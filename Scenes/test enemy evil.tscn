@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmwv8mqy10fmr"]
+
+[ext_resource type="Script" path="res://Scripts/test enemy evil.gd" id="1_jtptv"]
+[ext_resource type="Texture2D" uid="uid://buifbltj00ekt" path="res://Sprites/General Sprites/Cardboard Demon.png" id="2_kyvy0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ndne"]
+size = Vector2(56, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sfm4h"]
+size = Vector2(40, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b6yw3"]
+size = Vector2(21, 91)
+
+[node name="Test enemy" type="CharacterBody2D"]
+collision_layer = 128
+collision_mask = 9
+script = ExtResource("1_jtptv")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.996078, 0, 0.121569, 1)
+position = Vector2(0, -8)
+texture = ExtResource("2_kyvy0")
+flip_h = true
+
+[node name="Hurtbox" type="Area2D" parent="Sprite"]
+position = Vector2(0, 8)
+collision_layer = 128
+collision_mask = 20
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Sprite/Hurtbox"]
+shape = SubResource("RectangleShape2D_7ndne")
+debug_color = Color(0.901961, 0, 0.0980392, 0.419608)
+
+[node name="RayCast2D" type="RayCast2D" parent="Sprite/Hurtbox"]
+collision_mask = 1033
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="Hitbox" type="Area2D" parent="Sprite" groups=["HurtsEnzo"]]
+position = Vector2(0, 8)
+collision_layer = 1024
+collision_mask = 16
+metadata/dmg = 1
+metadata/strength = 10
+metadata/deathtype = "blunt"
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Sprite/Hitbox"]
+position = Vector2(-23, -20.5)
+shape = SubResource("RectangleShape2D_sfm4h")
+debug_color = Color(1, 0, 1, 0.505882)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_b6yw3")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -42.0
+offset_top = -80.0
+offset_right = 44.0
+offset_bottom = -52.0
+text = "wheee"
+
+[connection signal="area_entered" from="Sprite/Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="area_entered" from="Sprite/Hitbox" to="." method="_on_hitbox_area_entered"]

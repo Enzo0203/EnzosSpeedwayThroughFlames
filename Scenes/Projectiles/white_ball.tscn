@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://cpmq0bb3118cr"]
+
+[ext_resource type="Script" path="res://Scripts/white_ball.gd" id="1_tldaj"]
+[ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/D-White ball sheet.png" id="2_vnc03"]
+
+[sub_resource type="Animation" id="Animation_schjl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bts1l"]
+resource_name = "ball"
+length = 0.13334
+loop_mode = 1
+step = 0.0666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4w3o2"]
+_data = {
+"RESET": SubResource("Animation_schjl"),
+"ball": SubResource("Animation_bts1l")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ju3r4"]
+resource_local_to_scene = true
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_tldaj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+texture = ExtResource("2_vnc03")
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4w3o2")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dqv0b")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["HurtsEnzo"]]
+collision_layer = 1024
+collision_mask = 93
+metadata/dmg = 1
+metadata/strength = 1
+metadata/kbdirection = Vector2(0, -200)
+metadata/deathtype = "blunt"
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ju3r4")
+debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjpdwwtfsxaiw"]
+
+[ext_resource type="Script" path="res://Scripts/Items.gd" id="1_68bdb"]
+[ext_resource type="Texture2D" uid="uid://cg1xylfmdpi6q" path="res://Sprites/General Sprites/Chips Sheet.png" id="2_ld38n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vo83l"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="Animation" id="Animation_00d0x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_d5nu7"]
+resource_name = "idle"
+length = 0.60001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wnyg3"]
+_data = {
+"RESET": SubResource("Animation_00d0x"),
+"idle": SubResource("Animation_d5nu7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m12bk"]
+size = Vector2(36, 13)
+
+[node name="Chips" type="CharacterBody2D"]
+position = Vector2(0, -5)
+collision_layer = 0
+script = ExtResource("1_68bdb")
+
+[node name="Spritesheet" type="Sprite2D" parent="."]
+position = Vector2(0, -30)
+texture = ExtResource("2_ld38n")
+hframes = 6
+
+[node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["Heal"]]
+position = Vector2(0, 30)
+collision_layer = 256
+collision_mask = 4
+metadata/heal = 3
+
+[node name="Hitbox" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
+shape = SubResource("RectangleShape2D_vo83l")
+debug_color = Color(0.992157, 0, 0.278431, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Spritesheet"]
+libraries = {
+"": SubResource("AnimationLibrary_wnyg3")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_m12bk")
+
+[connection signal="area_entered" from="Spritesheet/Hitbox" to="." method="_on_hitbox_area_entered"]

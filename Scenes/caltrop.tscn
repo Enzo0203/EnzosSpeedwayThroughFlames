@@ -1,0 +1,144 @@
+[gd_scene load_steps=8 format=3 uid="uid://lcv2h2ct6fk2"]
+
+[ext_resource type="Script" path="res://Scripts/caltrop.gd" id="1_gvtda"]
+[ext_resource type="Texture2D" uid="uid://db0bo5son2l3r" path="res://Sprites/General Sprites/Caltrop.png" id="1_pwcmh"]
+
+[sub_resource type="Animation" id="Animation_k7dbc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hurtbox2/Hurtbox2:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Hurtbox/Hurtbox1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Hurtbox2/Hurtbox2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lsapp"]
+resource_name = "idle"
+length = 0.100003
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Hurtbox/Hurtbox1:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Hurtbox2/Hurtbox2:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Hurtbox/Hurtbox1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Hurtbox2/Hurtbox2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6xgel"]
+_data = {
+"RESET": SubResource("Animation_k7dbc"),
+"idle": SubResource("Animation_lsapp")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4303"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jhlnx"]
+size = Vector2(30, 30)
+
+[node name="Caltrop" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_gvtda")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pwcmh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_6xgel")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_v4303")
+
+[node name="Hurtbox" type="Area2D" parent="." groups=["HurtsEnzo", "hazard"]]
+collision_layer = 8
+collision_mask = 0
+metadata/deathtype = "spike"
+
+[node name="Hurtbox1" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_jhlnx")
+disabled = true
+debug_color = Color(0.976471, 0, 0.423529, 0.419608)
+
+[node name="Hurtbox2" type="Area2D" parent="." groups=["HurtsEnzo", "hazard"]]
+collision_layer = 8
+collision_mask = 0
+metadata/deathtype = "spike"
+
+[node name="Hurtbox2" type="CollisionShape2D" parent="Hurtbox2"]
+shape = SubResource("RectangleShape2D_jhlnx")
+debug_color = Color(0.976471, 0, 0.423529, 0.419608)

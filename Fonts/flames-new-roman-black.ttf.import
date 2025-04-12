@@ -1,0 +1,38 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://dktciom3fh1u7"
+path="res://.godot/imported/flames-new-roman-black.ttf-27154ae21e9b0bede92580b64f80301f.fontdata"
+
+[deps]
+
+source_file="res://Fonts/flames-new-roman-black.ttf"
+dest_files=["res://.godot/imported/flames-new-roman-black.ttf-27154ae21e9b0bede92580b64f80301f.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=true
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
+language_support={}
+script_support={}
+opentype_features={}

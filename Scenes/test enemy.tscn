@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://7e6v68d1olpd"]
+
+[ext_resource type="Script" path="res://Scripts/test enemy.gd" id="1_gf04l"]
+[ext_resource type="Texture2D" uid="uid://buifbltj00ekt" path="res://Sprites/General Sprites/Cardboard Demon.png" id="2_wusqm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ndne"]
+size = Vector2(56, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b6yw3"]
+size = Vector2(21, 91)
+
+[node name="Test enemy" type="CharacterBody2D"]
+collision_layer = 128
+collision_mask = 9
+script = ExtResource("1_gf04l")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_wusqm")
+flip_h = true
+
+[node name="Hurtbox" type="Area2D" parent="Sprite"]
+collision_layer = 128
+collision_mask = 20
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Sprite/Hurtbox"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_7ndne")
+debug_color = Color(0.901961, 0, 0.0980392, 0.419608)
+
+[node name="RayCast2D" type="RayCast2D" parent="Sprite/Hurtbox"]
+collision_mask = 1033
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_b6yw3")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -41.0
+offset_top = -73.0
+offset_right = 45.0
+offset_bottom = -45.0
+text = "wheee"
+
+[connection signal="area_entered" from="Sprite/Hurtbox" to="." method="_on_area_entered"]
