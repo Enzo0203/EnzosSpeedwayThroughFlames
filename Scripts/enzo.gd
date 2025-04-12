@@ -23,7 +23,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animation = $AnimationPlayer
 @onready var spritesheet = $Spritesheet
 @onready var coyote_jump_timer = $CoyoteJumpTimer
-@onready var invincibility_timer = $Invincibility
+@onready var invincibility_timer: Timer = $Invincibility
+@onready var lava_invincibility: Timer = $LavaInvincibility
 @onready var punchcooldown: Timer = $Punchcooldown
 @onready var regentimer: Timer = $Regentimer
 @onready var blocktimer: Timer = $Blocktimer
@@ -68,6 +69,7 @@ func force_damage():
 		regentimer.start()
 	if health > 0:
 		Globalvars.EnzoHurt = true
+		await get_tree().process_frame
 		await get_tree().process_frame
 		Globalvars.EnzoHurt = false
 
@@ -292,10 +294,10 @@ func _physics_process(delta):
 		States.BLOCKREL:
 			blockrelease(delta, INPUT_AXIS)
 	update_animations(INPUT_AXIS)
-	check_for_hurtbox()
 	check_for_death()
 	attachToBoard()
 	check_and_regen()
+	
 	if is_on_floor():
 		canEnzoStomp = true
 		$Spritesheet/Walljumpdetector/Walljumpdetector.disabled = true
@@ -990,7 +992,7 @@ var howToDie
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
 		# Flip sprite
-		if area.global_position.x >= position.x:
+		if area.global_position.x >= global_position.x:
 			$Spritesheet.scale.x = 1
 		else:
 			$Spritesheet.scale.x = -1
@@ -1000,6 +1002,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				change_state(States.BLOCKHIT)
 				blocktimer.start()
 				Globalvars.EnzoScore += 25
+			elif hurtbox.get_meta("state") == "vuln":
+				howToDie = area.get_meta("deathtype")
+				change_state(States.HURT)
+				check_and_damage(true, true, 200)
+				if health >= 1:
+					velocity.y = -300
 		if hurtbox.get_meta("state") == "blockingperfect":
 				#Perfect Block
 				change_state(States.BLOCKPERFECT)
@@ -1007,11 +1015,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				invincibility_timer.start()
 				blocktimer.stop()
 				Globalvars.EnzoScore += 25
-		howToDie = area.get_meta("deathtype")
-		collidingWithHurtbox = true
 	if area.is_in_group("Lava"):
-		howToDie = "burn"
-		collidingWithLava = true
+		if lava_invincibility.time_left == 0:
+			howToDie = "burn"
+			change_state(States.BURNJUMPING)
+			if area.global_position.y > global_position.y:
+				velocity.y = -800
+			else:
+				velocity.y = 800
+			lava_invincibility.start()
+			check_and_damage(false, false, 200)
 	if area.is_in_group("Skateboard"):
 		isOnBoard = true
 		if radical == false and justJumpedOffBoard == false:
@@ -1038,10 +1051,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		Globalvars.EnzoHeal = false
 
 func _on_hurtbox_area_exited(area: Area2D) -> void:
-	if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
-		collidingWithHurtbox = false
-	if area.is_in_group("Lava"):
-		collidingWithLava = false
 	if area.is_in_group("Skateboard"):
 		isOnBoard = false
 		skateboard = area
@@ -1081,19 +1090,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		randomizeAudioPitch(hitSoundType, 0.3)
 		hitSoundType.play()
 
-func check_for_hurtbox():
-	if collidingWithHurtbox == true:
-		if invincibility_timer.time_left == 0.0:
-			if hurtbox.get_meta("state") == "vuln":
-				change_state(States.HURT)
-				check_and_damage(true, true, 200)
-				if health >= 1:
-					velocity.y = -300
-	if collidingWithLava == true:
-		change_state(States.BURNJUMPING)
-		velocity.y = -800
-		check_and_damage(false, false, 200)
-
 func hurt(delta, INPUT_AXIS):
 	# What to do
 	if $Spritesheet.scale.x == 1:
@@ -1124,7 +1120,6 @@ func burnjumping(delta, INPUT_AXIS):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What this can transition to
-	await get_tree().create_timer(0.5).timeout
 	if state == States.BURNJUMPING:
 		if is_on_floor():
 			squish()
