@@ -17,6 +17,7 @@ func change_state(newState):
 var hitboxInSight = false
 
 func _physics_process(delta):
+	$Label2.text = str(raycast.get_collider())
 	match state:
 		States.IDLE:
 			idle(delta)
@@ -74,7 +75,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				print("test dummy saved by wall")
 				$Label.text = "saved by wall"
 			else:
-				if raycast.get_collider().is_in_group("HurtsEnzo") and area.get_meta("strength") - 1 < $Sprite/Hitbox.get_meta("strength"):
+				if raycast.get_collider() == $Sprite/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo") and area.get_meta("strength") - 1 < $Sprite/Hitbox.get_meta("strength"):
 					raycast.set_collision_mask_value(11, false)
 					raycast.target_position = (raycast.global_position - area.global_position) * -1
 					await get_tree().process_frame

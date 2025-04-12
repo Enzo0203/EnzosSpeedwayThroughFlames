@@ -29,7 +29,7 @@ shape = SubResource("RectangleShape2D_7ndne")
 debug_color = Color(0.901961, 0, 0.0980392, 0.419608)
 
 [node name="RayCast2D" type="RayCast2D" parent="Sprite/Hurtbox"]
-collision_mask = 1033
+collision_mask = 9
 hit_from_inside = true
 collide_with_areas = true
 
