@@ -39,6 +39,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			#Make it hurt enemies and not you
 			hitbox.add_to_group("EnzoHitbox")
+			hitbox.set_collision_layer_value(11, false)
+			hitbox.set_collision_layer_value(5, true)
 			#Flip direction
 			if area.get_meta("kbdirection").x < 0:
 				launchDirection.x = -1

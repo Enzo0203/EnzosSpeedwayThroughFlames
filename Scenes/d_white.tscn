@@ -227,7 +227,7 @@ vframes = 6
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
 collision_layer = 128
-collision_mask = 28
+collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
 position = Vector2(0, 6.5)

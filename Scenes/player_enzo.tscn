@@ -7780,7 +7780,7 @@ scale_amount_curve = SubResource("Curve_au0cc")
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnzoHitbox"]]
 position = Vector2(0, -5)
 collision_layer = 16
-collision_mask = 144
+collision_mask = 1168
 metadata/dmg = 2
 metadata/strength = 2
 metadata/type = "norm"
