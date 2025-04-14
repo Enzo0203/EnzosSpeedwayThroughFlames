@@ -57,7 +57,7 @@ func hurt(delta):
 	change_state(States.IDLE)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
 		# Shoot raycast and check for wall or own hitbox
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1

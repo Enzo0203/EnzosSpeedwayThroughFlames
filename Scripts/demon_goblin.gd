@@ -15,7 +15,7 @@ var is_dead = false
 
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
-
+@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
 func change_state(newState):
 	state = newState
@@ -34,10 +34,14 @@ func _physics_process(delta):
 			dead(delta)
 	move_and_slide()
 	update_animations()
+	if $Spritesheet.scale.x == -1:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
+	else:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
-var EnzoInArea = false
-var EnzoInArea2 = false
-var Obstacle
+var EnzoInArea: bool = false
+var EnzoInArea2: bool = false
+var Obstacle: bool
 
 func _on_enzo_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHurtbox"):
@@ -81,8 +85,8 @@ func walking(delta):
 		velocity.x = move_toward(velocity.x, -200, 1000 * delta)
 		sprite.scale.x = -1
 	if not is_on_floor():
-			velocity.y += gravity * delta
-			velocity.y = min(velocity.y, 500)
+		velocity.y += gravity * delta
+		velocity.y = min(velocity.y, 500)
 	else:
 		if Obstacle:
 			velocity.y = -420
@@ -113,24 +117,56 @@ func dead(delta):
 	velocity.y += gravity * delta
 	collision_mask = 0
 
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	if is_dead == false:
-		if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-			Globalvars.EnzoScore += 100
-			hitStop(0.1, 0.3)
-			change_state(States.DEAD)
-			velocity = area.get_meta("kbdirection")
-			is_dead = true
-			Globalvars.EnemyKilledRecently = true
-			Globalvars.EnzoCombo += 1
-			await get_tree().create_timer(0.01).timeout
-			Globalvars.EnemyKilledRecently = false
-
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+		# Shoot raycast and check for wall or own hitbox
+		raycast.set_collision_mask_value(11, true)
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		await get_tree().process_frame
+		if not raycast.is_colliding():
+			# No wall, hurt enemy
+				if is_dead == false:
+					if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+						Globalvars.EnzoScore += 100
+						hitStop(0.1, 0.3)
+						change_state(States.DEAD)
+						velocity = area.get_meta("kbdirection")
+						is_dead = true
+						Globalvars.EnemyKilledRecently = true
+						Globalvars.EnzoCombo += 1
+						await get_tree().process_frame
+						Globalvars.EnemyKilledRecently = false
+		else:
+			# Check if wall or own hitbox
+			if raycast.get_collider().is_in_group("tileset"):
+				# There's a wall
+				pass
+			else:
+				# Hitbox
+				# Check if hitbox is my own
+				if raycast.get_collider() == $Spritesheet/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo"):
+					# Compare strength
+					if area.get_meta("strength") - 1 <= $Spritesheet/Hitbox.get_meta("strength"):
+						# Check for wall again
+						raycast.set_collision_mask_value(11, false)
+						await get_tree().process_frame
+						if not raycast.is_colliding():
+							# No wall, Clank
+							print("I'm clankin it")
+							if area.global_position.x >= position.x:
+								$Spritesheet.scale.x = 1
+								velocity.x = -200
+							else:
+								$Spritesheet.scale.x = -1
+								velocity.x = 200
+						else:
+							# There is a wall
+							pass
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox"):
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			# Insert Minicounter below
-			
 			if area.get_meta("type") == "parry":
 				if is_dead == false:
 					velocity = area.get_meta("kbdirection")

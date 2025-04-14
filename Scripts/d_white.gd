@@ -21,7 +21,7 @@ var is_dead = false
 @onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
 
-var health = 10
+var health = 2
 
 func change_state(newState):
 	state = newState
@@ -173,7 +173,7 @@ func check_for_death():
 		Globalvars.EnemyKilledRecently = true
 		Globalvars.EnzoCombo += 1
 		is_dead = true
-		await get_tree().create_timer(0.01).timeout
+		await get_tree().process_frame
 		Globalvars.EnemyKilledRecently = false
 
 func update_animations():
