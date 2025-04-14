@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://buifbltj00ekt" path="res://Sprites/General Sprites/Cardboard Demon.png" id="2_kyvy0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ndne"]
-size = Vector2(56, 92)
+size = Vector2(56, 93)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sfm4h"]
 size = Vector2(40, 38)
@@ -32,7 +32,8 @@ collision_mask = 20
 shape = SubResource("RectangleShape2D_7ndne")
 debug_color = Color(0.901961, 0, 0.0980392, 0.419608)
 
-[node name="RayCast2D" type="RayCast2D" parent="Sprite/Hurtbox"]
+[node name="HitDetector" type="RayCast2D" parent="Sprite/Hurtbox"]
+target_position = Vector2(95, -37)
 collision_mask = 1033
 hit_from_inside = true
 collide_with_areas = true

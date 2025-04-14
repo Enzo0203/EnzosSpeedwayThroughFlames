@@ -15,11 +15,13 @@ var is_dead = false
 @onready var healthbar: TextureRect = $Health/Health
 @onready var healthbarbackdrop: TextureRect = $Health/Healthbackdrop
 @onready var stuntimer: Timer = $Stuntimer
-@onready var enzo_detector: Area2D = $Spritesheet/EnzoDetector
 
-@onready var raycast: RayCast2D = $Spritesheet/RayCast2D
+@onready var hurtbox: Area2D = $Spritesheet/Hurtbox
+@onready var enzoDetector: RayCast2D = $Spritesheet/EnzoDetector
+@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
-var health = 2
+
+var health = 10
 
 func change_state(newState):
 	state = newState
@@ -43,6 +45,10 @@ func _physics_process(delta):
 	update_animations()
 	set_health()
 	check_for_death()
+	if $Spritesheet.scale.x == -1:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
+	else:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
 var EnzoInArea
 var HasBall = true
@@ -63,8 +69,8 @@ func idle(delta):
 	if state == States.IDLE:
 		if HasBall == false:
 			change_state(States.RELOADING)
-		if HasBall == true and raycast.is_colliding():
-			if raycast.get_collider().is_in_group("EnzoHurtbox"):
+		if HasBall == true and enzoDetector.is_colliding():
+			if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
 				change_state(States.THROWING)
 				await get_tree().create_timer(0.6).timeout
 				launch_ball()
@@ -95,8 +101,8 @@ func reload(delta):
 	if state == States.RELOADING:
 		if animation.current_animation != "reload":
 			HasBall = true
-			if HasBall == true and raycast.is_colliding():
-				if raycast.get_collider().is_in_group("EnzoHurtbox"):
+			if HasBall == true and enzoDetector.is_colliding():
+				if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
 					change_state(States.THROWING)
 					await get_tree().create_timer(0.6).timeout
 					launch_ball()
@@ -113,8 +119,8 @@ func hurt(delta):
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if stuntimer.time_left == 0:
 		if state == States.HURT:
-			if HasBall == true and raycast.is_colliding():
-				if raycast.get_collider().is_in_group("EnzoHurtbox"):
+			if HasBall == true and enzoDetector.is_colliding():
+				if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
 					change_state(States.THROWING)
 					await get_tree().create_timer(0.6).timeout
 					launch_ball()
@@ -138,17 +144,27 @@ func dead(delta):
 	collision_mask = 0
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if is_dead == false:
-		if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-			if health - area.get_meta("dmg") <= 0:
-				change_state(States.DEAD)
-			else:
-				change_state(States.HURT)
-			velocity = area.get_meta("kbdirection")
-			stuntimer.start()
-			Globalvars.EnzoScore += 100
-			hitStop(0.1, 0.3)
-			health -= area.get_meta("dmg")
+	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+		# Shoot raycast and Check for wall
+		raycast.global_position = hurtbox.global_position
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		await get_tree().process_frame
+		if not raycast.is_colliding():
+			#No wall, hurt
+			if is_dead == false:
+				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+					if health - area.get_meta("dmg") <= 0:
+						change_state(States.DEAD)
+					else:
+						change_state(States.HURT)
+					velocity = area.get_meta("kbdirection")
+					stuntimer.start()
+					Globalvars.EnzoScore += 100
+					hitStop(0.1, 0.3)
+					health -= area.get_meta("dmg")
+		elif raycast.get_collider().is_in_group("tileset"):
+			#There's a wall
+			pass
 
 func check_for_death():
 	if health <= 0 and is_dead == false:

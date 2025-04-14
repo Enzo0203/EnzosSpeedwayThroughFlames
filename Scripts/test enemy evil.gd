@@ -4,7 +4,7 @@ extends CharacterBody2D
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var hurtbox: Area2D = $Sprite/Hurtbox
-@onready var raycast: RayCast2D = $Sprite/Hurtbox/RayCast2D
+@onready var raycast: RayCast2D = $Sprite/Hurtbox/HitDetector
 
 
 enum States {IDLE, HURT}
@@ -25,9 +25,9 @@ func _physics_process(delta):
 			hurt(delta)
 	move_and_slide()
 	if $Sprite.scale.x == -1:
-		$Sprite/Hurtbox/RayCast2D.scale.x = -1
+		$Sprite/Hurtbox/HitDetector.scale.x = -1
 	else:
-		$Sprite/Hurtbox/RayCast2D.scale.x = 1
+		$Sprite/Hurtbox/HitDetector.scale.x = 1
 
 func idle(delta):
 	# What to do
@@ -58,10 +58,12 @@ func hurt(delta):
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox"):
+		# Shoot raycast and check for wall or own hitbox
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		await get_tree().process_frame
 		if not raycast.is_colliding():
+			# No wall, hurt enemy
 			change_state(States.HURT)
 			velocity = area.get_meta("kbdirection")
 			if area.global_position.x >= position.x:
@@ -71,35 +73,45 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			print("test dummy hurt")
 			$Label.text = "hurt"
 		else:
+			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
+				# There's a wall
 				print("test dummy saved by wall")
 				$Label.text = "saved by wall"
 			else:
-				if raycast.get_collider() == $Sprite/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo") and area.get_meta("strength") - 1 < $Sprite/Hitbox.get_meta("strength"):
-					raycast.set_collision_mask_value(11, false)
-					raycast.target_position = (raycast.global_position - area.global_position) * -1
-					await get_tree().process_frame
-					if not raycast.is_colliding():
-						print("test dummy saved by clank")
-						$Label.text = "saved by clank"
-						if area.global_position.x >= position.x:
-							$Sprite.scale.x = -1
-							velocity.x = -300
+				# Hitbox
+				# Check if hitbox is my own
+				if raycast.get_collider() == $Sprite/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo"):
+					# Compare strength
+					if area.get_meta("strength") - 1 < $Sprite/Hitbox.get_meta("strength"):
+						# Check for wall again
+						raycast.set_collision_mask_value(11, false)
+						await get_tree().process_frame
+						if not raycast.is_colliding():
+							# No wall, Clank
+							print("test dummy saved by clank")
+							$Label.text = "saved by clank"
+							if area.global_position.x >= position.x:
+								$Sprite.scale.x = -1
+								velocity.x = -300
+							else:
+								$Sprite.scale.x = 1
+								velocity.x = 300
 						else:
-							$Sprite.scale.x = 1
-							velocity.x = 300
-					else:
-						print("test dummy tried to save clank but stopped by wall")
-						$Label.text = "tried save clank but wall"
+							# There is a wall
+							print("test dummy tried to save clank but stopped by wall")
+							$Label.text = "tried save clank but wall"
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	await get_tree().process_frame
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
+		# Shoot raycast and check for wall
 		raycast.set_collision_mask_value(11, false)
 		raycast.global_position = $Sprite/Hitbox.global_position
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		await get_tree().process_frame
 		if not raycast.is_colliding():
+			# No wall, clank
 			print("test dummy clanked")
 			$Label.text = "clanked"
 			if area.global_position.x >= position.x:
@@ -109,5 +121,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				$Sprite.scale.x = 1
 				velocity.x = 300
 		else:
+			# There is a wall
 			print("test dummy tried to clank but stopped by wall")
 			$Label.text = "tried clank but wall"

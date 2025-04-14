@@ -224,17 +224,23 @@ script = ExtResource("1_fkcf2")
 texture = ExtResource("2_vnbog")
 hframes = 6
 vframes = 6
+frame = 16
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
 collision_layer = 128
 collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
-position = Vector2(0, 6.5)
+position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_2mhsb")
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
-[node name="RayCast2D" type="RayCast2D" parent="Spritesheet"]
+[node name="HitDetector" type="RayCast2D" parent="Spritesheet/Hurtbox"]
+target_position = Vector2(0, 0)
+collision_mask = 9
+hit_from_inside = true
+
+[node name="EnzoDetector" type="RayCast2D" parent="Spritesheet"]
 modulate = Color(0.0221348, 0.268932, 1.68458e-07, 1)
 target_position = Vector2(328, 51)
 collision_mask = 13

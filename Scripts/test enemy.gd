@@ -4,7 +4,7 @@ extends CharacterBody2D
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var hurtbox: Area2D = $Sprite/Hurtbox
-@onready var raycast: RayCast2D = $Sprite/Hurtbox/RayCast2D
+@onready var raycast: RayCast2D = $Sprite/Hurtbox/HitDetector
 
 
 enum States {IDLE, HURT}
@@ -52,15 +52,18 @@ func hurt(delta):
 	change_state(States.IDLE)
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+		# Shoot raycast and Check for wall
 		raycast.global_position = hurtbox.global_position
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		await get_tree().process_frame
 		if not raycast.is_colliding():
+			# There's no wall, Hurt enemy
 			change_state(States.HURT)
 			velocity = area.get_meta("kbdirection")
 			print("test dummy hurt")
 			$Label.text = "hurt"
 		elif raycast.get_collider().is_in_group("tileset"):
+			#There's a wall
 			print("test dummy saved by wall")
 			$Label.text = "saved by wall"
