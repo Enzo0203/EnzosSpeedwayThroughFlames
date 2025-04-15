@@ -948,14 +948,19 @@ shape = SubResource("RectangleShape2D_lrs4e")
 debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
+position = Vector2(0, -11)
 collision_layer = 128
-collision_mask = 28
+collision_mask = 2068
 metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
-position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_juhp6")
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
+
+[node name="HitDetector" type="RayCast2D" parent="Spritesheet/Hurtbox"]
+collision_mask = 1033
+hit_from_inside = true
+collide_with_areas = true
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["HurtsEnzo"]]
 collision_layer = 1024

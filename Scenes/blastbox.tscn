@@ -245,7 +245,7 @@ libraries = {
 }
 
 [node name="Hurtbox" type="Area2D" parent="Blastbox"]
-collision_layer = 8
+collision_layer = 0
 collision_mask = 28
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Blastbox/Hurtbox"]
@@ -274,7 +274,7 @@ libraries = {
 }
 
 [node name="Hitbox" type="Area2D" parent="Explosion" groups=["Explosion"]]
-collision_layer = 8
+collision_layer = 2048
 collision_mask = 0
 monitoring = false
 metadata/dmg = 3
@@ -288,7 +288,7 @@ disabled = true
 debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
 [node name="SmallHitbox" type="Area2D" parent="Explosion" groups=["CloseExplosion"]]
-collision_layer = 8
+collision_layer = 2048
 collision_mask = 0
 monitoring = false
 

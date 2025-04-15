@@ -28,6 +28,7 @@ var is_dead = false
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 
+@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 @onready var anticlip: RayCast2D = $Spritesheet/Anticlip
 
 
@@ -68,6 +69,10 @@ func _physics_process(delta):
 	update_animations()
 	set_health()
 	check_for_death()
+	if $Spritesheet.scale.x == -1:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
+	else:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
 func idle(delta):
 	velocity.y += gravity * delta
@@ -208,21 +213,55 @@ func dead(delta):
 	collision_mask = 0
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if is_dead == false:
-		if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-			if health - area.get_meta("dmg") <= 0:
-				change_state(States.DEAD)
+	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+		# Shoot raycast and check for wall or own hitbox
+		raycast.set_collision_mask_value(11, true)
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		await get_tree().process_frame
+		if not raycast.is_colliding():
+			# No wall, hurt enemy
+			if is_dead == false:
+				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+					if health - area.get_meta("dmg") <= 0:
+						change_state(States.DEAD)
+					else:
+						change_state(States.HURT)
+					velocity = area.get_meta("kbdirection")
+					stuntimer.start()
+					Globalvars.EnzoScore += 100
+					hitStop(0.1, 0.3)
+					if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
+						health -= hitbox.get_meta("dmg")
+						blastboxcooldown.start()
+					else:
+						health -= area.get_meta("dmg")
+		else:
+			# Check if wall or own hitbox
+			if raycast.get_collider().is_in_group("tileset"):
+				# There's a wall
+				pass
 			else:
-				change_state(States.HURT)
-			velocity = area.get_meta("kbdirection")
-			stuntimer.start()
-			Globalvars.EnzoScore += 100
-			hitStop(0.1, 0.3)
-			if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
-				health -= hitbox.get_meta("dmg")
-				blastboxcooldown.start()
-			else:
-				health -= area.get_meta("dmg")
+				# Hitbox
+				# Check if hitbox is my own
+				if raycast.get_collider() == $Spritesheet/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo"):
+					# Compare strength
+					if area.get_meta("strength") - 1 < $Spritesheet/Hitbox.get_meta("strength"):
+						# Check for wall again
+						raycast.set_collision_mask_value(11, false)
+						await get_tree().process_frame
+						if not raycast.is_colliding():
+							# No wall, Clank
+							print("test dummy saved by clank")
+							$Label.text = "saved by clank"
+							if area.global_position.x >= position.x:
+								$Sprite.scale.x = -1
+								velocity.x = -300
+							else:
+								$Sprite.scale.x = 1
+								velocity.x = 300
+						else:
+							# There is a wall
+							pass
 
 func update_animations():
 	if state == States.IDLE:

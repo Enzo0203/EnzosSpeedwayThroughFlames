@@ -39,6 +39,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
+@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
 enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHING, PUNCHINGWEAK, PUNCHINGMID, PUNCHINGSTRONG, HURT, DEAD, BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING, KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL, DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2, AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL}
 
@@ -177,7 +178,7 @@ func _physics_process(delta: float) -> void:
 	Globalvars.EnzoRegen = regen
 	Globalvars.EnzoRegenArr = regenarr
 	Globalvars.EnzoRegenState = regenstate
-	labelstate.text = "piss"
+	labelstate.text = str(raycast.get_collider())
 	labelspeed.text = str(velocity.y)
 	labelthird.text = str(regentimer.time_left)
 	if velocity.x > 100 and velocity.x < 800:
@@ -318,6 +319,10 @@ func _physics_process(delta: float) -> void:
 		canWallJump = true
 	else:
 		canWallJump = false
+	if $Spritesheet.scale.x == -1:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
+	else:
+		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
 # Explode for no fucking reason
 @onready var explosion: PackedScene = preload("res://Scenes/explosion.tscn")
@@ -986,31 +991,64 @@ var howToDie: String
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
-		# Flip sprite
-		if area.global_position.x >= global_position.x:
-			$Spritesheet.scale.x = 1
+		# Shoot raycast and check for wall or own hitbox
+		raycast.set_collision_mask_value(5, true)
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		await get_tree().process_frame
+		if raycast.is_colliding() == false:
+			#No wall
+			if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
+				# Flip sprite
+				if area.global_position.x >= global_position.x:
+					$Spritesheet.scale.x = 1
+				else:
+					$Spritesheet.scale.x = -1
+				if invincibility_timer.time_left == 0.0:
+					if hurtbox.get_meta("state") == "blocking":
+						#Block
+						change_state(States.BLOCKHIT)
+						blocktimer.start()
+						Globalvars.EnzoScore += 25
+					elif hurtbox.get_meta("state") == "vuln":
+						#Hurt
+						howToDie = area.get_meta("deathtype")
+						change_state(States.HURT)
+						check_and_damage(true, true, 200)
+						if health >= 1:
+							velocity.y = -300
+				if hurtbox.get_meta("state") == "blockingperfect":
+						#Perfect Block
+						change_state(States.BLOCKPERFECT)
+						invincibility_timer.wait_time = 0.6
+						invincibility_timer.start()
+						blocktimer.stop()
+						Globalvars.EnzoScore += 25
 		else:
-			$Spritesheet.scale.x = -1
-		if invincibility_timer.time_left == 0.0:
-			if hurtbox.get_meta("state") == "blocking":
-				#Block
-				change_state(States.BLOCKHIT)
-				blocktimer.start()
-				Globalvars.EnzoScore += 25
-			elif hurtbox.get_meta("state") == "vuln":
-				howToDie = area.get_meta("deathtype")
-				change_state(States.HURT)
-				check_and_damage(true, true, 200)
-				if health >= 1:
-					velocity.y = -300
-		if hurtbox.get_meta("state") == "blockingperfect":
-				#Perfect Block
-				change_state(States.BLOCKPERFECT)
-				invincibility_timer.wait_time = 0.6
-				invincibility_timer.start()
-				blocktimer.stop()
-				Globalvars.EnzoScore += 25
-	if area.is_in_group("Lava"):
+			# Check if wall or own hitbox
+			if raycast.get_collider() != null and raycast.get_collider().is_in_group("tileset"):
+				# There's a wall
+				pass
+			else:
+				# Hitbox
+				# Check if hitbox is my own
+				if raycast.get_collider() == $Spritesheet/Hitbox and raycast.get_collider().is_in_group("EnzoHitbox"):
+					# Compare strength
+					if area.get_meta("strength") - 1 < $Spritesheet/Hitbox.get_meta("strength"):
+						# Check for wall again
+						raycast.set_collision_mask_value(5, false)
+						await get_tree().process_frame
+						if not raycast.is_colliding():
+							# No wall, Clank
+							if area.global_position.x >= position.x:
+								$Spritesheet.scale.x = -1
+								velocity.x = -300
+							else:
+								$Spritesheet.scale.x = 1
+								velocity.x = 300
+						else:
+							# There is a wall
+							pass
+	elif area.is_in_group("Lava"):
 		if lava_invincibility.time_left == 0:
 			howToDie = "burn"
 			change_state(States.BURNJUMPING)
@@ -1020,7 +1058,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				velocity.y = 800
 			lava_invincibility.start()
 			check_and_damage(false, false, 200)
-	if area.is_in_group("Skateboard"):
+	elif area.is_in_group("Skateboard"):
 		isOnBoard = true
 		if radical == false and justJumpedOffBoard == false:
 			velocity.x = 0
@@ -1028,7 +1066,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		change_state(States.SKATING)
 		skateboard = area
 		add_child(skateboard)
-	if area.is_in_group("Heal"):
+	elif area.is_in_group("Heal"):
 		if health + area.get_meta("heal") > 5:
 			if regen + (area.get_meta("heal") - (5 - health)) > 5:
 				regen_give(5 - regen)

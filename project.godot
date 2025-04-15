@@ -85,6 +85,7 @@ character_c={
 2d_physics/layer_9="Pickups"
 2d_physics/layer_10="Camera attractors"
 2d_physics/layer_11="EnemyAttack"
+2d_physics/layer_12="Environment attack"
 
 [physics]
 
