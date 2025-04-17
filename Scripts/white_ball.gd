@@ -66,7 +66,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 var target_y = null
 
 func destroy():
-	await get_tree().process_frame
 	queue_free()
 
 func hitboxstun(duration):

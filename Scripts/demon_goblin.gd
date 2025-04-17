@@ -122,7 +122,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		# Shoot raycast and check for wall or own hitbox
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		await get_tree().process_frame
+		raycast.force_raycast_update()
 		if not raycast.is_colliding():
 			# No wall, hurt enemy
 				if is_dead == false:
@@ -149,7 +149,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 					if area.get_meta("strength") - 1 <= $Spritesheet/Hitbox.get_meta("strength"):
 						# Check for wall again
 						raycast.set_collision_mask_value(11, false)
-						await get_tree().process_frame
+						raycast.force_raycast_update()
 						if not raycast.is_colliding():
 							# No wall, Clank
 							print("I'm clankin it")

@@ -56,7 +56,7 @@ func _on_area_entered(area: Area2D) -> void:
 		# Shoot raycast and Check for wall
 		raycast.global_position = hurtbox.global_position
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		await get_tree().process_frame
+		raycast.force_raycast_update()
 		if not raycast.is_colliding():
 			# There's no wall, Hurt enemy
 			change_state(States.HURT)

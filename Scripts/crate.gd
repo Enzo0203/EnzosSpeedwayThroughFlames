@@ -47,7 +47,6 @@ func explode():
 		explosion_animation.play("Orange Instant")
 		if get_tree():
 			await get_tree().create_timer(1.1).timeout
-		print("ow!")
 		destroy()
 		exploded = true
 
