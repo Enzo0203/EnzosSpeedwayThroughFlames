@@ -74,7 +74,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
-func idle(delta):
+func idle(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 600)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -115,7 +115,7 @@ func idle(delta):
 			if blastboxcooldown.time_left == 0:
 				change_state(States.BIGTHROWING)
 
-func jumping(delta):
+func jumping(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	#Transitions
@@ -128,7 +128,7 @@ func jumping(delta):
 				change_state(States.JUMPTHROWING)
 				launch_compact_blastbox()
 
-func throwing(delta):
+func throwing(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -140,7 +140,7 @@ func throwing(delta):
 			else:
 				change_state(States.JUMPING)
 
-func jumpthrowing(delta):
+func jumpthrowing(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	if state == States.JUMPTHROWING:
@@ -151,7 +151,7 @@ func jumpthrowing(delta):
 			else:
 				change_state(States.JUMPING)
 
-func bigthrowing(delta):
+func bigthrowing(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -187,7 +187,7 @@ func launch_blastbox():
 
 var bounceSpeed
 
-func hurt(delta):
+func hurt(delta: float):
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 2000)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -207,7 +207,7 @@ func hurt(delta):
 			velocity.y = bounceSpeed / 2 * -1
 			bounceSpeed = null
 
-func dead(delta):
+func dead(delta: float):
 	# What to do
 	velocity.y += gravity * delta
 	collision_mask = 0
@@ -253,10 +253,10 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							# No wall, Save clank
 							print("bombarSaveClank")
 							if area.global_position.x >= position.x:
-								$Sprite.scale.x = -1
+								$Spritesheet.scale.x = -1
 								velocity.x = -300
 							else:
-								$Sprite.scale.x = 1
+								$Spritesheet.scale.x = 1
 								velocity.x = 300
 						else:
 							# There is a wall
@@ -290,7 +290,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				else:
 					$Spritesheet.scale.x = 1
 					velocity.x = 300
-				hurtboxstun(0.3)
 		else:
 			# There is a wall
 			pass
@@ -370,8 +369,3 @@ func _on_enzo_detector_3_area_entered(area: Area2D) -> void:
 func _on_enzo_detector_3_area_exited(area: Area2D) -> void:
 	if area.is_in_group("EnzoHurtbox"):
 		EnzoInArea3 = false
-
-func hurtboxstun(duration):
-	hitbox.set_deferred("monitorable", false)
-	await get_tree().create_timer(duration).timeout
-	hitbox.set_deferred("monitorable", true)

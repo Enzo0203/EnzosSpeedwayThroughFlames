@@ -1042,8 +1042,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						raycast.set_collision_mask_value(5, false)
 						raycast.force_raycast_update()
 						if not raycast.is_colliding():
-							# No wall, Compare strengths
-							# Compare strengths
+							# No wall
+							# Clash
 							if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 								if hitbox.get_meta("type") == "norm":
 									#Rebound
@@ -1117,19 +1117,21 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	raycast2.set_collision_mask_value(11, false)
 	raycast2.force_raycast_update()
 	# Check what hitbox hit
+	print(str(area.is_in_group("HurtsEnzo")))
 	if area.is_in_group("HurtsEnzo"):
 		# Hitbox
 		# Check if there's a wall
+		print(str(raycast2.is_colliding() == false))
 		if raycast2.is_colliding() == false:
 			# No wall
 			# Update Raycast
 			raycast2.set_collision_mask_value(11, true)
 			raycast2.force_raycast_update()
 			# Check if actually hitting hitbox
+			print(str(raycast2.get_collider()))
 			if raycast2.is_colliding():
 				# Hitting hitbox
-				# Compare strengths
-				print(str(hitbox.get_meta("strength") - 1 > area.get_meta("strength")))
+				# Clash
 				if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 					if hitbox.get_meta("type") == "norm":
 						#Rebound
@@ -1178,6 +1180,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			if raycast2.get_collider().is_in_group("HurtsEnzo"):
 				# Hitbox
 				# Enemy save clashed
+				print("Enzo Save Clanked")
 				if hitbox.get_overlapping_areas().all(collides_with_hitbox) == false:
 					if area.global_position.x >= position.x:
 						$Spritesheet.scale.x = 1

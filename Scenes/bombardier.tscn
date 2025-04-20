@@ -32,7 +32,6 @@ size = Vector2(35, 113)
 [sub_resource type="Animation" id="Animation_vxb8r"]
 resource_name = "Bigthrow"
 length = 1.00001
-step = 0.111111
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -88,7 +87,7 @@ tracks/4/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.75, 0.875),
+"times": PackedFloat32Array(0, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -136,7 +135,7 @@ tracks/8/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.75, 0.875),
+"times": PackedFloat32Array(0, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(72, 124), Vector2(31, 124), Vector2(72, 124)]
@@ -148,7 +147,7 @@ tracks/9/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.75, 0.875),
+"times": PackedFloat32Array(0, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(0, -11), Vector2(20.5, -11), Vector2(0, -11)]
@@ -915,7 +914,7 @@ scale = Vector2(-1, 1)
 texture = ExtResource("1_fe1fo")
 hframes = 5
 vframes = 5
-frame = 22
+frame = 12
 
 [node name="EnzoDetector1" type="Area2D" parent="Spritesheet"]
 visible = false
@@ -954,18 +953,21 @@ debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 position = Vector2(0, -11)
 collision_layer = 128
 collision_mask = 2068
-metadata/state = "vuln"
+metadata/state = "parriable"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
+position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_juhp6")
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
 
 [node name="HitDetector" type="RayCast2D" parent="Spritesheet/Hurtbox"]
+target_position = Vector2(0, 0)
 collision_mask = 1033
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["HurtsEnzo"]]
+position = Vector2(0, -11)
 collision_layer = 1024
 collision_mask = 16
 metadata/dmg = 4
@@ -973,7 +975,7 @@ metadata/strength = 4
 metadata/deathtype = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
-position = Vector2(-33, -31.5)
+position = Vector2(-33, -20.5)
 shape = SubResource("RectangleShape2D_6tv6m")
 disabled = true
 debug_color = Color(0.921569, 0, 0.694118, 0.419608)
