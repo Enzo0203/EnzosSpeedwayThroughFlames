@@ -40,6 +40,8 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 @onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
+@onready var raycast2: RayCast2D = $Spritesheet/Hitbox/HurtDetector
+
 
 enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHING, PUNCHINGWEAK, PUNCHINGMID, PUNCHINGSTRONG, HURT, DEAD, BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING, KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL, DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2, AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL}
 
@@ -178,7 +180,7 @@ func _physics_process(delta: float) -> void:
 	Globalvars.EnzoRegen = regen
 	Globalvars.EnzoRegenArr = regenarr
 	Globalvars.EnzoRegenState = regenstate
-	labelstate.text = str(raycast.get_collider())
+	labelstate.text = str(raycast2.get_collision_mask_value(11))
 	labelspeed.text = str(velocity.y)
 	labelthird.text = str(regentimer.time_left)
 	if velocity.x > 100 and velocity.x < 800:
@@ -321,8 +323,10 @@ func _physics_process(delta: float) -> void:
 		canWallJump = false
 	if $Spritesheet.scale.x == -1:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
+		$Spritesheet/Hitbox/HurtDetector.scale.x = -1
 	else:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
+		$Spritesheet/Hitbox/HurtDetector.scale.x = 1
 
 # Explode for no fucking reason
 @onready var explosion: PackedScene = preload("res://Scenes/explosion.tscn")
@@ -1025,7 +1029,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						Globalvars.EnzoScore += 25
 		else:
 			# Check if wall or own hitbox
-			if raycast.get_collider() != null and raycast.get_collider().is_in_group("tileset"):
+			if raycast.get_collider().is_in_group("tileset"):
 				# There's a wall
 				pass
 			else:
@@ -1038,13 +1042,29 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						raycast.set_collision_mask_value(5, false)
 						raycast.force_raycast_update()
 						if not raycast.is_colliding():
-							# No wall, Clank
-							if area.global_position.x >= position.x:
-								$Spritesheet.scale.x = -1
-								velocity.x = -300
+							# No wall, Compare strengths
+							# Compare strengths
+							if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
+								if hitbox.get_meta("type") == "norm":
+									#Rebound
+									pr_rebound.position = hitboxshape.position
+									pr_rebound.set_emitting(true)
+								if hitbox.get_meta("type") == "parry":
+									#Projectile Parry
+									Globalvars.EnzoScore += 100
+									pr_parry.set_emitting(true)
 							else:
-								$Spritesheet.scale.x = 1
-								velocity.x = 300
+								#Clank
+								print("Enzo has clanked")
+								if area.global_position.x >= position.x:
+									$Spritesheet.scale.x = 1
+									velocity.x = -300
+								else:
+									$Spritesheet.scale.x = -1
+									velocity.x = 300
+								hurtboxstun(0.3)
+								pr_clank.position = hitboxshape.position
+								pr_clank.set_emitting(true)
 						else:
 							# There is a wall
 							pass
@@ -1092,36 +1112,90 @@ func _on_hurtbox_area_exited(area: Area2D) -> void:
 			radical = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
+	# Shoot Raycast
+	raycast2.target_position = (raycast2.global_position - area.global_position) * -1
+	raycast2.set_collision_mask_value(11, false)
+	raycast2.force_raycast_update()
+	# Check what hitbox hit
 	if area.is_in_group("HurtsEnzo"):
-		if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
-			if hitbox.get_meta("type") == "norm":
-				#Rebound
-				pr_rebound.position = hitboxshape.position
-				pr_rebound.set_emitting(true)
-			if hitbox.get_meta("type") == "parry":
-				#Projectile Parry
-				Globalvars.EnzoScore += 100
-				pr_parry.set_emitting(true)
-		else:
-			#Clank
-			print("Enzo has clanked")
-			if area.global_position.x >= position.x:
-				$Spritesheet.scale.x = 1
-				velocity.x = -300
+		# Hitbox
+		# Check if there's a wall
+		if raycast2.is_colliding() == false:
+			# No wall
+			# Update Raycast
+			raycast2.set_collision_mask_value(11, true)
+			raycast2.force_raycast_update()
+			# Check if actually hitting hitbox
+			if raycast2.is_colliding():
+				# Hitting hitbox
+				# Compare strengths
+				print(str(hitbox.get_meta("strength") - 1 > area.get_meta("strength")))
+				if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
+					if hitbox.get_meta("type") == "norm":
+						#Rebound
+						pr_rebound.position = hitboxshape.position
+						pr_rebound.set_emitting(true)
+					if hitbox.get_meta("type") == "parry":
+						#Projectile Parry
+						Globalvars.EnzoScore += 100
+						pr_parry.set_emitting(true)
+				else:
+					#Clank
+					if area.global_position.x >= position.x:
+						$Spritesheet.scale.x = 1
+						velocity.x = -300
+					else:
+						$Spritesheet.scale.x = -1
+						velocity.x = 300
+					hurtboxstun(0.3)
+					pr_clank.position = hitboxshape.position
+					pr_clank.set_emitting(true)
 			else:
-				$Spritesheet.scale.x = -1
-				velocity.x = 300
-			hurtboxstun(0.3)
-			pr_clank.position = hitboxshape.position
-			pr_clank.set_emitting(true)
-	if hitbox.get_meta("type") == "parry":
-		if area.get_meta("state") == "parriable":
-			#Melee parry
-			Globalvars.EnzoScore += 100
-			pr_parry.set_emitting(true)
+				# Not hitting hitbox
+				pass
+		else:
+			# Wall
+			pass
 	if area.is_in_group("EnemyHurtbox"):
-		randomizeAudioPitch(hitSoundType, 0.3)
-		hitSoundType.play()
+		# Hurtbox
+		# Update Raycast
+		raycast2.set_collision_mask_value(11, true)
+		raycast2.force_raycast_update()
+		# Check if there's a wall or hitbox
+		if raycast2.is_colliding() == false:
+			# No wall
+				randomizeAudioPitch(hitSoundType, 0.3)
+				hitSoundType.play()
+				if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
+					# Melee parry
+					Globalvars.EnzoScore += 100
+					pr_parry.set_emitting(true)
+		else:
+			# Wall or hitbox
+			if raycast2.get_collider().is_in_group("tileset"):
+				# Wall
+				pass
+			if raycast2.get_collider().is_in_group("HurtsEnzo"):
+				# Hitbox
+				# Enemy save clashed
+				if hitbox.get_overlapping_areas().all(collides_with_hitbox) == false:
+					if area.global_position.x >= position.x:
+						$Spritesheet.scale.x = 1
+						velocity.x = -300
+					else:
+						$Spritesheet.scale.x = -1
+						velocity.x = 300
+					hurtboxstun(0.3)
+					pr_clank.position = hitboxshape.position
+					pr_clank.set_emitting(true)
+				else:
+					pass
+
+func collides_with_hitbox(area):
+	if area.is_in_group("HurtsEnzo"):
+		return true
+	else:
+		return false
 
 func hurt(delta: float, INPUT_AXIS: float) -> void:
 	# What to do

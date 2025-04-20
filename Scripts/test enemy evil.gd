@@ -88,7 +88,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						raycast.set_collision_mask_value(11, false)
 						raycast.force_raycast_update()
 						if not raycast.is_colliding():
-							# No wall, Clank
+							# No wall, save clash
 							print("test dummy saved by clank")
 							$Label.text = "saved by clank"
 							if area.global_position.x >= position.x:
@@ -103,15 +103,13 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							$Label.text = "tried save clank but wall"
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	await get_tree().process_frame
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
 		# Shoot raycast and check for wall
 		raycast.set_collision_mask_value(11, false)
-		raycast.global_position = $Sprite/Hitbox.global_position
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		await get_tree().process_frame
+		raycast.force_raycast_update()
 		if not raycast.is_colliding():
-			# No wall, clank
+			# No wall, clash
 			print("test dummy clanked")
 			$Label.text = "clanked"
 			if area.global_position.x >= position.x:

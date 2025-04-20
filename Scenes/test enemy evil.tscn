@@ -7,7 +7,7 @@
 size = Vector2(56, 93)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sfm4h"]
-size = Vector2(40, 38)
+size = Vector2(40, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6yw3"]
 size = Vector2(21, 91)
@@ -23,7 +23,7 @@ position = Vector2(0, -8)
 texture = ExtResource("2_kyvy0")
 flip_h = true
 
-[node name="Hurtbox" type="Area2D" parent="Sprite"]
+[node name="Hurtbox" type="Area2D" parent="Sprite" groups=["EnemyHurtbox"]]
 position = Vector2(0, 8)
 collision_layer = 128
 collision_mask = 2072
@@ -47,7 +47,7 @@ metadata/strength = 10
 metadata/deathtype = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Sprite/Hitbox"]
-position = Vector2(-23, -23)
+position = Vector2(-23, -20.5)
 shape = SubResource("RectangleShape2D_sfm4h")
 debug_color = Color(1, 0, 1, 0.505882)
 
@@ -56,6 +56,7 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_b6yw3")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = -42.0
 offset_top = -80.0
 offset_right = 44.0
@@ -63,6 +64,7 @@ offset_bottom = -52.0
 text = "wheee"
 
 [node name="Label2" type="Label" parent="."]
+visible = false
 offset_left = -42.0
 offset_top = -105.0
 offset_right = -2.0

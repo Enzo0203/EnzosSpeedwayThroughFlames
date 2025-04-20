@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 1.5
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") * 1.5
 
 enum States {IDLE, JUMPING, THROWING, JUMPTHROWING, BIGTHROWING, HURT, DEAD}
 
-var state = States.IDLE
-var is_dead = false
+var state: int = States.IDLE
+var is_dead: bool = false
 
-@onready var animation = $AnimationPlayer
-@onready var sprite = $Spritesheet
-@onready var marker = $Spritesheet/Marker2D
+@onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Spritesheet
+@onready var marker: Marker2D = $Spritesheet/Marker2D
 @onready var marker_2: Marker2D = $Spritesheet/Marker2D2
 @onready var healthbar: TextureRect = $Health/Health
 @onready var healthbarbackdrop: TextureRect = $Health/Healthbackdrop
@@ -32,9 +32,9 @@ var is_dead = false
 @onready var anticlip: RayCast2D = $Spritesheet/Anticlip
 
 
-var health = 30
+var health: int = 30
 
-func change_state(newState):
+func change_state(newState: int) -> void:
 	state = newState
 
 func _ready() -> void:
@@ -48,7 +48,7 @@ func _ready() -> void:
 	if health > 20 and health <= 30:
 		healthbarbackdrop3.size.x = 24 * (health - 20)
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	label.text = str(health)
 	match state:
 		States.IDLE:
@@ -250,9 +250,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						raycast.set_collision_mask_value(11, false)
 						raycast.force_raycast_update()
 						if not raycast.is_colliding():
-							# No wall, Clank
-							print("test dummy saved by clank")
-							$Label.text = "saved by clank"
+							# No wall, Save clank
+							print("bombarSaveClank")
 							if area.global_position.x >= position.x:
 								$Sprite.scale.x = -1
 								velocity.x = -300
@@ -261,7 +260,40 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 								velocity.x = 300
 						else:
 							# There is a wall
+							print("bombarFailClankWall")
 							pass
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
+		# Shoot raycast and check for wall
+		raycast.set_collision_mask_value(11, false)
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		raycast.force_raycast_update()
+		if not raycast.is_colliding():
+			# No wall, compare strength
+			if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
+				# Minicounter
+				if area.get_meta("type") == "parry":
+					if is_dead == false:
+						velocity = area.get_meta("kbdirection")
+						change_state(States.HURT)
+						stuntimer.start()
+						Globalvars.EnzoScore += 100
+						hitStop(0.1, 0.3)
+						health -= hitbox.get_meta("dmg")
+			else:
+				# Clank
+				print("bombarClank")
+				if area.global_position.x >= position.x:
+					$Spritesheet.scale.x = -1
+					velocity.x = -300
+				else:
+					$Spritesheet.scale.x = 1
+					velocity.x = 300
+				hurtboxstun(0.3)
+		else:
+			# There is a wall
+			pass
 
 func update_animations():
 	if state == States.IDLE:
@@ -338,29 +370,6 @@ func _on_enzo_detector_3_area_entered(area: Area2D) -> void:
 func _on_enzo_detector_3_area_exited(area: Area2D) -> void:
 	if area.is_in_group("EnzoHurtbox"):
 		EnzoInArea3 = false
-
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
-		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
-			# Minicounter
-			if area.get_meta("type") == "parry":
-				if is_dead == false:
-					velocity = area.get_meta("kbdirection")
-					change_state(States.HURT)
-					stuntimer.start()
-					Globalvars.EnzoScore += 100
-					hitStop(0.1, 0.3)
-					health -= hitbox.get_meta("dmg")
-		else:
-			# Clank
-			print("bombardier has clanked")
-			if area.global_position.x >= position.x:
-				$Spritesheet.scale.x = -1
-				velocity.x = -300
-			else:
-				$Spritesheet.scale.x = 1
-				velocity.x = 300
-			hurtboxstun(0.3)
 
 func hurtboxstun(duration):
 	hitbox.set_deferred("monitorable", false)

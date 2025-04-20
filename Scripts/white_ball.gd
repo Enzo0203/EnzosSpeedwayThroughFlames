@@ -39,7 +39,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			#Make it hurt enemies and not you
 			hitbox.add_to_group("EnzoHitbox")
-			hitbox.set_collision_layer_value(11, false)
 			hitbox.set_collision_layer_value(5, true)
 			#Flip direction
 			if area.get_meta("kbdirection").x < 0:
@@ -72,3 +71,11 @@ func hitboxstun(duration):
 	hitbox.set_deferred("monitorable", false)
 	await get_tree().create_timer(duration).timeout
 	hitbox.set_deferred("monitorable", true)
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

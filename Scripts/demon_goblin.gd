@@ -15,6 +15,7 @@ var is_dead = false
 
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
+@onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 @onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
 func change_state(newState):
@@ -34,7 +35,7 @@ func _physics_process(delta):
 			dead(delta)
 	move_and_slide()
 	update_animations()
-	if $Spritesheet.scale.x == -1:
+	if $Spritesheet.scale.x < 0:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
 	else:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
@@ -164,24 +165,34 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							pass
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
-		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
-			# Insert Minicounter below
-			if area.get_meta("type") == "parry":
-				if is_dead == false:
-					velocity = area.get_meta("kbdirection")
-					change_state(States.DEAD)
-					Globalvars.EnzoScore += 100
-					hitStop(0.1, 0.3)
-		else:
-			# Clank
-			if area.global_position.x >= position.x:
-				$Spritesheet.scale.x = 1
-				velocity.x = -200
+	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
+		# Shoot raycast and check for wall
+		raycast.set_collision_mask_value(11, false)
+		raycast.target_position = (raycast.global_position - area.global_position) * -1
+		raycast.force_raycast_update()
+		if not raycast.is_colliding():
+			# No wall, compare strength
+			if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
+				# Insert Minicounter below
+				# Parry
+				if area.get_meta("type") == "parry":
+					if is_dead == false:
+						velocity = area.get_meta("kbdirection")
+						change_state(States.DEAD)
+						Globalvars.EnzoScore += 100
+						hitStop(0.1, 0.3)
 			else:
-				$Spritesheet.scale.x = -1
-				velocity.x = 200
-			hurtboxstun(0.3)
+				# Clank
+				if area.global_position.x >= position.x:
+					$Spritesheet.scale.x = 1
+					velocity.x = -200
+				else:
+					$Spritesheet.scale.x = -1
+					velocity.x = 200
+				hurtboxstun(0.3)
+		else:
+			# There is a wall
+			pass
 
 func update_animations():
 	if state == States.IDLE:

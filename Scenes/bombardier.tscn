@@ -918,6 +918,7 @@ vframes = 5
 frame = 22
 
 [node name="EnzoDetector1" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -928,6 +929,7 @@ shape = SubResource("RectangleShape2D_xdckb")
 debug_color = Color(0, 0.811765, 0.301961, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -938,6 +940,7 @@ shape = SubResource("RectangleShape2D_y6bl0")
 debug_color = Color(0.0392157, 0.611765, 0, 0.419608)
 
 [node name="EnzoDetector3" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -964,9 +967,9 @@ collide_with_areas = true
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["HurtsEnzo"]]
 collision_layer = 1024
-collision_mask = 4
-metadata/dmg = 5
-metadata/strength = 5
+collision_mask = 16
+metadata/dmg = 4
+metadata/strength = 4
 metadata/deathtype = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
