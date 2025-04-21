@@ -757,6 +757,7 @@ libraries = {
 }
 
 [node name="EnzoDetector" type="Area2D" parent="Spritesheet"]
+visible = false
 position = Vector2(3, 0)
 collision_layer = 0
 collision_mask = 4

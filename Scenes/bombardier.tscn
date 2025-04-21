@@ -32,6 +32,7 @@ size = Vector2(35, 113)
 [sub_resource type="Animation" id="Animation_vxb8r"]
 resource_name = "Bigthrow"
 length = 1.00001
+step = 0.1111
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -914,7 +915,7 @@ scale = Vector2(-1, 1)
 texture = ExtResource("1_fe1fo")
 hframes = 5
 vframes = 5
-frame = 12
+frame = 18
 
 [node name="EnzoDetector1" type="Area2D" parent="Spritesheet"]
 visible = false
@@ -956,7 +957,7 @@ collision_mask = 2068
 metadata/state = "parriable"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
-position = Vector2(0, -11)
+position = Vector2(20.5, -11)
 shape = SubResource("RectangleShape2D_juhp6")
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
 
@@ -977,7 +978,6 @@ metadata/deathtype = "blunt"
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
 position = Vector2(-33, -20.5)
 shape = SubResource("RectangleShape2D_6tv6m")
-disabled = true
 debug_color = Color(0.921569, 0, 0.694118, 0.419608)
 
 [node name="Marker2D" type="Marker2D" parent="Spritesheet"]

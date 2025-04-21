@@ -6433,7 +6433,7 @@ script = ExtResource("1_cdf8x")
 texture = ExtResource("2_k85s5")
 hframes = 7
 vframes = 29
-frame = 186
+frame = 111
 
 [node name="Texts" type="Node2D" parent="Spritesheet"]
 
@@ -6497,7 +6497,7 @@ position = Vector2(0, -5)
 collision_layer = 16
 collision_mask = 1168
 metadata/dmg = 2
-metadata/strength = 2
+metadata/strength = 3
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
@@ -6507,7 +6507,6 @@ shape = SubResource("RectangleShape2D_8s6kh")
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
 
 [node name="HurtDetector" type="RayCast2D" parent="Spritesheet/Hitbox"]
-self_modulate = Color(1, 0.760784, 0.835294, 1)
 target_position = Vector2(90, 0)
 collision_mask = 9
 hit_from_inside = true

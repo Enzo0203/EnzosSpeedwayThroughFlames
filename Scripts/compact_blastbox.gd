@@ -51,7 +51,6 @@ func explode():
 		blastbox_collision.disabled = true
 		hurtboxshape.disabled = true
 		await get_tree().create_timer(1.1).timeout
-		print("ow!")
 		destroy()
 		exploded = true
 

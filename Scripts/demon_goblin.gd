@@ -124,6 +124,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		raycast.force_raycast_update()
+		print(str(raycast.get_collider()))
+		print(str(raycast.target_position))
 		if not raycast.is_colliding():
 			# No wall, hurt enemy
 				if is_dead == false:
@@ -153,7 +155,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						raycast.force_raycast_update()
 						if not raycast.is_colliding():
 							# No wall, Clank
-							print("I'm clankin it")
+							print("Goblin clank")
 							if area.global_position.x >= position.x:
 								$Spritesheet.scale.x = 1
 								velocity.x = -200

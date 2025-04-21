@@ -1036,13 +1036,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				# Hitbox
 				# Check if hitbox is my own
 				if raycast.get_collider() == $Spritesheet/Hitbox and raycast.get_collider().is_in_group("EnzoHitbox"):
-					# Compare strength
-					if area.get_meta("strength") - 1 < $Spritesheet/Hitbox.get_meta("strength"):
-						# Check for wall again
-						raycast.set_collision_mask_value(5, false)
+					# Check for wall again
+					raycast.set_collision_mask_value(5, false)
+					raycast.force_raycast_update()
+					if not raycast.is_colliding():
+						# No wall
+						# Check if actually hitting enemy hitbox
+						raycast.set_collision_mask_value(11, true)
 						raycast.force_raycast_update()
-						if not raycast.is_colliding():
-							# No wall
+						if raycast.is_colliding():
+							# Colliding with hitbox
 							# Clash
 							if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 								if hitbox.get_meta("type") == "norm":
@@ -1055,7 +1058,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 									pr_parry.set_emitting(true)
 							else:
 								#Clank
-								print("Enzo has clanked")
+								print("Enzo has save clanked himself")
 								if area.global_position.x >= position.x:
 									$Spritesheet.scale.x = 1
 									velocity.x = -300
@@ -1066,8 +1069,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 								pr_clank.position = hitboxshape.position
 								pr_clank.set_emitting(true)
 						else:
-							# There is a wall
+							# Not hitting hitbox
+							print("you fixed the thing you beautiful motherfucker kiss me")
 							pass
+					else:
+						# There is a wall
+						pass
 	elif area.is_in_group("Lava"):
 		if lava_invincibility.time_left == 0:
 			howToDie = "burn"
@@ -1117,18 +1124,15 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	raycast2.set_collision_mask_value(11, false)
 	raycast2.force_raycast_update()
 	# Check what hitbox hit
-	print(str(area.is_in_group("HurtsEnzo")))
 	if area.is_in_group("HurtsEnzo"):
 		# Hitbox
 		# Check if there's a wall
-		print(str(raycast2.is_colliding() == false))
 		if raycast2.is_colliding() == false:
 			# No wall
 			# Update Raycast
 			raycast2.set_collision_mask_value(11, true)
 			raycast2.force_raycast_update()
 			# Check if actually hitting hitbox
-			print(str(raycast2.get_collider()))
 			if raycast2.is_colliding():
 				# Hitting hitbox
 				# Clash
@@ -1143,6 +1147,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 						pr_parry.set_emitting(true)
 				else:
 					#Clank
+					print("Clank")
 					if area.global_position.x >= position.x:
 						$Spritesheet.scale.x = 1
 						velocity.x = -300
