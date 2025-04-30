@@ -997,6 +997,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
 		# Shoot raycast and check for wall or own hitbox
 		raycast.set_collision_mask_value(5, true)
+		raycast.set_collision_mask_value(11, false)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		raycast.force_raycast_update()
 		if raycast.is_colliding() == false:
@@ -1013,7 +1014,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						change_state(States.BLOCKHIT)
 						blocktimer.start()
 						Globalvars.EnzoScore += 25
-					elif hurtbox.get_meta("state") == "vuln":
+					if hurtbox.get_meta("state") == "vuln":
 						#Hurt
 						howToDie = area.get_meta("deathtype")
 						change_state(States.HURT)
@@ -1021,12 +1022,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						if health >= 1:
 							velocity.y = -300
 				if hurtbox.get_meta("state") == "blockingperfect":
-						#Perfect Block
-						change_state(States.BLOCKPERFECT)
-						invincibility_timer.wait_time = 0.6
-						invincibility_timer.start()
-						blocktimer.stop()
-						Globalvars.EnzoScore += 25
+					#Perfect Block
+					change_state(States.BLOCKPERFECT)
+					invincibility_timer.wait_time = 0.6
+					invincibility_timer.start()
+					blocktimer.stop()
+					Globalvars.EnzoScore += 50
 		else:
 			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
@@ -1050,6 +1051,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 								if hitbox.get_meta("type") == "norm":
 									#Rebound
+									print("Enzo has save rebound")
 									pr_rebound.position = hitboxshape.position
 									pr_rebound.set_emitting(true)
 								if hitbox.get_meta("type") == "parry":
@@ -1139,6 +1141,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 					if hitbox.get_meta("type") == "norm":
 						#Rebound
+						print("Enzo has rebound")
 						pr_rebound.position = hitboxshape.position
 						pr_rebound.set_emitting(true)
 					if hitbox.get_meta("type") == "parry":
@@ -1171,12 +1174,13 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		# Check if there's a wall or hitbox
 		if raycast2.is_colliding() == false:
 			# No wall
-				randomizeAudioPitch(hitSoundType, 0.3)
-				hitSoundType.play()
-				if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
-					# Melee parry
-					Globalvars.EnzoScore += 100
-					pr_parry.set_emitting(true)
+			# Enzo Hit something
+			randomizeAudioPitch(hitSoundType, 0.3)
+			hitSoundType.play()
+			if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
+				# Melee parry
+				Globalvars.EnzoScore += 100
+				pr_parry.set_emitting(true)
 		else:
 			# Wall or hitbox
 			if raycast2.get_collider().is_in_group("tileset"):
@@ -1199,7 +1203,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				else:
 					pass
 
-func collides_with_hitbox(area):
+func collides_with_hitbox(area: Area2D) -> bool:
 	if area.is_in_group("HurtsEnzo"):
 		return true
 	else:
@@ -1294,9 +1298,9 @@ func blocking(delta: float, _INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	if blocktimer.time_left == 0:
-		if state == States.BLOCKING:
-			change_state(States.BLOCKREL)
+	await blocktimer.timeout
+	if state == States.BLOCKING:
+		change_state(States.BLOCKREL)
 
 func blockhit(delta: float, _INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -1307,8 +1311,10 @@ func blockhit(delta: float, _INPUT_AXIS: float) -> void:
 	elif $Spritesheet.scale.x == -1:
 		velocity.x = 50
 	# What can this transition to
-	if animation.is_playing() == false:
-		change_state(States.BLOCKING)
+	if state == States.BLOCKHIT:
+		await get_tree().create_timer(0.2).timeout
+		if state == States.BLOCKHIT:
+			change_state(States.BLOCKING)
 
 func blockprep(delta: float, _INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -1348,7 +1354,6 @@ func blockperfect(delta: float, INPUT_AXIS: float) -> void:
 						change_state(States.BLOCKPREP)
 			if Input.is_action_just_pressed("ui_down"):
 				change_state(States.CROUCHPREP)
-	if state == States.BLOCKPERFECT:
 		await get_tree().create_timer(0.6).timeout
 		if state == States.BLOCKPERFECT:
 			if is_on_floor():
@@ -1364,7 +1369,8 @@ func blockrelease(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	if animation.is_playing() == false:
+	if state == States.BLOCKREL:
+		await get_tree().create_timer(0.4).timeout
 		if state == States.BLOCKREL:
 			if is_on_floor():
 				if INPUT_AXIS == 0:

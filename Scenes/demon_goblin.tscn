@@ -727,7 +727,7 @@ size = Vector2(14, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcjww"]
 resource_local_to_scene = true
-size = Vector2(36, 60)
+size = Vector2(76, 37)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_avpfy"]
 resource_local_to_scene = true
@@ -749,6 +749,7 @@ position = Vector2(-3, 0)
 texture = ExtResource("1_wlxbx")
 hframes = 6
 vframes = 5
+frame = 21
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Spritesheet"]
 root_node = NodePath("../..")
@@ -765,6 +766,7 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/EnzoDetector"]
 position = Vector2(0, 53.5)
 shape = SubResource("RectangleShape2D_4q2ji")
+disabled = true
 debug_color = Color(0, 0.643137, 0.27451, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="Spritesheet"]
@@ -775,6 +777,7 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/EnzoDetector2"]
 position = Vector2(65, 20)
 shape = SubResource("RectangleShape2D_lujxp")
+disabled = true
 debug_color = Color(0.156863, 0.509804, 0, 0.419608)
 
 [node name="ObstacleDetector" type="Area2D" parent="Spritesheet"]
@@ -788,12 +791,12 @@ shape = SubResource("RectangleShape2D_42vda")
 debug_color = Color(0.698039, 0.494118, 0, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
-position = Vector2(3, 22)
+position = Vector2(3, 42)
 collision_layer = 128
 collision_mask = 2064
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
-position = Vector2(0, -1)
+position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_gcjww")
 debug_color = Color(0.996078, 0, 0.215686, 0.419608)
 

@@ -51,6 +51,7 @@ size = Vector2(36, 13)
 [node name="Chips" type="CharacterBody2D"]
 position = Vector2(0, -5)
 collision_layer = 0
+collision_mask = 9
 script = ExtResource("1_68bdb")
 
 [node name="Spritesheet" type="Sprite2D" parent="."]

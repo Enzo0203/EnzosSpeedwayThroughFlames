@@ -25,9 +25,18 @@ extends Control
 @onready var Score4: AnimationPlayer = $Score/Score4/AnimationPlayer
 @onready var Score5: AnimationPlayer = $Score/Score5/AnimationPlayer
 @onready var Score6: AnimationPlayer = $Score/Score6/AnimationPlayer
+
 @onready var ComboTimeBar: TextureProgressBar = $Combo/ComboTimeBar
-@onready var ComboNumbers: AnimationPlayer = $Combo/ComboNumbers/AnimationPlayer
+@onready var ComboNumber1: AnimationPlayer = $Combo/ComboNumber1/AnimationPlayer
+@onready var ComboNumber2: AnimationPlayer = $Combo/ComboNumber2/AnimationPlayer
+@onready var ComboNumber3: AnimationPlayer = $Combo/ComboNumber3/AnimationPlayer
 @onready var ComboTimer: Timer = $Combo/ComboTimer
+
+@onready var MiniComboTimeBar: TextureProgressBar = $Combo/MiniComboTimeBar
+@onready var MiniComboNumber1: AnimationPlayer = $Combo/MiniComboNumber1/AnimationPlayer
+@onready var MiniComboNumber2: AnimationPlayer = $Combo/MiniComboNumber2/AnimationPlayer
+@onready var MiniComboNumber3: AnimationPlayer = $Combo/MiniComboNumber3/AnimationPlayer
+@onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
 var health = Globalvars.EnzoHealthArr
 var regen = Globalvars.EnzoRegenArr
@@ -72,23 +81,96 @@ func _physics_process(_delta: float) -> void:
 				SpeechBubble.play("Combo")
 	#Score
 	##.pad_zeros makes it so that the score says, for example, 000100 instead of 100
-	Score1.play(str(Globalvars.EnzoScore).pad_zeros(6)[5])
-	Score2.play(str(Globalvars.EnzoScore).pad_zeros(6)[4])
-	Score3.play(str(Globalvars.EnzoScore).pad_zeros(6)[3])
-	Score4.play(str(Globalvars.EnzoScore).pad_zeros(6)[2])
-	Score5.play(str(Globalvars.EnzoScore).pad_zeros(6)[1])
-	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[0])
+	Score1.play(str(Globalvars.EnzoScore).pad_zeros(6)[-1])
+	Score2.play(str(Globalvars.EnzoScore).pad_zeros(6)[-2])
+	Score3.play(str(Globalvars.EnzoScore).pad_zeros(6)[-3])
+	Score4.play(str(Globalvars.EnzoScore).pad_zeros(6)[-4])
+	Score5.play(str(Globalvars.EnzoScore).pad_zeros(6)[-5])
+	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[-6])
 	#Combo
-	ComboNumbers.play(str(Globalvars.EnzoCombo))
 	ComboTimeBar.value = ComboTimer.time_left
 	if Globalvars.EnzoCombo > 5:
 		ComboTimer.wait_time = Globalvars.EnzoCombo * 1.3
+		ComboTimer.wait_time = min(ComboTimer.wait_time, 10)
 	else:
 		ComboTimer.wait_time = 5
-	if Globalvars.EnemyKilledRecently == true:
+		ComboTimer.wait_time = min(ComboTimer.wait_time, 10)
+	if Globalvars.EnzoComboUpdated == true:
 		ComboTimer.start()
 	if ComboTimer.time_left == 0:
 		Globalvars.EnzoCombo = 0
+	if Globalvars.EnzoCombo < 10:
+		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
+		$Combo/ComboNumber1.position = Vector2(776, 418)
+		$Combo/ComboNumber2.visible = false
+		$Combo/ComboNumber3.visible = false
+	if Globalvars.EnzoCombo >= 10 and Globalvars.EnzoCombo < 100:
+		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
+		$Combo/ComboNumber1.position = Vector2(791, 418)
+		ComboNumber2.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-2])
+		$Combo/ComboNumber2.position = Vector2(758, 418)
+		$Combo/ComboNumber2.visible = true
+		$Combo/ComboNumber3.visible = false
+	if Globalvars.EnzoCombo >= 100:
+		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
+		$Combo/ComboNumber1.position = Vector2(804, 418)
+		ComboNumber2.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-2])
+		$Combo/ComboNumber2.position = Vector2(776, 418)
+		$Combo/ComboNumber2.visible = true
+		ComboNumber3.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-3])
+		$Combo/ComboNumber3.position = Vector2(747, 418)
+		$Combo/ComboNumber3.visible = true
+	#Minicombo
+	MiniComboTimeBar.value = MiniComboTimer.time_left
+	if Globalvars.EnzoMiniCombo > 5:
+		MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
+		MiniComboTimer.wait_time = min(ComboTimer.wait_time, 7)
+	else:
+		MiniComboTimer.wait_time = 7
+		MiniComboTimer.wait_time = min(ComboTimer.wait_time, 7)
+	if Globalvars.EnzoMiniComboUpdated == true:
+		MiniComboTimer.start()
+	if MiniComboTimer.time_left == 0:
+		Globalvars.EnzoMiniCombo = 0
+	if Globalvars.EnzoMiniCombo == 0:
+		$Combo/MiniComboBackground.self_modulate = Color(0, 0, 0, 1)
+	if Globalvars.EnzoMiniCombo > 0 and Globalvars.EnzoMiniCombo < 10:
+		$Combo/MiniComboBackground.self_modulate = Color(0, 0.9, 0.9, 1)
+	if Globalvars.EnzoMiniCombo >= 10 and Globalvars.EnzoMiniCombo < 25:
+		$Combo/MiniComboBackground.self_modulate = Color(0.9, 0.9, 0.4, 1)
+	if Globalvars.EnzoMiniCombo >= 25 and Globalvars.EnzoMiniCombo < 50:
+		$Combo/MiniComboBackground.self_modulate = Color(1, 1, 0, 1)
+	if Globalvars.EnzoMiniCombo >= 50 and Globalvars.EnzoMiniCombo < 100:
+		$Combo/MiniComboBackground.self_modulate = Color(1, 0.5, 0, 1)
+	if Globalvars.EnzoMiniCombo >= 100 and Globalvars.EnzoMiniCombo < 150:
+		$Combo/MiniComboBackground.self_modulate = Color(1, 0, 0, 1)
+	if Globalvars.EnzoMiniCombo >= 150 and Globalvars.EnzoMiniCombo < 200:
+		$Combo/MiniComboBackground.self_modulate = Color(0.6, 0, 0.3, 1)
+	if Globalvars.EnzoMiniCombo >= 200 and Globalvars.EnzoMiniCombo < 300:
+		$Combo/MiniComboBackground.self_modulate = Color(0.9, 0, 0.9, 1)
+	if Globalvars.EnzoMiniCombo >= 300:
+		$Combo/MiniComboBackground.self_modulate = Color(0.8, 0.6, 1, 1)
+	if Globalvars.EnzoMiniCombo < 10:
+		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
+		$Combo/MiniComboNumber1.position = Vector2(724, 265)
+		$Combo/MiniComboNumber2.visible = false
+		$Combo/MiniComboNumber3.visible = false
+	if Globalvars.EnzoMiniCombo >= 10 and Globalvars.EnzoMiniCombo < 100:
+		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
+		$Combo/MiniComboNumber1.position = Vector2(733, 265)
+		MiniComboNumber2.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-2])
+		$Combo/MiniComboNumber2.position = Vector2(715, 265)
+		$Combo/MiniComboNumber2.visible = true
+		$Combo/MiniComboNumber3.visible = false
+	if Globalvars.EnzoMiniCombo >= 100:
+		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
+		$Combo/MiniComboNumber1.position = Vector2(741, 265)
+		MiniComboNumber2.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-2])
+		$Combo/MiniComboNumber2.position = Vector2(724, 265)
+		$Combo/MiniComboNumber2.visible = true
+		MiniComboNumber3.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-3])
+		$Combo/MiniComboNumber3.position = Vector2(707, 265)
+		$Combo/MiniComboNumber3.visible = true
 
 func set_health():
 	Heart1.play(str(health[0]))

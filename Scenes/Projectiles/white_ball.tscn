@@ -43,7 +43,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]
-radius = 1.0
+radius = 1.41421
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ju3r4"]
 resource_local_to_scene = true
@@ -66,6 +66,7 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dqv0b")
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=["HurtsEnzo"]]
 collision_layer = 1024

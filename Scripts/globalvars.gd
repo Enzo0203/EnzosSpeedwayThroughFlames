@@ -1,18 +1,22 @@
 extends Node
 
-var EnzoState
-var EnzoMovement
-var EnzoDirection
-var EnzoVelocity
-var EnzoPositionX
-var EnzoPositionY
-var EnzoHealth = 5
-var EnzoHealthArr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
-var EnzoRegen = 0
-var EnzoRegenArr = [0, 0, 0, 0, 0]
-var EnzoRegenState
-var EnzoScore = 000000
-var EnzoHurt = false
-var EnzoHeal = false
-var EnzoCombo = 0
-var EnemyKilledRecently = false
+var EnzoState: int
+var EnzoMovement: int
+var EnzoDirection: int
+var EnzoVelocity: float
+var EnzoPositionX: float
+var EnzoPositionY: float
+var EnzoHealth: int = 5
+var EnzoHealthArr: Array = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
+var EnzoRegen: int = 0
+var EnzoRegenArr: Array = [0, 0, 0, 0, 0]
+var EnzoRegenState: String
+var EnzoScore: int = 000000
+var EnzoHurt: bool = false
+var EnzoHeal: bool = false
+
+var EnzoCombo: int = 0
+var EnzoComboUpdated: bool = false
+
+var EnzoMiniCombo: int = 0
+var EnzoMiniComboUpdated: bool = false

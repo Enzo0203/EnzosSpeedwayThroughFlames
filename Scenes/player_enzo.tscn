@@ -940,94 +940,82 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Spritesheet/Hurtbox:editor_description")
+tracks/2/path = NodePath("Spritesheet/Texts/Block:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["blocking"]
+"values": [true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Texts/Block:emitting")
+tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector2(42, 79)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 79)]
+"values": [Vector2(0, 1.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/5/path = NodePath("Spritesheet/Sound effects/Block:playing")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 1.5)]
+"update": 1,
+"values": [true]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Spritesheet/Sound effects/Block:playing")
+tracks/6/path = NodePath("Spritesheet/Hurtbox:metadata/state")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": ["vuln"]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:metadata/state")
+tracks/7/path = NodePath("AnimationPlayer:speed_scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["vuln"]
+"update": 0,
+"values": [1.0]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("AnimationPlayer:speed_scale")
+tracks/8/path = NodePath("Spritesheet/Hurtbox:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -1036,8 +1024,8 @@ tracks/9/keys = {
 
 [sub_resource type="Animation" id="Animation_h7f18"]
 resource_name = "blockprep"
-length = 0.120004
-step = 0.05
+length = 0.2
+step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1045,7 +1033,7 @@ tracks/0/path = NodePath("Spritesheet:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1),
+"times": PackedFloat32Array(0, 0.06, 0.12),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [191, 62, 191]
@@ -1065,70 +1053,58 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Spritesheet/Hurtbox:editor_description")
+tracks/2/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["blocking"]
+"update": 0,
+"values": [Vector2(42, 75)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 75)]
+"values": [Vector2(0, 3.5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/4/path = NodePath("Spritesheet/Hurtbox:metadata/state")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 3.5)]
+"update": 1,
+"values": ["blockingperfect"]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Spritesheet/Hurtbox:metadata/state")
+tracks/5/path = NodePath("AnimationPlayer:speed_scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["blockingperfect"]
+"update": 0,
+"values": [1.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimationPlayer:speed_scale")
+tracks/6/path = NodePath("Spritesheet/Hurtbox:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -6433,7 +6409,7 @@ script = ExtResource("1_cdf8x")
 texture = ExtResource("2_k85s5")
 hframes = 7
 vframes = 29
-frame = 111
+frame = 192
 
 [node name="Texts" type="Node2D" parent="Spritesheet"]
 
@@ -6444,6 +6420,7 @@ amount = 1
 lifetime = 0.5
 one_shot = true
 randomness = 1.0
+fixed_fps = 30
 texture = ExtResource("3_epb8m")
 direction = Vector2(0, -1)
 spread = 10.0
@@ -6459,6 +6436,7 @@ emitting = false
 amount = 1
 lifetime = 0.5
 one_shot = true
+fixed_fps = 15
 texture = ExtResource("4_sfdtb")
 direction = Vector2(0, -1)
 spread = 20.0
@@ -6470,6 +6448,7 @@ emitting = false
 amount = 1
 lifetime = 0.5
 one_shot = true
+fixed_fps = 20
 texture = ExtResource("5_ptfm3")
 direction = Vector2(0, -1)
 spread = 20.0
@@ -6482,6 +6461,7 @@ emitting = false
 amount = 1
 lifetime = 0.5
 one_shot = true
+fixed_fps = 30
 texture = ExtResource("6_6j3nt")
 direction = Vector2(0, -1)
 spread = 10.0
@@ -6513,7 +6493,7 @@ hit_from_inside = true
 collide_with_areas = true
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnzoHurtbox"]]
-editor_description = "neut"
+editor_description = "blocking"
 collision_layer = 4
 collision_mask = 3392
 metadata/state = "vuln"
@@ -6611,7 +6591,6 @@ wait_time = 5.0
 one_shot = true
 
 [node name="Blocktimer" type="Timer" parent="."]
-wait_time = 0.7
 one_shot = true
 
 [node name="State" type="Label" parent="."]

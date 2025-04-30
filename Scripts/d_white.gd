@@ -154,8 +154,10 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			if is_dead == false:
 				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
 					if health - area.get_meta("dmg") <= 0:
+						addToMiniCombo(health)
 						change_state(States.DEAD)
 					else:
+						addToMiniCombo(area.get_meta("dmg"))
 						change_state(States.HURT)
 					velocity = area.get_meta("kbdirection")
 					stuntimer.start()
@@ -166,15 +168,21 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			#There's a wall
 			pass
 
+func addToMiniCombo(value: int):
+	Globalvars.EnzoMiniCombo += value
+	Globalvars.EnzoMiniComboUpdated = true
+	await get_tree().process_frame
+	Globalvars.EnzoMiniComboUpdated = false
+
 func check_for_death():
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
-		Globalvars.EnemyKilledRecently = true
+		Globalvars.EnzoComboUpdated = true
 		Globalvars.EnzoCombo += 1
 		is_dead = true
 		await get_tree().process_frame
-		Globalvars.EnemyKilledRecently = false
+		Globalvars.EnzoComboUpdated = false
 
 func update_animations():
 	if state == States.IDLE:

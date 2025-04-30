@@ -231,9 +231,17 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 					Globalvars.EnzoScore += 100
 					hitStop(0.1, 0.3)
 					if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
+						if health - area.get_meta("dmg") <= 0:
+							addToMiniCombo(health)
+						else:
+							addToMiniCombo(hitbox.get_meta("dmg"))
 						health -= hitbox.get_meta("dmg")
 						blastboxcooldown.start()
 					else:
+						if health - area.get_meta("dmg") <= 0:
+							addToMiniCombo(health)
+						else:
+							addToMiniCombo(area.get_meta("dmg"))
 						health -= area.get_meta("dmg")
 		else:
 			# Check if wall or own hitbox
@@ -262,6 +270,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							# There is a wall
 							print("bombarFailClankWall")
 							pass
+
+func addToMiniCombo(value: int):
+	Globalvars.EnzoMiniCombo += value
+	Globalvars.EnzoMiniComboUpdated = true
+	await get_tree().process_frame
+	Globalvars.EnzoMiniComboUpdated = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
@@ -318,14 +332,14 @@ func check_for_death():
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
-		Globalvars.EnemyKilledRecently = true
+		Globalvars.EnzoComboUpdated = true
 		Globalvars.EnzoCombo += 1
 		var snackbox_instance = snackbox.instantiate()
 		snackbox_instance.spawnPosition = hurtbox.global_position
 		get_parent().add_child(snackbox_instance)
 		is_dead = true
 		await get_tree().create_timer(0.01).timeout
-		Globalvars.EnemyKilledRecently = false
+		Globalvars.EnzoComboUpdated = false
 
 func randomizeAudioPitch(_audio):
 	pass

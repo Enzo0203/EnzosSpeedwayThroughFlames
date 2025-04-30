@@ -11,7 +11,6 @@ var is_dead = false
 @onready var animation: AnimationPlayer = $Spritesheet/AnimationPlayer
 @onready var sprite: Sprite2D = $Spritesheet
 @onready var label: Label = $Label
-@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
@@ -124,21 +123,20 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
 		raycast.force_raycast_update()
-		print(str(raycast.get_collider()))
-		print(str(raycast.target_position))
 		if not raycast.is_colliding():
 			# No wall, hurt enemy
 				if is_dead == false:
 					if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+						addToMiniCombo(1)
 						Globalvars.EnzoScore += 100
 						hitStop(0.1, 0.3)
 						change_state(States.DEAD)
 						velocity = area.get_meta("kbdirection")
 						is_dead = true
-						Globalvars.EnemyKilledRecently = true
+						Globalvars.EnzoComboUpdated = true
 						Globalvars.EnzoCombo += 1
 						await get_tree().process_frame
-						Globalvars.EnemyKilledRecently = false
+						Globalvars.EnzoComboUpdated = false
 		else:
 			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
@@ -165,6 +163,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						else:
 							# There is a wall
 							pass
+
+func addToMiniCombo(value: int):
+	Globalvars.EnzoMiniCombo += value
+	Globalvars.EnzoMiniComboUpdated = true
+	await get_tree().process_frame
+	Globalvars.EnzoMiniComboUpdated = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
