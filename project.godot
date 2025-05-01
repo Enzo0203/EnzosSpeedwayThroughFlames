@@ -13,7 +13,8 @@ config_version=5
 config/name="Enzo's Speedway Through Flames"
 run/main_scene="res://Scenes/world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://Sprites/lil godoty.svg"
+config/icon="res://estficon.png"
+config/windows_native_icon="res://estficon.ico"
 
 [autoload]
 

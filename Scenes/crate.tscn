@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://cfhxp35yy5oed"]
 
 [ext_resource type="Script" path="res://Scripts/crate.gd" id="1_37ejq"]
-[ext_resource type="Texture2D" uid="uid://de0vc25kr7mc2" path="res://Sprites/General Sprites/TNT.png" id="3_wevib"]
+[ext_resource type="Texture2D" uid="uid://b5ko6p01vtakl" path="res://Sprites/General Sprites/Wood TNT.png" id="2_ervb8"]
 
 [sub_resource type="Animation" id="Animation_4n7m5"]
 length = 0.001
@@ -301,7 +301,7 @@ gravity_scale = 0.0
 script = ExtResource("1_37ejq")
 
 [node name="Crate" type="Sprite2D" parent="."]
-texture = ExtResource("3_wevib")
+texture = ExtResource("2_ervb8")
 
 [node name="CrateAnimationPlayer" type="AnimationPlayer" parent="Crate"]
 root_node = NodePath("../..")

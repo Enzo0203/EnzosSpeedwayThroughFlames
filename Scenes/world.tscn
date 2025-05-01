@@ -2679,7 +2679,7 @@ offset_left = 743.0
 offset_top = 246.0
 offset_right = 805.0
 offset_bottom = 443.0
-max_value = 10.0
+max_value = 15.0
 fill_mode = 3
 texture_progress = ExtResource("20_cbgdk")
 

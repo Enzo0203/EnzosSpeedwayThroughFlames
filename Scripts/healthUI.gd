@@ -38,8 +38,8 @@ extends Control
 @onready var MiniComboNumber3: AnimationPlayer = $Combo/MiniComboNumber3/AnimationPlayer
 @onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
-var health = Globalvars.EnzoHealthArr
-var regen = Globalvars.EnzoRegenArr
+var health: Array = Globalvars.EnzoHealthArr
+var regen: Array = Globalvars.EnzoRegenArr
 
 func _ready() -> void:
 	Overlay.play("Idle")
@@ -89,12 +89,9 @@ func _physics_process(_delta: float) -> void:
 	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[-6])
 	#Combo
 	ComboTimeBar.value = ComboTimer.time_left
-	if Globalvars.EnzoCombo > 5:
-		ComboTimer.wait_time = Globalvars.EnzoCombo * 1.3
-		ComboTimer.wait_time = min(ComboTimer.wait_time, 10)
-	else:
-		ComboTimer.wait_time = 5
-		ComboTimer.wait_time = min(ComboTimer.wait_time, 10)
+	ComboTimer.wait_time = Globalvars.EnzoCombo * 2
+	ComboTimer.wait_time = max(ComboTimer.wait_time, 4)
+	ComboTimer.wait_time = min(ComboTimer.wait_time, ComboTimeBar.max_value)
 	if Globalvars.EnzoComboUpdated == true:
 		ComboTimer.start()
 	if ComboTimer.time_left == 0:
@@ -122,12 +119,9 @@ func _physics_process(_delta: float) -> void:
 		$Combo/ComboNumber3.visible = true
 	#Minicombo
 	MiniComboTimeBar.value = MiniComboTimer.time_left
-	if Globalvars.EnzoMiniCombo > 5:
-		MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
-		MiniComboTimer.wait_time = min(ComboTimer.wait_time, 7)
-	else:
-		MiniComboTimer.wait_time = 7
-		MiniComboTimer.wait_time = min(ComboTimer.wait_time, 7)
+	MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
+	MiniComboTimer.wait_time = max(ComboTimer.wait_time, 3)
+	MiniComboTimer.wait_time = min(ComboTimer.wait_time, MiniComboTimeBar.max_value)
 	if Globalvars.EnzoMiniComboUpdated == true:
 		MiniComboTimer.start()
 	if MiniComboTimer.time_left == 0:
@@ -172,7 +166,7 @@ func _physics_process(_delta: float) -> void:
 		$Combo/MiniComboNumber3.position = Vector2(707, 265)
 		$Combo/MiniComboNumber3.visible = true
 
-func set_health():
+func set_health() -> void:
 	Heart1.play(str(health[0]))
 	Heart2.play(str(health[1]))
 	Heart3.play(str(health[2]))
