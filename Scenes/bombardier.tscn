@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://c7cm41byq6hvq"]
 
 [ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier sheet.png" id="1_fe1fo"]
-[ext_resource type="Script" path="res://Scripts/bombardier.gd" id="1_vayxy"]
+[ext_resource type="Script" uid="uid://ds0y7pabud0h4" path="res://Scripts/bombardier.gd" id="1_vayxy"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="2_eg1a6"]
 [ext_resource type="Texture2D" uid="uid://51vf8nbtb68f" path="res://Sprites/HUD/DemonHeartFull.png" id="3_aq33k"]
 
@@ -894,14 +894,14 @@ tracks/9/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lx0kx"]
 _data = {
-"Bigthrow": SubResource("Animation_vxb8r"),
-"Dead": SubResource("Animation_n6an0"),
-"Hurt": SubResource("Animation_awjvf"),
-"Idle": SubResource("Animation_qacm3"),
-"Jump": SubResource("Animation_ywomt"),
-"JumpThrow": SubResource("Animation_20b7o"),
-"RESET": SubResource("Animation_c1ibg"),
-"Throw": SubResource("Animation_h4ikx")
+&"Bigthrow": SubResource("Animation_vxb8r"),
+&"Dead": SubResource("Animation_n6an0"),
+&"Hurt": SubResource("Animation_awjvf"),
+&"Idle": SubResource("Animation_qacm3"),
+&"Jump": SubResource("Animation_ywomt"),
+&"JumpThrow": SubResource("Animation_20b7o"),
+&"RESET": SubResource("Animation_c1ibg"),
+&"Throw": SubResource("Animation_h4ikx")
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["EnemyCollision"]]

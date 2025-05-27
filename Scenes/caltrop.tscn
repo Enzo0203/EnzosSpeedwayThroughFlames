@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://lcv2h2ct6fk2"]
 
-[ext_resource type="Script" path="res://Scripts/caltrop.gd" id="1_gvtda"]
+[ext_resource type="Script" uid="uid://8tm57t3acdj7" path="res://Scripts/caltrop.gd" id="1_gvtda"]
 [ext_resource type="Texture2D" uid="uid://db0bo5son2l3r" path="res://Sprites/General Sprites/Caltrop.png" id="1_pwcmh"]
 
 [sub_resource type="Animation" id="Animation_k7dbc"]
@@ -98,8 +98,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6xgel"]
 _data = {
-"RESET": SubResource("Animation_k7dbc"),
-"idle": SubResource("Animation_lsapp")
+&"RESET": SubResource("Animation_k7dbc"),
+&"idle": SubResource("Animation_lsapp")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4303"]

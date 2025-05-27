@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://dlw1wfk1kmu6d"]
 
 [ext_resource type="Texture2D" uid="uid://d7y7fv5yh7vx" path="res://Sprites/General Sprites/Demon goblin sheet.png" id="1_wlxbx"]
-[ext_resource type="Script" path="res://Scripts/demon_goblin.gd" id="2_lcivg"]
+[ext_resource type="Script" uid="uid://bk1427ivshjqb" path="res://Scripts/demon_goblin.gd" id="2_lcivg"]
 
 [sub_resource type="Animation" id="Animation_f2n7f"]
 resource_name = "attack"
@@ -706,12 +706,12 @@ tracks/8/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d6wl1"]
 _data = {
-"attack": SubResource("Animation_f2n7f"),
-"attackprep": SubResource("Animation_db373"),
-"dead": SubResource("Animation_6sv0b"),
-"fall": SubResource("Animation_i12f2"),
-"idle": SubResource("Animation_321hi"),
-"walk": SubResource("Animation_r50q2")
+&"attack": SubResource("Animation_f2n7f"),
+&"attackprep": SubResource("Animation_db373"),
+&"dead": SubResource("Animation_6sv0b"),
+&"fall": SubResource("Animation_i12f2"),
+&"idle": SubResource("Animation_321hi"),
+&"walk": SubResource("Animation_r50q2")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4q2ji"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://syewcoe1n7wo"]
 
-[ext_resource type="Script" path="res://Scripts/skateboard.gd" id="1_bdq6d"]
+[ext_resource type="Script" uid="uid://bmq58oxyodnda" path="res://Scripts/skateboard.gd" id="1_bdq6d"]
 [ext_resource type="Texture2D" uid="uid://ddxrwtquwe11u" path="res://Sprites/General Sprites/Skateboard Sheet.png" id="1_tbxs0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyqio"]

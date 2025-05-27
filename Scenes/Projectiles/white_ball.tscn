@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cpmq0bb3118cr"]
 
-[ext_resource type="Script" path="res://Scripts/white_ball.gd" id="1_tldaj"]
+[ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/white_ball.gd" id="1_tldaj"]
 [ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/D-White ball sheet.png" id="2_vnc03"]
 
 [sub_resource type="Animation" id="Animation_schjl"]
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4w3o2"]
 _data = {
-"RESET": SubResource("Animation_schjl"),
-"ball": SubResource("Animation_bts1l")
+&"RESET": SubResource("Animation_schjl"),
+&"ball": SubResource("Animation_bts1l")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]

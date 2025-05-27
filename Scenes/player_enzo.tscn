@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://eatffjhnbskb"]
 
-[ext_resource type="Script" path="res://Scripts/enzo.gd" id="1_cdf8x"]
+[ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/enzo.gd" id="1_cdf8x"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_k85s5"]
 [ext_resource type="Texture2D" uid="uid://tx7i7kxffs0r" path="res://Sprites/HUD/Particles/TextBlock.png" id="3_epb8m"]
 [ext_resource type="AudioStream" uid="uid://bb2j584xkriq3" path="res://Sfx/Jump.wav" id="4_2je52"]
@@ -22,8 +22,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Ve
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_yom7k"]
-min_value = -10.0
-max_value = 10.0
+_limits = [-10.0, 10.0, 0.0, 1.0]
 _data = [Vector2(0, -4.49057), 0.0, 55.0859, 0, 0, Vector2(0.253788, 5.4717), 9.26847e-06, 9.26847e-06, 0, 0, Vector2(0.511364, -4.18868), 1.52454e-06, 1.52454e-06, 0, 0, Vector2(0.753788, 4.26415), 1.80995e-06, 1.80995e-06, 0, 0, Vector2(1, -3.28302), -35.0189, 0.0, 0, 0]
 point_count = 5
 
@@ -6341,58 +6340,58 @@ tracks/10/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i00x7"]
 _data = {
-"RESET": SubResource("Animation_cknew"),
-"airjab": SubResource("Animation_4pq4l"),
-"airstompattack": SubResource("Animation_gkj4c"),
-"airstomphold": SubResource("Animation_lwiut"),
-"airstompprep": SubResource("Animation_uv601"),
-"block": SubResource("Animation_768rc"),
-"blockhit": SubResource("Animation_gsim3"),
-"blockperfect": SubResource("Animation_jonr8"),
-"blockprep": SubResource("Animation_h7f18"),
-"blockrelease": SubResource("Animation_2c5u4"),
-"burnjump": SubResource("Animation_oydf4"),
-"burnrun": SubResource("Animation_bvg8a"),
-"chargepunchcharge": SubResource("Animation_6rmfj"),
-"chargepunchstrong": SubResource("Animation_owl7v"),
-"chargepunchweak": SubResource("Animation_3fcad"),
-"crouch": SubResource("Animation_g2x7e"),
-"crouchguard": SubResource("Animation_qmvmr"),
-"dead": SubResource("Animation_211c6"),
-"deadblunt": SubResource("Animation_s8ny7"),
-"deadburn": SubResource("Animation_cqkpo"),
-"deadspike": SubResource("Animation_1fctk"),
-"dropkickattack": SubResource("Animation_2tye5"),
-"dropkickhold": SubResource("Animation_1u8ns"),
-"dropkickprep": SubResource("Animation_f0vvj"),
-"fall": SubResource("Animation_um5wc"),
-"groundpound": SubResource("Animation_314nh"),
-"groundpoundland": SubResource("Animation_grv3f"),
-"groundpoundprep": SubResource("Animation_rf73e"),
-"hurt": SubResource("Animation_0pqot"),
-"idle": SubResource("Animation_uvlo5"),
-"idle2": SubResource("Animation_kd0rt"),
-"jump": SubResource("Animation_kduok"),
-"kick": SubResource("Animation_a33vj"),
-"parryfoward": SubResource("Animation_vmxru"),
-"parryfupward": SubResource("Animation_dblvb"),
-"parryupward": SubResource("Animation_pnsdn"),
-"punch": SubResource("Animation_ohopv"),
-"punch2": SubResource("Animation_olb0h"),
-"rise": SubResource("Animation_evp7s"),
-"roll": SubResource("Animation_qwpg2"),
-"run": SubResource("Animation_sdr4y"),
-"skating": SubResource("Animation_alds3"),
-"skatingcrouch": SubResource("Animation_nxunq"),
-"skatingcrouchtransi": SubResource("Animation_k7tet"),
-"skatingjump": SubResource("Animation_k5nj3"),
-"skid": SubResource("Animation_la2fi"),
-"spikerfirsthalf": SubResource("Animation_fc1d3"),
-"spikersecondhalf": SubResource("Animation_cqkdd"),
-"sprint": SubResource("Animation_m3cyy"),
-"sprintpunch": SubResource("Animation_ynccm"),
-"walk": SubResource("Animation_rqfyh"),
-"wallkick": SubResource("Animation_0ciaj")
+&"RESET": SubResource("Animation_cknew"),
+&"airjab": SubResource("Animation_4pq4l"),
+&"airstompattack": SubResource("Animation_gkj4c"),
+&"airstomphold": SubResource("Animation_lwiut"),
+&"airstompprep": SubResource("Animation_uv601"),
+&"block": SubResource("Animation_768rc"),
+&"blockhit": SubResource("Animation_gsim3"),
+&"blockperfect": SubResource("Animation_jonr8"),
+&"blockprep": SubResource("Animation_h7f18"),
+&"blockrelease": SubResource("Animation_2c5u4"),
+&"burnjump": SubResource("Animation_oydf4"),
+&"burnrun": SubResource("Animation_bvg8a"),
+&"chargepunchcharge": SubResource("Animation_6rmfj"),
+&"chargepunchstrong": SubResource("Animation_owl7v"),
+&"chargepunchweak": SubResource("Animation_3fcad"),
+&"crouch": SubResource("Animation_g2x7e"),
+&"crouchguard": SubResource("Animation_qmvmr"),
+&"dead": SubResource("Animation_211c6"),
+&"deadblunt": SubResource("Animation_s8ny7"),
+&"deadburn": SubResource("Animation_cqkpo"),
+&"deadspike": SubResource("Animation_1fctk"),
+&"dropkickattack": SubResource("Animation_2tye5"),
+&"dropkickhold": SubResource("Animation_1u8ns"),
+&"dropkickprep": SubResource("Animation_f0vvj"),
+&"fall": SubResource("Animation_um5wc"),
+&"groundpound": SubResource("Animation_314nh"),
+&"groundpoundland": SubResource("Animation_grv3f"),
+&"groundpoundprep": SubResource("Animation_rf73e"),
+&"hurt": SubResource("Animation_0pqot"),
+&"idle": SubResource("Animation_uvlo5"),
+&"idle2": SubResource("Animation_kd0rt"),
+&"jump": SubResource("Animation_kduok"),
+&"kick": SubResource("Animation_a33vj"),
+&"parryfoward": SubResource("Animation_vmxru"),
+&"parryfupward": SubResource("Animation_dblvb"),
+&"parryupward": SubResource("Animation_pnsdn"),
+&"punch": SubResource("Animation_ohopv"),
+&"punch2": SubResource("Animation_olb0h"),
+&"rise": SubResource("Animation_evp7s"),
+&"roll": SubResource("Animation_qwpg2"),
+&"run": SubResource("Animation_sdr4y"),
+&"skating": SubResource("Animation_alds3"),
+&"skatingcrouch": SubResource("Animation_nxunq"),
+&"skatingcrouchtransi": SubResource("Animation_k7tet"),
+&"skatingjump": SubResource("Animation_k5nj3"),
+&"skid": SubResource("Animation_la2fi"),
+&"spikerfirsthalf": SubResource("Animation_fc1d3"),
+&"spikersecondhalf": SubResource("Animation_cqkdd"),
+&"sprint": SubResource("Animation_m3cyy"),
+&"sprintpunch": SubResource("Animation_ynccm"),
+&"walk": SubResource("Animation_rqfyh"),
+&"wallkick": SubResource("Animation_0ciaj")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["EnzoCollision"]]

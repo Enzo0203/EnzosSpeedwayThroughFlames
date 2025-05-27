@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://7e6v68d1olpd"]
 
-[ext_resource type="Script" path="res://Scripts/test enemy.gd" id="1_gf04l"]
+[ext_resource type="Script" uid="uid://jjrasgm0nymk" path="res://Scripts/test enemy.gd" id="1_gf04l"]
 [ext_resource type="Texture2D" uid="uid://buifbltj00ekt" path="res://Sprites/General Sprites/Cardboard Demon.png" id="2_wusqm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ndne"]

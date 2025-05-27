@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b7eqkwrnfbtps"]
 
 [ext_resource type="Texture2D" uid="uid://dv6j51wqeb72t" path="res://Sprites/General Sprites/Lava Sheet.png" id="1_3h5d1"]
-[ext_resource type="Script" path="res://Scripts/lava.gd" id="1_su4jk"]
+[ext_resource type="Script" uid="uid://n3kc3w2odo2s" path="res://Scripts/lava.gd" id="1_su4jk"]
 [ext_resource type="Texture2D" uid="uid://stkhywj0ujkm" path="res://Sprites/HUD/Particles/CircleParticle.png" id="3_7p7fm"]
 
 [sub_resource type="Animation" id="Animation_fv22h"]
@@ -22,7 +22,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hsjuy"]
 _data = {
-"Idle": SubResource("Animation_fv22h")
+&"Idle": SubResource("Animation_fv22h")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4303"]

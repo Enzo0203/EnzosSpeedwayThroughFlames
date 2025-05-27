@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjpdwwtfsxaiw"]
 
-[ext_resource type="Script" path="res://Scripts/Items.gd" id="1_68bdb"]
+[ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items.gd" id="1_68bdb"]
 [ext_resource type="Texture2D" uid="uid://cg1xylfmdpi6q" path="res://Sprites/General Sprites/Chips Sheet.png" id="2_ld38n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo83l"]
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wnyg3"]
 _data = {
-"RESET": SubResource("Animation_00d0x"),
-"idle": SubResource("Animation_d5nu7")
+&"RESET": SubResource("Animation_00d0x"),
+&"idle": SubResource("Animation_d5nu7")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m12bk"]
