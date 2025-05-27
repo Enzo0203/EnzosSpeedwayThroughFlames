@@ -12,11 +12,10 @@ var EnzoRegen: int = 0
 var EnzoRegenArr: Array = [0, 0, 0, 0, 0]
 var EnzoRegenState: String
 var EnzoScore: int = 000000
-var EnzoHurt: bool = false
-var EnzoHeal: bool = false
-
 var EnzoCombo: int = 0
-var EnzoComboUpdated: bool = false
-
 var EnzoMiniCombo: int = 0
-var EnzoMiniComboUpdated: bool = false
+
+signal EnzoHurt
+signal EnzoHeal
+signal EnzoComboUpdated
+signal EnzoMiniComboUpdated

@@ -43,13 +43,15 @@ var regen: Array = Globalvars.EnzoRegenArr
 
 func _ready() -> void:
 	Overlay.play("Idle")
+	Globalvars.EnzoHurt.connect(_on_enzo_hurt)
+	Globalvars.EnzoHeal.connect(_on_enzo_heal)
+	Globalvars.EnzoComboUpdated.connect(_on_combo_update)
+	Globalvars.EnzoMiniComboUpdated.connect(_on_minicombo_update)
 
 func _physics_process(_delta: float) -> void:
 	$ScoreLabel.text = str(Overlay.current_animation)
 	set_health()
 	# Hearts
-	if Globalvars.EnzoHurt:
-		Overlay.play("Hurt")
 	if Globalvars.EnzoHealth == 0:
 		Overlay.play("Black Screen of Death")
 		if get_tree():
@@ -92,8 +94,6 @@ func _physics_process(_delta: float) -> void:
 	ComboTimer.wait_time = Globalvars.EnzoCombo * 2
 	ComboTimer.wait_time = max(ComboTimer.wait_time, 4)
 	ComboTimer.wait_time = min(ComboTimer.wait_time, ComboTimeBar.max_value)
-	if Globalvars.EnzoComboUpdated == true:
-		ComboTimer.start()
 	if ComboTimer.time_left == 0:
 		Globalvars.EnzoCombo = 0
 	if Globalvars.EnzoCombo < 10:
@@ -122,8 +122,6 @@ func _physics_process(_delta: float) -> void:
 	MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
 	MiniComboTimer.wait_time = max(ComboTimer.wait_time, 3)
 	MiniComboTimer.wait_time = min(ComboTimer.wait_time, MiniComboTimeBar.max_value)
-	if Globalvars.EnzoMiniComboUpdated == true:
-		MiniComboTimer.start()
 	if MiniComboTimer.time_left == 0:
 		Globalvars.EnzoMiniCombo = 0
 	if Globalvars.EnzoMiniCombo == 0:
@@ -165,6 +163,15 @@ func _physics_process(_delta: float) -> void:
 		MiniComboNumber3.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-3])
 		$Combo/MiniComboNumber3.position = Vector2(707, 265)
 		$Combo/MiniComboNumber3.visible = true
+
+func _on_enzo_hurt() -> void:
+	Overlay.play("Hurt")
+func _on_enzo_heal() -> void:
+	pass
+func _on_combo_update() -> void:
+	ComboTimer.start()
+func _on_minicombo_update() -> void:
+	MiniComboTimer.start()
 
 func set_health() -> void:
 	Heart1.play(str(health[0]))

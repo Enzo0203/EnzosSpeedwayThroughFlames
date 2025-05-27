@@ -170,19 +170,15 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
-	Globalvars.EnzoMiniComboUpdated = true
-	await get_tree().process_frame
-	Globalvars.EnzoMiniComboUpdated = false
+	Globalvars.EnzoMiniComboUpdated.emit()
 
 func check_for_death():
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
-		Globalvars.EnzoComboUpdated = true
+		Globalvars.EnzoComboUpdated.emit()
 		Globalvars.EnzoCombo += 1
 		is_dead = true
-		await get_tree().process_frame
-		Globalvars.EnzoComboUpdated = false
 
 func update_animations():
 	if state == States.IDLE:

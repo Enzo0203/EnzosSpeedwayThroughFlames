@@ -68,9 +68,7 @@ func force_damage() -> void:
 		regentimer.wait_time = 6
 		regentimer.start()
 	if health > 0:
-		Globalvars.EnzoHurt = true
-		await get_tree().process_frame
-		Globalvars.EnzoHurt = false
+		Globalvars.EnzoHurt.emit()
 
 func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
 	if invincibility_timer.time_left == 0.0:
@@ -1108,9 +1106,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		else:
 			heart_heal(area.get_meta("heal"))
 			change_hp(health + area.get_meta("heal"))
-		Globalvars.EnzoHeal = true
-		await get_tree().process_frame
-		Globalvars.EnzoHeal = false
+		Globalvars.EnzoHeal.emit()
 
 func _on_hurtbox_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Skateboard"):

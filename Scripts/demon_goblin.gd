@@ -133,10 +133,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						change_state(States.DEAD)
 						velocity = area.get_meta("kbdirection")
 						is_dead = true
-						Globalvars.EnzoComboUpdated = true
+						Globalvars.EnzoComboUpdated.emit()
 						Globalvars.EnzoCombo += 1
-						await get_tree().process_frame
-						Globalvars.EnzoComboUpdated = false
 		else:
 			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
@@ -166,9 +164,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
-	Globalvars.EnzoMiniComboUpdated = true
-	await get_tree().process_frame
-	Globalvars.EnzoMiniComboUpdated = false
+	Globalvars.EnzoMiniComboUpdated.emit()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:

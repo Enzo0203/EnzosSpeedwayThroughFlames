@@ -273,9 +273,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
-	Globalvars.EnzoMiniComboUpdated = true
-	await get_tree().process_frame
-	Globalvars.EnzoMiniComboUpdated = false
+	Globalvars.EnzoMiniComboUpdated.emit()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
@@ -332,14 +330,12 @@ func check_for_death():
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
-		Globalvars.EnzoComboUpdated = true
+		Globalvars.EnzoComboUpdated.emit()
 		Globalvars.EnzoCombo += 1
 		var snackbox_instance = snackbox.instantiate()
 		snackbox_instance.spawnPosition = hurtbox.global_position
 		get_parent().add_child(snackbox_instance)
 		is_dead = true
-		await get_tree().create_timer(0.01).timeout
-		Globalvars.EnzoComboUpdated = false
 
 func randomizeAudioPitch(_audio):
 	pass
