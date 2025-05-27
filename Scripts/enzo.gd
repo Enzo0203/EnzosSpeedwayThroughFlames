@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 	Globalvars.EnzoRegen = regen
 	Globalvars.EnzoRegenArr = regenarr
 	Globalvars.EnzoRegenState = regenstate
-	labelstate.text = str(raycast2.get_collision_mask_value(11))
+	labelstate.text = str(coyote_jump_timer.time_left)
 	labelspeed.text = str(velocity.y)
 	labelthird.text = str(regentimer.time_left)
 	if velocity.x > 100 and velocity.x < 800:
@@ -593,10 +593,10 @@ func sprintpunch(delta: float, INPUT_AXIS: float) -> void:
 		if animation.is_playing() == false:
 			if INPUT_AXIS == 0:
 				change_state(States.HALTING)
-			if not is_on_floor():
-				change_state(States.FALLSPRINTING)
 			if not Input.is_action_pressed("character_a"):
 				change_state(States.HALTING)
+			if not is_on_floor():
+				change_state(States.FALLSPRINTING)
 			else:
 				change_state(States.SPRINTING)
 		if velocity.x < 600 and velocity.x > -600:

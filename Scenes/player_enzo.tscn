@@ -6416,11 +6416,11 @@ frame = 192
 position = Vector2(0, -38)
 emitting = false
 amount = 1
+texture = ExtResource("3_epb8m")
 lifetime = 0.5
 one_shot = true
 randomness = 1.0
 fixed_fps = 30
-texture = ExtResource("3_epb8m")
 direction = Vector2(0, -1)
 spread = 10.0
 initial_velocity_min = 300.0
@@ -6433,10 +6433,10 @@ scale_amount_curve = SubResource("Curve_ehqkl")
 position = Vector2(0, 38)
 emitting = false
 amount = 1
+texture = ExtResource("4_sfdtb")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 15
-texture = ExtResource("4_sfdtb")
 direction = Vector2(0, -1)
 spread = 20.0
 initial_velocity_min = 300.0
@@ -6445,10 +6445,10 @@ initial_velocity_max = 300.0
 [node name="Rebound" type="CPUParticles2D" parent="Spritesheet/Texts"]
 emitting = false
 amount = 1
+texture = ExtResource("5_ptfm3")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 20
-texture = ExtResource("5_ptfm3")
 direction = Vector2(0, -1)
 spread = 20.0
 initial_velocity_min = 300.0
@@ -6458,10 +6458,10 @@ initial_velocity_max = 300.0
 position = Vector2(0, -38)
 emitting = false
 amount = 1
+texture = ExtResource("6_6j3nt")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 30
-texture = ExtResource("6_6j3nt")
 direction = Vector2(0, -1)
 spread = 10.0
 initial_velocity_min = 300.0
@@ -6566,7 +6566,7 @@ shape = SubResource("CapsuleShape2D_j2ivr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_i00x7")
+&"": SubResource("AnimationLibrary_i00x7")
 }
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
