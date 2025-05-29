@@ -38,8 +38,13 @@ extends Control
 @onready var MiniComboNumber3: AnimationPlayer = $Combo/MiniComboNumber3/AnimationPlayer
 @onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
+@onready var MultiNumber1: AnimationPlayer = $Combo/MultiplierNumber1/AnimationPlayer
+@onready var MultiNumber2: AnimationPlayer = $Combo/MultiplierNumber2/AnimationPlayer
+
 var health: Array = Globalvars.EnzoHealthArr
 var regen: Array = Globalvars.EnzoRegenArr
+var miniComboMultiplier: float = 0
+var comboMultiplier: float = 0
 
 func _ready() -> void:
 	Overlay.play("Idle")
@@ -49,7 +54,7 @@ func _ready() -> void:
 	Globalvars.EnzoMiniComboUpdated.connect(_on_minicombo_update)
 
 func _physics_process(_delta: float) -> void:
-	$ScoreLabel.text = str(Overlay.current_animation)
+	$ScoreLabel.text = str([comboMultiplier, miniComboMultiplier, Globalvars.EnzoScoreMultiplier])
 	set_health()
 	# Hearts
 	if Globalvars.EnzoHealth == 0:
@@ -101,6 +106,7 @@ func _physics_process(_delta: float) -> void:
 		$Combo/ComboNumber1.position = Vector2(776, 418)
 		$Combo/ComboNumber2.visible = false
 		$Combo/ComboNumber3.visible = false
+		comboMultiplier = 0
 	if Globalvars.EnzoCombo >= 10 and Globalvars.EnzoCombo < 100:
 		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
 		$Combo/ComboNumber1.position = Vector2(791, 418)
@@ -108,6 +114,7 @@ func _physics_process(_delta: float) -> void:
 		$Combo/ComboNumber2.position = Vector2(758, 418)
 		$Combo/ComboNumber2.visible = true
 		$Combo/ComboNumber3.visible = false
+		comboMultiplier = 1
 	if Globalvars.EnzoCombo >= 100:
 		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
 		$Combo/ComboNumber1.position = Vector2(804, 418)
@@ -117,6 +124,11 @@ func _physics_process(_delta: float) -> void:
 		ComboNumber3.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-3])
 		$Combo/ComboNumber3.position = Vector2(747, 418)
 		$Combo/ComboNumber3.visible = true
+		comboMultiplier = 1.5
+	#Score Mult
+	Globalvars.EnzoScoreMultiplier = 1 + miniComboMultiplier + comboMultiplier
+	MultiNumber1.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-1])
+	MultiNumber2.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-3])
 	#Minicombo
 	MiniComboTimeBar.value = MiniComboTimer.time_left
 	MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
@@ -126,22 +138,28 @@ func _physics_process(_delta: float) -> void:
 		Globalvars.EnzoMiniCombo = 0
 	if Globalvars.EnzoMiniCombo == 0:
 		$Combo/MiniComboBackground.self_modulate = Color(0, 0, 0, 1)
+		miniComboMultiplier = 0
 	if Globalvars.EnzoMiniCombo > 0 and Globalvars.EnzoMiniCombo < 10:
 		$Combo/MiniComboBackground.self_modulate = Color(0, 0.9, 0.9, 1)
 	if Globalvars.EnzoMiniCombo >= 10 and Globalvars.EnzoMiniCombo < 25:
 		$Combo/MiniComboBackground.self_modulate = Color(0.9, 0.9, 0.4, 1)
+		miniComboMultiplier = 0.1
 	if Globalvars.EnzoMiniCombo >= 25 and Globalvars.EnzoMiniCombo < 50:
 		$Combo/MiniComboBackground.self_modulate = Color(1, 1, 0, 1)
 	if Globalvars.EnzoMiniCombo >= 50 and Globalvars.EnzoMiniCombo < 100:
 		$Combo/MiniComboBackground.self_modulate = Color(1, 0.5, 0, 1)
+		miniComboMultiplier = 0.3
 	if Globalvars.EnzoMiniCombo >= 100 and Globalvars.EnzoMiniCombo < 150:
 		$Combo/MiniComboBackground.self_modulate = Color(1, 0, 0, 1)
+		miniComboMultiplier = 0.5
 	if Globalvars.EnzoMiniCombo >= 150 and Globalvars.EnzoMiniCombo < 200:
 		$Combo/MiniComboBackground.self_modulate = Color(0.6, 0, 0.3, 1)
+		miniComboMultiplier = 0.7
 	if Globalvars.EnzoMiniCombo >= 200 and Globalvars.EnzoMiniCombo < 300:
 		$Combo/MiniComboBackground.self_modulate = Color(0.9, 0, 0.9, 1)
 	if Globalvars.EnzoMiniCombo >= 300:
 		$Combo/MiniComboBackground.self_modulate = Color(0.8, 0.6, 1, 1)
+		miniComboMultiplier = 1
 	if Globalvars.EnzoMiniCombo < 10:
 		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
 		$Combo/MiniComboNumber1.position = Vector2(724, 265)

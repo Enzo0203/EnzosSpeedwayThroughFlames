@@ -228,21 +228,19 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						change_state(States.HURT)
 					velocity = area.get_meta("kbdirection")
 					stuntimer.start()
-					Globalvars.EnzoScore += 100
+					give_score(100, true)
 					hitStop(0.1, 0.3)
 					if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
 						if health - area.get_meta("dmg") <= 0:
-							addToMiniCombo(health)
+							damage(health)
 						else:
-							addToMiniCombo(hitbox.get_meta("dmg"))
-						health -= hitbox.get_meta("dmg")
+							damage(hitbox.get_meta("dmg"))
 						blastboxcooldown.start()
 					else:
 						if health - area.get_meta("dmg") <= 0:
-							addToMiniCombo(health)
+							damage(health)
 						else:
-							addToMiniCombo(area.get_meta("dmg"))
-						health -= area.get_meta("dmg")
+							damage(area.get_meta("dmg"))
 		else:
 			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
@@ -271,6 +269,11 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							print("bombarFailClankWall")
 							pass
 
+func damage(amount):
+	health -= amount
+	give_score(10 * amount, true)
+	addToMiniCombo(amount)
+
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
 	Globalvars.EnzoMiniComboUpdated.emit()
@@ -290,7 +293,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 						velocity = area.get_meta("kbdirection")
 						change_state(States.HURT)
 						stuntimer.start()
-						Globalvars.EnzoScore += 100
+						give_score(100, true)
 						hitStop(0.1, 0.3)
 						health -= hitbox.get_meta("dmg")
 			else:
@@ -379,3 +382,9 @@ func _on_enzo_detector_3_area_entered(area: Area2D) -> void:
 func _on_enzo_detector_3_area_exited(area: Area2D) -> void:
 	if area.is_in_group("EnzoHurtbox"):
 		EnzoInArea3 = false
+
+func give_score(amount: int, accountForMultiplier: bool) -> void:
+	if accountForMultiplier == true:
+		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+	else:
+		Globalvars.EnzoScore += amount

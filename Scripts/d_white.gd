@@ -154,19 +154,22 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			if is_dead == false:
 				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
 					if health - area.get_meta("dmg") <= 0:
-						addToMiniCombo(health)
+						damage(health)
 						change_state(States.DEAD)
 					else:
-						addToMiniCombo(area.get_meta("dmg"))
+						damage(area.get_meta("dmg"))
 						change_state(States.HURT)
 					velocity = area.get_meta("kbdirection")
 					stuntimer.start()
-					Globalvars.EnzoScore += 100
 					hitStop(0.1, 0.3)
-					health -= area.get_meta("dmg")
 		elif raycast.get_collider().is_in_group("tileset"):
 			#There's a wall
 			pass
+
+func damage(amount):
+	health -= amount
+	give_score(10 * amount, true)
+	addToMiniCombo(amount)
 
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
@@ -200,3 +203,9 @@ func randomizeAudioPitch(audio):
 
 func set_health():
 	healthbar.size.x = 24 * health
+
+func give_score(amount: int, accountForMultiplier: bool) -> void:
+	if accountForMultiplier == true:
+		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+	else:
+		Globalvars.EnzoScore += amount

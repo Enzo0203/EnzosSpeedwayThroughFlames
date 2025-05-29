@@ -128,7 +128,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				if is_dead == false:
 					if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
 						addToMiniCombo(1)
-						Globalvars.EnzoScore += 100
+						give_score(100, true)
 						hitStop(0.1, 0.3)
 						change_state(States.DEAD)
 						velocity = area.get_meta("kbdirection")
@@ -181,7 +181,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 					if is_dead == false:
 						velocity = area.get_meta("kbdirection")
 						change_state(States.DEAD)
-						Globalvars.EnzoScore += 100
+						give_score(100, true)
 						hitStop(0.1, 0.3)
 			else:
 				# Clank
@@ -221,3 +221,9 @@ func hurtboxstun(duration):
 	hitboxshape.set_deferred("monitorable", false)
 	await get_tree().create_timer(duration).timeout
 	hitboxshape.set_deferred("monitorable", true)
+
+func give_score(amount: int, accountForMultiplier: bool) -> void:
+	if accountForMultiplier == true:
+		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+	else:
+		Globalvars.EnzoScore += amount

@@ -1011,7 +1011,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 						#Block
 						change_state(States.BLOCKHIT)
 						blocktimer.start()
-						Globalvars.EnzoScore += 25
+						give_score(25, true)
 					if hurtbox.get_meta("state") == "vuln":
 						#Hurt
 						howToDie = area.get_meta("deathtype")
@@ -1025,7 +1025,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 					invincibility_timer.wait_time = 0.6
 					invincibility_timer.start()
 					blocktimer.stop()
-					Globalvars.EnzoScore += 50
+					give_score(50, true)
 		else:
 			# Check if wall or own hitbox
 			if raycast.get_collider().is_in_group("tileset"):
@@ -1054,7 +1054,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 									pr_rebound.set_emitting(true)
 								if hitbox.get_meta("type") == "parry":
 									#Projectile Parry
-									Globalvars.EnzoScore += 100
+									give_score(100, true)
 									pr_parry.set_emitting(true)
 							else:
 								#Clank
@@ -1142,7 +1142,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 						pr_rebound.set_emitting(true)
 					if hitbox.get_meta("type") == "parry":
 						#Projectile Parry
-						Globalvars.EnzoScore += 100
+						give_score(100, true)
 						pr_parry.set_emitting(true)
 				else:
 					#Clank
@@ -1175,7 +1175,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			hitSoundType.play()
 			if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
 				# Melee parry
-				Globalvars.EnzoScore += 100
+				give_score(100, true)
 				pr_parry.set_emitting(true)
 		else:
 			# Wall or hitbox
@@ -1725,3 +1725,9 @@ func hurtboxstun(duration: float) -> void:
 	hitbox.set_deferred("monitorable", false)
 	await get_tree().create_timer(duration).timeout
 	hitbox.set_deferred("monitorable", true)
+
+func give_score(amount: int, accountForMultiplier: bool) -> void:
+	if accountForMultiplier == true:
+		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+	else:
+		Globalvars.EnzoScore += amount

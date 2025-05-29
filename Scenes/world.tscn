@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://dpyu1s7m5rtrl"]
+[gd_scene load_steps=102 format=3 uid="uid://dpyu1s7m5rtrl"]
 
 [ext_resource type="Texture2D" uid="uid://5vhvbr506qvy" path="res://Sprites/Backgrounds/TilesetGrass.png" id="1_bm502"]
 [ext_resource type="PackedScene" uid="uid://eatffjhnbskb" path="res://Scenes/player_enzo.tscn" id="2_hrhje"]
@@ -32,12 +32,13 @@
 [ext_resource type="Texture2D" uid="uid://daqxm3eq8xds0" path="res://Sprites/HUD/Combo/Combo Empty.png" id="19_v7pkf"]
 [ext_resource type="Texture2D" uid="uid://b6o7nvgk524mj" path="res://Sprites/HUD/Combo/Combo Timer.png" id="20_cbgdk"]
 [ext_resource type="Texture2D" uid="uid://m5pflldfnx1o" path="res://Sprites/HUD/Combo/Combo Numbers.png" id="21_7po1i"]
-[ext_resource type="AudioStream" uid="uid://dou4e5k7u1nfg" path="res://Music/Madman.wav" id="21_wg8sh"]
 [ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Regenoutline.png" id="27_j1r6p"]
 [ext_resource type="Texture2D" uid="uid://bgmp4lmn0nc33" path="res://Sprites/HUD/Combo/MiniCombo Timer.png" id="32_qvtwg"]
 [ext_resource type="Texture2D" uid="uid://befumo68rbtyb" path="res://Sprites/HUD/Flamed.png" id="33_53k8y"]
 [ext_resource type="Texture2D" uid="uid://b6rcb81rgkvr6" path="res://Sprites/HUD/Combo/MiniCombo Background.png" id="33_iy7o5"]
 [ext_resource type="Texture2D" uid="uid://mkuwvd43bl4v" path="res://Sprites/HUD/Combo/MiniCombo Numbers.png" id="35_4qo8h"]
+[ext_resource type="Texture2D" uid="uid://pbkh3vono5nj" path="res://Sprites/HUD/Combo/Multiplier Numbers.png" id="36_04jkj"]
+[ext_resource type="AudioStream" uid="uid://cnb5cla535mjy" path="res://Music/Madman.mp3" id="39_04jkj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3wduv"]
 texture = ExtResource("1_bm502")
@@ -2328,6 +2329,28 @@ libraries = {
 &"": SubResource("AnimationLibrary_a0d1c")
 }
 
+[node name="MultiplierNumber1" type="Sprite2D" parent="CanvasLayer/UI/Combo"]
+position = Vector2(683, 420.5)
+texture = ExtResource("36_04jkj")
+hframes = 10
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/UI/Combo/MultiplierNumber1"]
+libraries = {
+&"": SubResource("AnimationLibrary_a0d1c")
+}
+
+[node name="MultiplierNumber2" type="Sprite2D" parent="CanvasLayer/UI/Combo"]
+position = Vector2(662, 419.5)
+texture = ExtResource("36_04jkj")
+hframes = 10
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/UI/Combo/MultiplierNumber2"]
+libraries = {
+&"": SubResource("AnimationLibrary_a0d1c")
+}
+
 [node name="ComboTimer" type="Timer" parent="CanvasLayer/UI/Combo"]
 wait_time = 5.0
 one_shot = true
@@ -2366,11 +2389,12 @@ i was at house eating dorito when phone ring
 visible = false
 modulate = Color(0.552941, 0, 1, 1)
 layout_mode = 0
-offset_left = 534.0
+offset_left = 581.0
 offset_top = 97.0
-offset_right = 590.0
-offset_bottom = 121.0
+offset_right = 667.0
+offset_bottom = 125.0
 scale = Vector2(3, 3)
+theme_override_font_sizes/font_size = 7
 text = "Score"
 
 [node name="SpeechBubbleDelay" type="Timer" parent="CanvasLayer/UI"]
@@ -2383,7 +2407,7 @@ texture = ExtResource("33_53k8y")
 offset = Vector2(324, 180.669)
 
 [node name="Madman" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("21_wg8sh")
+stream = ExtResource("39_04jkj")
 autoplay = true
 
 [connection signal="area_entered" from="Enzo/Camera2D/AttractorDetector" to="Enzo/Camera2D" method="_on_attractor_detector_area_entered"]

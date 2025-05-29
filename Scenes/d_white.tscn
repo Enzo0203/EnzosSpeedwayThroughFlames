@@ -252,7 +252,7 @@ position = Vector2(41, -2)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_l6x4n")
+&"": SubResource("AnimationLibrary_l6x4n")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
