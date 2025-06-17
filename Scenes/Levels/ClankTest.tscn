@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqswfm0ot0eea"]
+
+[ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="1_sot3c"]
+[ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier sheet.png" id="2_1pqah"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c7da"]
+resource_local_to_scene = true
+size = Vector2(49, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1pqah"]
+size = Vector2(75, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sot3c"]
+size = Vector2(55, 113)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Enzo" type="CharacterBody2D" parent="."]
+position = Vector2(-112, -2)
+
+[node name="Sprite" type="Sprite2D" parent="Enzo"]
+position = Vector2(8, 8)
+texture = ExtResource("1_sot3c")
+hframes = 7
+vframes = 35
+frame = 15
+
+[node name="Hurtbox" type="Area2D" parent="Enzo"]
+position = Vector2(14, 13)
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Enzo/Hurtbox"]
+shape = SubResource("RectangleShape2D_2c7da")
+debug_color = Color(0.996078, 0, 0.211765, 0.211765)
+
+[node name="Hitbox" type="Area2D" parent="Enzo"]
+position = Vector2(39, 3)
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Enzo/Hitbox"]
+shape = SubResource("RectangleShape2D_1pqah")
+debug_color = Color(0.96738, 0, 0.481915, 0.211765)
+
+[node name="Demon" type="CharacterBody2D" parent="."]
+position = Vector2(80, 8)
+
+[node name="Sprite" type="Sprite2D" parent="Demon"]
+texture = ExtResource("2_1pqah")
+hframes = 5
+vframes = 5
+frame = 18
+
+[node name="Area2D" type="Area2D" parent="Demon"]
+position = Vector2(-1, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Demon/Area2D"]
+shape = SubResource("RectangleShape2D_sot3c")
+debug_color = Color(0.996078, 0, 0.211765, 0.211765)
+
+[node name="Area2D2" type="Area2D" parent="Demon"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Demon/Area2D2"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)

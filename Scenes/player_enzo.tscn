@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://eatffjhnbskb"]
+[gd_scene load_steps=79 format=3 uid="uid://eatffjhnbskb"]
 
 [ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/enzo.gd" id="1_cdf8x"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_k85s5"]
@@ -55,86 +55,86 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet/Hitbox:position")
+tracks/0/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -5)]
+"values": [Vector2(42, 79)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet/Hurtbox:position")
+tracks/1/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, 1.5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/2/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 79)]
+"values": [Vector2(59, 27)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/3/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1.5)]
+"values": [Vector2(47.5, -5.5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
+tracks/4/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(59, 27)]
+"update": 1,
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
+tracks/5/path = NodePath("Spritesheet:frame")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(47.5, -5.5)]
+"update": 1,
+"values": [203]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
+tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [SubResource("RectangleShape2D_u3wga")]
 }
 
 [sub_resource type="Animation" id="Animation_4pq4l"]
@@ -228,62 +228,62 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hitbox:position")
+tracks/7/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -5)]
+"values": [Vector2(61, 27)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hurtbox:position")
+tracks/8/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(45, -11)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
+tracks/9/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(59, 27)]
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
+tracks/10/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(47.5, -5.5)]
+"values": [Vector2(42, 84)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
+tracks/11/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_gkj4c"]
@@ -317,55 +317,55 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Spritesheet/Hurtbox:editor_description")
+tracks/2/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["neut"]
+"update": 0,
+"values": [Vector2(42, 84)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 54.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/4/path = NodePath("Spritesheet/Hurtbox:metadata/state")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -7.25)]
+"update": 1,
+"values": ["vuln"]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Spritesheet/Hurtbox:metadata/state")
+tracks/5/path = NodePath("Spritesheet/Hitbox:metadata/dmg")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["vuln"]
+"values": [6]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Spritesheet/Hitbox:metadata/dmg")
+tracks/6/path = NodePath("Spritesheet/Hitbox:metadata/strength")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -377,86 +377,50 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hitbox:metadata/strength")
+tracks/7/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [6]
+"update": 0,
+"values": [Vector2(72, 44.5)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
+tracks/8/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(72, 44.5)]
+"values": [Vector2(0, 37)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
+tracks/9/path = NodePath("Spritesheet/Hitbox:metadata/type")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 46.75)]
+"update": 1,
+"values": ["norm"]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Spritesheet/Hitbox:metadata/type")
+tracks/10/path = NodePath("AnimationPlayer:speed_scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["norm"]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("AnimationPlayer:speed_scale")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hitbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -5)]
 }
 
 [sub_resource type="Animation" id="Animation_lwiut"]
@@ -547,30 +511,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hitbox:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -5)]
-}
 
 [sub_resource type="Animation" id="Animation_uv601"]
 resource_name = "airstompprep"
@@ -622,7 +562,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(42, 93), Vector2(42, 54.5)]
+"values": [Vector2(42, 84), Vector2(42, 55.75)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -634,7 +574,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 4.5), Vector2(0, -7.25)]
+"values": [Vector2(0, 5), Vector2(0, -9.125)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -663,26 +603,14 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hitbox:position")
+tracks/7/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -5)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"update": 1,
+"values": [SubResource("RectangleShape2D_u3wga")]
 }
 
 [sub_resource type="Animation" id="Animation_768rc"]
@@ -734,7 +662,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 75)]
+"values": [Vector2(42, 76)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -746,7 +674,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 3.5)]
+"values": [Vector2(0, 9)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -771,18 +699,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 10)]
 }
 
 [sub_resource type="Animation" id="Animation_gsim3"]
@@ -846,7 +762,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 75)]
+"values": [Vector2(42, 71)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -855,10 +771,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1.5), Vector2(0, 3.5)]
+"values": [Vector2(0, 11.5)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -895,18 +811,6 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 10)]
 }
 
 [sub_resource type="Animation" id="Animation_jonr8"]
@@ -958,7 +862,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 79)]
+"values": [Vector2(42, 81)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -970,7 +874,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1.5)]
+"values": [Vector2(0, 6.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1007,18 +911,6 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 10)]
 }
 
 [sub_resource type="Animation" id="Animation_h7f18"]
@@ -1059,7 +951,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 75)]
+"values": [Vector2(42, 76)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1071,7 +963,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 3.5)]
+"values": [Vector2(0, 9)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1096,18 +988,6 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 10)]
 }
 
 [sub_resource type="Animation" id="Animation_2c5u4"]
@@ -1159,7 +1039,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(42, 80), Vector2(42, 89)]
+"values": [Vector2(42, 80), Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1171,7 +1051,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 7), Vector2(0, 2.5)]
+"values": [Vector2(0, 7), Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1196,18 +1076,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 4), Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_oydf4"]
@@ -1260,7 +1128,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 93)]
+"values": [Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1272,7 +1140,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1297,18 +1165,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_bvg8a"]
@@ -1361,7 +1217,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 93)]
+"values": [Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1373,7 +1229,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1398,18 +1254,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_6rmfj"]
@@ -1458,10 +1302,10 @@ tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.21, 0.41, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(42, 93), Vector2(56, 85), Vector2(58, 79), Vector2(56, 85)]
+"values": [Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1470,10 +1314,10 @@ tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.21, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 4.5), Vector2(-20, 8.5), Vector2(-39, 11.5), Vector2(-20, 8.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1498,18 +1342,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_owl7v"]
@@ -1537,7 +1369,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(73.5, 59)]
+"values": [Vector2(74.75, 40.5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1561,7 +1393,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(46.75, 6)]
+"values": [Vector2(40.625, 2.75)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1582,10 +1414,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(59, 79), Vector2(20, 91)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -1594,10 +1426,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-36.5, 11.5), Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -1645,7 +1477,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [5]
+"values": [7]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -1657,7 +1489,7 @@ tracks/11/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [5]
+"values": [7]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -1682,18 +1514,6 @@ tracks/13/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_3fcad"]
@@ -1721,7 +1541,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(61.5, 54)]
+"values": [Vector2(59, 31)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1745,7 +1565,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(44.75, 5)]
+"values": [Vector2(43.5, -2.5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1793,7 +1613,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3]
+"values": [5]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -1805,7 +1625,7 @@ tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [3]
+"values": [5]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -1834,14 +1654,26 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Spritesheet/Hurtbox:position")
+tracks/11/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 4)]
+"values": [Vector2(42.5, 84)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_g2x7e"]
@@ -1893,7 +1725,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(43, 66)]
+"values": [Vector2(43, 61)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1905,7 +1737,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.5, -3)]
+"values": [Vector2(0, 16.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1930,18 +1762,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 21)]
 }
 
 [sub_resource type="Animation" id="Animation_qmvmr"]
@@ -1991,10 +1811,10 @@ tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(43, 77), Vector2(43, 66)]
+"values": [Vector2(42, 84), Vector2(42, 63)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2003,10 +1823,10 @@ tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.05),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0.5, 1.5), Vector2(0.5, 0)]
+"values": [Vector2(0, 5), Vector2(0, 15.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2031,18 +1851,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.05),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 11), Vector2(0, 18)]
 }
 
 [sub_resource type="Animation" id="Animation_211c6"]
@@ -2094,7 +1902,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2106,7 +1914,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 93)]
+"values": [Vector2(42, 84)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2131,18 +1939,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_s8ny7"]
@@ -2184,6 +1980,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(42, 84)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_cqkpo"]
@@ -2236,7 +2056,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2248,7 +2068,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 93)]
+"values": [Vector2(42, 84)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2324,7 +2144,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, 4.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2336,7 +2156,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 93)]
+"values": [Vector2(42, 84)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2424,7 +2244,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(2.5, -2.5), Vector2(0, 4.5)]
+"values": [Vector2(2.5, 13.5), Vector2(0, 4.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2510,18 +2330,6 @@ tracks/11/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 22), Vector2(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_1u8ns"]
 resource_name = "dropkickhold"
@@ -2585,7 +2393,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2.5, -2.5)]
+"values": [Vector2(2.5, 13.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2610,18 +2418,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 22)]
 }
 
 [sub_resource type="Animation" id="Animation_f0vvj"]
@@ -2674,7 +2470,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(42, 93), Vector2(83, 43)]
+"values": [Vector2(42, 84), Vector2(83, 43)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2686,7 +2482,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 4.5), Vector2(2.5, -2.5)]
+"values": [Vector2(0, 5), Vector2(2.5, -2.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2711,18 +2507,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 22)]
 }
 
 [sub_resource type="Animation" id="Animation_um5wc"]
@@ -2787,7 +2571,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2812,18 +2596,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 9)]
 }
 
 [sub_resource type="Animation" id="Animation_314nh"]
@@ -2873,10 +2645,10 @@ tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(42, 65), Vector2(42, 54)]
+"values": [Vector2(42, 65)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2885,10 +2657,10 @@ tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, -5.5), Vector2(0, 0)]
+"values": [Vector2(0, 14.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2974,18 +2746,6 @@ tracks/11/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 19)]
-}
 
 [sub_resource type="Animation" id="Animation_grv3f"]
 resource_name = "groundpoundland"
@@ -3034,10 +2794,10 @@ tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.266673),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(42, 45), Vector2(42, 57)]
+"values": [Vector2(42, 32), Vector2(42, 66)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3046,10 +2806,10 @@ tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.266673),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 4.5), Vector2(0, -1.5)]
+"values": [Vector2(0, 31), Vector2(0, 14)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3135,18 +2895,6 @@ tracks/11/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 24)]
-}
 
 [sub_resource type="Animation" id="Animation_rf73e"]
 resource_name = "groundpoundprep"
@@ -3195,7 +2943,7 @@ tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.200007, 0.2001),
+"times": PackedFloat32Array(0, 0.2, 0.2001),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(42, 84), Vector2(42, 59), Vector2(42, 82)]
@@ -3207,10 +2955,10 @@ tracks/4/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.200007, 0.2001),
+"times": PackedFloat32Array(0, 0.2, 0.2001),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 9), Vector2(0, 0.5), Vector2(0, -1)]
+"values": [Vector2(0, 5), Vector2(0, 17.5), Vector2(0, -1)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3235,18 +2983,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.200007),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 21)]
 }
 
 [sub_resource type="Animation" id="Animation_0pqot"]
@@ -3310,7 +3046,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 9)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3335,18 +3071,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_uvlo5"]
@@ -3437,18 +3161,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_kd0rt"]
 resource_name = "idle2"
@@ -3500,7 +3212,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 85)]
+"values": [Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3512,7 +3224,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 5.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3537,18 +3249,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_kduok"]
@@ -3600,7 +3300,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 81)]
+"values": [Vector2(42, 84)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3612,7 +3312,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 6.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3649,18 +3349,6 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_a33vj"]
@@ -3701,7 +3389,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0.0588235),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(74.7813, 97.75)]
+"values": [Vector2(64.7813, 97.75)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -3713,7 +3401,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0.0588235),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(40.6094, 5)]
+"values": [Vector2(35.6094, 5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3734,10 +3422,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0588235, 0.176471),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(35, 88), Vector2(24, 90), Vector2(42, 85)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -3746,10 +3434,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.0588235, 0.176471),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-3.5, 3), Vector2(-9, 3), Vector2(0, 5.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -3823,18 +3511,6 @@ tracks/12/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_vmxru"]
 resource_name = "parryfoward"
@@ -3873,7 +3549,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(91.5, 38)]
+"values": [Vector2(68, 38)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -3885,7 +3561,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(60.25, -2)]
+"values": [Vector2(43, -2)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3906,10 +3582,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 84), Vector2(42, 85)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -3918,10 +3594,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 6), Vector2(0, 5.5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -3994,18 +3670,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_dblvb"]
@@ -4045,7 +3709,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(74.375, 88)]
+"values": [Vector2(55.375, 60)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -4057,7 +3721,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(54.8125, -22)]
+"values": [Vector2(37.3125, -18)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -4078,10 +3742,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 83), Vector2(42, 84)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -4090,10 +3754,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 5.5), Vector2(0, 5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -4166,18 +3830,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_pnsdn"]
@@ -4217,7 +3869,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(50, 102)]
+"values": [Vector2(53, 67)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -4229,7 +3881,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2, -53)]
+"values": [Vector2(0.5, -36.5)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -4250,10 +3902,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 83), Vector2(42, 84)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -4262,10 +3914,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 5.5), Vector2(0, 5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -4338,18 +3990,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_ohopv"]
@@ -4390,7 +4030,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(74.25, 35)]
+"values": [Vector2(63.25, 28.5)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -4402,7 +4042,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(40.875, 0)]
+"values": [Vector2(35.375, -3.25)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -4423,10 +4063,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.12),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 84), Vector2(42, 84)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -4435,10 +4075,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.12),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 5), Vector2(0, 5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -4511,18 +4151,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_olb0h"]
@@ -4595,10 +4223,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 84), Vector2(42, 84)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -4607,10 +4235,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 5), Vector2(0, 5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -4683,18 +4311,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_evp7s"]
@@ -4785,18 +4401,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_qwpg2"]
 resource_name = "roll"
@@ -4860,7 +4464,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-1.5, -0.5)]
+"values": [Vector2(-1.5, 25.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -4885,18 +4489,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 30)]
 }
 
 [sub_resource type="Animation" id="Animation_sdr4y"]
@@ -4987,17 +4579,166 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
+
+[sub_resource type="Animation" id="Animation_5sf0j"]
+resource_name = "sexkick"
+length = 0.800007
+step = 0.0666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 0.533333, 0.6, 0.666667, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [200, 201, 202, 203, 202, 203, 202, 203, 202, 203, 200, 204]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0666667, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(77.25, 35), Vector2(44.25, 24.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.0666667, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(42.375, 13), Vector2(25.875, 15.25)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spritesheet/Hurtbox:editor_description")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["neut"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(42, 84)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
+}
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
+tracks/7/path = NodePath("Spritesheet/Sound effects/WeakPunchWhiff:playing")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Spritesheet/Hurtbox:metadata/state")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["vuln"]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Spritesheet/Hitbox:metadata/dmg")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.0666667, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 1]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Spritesheet/Hitbox:metadata/strength")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.0666667, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 1]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Spritesheet/Hitbox:metadata/type")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["norm"]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimationPlayer:speed_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 4)]
+"values": [1.0]
 }
 
 [sub_resource type="Animation" id="Animation_alds3"]
@@ -5050,7 +4791,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(42, 65)]
+"values": [Vector2(42, 72)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -5062,7 +4803,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 7.5)]
+"values": [Vector2(0, 11)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -5087,18 +4828,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 11)]
 }
 
 [sub_resource type="Animation" id="Animation_nxunq"]
@@ -5151,7 +4880,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(51, 62)]
+"values": [Vector2(51, 65)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -5163,7 +4892,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0.5, 5)]
+"values": [Vector2(0.5, 14.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -5188,18 +4917,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_k7tet"]
@@ -5252,7 +4969,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(51, 62)]
+"values": [Vector2(50, 69)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -5264,7 +4981,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0.5, 9)]
+"values": [Vector2(0, 12.5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -5289,18 +5006,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 11)]
 }
 
 [sub_resource type="Animation" id="Animation_k5nj3"]
@@ -5353,7 +5058,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(51, 58)]
+"values": [Vector2(51, 64)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -5365,7 +5070,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0.5, 7)]
+"values": [Vector2(0.5, 15)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -5390,18 +5095,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_la2fi"]
@@ -5491,18 +5184,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_fc1d3"]
@@ -5653,18 +5334,6 @@ tracks/11/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_cqkdd"]
 resource_name = "spikersecondhalf"
@@ -5704,7 +5373,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(60, 102)]
+"values": [Vector2(54, 96)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -5716,7 +5385,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(34, 14)]
+"values": [Vector2(31, 11)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -5737,10 +5406,10 @@ tracks/5/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(35, 84), Vector2(42, 84)]
+"values": [Vector2(42, 84)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -5749,10 +5418,10 @@ tracks/6/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3.5, 5), Vector2(0, 5)]
+"values": [Vector2(0, 5)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -5825,18 +5494,6 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_m3cyy"]
@@ -5927,18 +5584,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_ynccm"]
 resource_name = "sprintpunch"
@@ -6026,7 +5671,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(106, 87)]
+"values": [Vector2(106, 53)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -6038,7 +5683,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(26, -3)]
+"values": [Vector2(26, -10.5)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -6087,18 +5732,6 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_rqfyh"]
@@ -6188,18 +5821,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
-}
 
 [sub_resource type="Animation" id="Animation_0ciaj"]
 resource_name = "wallkick"
@@ -6268,74 +5889,38 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Spritesheet/Hitbox/HitboxShape:shape:size")
+tracks/5/path = NodePath("Spritesheet/Sound effects/Jump:playing")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(36, 28)]
+"update": 1,
+"values": [true]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Spritesheet/Hitbox/HitboxShape:position")
+tracks/6/path = NodePath("Spritesheet/Hurtbox:metadata/state")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 43)]
+"update": 1,
+"values": ["vuln"]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Spritesheet/Sound effects/Jump:playing")
+tracks/7/path = NodePath("AnimationPlayer:speed_scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.0666667),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Spritesheet/Hurtbox:metadata/state")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["vuln"]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("AnimationPlayer:speed_scale")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Spritesheet/Hurtbox:position")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 4)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i00x7"]
@@ -6381,6 +5966,7 @@ _data = {
 &"rise": SubResource("Animation_evp7s"),
 &"roll": SubResource("Animation_qwpg2"),
 &"run": SubResource("Animation_sdr4y"),
+&"sexkick": SubResource("Animation_5sf0j"),
 &"skating": SubResource("Animation_alds3"),
 &"skatingcrouch": SubResource("Animation_nxunq"),
 &"skatingcrouchtransi": SubResource("Animation_k7tet"),
@@ -6407,8 +5993,8 @@ script = ExtResource("1_cdf8x")
 [node name="Spritesheet" type="Sprite2D" parent="."]
 texture = ExtResource("2_k85s5")
 hframes = 7
-vframes = 29
-frame = 192
+vframes = 35
+frame = 203
 
 [node name="Texts" type="Node2D" parent="Spritesheet"]
 
@@ -6472,10 +6058,9 @@ angular_velocity_curve = SubResource("Curve_yom7k")
 scale_amount_curve = SubResource("Curve_au0cc")
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnzoHitbox"]]
-position = Vector2(0, -5)
 collision_layer = 16
 collision_mask = 1168
-metadata/dmg = 2
+metadata/dmg = 3
 metadata/strength = 3
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
@@ -6485,14 +6070,9 @@ position = Vector2(47.5, -5.5)
 shape = SubResource("RectangleShape2D_8s6kh")
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
 
-[node name="HurtDetector" type="RayCast2D" parent="Spritesheet/Hitbox"]
-target_position = Vector2(90, 0)
-collision_mask = 9
-hit_from_inside = true
-collide_with_areas = true
-
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnzoHurtbox"]]
-editor_description = "blocking"
+editor_description = "neut"
+position = Vector2(0, 4)
 collision_layer = 4
 collision_mask = 3392
 metadata/state = "vuln"
@@ -6501,13 +6081,6 @@ metadata/state = "vuln"
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_u3wga")
 debug_color = Color(1, 0, 0.133333, 0.419608)
-
-[node name="HitDetector" type="RayCast2D" parent="Spritesheet/Hurtbox"]
-self_modulate = Color(0.619608, 0, 0.298039, 1)
-target_position = Vector2(90, 0)
-collision_mask = 25
-hit_from_inside = true
-collide_with_areas = true
 
 [node name="Walljumpdetector" type="Area2D" parent="Spritesheet"]
 visible = false

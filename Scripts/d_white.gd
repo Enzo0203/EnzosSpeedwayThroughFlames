@@ -18,7 +18,6 @@ var is_dead = false
 
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 @onready var enzoDetector: RayCast2D = $Spritesheet/EnzoDetector
-@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
 
 
 var health = 2
@@ -145,26 +144,17 @@ func dead(delta):
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-		# Shoot raycast and Check for wall
-		raycast.global_position = hurtbox.global_position
-		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		raycast.force_raycast_update()
-		if not raycast.is_colliding():
-			#No wall, hurt
-			if is_dead == false:
-				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-					if health - area.get_meta("dmg") <= 0:
-						damage(health)
-						change_state(States.DEAD)
-					else:
-						damage(area.get_meta("dmg"))
-						change_state(States.HURT)
-					velocity = area.get_meta("kbdirection")
-					stuntimer.start()
-					hitStop(0.1, 0.3)
-		elif raycast.get_collider().is_in_group("tileset"):
-			#There's a wall
-			pass
+		if is_dead == false:
+			if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+				if health - area.get_meta("dmg") <= 0:
+					damage(health)
+					change_state(States.DEAD)
+				else:
+					damage(area.get_meta("dmg"))
+					change_state(States.HURT)
+				velocity = area.get_meta("kbdirection")
+				stuntimer.start()
+				hitStop(0.1, 0.3)
 
 func damage(amount):
 	health -= amount

@@ -214,60 +214,27 @@ func dead(delta: float):
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-		# Shoot raycast and check for wall or own hitbox
-		raycast.set_collision_mask_value(11, true)
-		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		raycast.force_raycast_update()
-		if not raycast.is_colliding():
-			# No wall, hurt enemy
-			if is_dead == false:
-				if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+		if is_dead == false:
+			if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+				if health - area.get_meta("dmg") <= 0:
+					change_state(States.DEAD)
+				else:
+					change_state(States.HURT)
+				velocity = area.get_meta("kbdirection")
+				stuntimer.start()
+				give_score(100, true)
+				hitStop(0.1, 0.3)
+				if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
 					if health - area.get_meta("dmg") <= 0:
-						change_state(States.DEAD)
+						damage(health)
 					else:
-						change_state(States.HURT)
-					velocity = area.get_meta("kbdirection")
-					stuntimer.start()
-					give_score(100, true)
-					hitStop(0.1, 0.3)
-					if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
-						if health - area.get_meta("dmg") <= 0:
-							damage(health)
-						else:
-							damage(hitbox.get_meta("dmg"))
-						blastboxcooldown.start()
+						damage(hitbox.get_meta("dmg"))
+					blastboxcooldown.start()
+				else:
+					if health - area.get_meta("dmg") <= 0:
+						damage(health)
 					else:
-						if health - area.get_meta("dmg") <= 0:
-							damage(health)
-						else:
-							damage(area.get_meta("dmg"))
-		else:
-			# Check if wall or own hitbox
-			if raycast.get_collider().is_in_group("tileset"):
-				# There's a wall
-				pass
-			else:
-				# Hitbox
-				# Check if hitbox is my own
-				if raycast.get_collider() == $Spritesheet/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo"):
-					# Compare strength
-					if area.get_meta("strength") - 1 < $Spritesheet/Hitbox.get_meta("strength"):
-						# Check for wall again
-						raycast.set_collision_mask_value(11, false)
-						raycast.force_raycast_update()
-						if not raycast.is_colliding():
-							# No wall, Save clank
-							print("bombarSaveClank")
-							if area.global_position.x >= position.x:
-								$Spritesheet.scale.x = -1
-								velocity.x = -300
-							else:
-								$Spritesheet.scale.x = 1
-								velocity.x = 300
-						else:
-							# There is a wall
-							print("bombarFailClankWall")
-							pass
+						damage(area.get_meta("dmg"))
 
 func damage(amount):
 	health -= amount
@@ -279,35 +246,26 @@ func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniComboUpdated.emit()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
-		# Shoot raycast and check for wall
-		raycast.set_collision_mask_value(11, false)
-		raycast.target_position = (raycast.global_position - area.global_position) * -1
-		raycast.force_raycast_update()
-		if not raycast.is_colliding():
-			# No wall, compare strength
-			if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
-				# Minicounter
-				if area.get_meta("type") == "parry":
-					if is_dead == false:
-						velocity = area.get_meta("kbdirection")
-						change_state(States.HURT)
-						stuntimer.start()
-						give_score(100, true)
-						hitStop(0.1, 0.3)
-						health -= hitbox.get_meta("dmg")
-			else:
-				# Clank
-				print("bombarClank")
-				if area.global_position.x >= position.x:
-					$Spritesheet.scale.x = -1
-					velocity.x = -300
-				else:
-					$Spritesheet.scale.x = 1
-					velocity.x = 300
+	if area.is_in_group("EnzoHitbox"):
+		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
+			# Minicounter
+			if area.get_meta("type") == "parry":
+				if is_dead == false:
+					velocity = area.get_meta("kbdirection")
+					change_state(States.HURT)
+					stuntimer.start()
+					give_score(100, true)
+					hitStop(0.1, 0.3)
+					health -= hitbox.get_meta("dmg")
 		else:
-			# There is a wall
-			pass
+			# Clank
+			print("bombarClank")
+			if area.global_position.x >= position.x:
+				$Spritesheet.scale.x = -1
+				velocity.x = -300
+			else:
+				$Spritesheet.scale.x = 1
+				velocity.x = 300
 
 func update_animations():
 	if state == States.IDLE:
