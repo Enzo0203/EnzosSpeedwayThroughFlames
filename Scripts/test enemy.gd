@@ -52,7 +52,7 @@ func hurt(delta):
 	change_state(States.IDLE)
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+	if area.is_in_group("PlayerHitbox") or area.is_in_group("EnvironmentalHitbox"):
 		# Shoot raycast and Check for wall
 		raycast.global_position = hurtbox.global_position
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
@@ -63,7 +63,7 @@ func _on_area_entered(area: Area2D) -> void:
 			velocity = area.get_meta("kbdirection")
 			print("test dummy hurt")
 			$Label.text = "hurt"
-		elif raycast.get_collider().is_in_group("tileset"):
+		elif raycast.get_collider().is_in_group("EnvironmentalCollision"):
 			#There's a wall
 			print("test dummy saved by wall")
 			$Label.text = "saved by wall"

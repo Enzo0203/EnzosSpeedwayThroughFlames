@@ -2,14 +2,19 @@ extends Sprite2D
 
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sfx_explode: AudioStreamPlayer2D = $ExplosionSfx
+@onready var hitbox: Area2D = $Hitbox
 
-var spawnPosition
-var explosion_size
+
+var spawnPosition: Vector2
+var explosionSize: float
+var cantHurtEnzo: bool
 
 func _ready():
 	global_position = spawnPosition
-	scale.x = explosion_size
-	scale.y = explosion_size
+	scale = Vector2(explosionSize, explosionSize)
+	if cantHurtEnzo == true:
+		hitbox.remove_from_group("EnvironmentalHitbox")
+		hitbox.add_to_group("PlayerHitbox")
 	randomizeAudioPitch()
 	animation.play("Orange Instant")
 	if animation.is_playing() == false:

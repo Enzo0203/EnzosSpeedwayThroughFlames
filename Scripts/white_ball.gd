@@ -28,17 +28,17 @@ func _physics_process(delta):
 		global_position.y = move_toward(global_position.y, target_y, 300 * delta)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("tileset"):
+	if body.is_in_group("EnvironmentalCollision"):
 		destroy()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox") or area.is_in_group("hazard"):
+	if area.is_in_group("PlayerHurtbox") or area.is_in_group("hazard"):
 		destroy()
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("PlayerHitbox"):
 		#Check for strength value
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			#Make it hurt enemies and not you
-			hitbox.add_to_group("EnzoHitbox")
+			hitbox.add_to_group("PlayerHitbox")
 			hitbox.set_collision_layer_value(5, true)
 			#Flip direction
 			if area.get_meta("kbdirection").x < 0:

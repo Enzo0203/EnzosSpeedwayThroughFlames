@@ -203,6 +203,9 @@ data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////wAA
 format = 1
 stereo = true
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yaptl"]
+load_path = "res://.godot/imported/CircleParticle.png-8caea315d66337d6404e69f8f769d197.ctex"
+
 [sub_resource type="Gradient" id="Gradient_jped6"]
 offsets = PackedFloat32Array(0, 0.163043, 0.336957, 0.673913)
 colors = PackedColorArray(1, 1, 1, 1, 1, 0.423529, 0, 1, 1, 0.254902, 0, 1, 0.172549, 0.00392157, 0.00392157, 1)
@@ -226,9 +229,6 @@ scale_min = 0.01
 scale_max = 0.07
 color_ramp = SubResource("GradientTexture1D_82fsh")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yaptl"]
-load_path = "res://.godot/imported/CircleParticle.png-8caea315d66337d6404e69f8f769d197.ctex"
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 9
@@ -241,7 +241,7 @@ hframes = 5
 
 [node name="BBAnimationPlayer" type="AnimationPlayer" parent="Blastbox"]
 libraries = {
-"": SubResource("AnimationLibrary_2wssj")
+&"": SubResource("AnimationLibrary_2wssj")
 }
 
 [node name="Hurtbox" type="Area2D" parent="Blastbox"]
@@ -270,10 +270,10 @@ hframes = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Explosion"]
 libraries = {
-"": SubResource("AnimationLibrary_jinow")
+&"": SubResource("AnimationLibrary_jinow")
 }
 
-[node name="Hitbox" type="Area2D" parent="Explosion" groups=["Explosion"]]
+[node name="Hitbox" type="Area2D" parent="Explosion" groups=["EnvironmentalHitbox"]]
 collision_layer = 2048
 collision_mask = 0
 monitoring = false
@@ -302,9 +302,9 @@ stream = SubResource("AudioStreamWAV_c2xn7")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Explosion"]
 scale = Vector2(1.42857, 1.42857)
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_g517d")
 texture = SubResource("CompressedTexture2D_yaptl")
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_g517d")
 
 [connection signal="area_entered" from="Blastbox/Hurtbox" to="." method="_on_hurtbox_area_entered"]

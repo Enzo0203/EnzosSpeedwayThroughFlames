@@ -61,7 +61,7 @@ func hurt(delta):
 	change_state(States.IDLE)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+	if area.is_in_group("PlayerHitbox") or area.is_in_group("EnvironmentalHitbox"):
 		# Shoot raycast and check for wall or own hitbox
 		raycast.set_collision_mask_value(11, true)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1
@@ -78,14 +78,14 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			$Label.text = "hurt"
 		else:
 			# Check if wall or own hitbox
-			if raycast.get_collider().is_in_group("tileset"):
+			if raycast.get_collider().is_in_group("EnvironmentalCollision"):
 				# There's a wall
 				print("test dummy saved by wall")
 				$Label.text = "saved by wall"
 			else:
 				# Hitbox
 				# Check if hitbox is my own
-				if raycast.get_collider() == $Sprite/Hitbox and raycast.get_collider().is_in_group("HurtsEnzo"):
+				if raycast.get_collider() == $Sprite/Hitbox and raycast.get_collider().is_in_group("EnemyHitbox"):
 					# Compare strength
 					if area.get_meta("strength") - 1 < $Sprite/Hitbox.get_meta("strength"):
 						# Check for wall again
@@ -107,7 +107,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 							$Label.text = "tried save clank but wall"
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") and hurtbox.has_overlapping_areas() == false:
+	if area.is_in_group("PlayerHitbox") and hurtbox.has_overlapping_areas() == false:
 		# Shoot raycast and check for wall
 		raycast.set_collision_mask_value(11, false)
 		raycast.target_position = (raycast.global_position - area.global_position) * -1

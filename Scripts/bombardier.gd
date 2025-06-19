@@ -213,28 +213,27 @@ func dead(delta: float):
 	collision_mask = 0
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+	if area.is_in_group("PlayerHitbox") or area.is_in_group("EnvironmentalHitbox"):
 		if is_dead == false:
-			if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+			if health - area.get_meta("dmg") <= 0:
+				change_state(States.DEAD)
+			else:
+				change_state(States.HURT)
+			velocity = area.get_meta("kbdirection")
+			stuntimer.start()
+			give_score(100, true)
+			hitStop(0.1, 0.3)
+			if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
 				if health - area.get_meta("dmg") <= 0:
-					change_state(States.DEAD)
+					damage(health)
 				else:
-					change_state(States.HURT)
-				velocity = area.get_meta("kbdirection")
-				stuntimer.start()
-				give_score(100, true)
-				hitStop(0.1, 0.3)
-				if hurtbox.get_meta("state") == "parriable" and area.get_meta("type") == "parry":
-					if health - area.get_meta("dmg") <= 0:
-						damage(health)
-					else:
-						damage(hitbox.get_meta("dmg"))
-					blastboxcooldown.start()
+					damage(hitbox.get_meta("dmg"))
+				blastboxcooldown.start()
+			else:
+				if health - area.get_meta("dmg") <= 0:
+					damage(health)
 				else:
-					if health - area.get_meta("dmg") <= 0:
-						damage(health)
-					else:
-						damage(area.get_meta("dmg"))
+					damage(area.get_meta("dmg"))
 
 func damage(amount):
 	health -= amount
@@ -246,7 +245,7 @@ func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniComboUpdated.emit()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("PlayerHitbox"):
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			# Minicounter
 			if area.get_meta("type") == "parry":
@@ -318,27 +317,27 @@ var EnzoInArea3 = false
 var HasBall = true
 
 func _on_enzo_detector_1_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea1 = true
 
 func _on_enzo_detector_1_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea1 = false
 
 func _on_enzo_detector_2_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea2 = true
 
 func _on_enzo_detector_2_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea2 = false
 
 func _on_enzo_detector_3_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea3 = true
 
 func _on_enzo_detector_3_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea3 = false
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:

@@ -69,7 +69,7 @@ func idle(delta):
 		if HasBall == false:
 			change_state(States.RELOADING)
 		if HasBall == true and enzoDetector.is_colliding():
-			if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
+			if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 				change_state(States.THROWING)
 				await get_tree().create_timer(0.6).timeout
 				launch_ball()
@@ -101,7 +101,7 @@ func reload(delta):
 		if animation.current_animation != "reload":
 			HasBall = true
 			if HasBall == true and enzoDetector.is_colliding():
-				if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
+				if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 					change_state(States.THROWING)
 					await get_tree().create_timer(0.6).timeout
 					launch_ball()
@@ -119,7 +119,7 @@ func hurt(delta):
 	if stuntimer.time_left == 0:
 		if state == States.HURT:
 			if HasBall == true and enzoDetector.is_colliding():
-				if enzoDetector.get_collider().is_in_group("EnzoHurtbox"):
+				if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 					change_state(States.THROWING)
 					await get_tree().create_timer(0.6).timeout
 					launch_ball()
@@ -143,18 +143,17 @@ func dead(delta):
 	collision_mask = 0
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+	if area.is_in_group("PlayerHitbox") or area.is_in_group("EnvironmentalHitbox"):
 		if is_dead == false:
-			if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-				if health - area.get_meta("dmg") <= 0:
-					damage(health)
-					change_state(States.DEAD)
-				else:
-					damage(area.get_meta("dmg"))
-					change_state(States.HURT)
-				velocity = area.get_meta("kbdirection")
-				stuntimer.start()
-				hitStop(0.1, 0.3)
+			if health - area.get_meta("dmg") <= 0:
+				damage(health)
+				change_state(States.DEAD)
+			else:
+				damage(area.get_meta("dmg"))
+				change_state(States.HURT)
+			velocity = area.get_meta("kbdirection")
+			stuntimer.start()
+			hitStop(0.1, 0.3)
 
 func damage(amount):
 	health -= amount

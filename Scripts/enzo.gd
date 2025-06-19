@@ -31,7 +31,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var labelstate: Label = $State
 @onready var labelspeed: Label = $Speed
 @onready var labelthird: Label = $Slabel
-@onready var marker: Marker2D = $Marker2D
+@onready var ExplosionMarker: Marker2D = $ExplosionMarker
 @onready var pr_clank: CPUParticles2D = $Spritesheet/Texts/Clank
 @onready var pr_rebound: CPUParticles2D = $Spritesheet/Texts/Rebound
 @onready var pr_parry: CPUParticles2D = $Spritesheet/Texts/Parry
@@ -40,8 +40,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 
-
-enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHING, PUNCHINGWEAK, PUNCHINGMID, PUNCHINGSTRONG, HURT, DEAD, BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING, KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL, DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2, AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL}
+enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD, BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING, KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL, DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2, AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE}
 
 var state: int = States.IDLE
 
@@ -210,13 +209,13 @@ func _physics_process(delta: float) -> void:
 			fallsprinting(delta, INPUT_AXIS)
 		States.HALTING:
 			halting(delta, INPUT_AXIS)
-		States.CHARGEPUNCHING:
+		States.CHARGEPUNCHCHARGE:
 			chargepunching(delta, INPUT_AXIS)
-		States.PUNCHINGWEAK:
+		States.PUNCHING:
 			punchingweak(delta, INPUT_AXIS)
-		States.PUNCHINGMID:
+		States.CHARGEPUNCHWEAK:
 			punchingmid(delta, INPUT_AXIS)
-		States.PUNCHINGSTRONG:
+		States.CHARGEPUNCHSTRONG:
 			punchingstrong(delta, INPUT_AXIS)
 		States.HURT:
 			hurt(delta, INPUT_AXIS)
@@ -288,6 +287,16 @@ func _physics_process(delta: float) -> void:
 			blockperfect(delta, INPUT_AXIS)
 		States.BLOCKREL:
 			blockrelease(delta, INPUT_AXIS)
+		States.SEXKICK:
+			sexkick(delta, INPUT_AXIS)
+		States.CHARGEKICKCHARGE:
+			chargekicking(delta, INPUT_AXIS)
+		States.CHARGEKICKWEAK:
+			chargekickweak(delta, INPUT_AXIS)
+		States.CHARGEKICKSTRONG:
+			chargekickstrong(delta, INPUT_AXIS)
+		States.CHARGEKICKEXPLODE:
+			chargekickexplode(delta, INPUT_AXIS)
 	update_animations(INPUT_AXIS)
 	check_for_death()
 	attachToBoard()
@@ -324,8 +333,9 @@ func spontaniously_combust() -> void:
 	var exploded: bool = false
 	if exploded == false:
 		var explosion_instance: Node = explosion.instantiate()
-		explosion_instance.spawnPosition = marker.global_position
-		explosion_instance.explosion_size = 0.5
+		explosion_instance.spawnPosition = ExplosionMarker.global_position
+		explosion_instance.explosionSize = 0.8
+		explosion_instance.cantHurtEnzo = true
 		get_parent().add_child(explosion_instance)
 		exploded = true
 
@@ -344,9 +354,9 @@ func idle(delta: float, INPUT_AXIS: float) -> void:
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.JUMPING)
 			if Input.is_action_just_pressed("character_x"):
-				change_state(States.CHARGEPUNCHING)
+				change_state(States.CHARGEPUNCHCHARGE)
 			if Input.is_action_just_pressed("character_s"):
-				change_state(States.KICK)
+				change_state(States.CHARGEKICKCHARGE)
 			if Input.is_action_just_pressed("character_c"):
 				if INPUT_AXIS != 0:
 					if not Input.is_action_pressed("ui_up"):
@@ -374,6 +384,11 @@ func jumping(INPUT_AXIS: float) -> void:
 			change_state(States.SPIKER1)
 		else:
 			change_state(States.AIRJAB)
+	if Input.is_action_just_pressed("character_s"):
+		if Input.is_action_pressed("ui_down"):
+			pass
+		else:
+			change_state(States.SEXKICK)
 	await get_tree().create_timer(0.1).timeout
 	# What can this transition to after the 0.1 delay
 	if state == States.JUMPING:
@@ -414,6 +429,11 @@ func falling(delta: float, INPUT_AXIS: float) -> void:
 			change_state(States.SPIKER1)
 		else:
 			change_state(States.AIRJAB)
+	if Input.is_action_just_pressed("character_s"):
+		if Input.is_action_pressed("ui_down"):
+			pass
+		else:
+			change_state(States.SEXKICK)
 	if Input.is_action_just_pressed("character_c"):
 		if INPUT_AXIS != 0:
 			if not Input.is_action_pressed("ui_up"):
@@ -448,9 +468,9 @@ func walking(delta: float, INPUT_AXIS: float) -> void:
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.JUMPING)
 			if Input.is_action_just_pressed("character_x"):
-				change_state(States.CHARGEPUNCHING)
+				change_state(States.CHARGEPUNCHCHARGE)
 			if Input.is_action_just_pressed("character_s"):
-				change_state(States.KICK)
+				change_state(States.CHARGEKICKCHARGE)
 			if Input.is_action_just_pressed("character_c"):
 				if not Input.is_action_pressed("ui_up"):
 					change_state(States.PARRYFORWARDS)
@@ -476,9 +496,9 @@ func running(delta: float, INPUT_AXIS: float) -> void:
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.JUMPING)
 			if Input.is_action_just_pressed("character_x"):
-				change_state(States.CHARGEPUNCHING)
+				change_state(States.CHARGEPUNCHCHARGE)
 			if Input.is_action_just_pressed("character_s"):
-				change_state(States.KICK)
+				change_state(States.CHARGEKICKCHARGE)
 			if Input.is_action_just_pressed("character_c"):
 				if INPUT_AXIS != 0:
 					if not Input.is_action_pressed("ui_up"):
@@ -690,13 +710,13 @@ func chargepunching(delta: float, INPUT_AXIS: float) -> void:
 	# What can this transition to
 	if Input.is_action_pressed("character_x") == false:
 		if animation.current_animation_position < 0.4 or animation.current_animation_position > 0.7:
-				change_state(States.PUNCHINGWEAK)
-				punchcooldown.start()
+			change_state(States.PUNCHING)
+			punchcooldown.start()
 		if animation.current_animation_position >= 0.4 and animation.current_animation_position < 0.6:
-				change_state(States.PUNCHINGMID)
+			change_state(States.CHARGEPUNCHWEAK)
 		if animation.current_animation_position >= 0.6 and animation.current_animation_position <= 0.7:
-				hitStop(0.1, 0.5)
-				change_state(States.PUNCHINGSTRONG)
+			hitStop(0.1, 0.5)
+			change_state(States.CHARGEPUNCHSTRONG)
 		if animation.is_playing() == false:
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -712,7 +732,7 @@ func punchingweak(delta: float, INPUT_AXIS: float) -> void:
 	hitSoundType = $"Spritesheet/Sound effects/Weakpunch"
 	directionalKnockback(300, -150, true)
 	# What can this transition to
-	if state == States.PUNCHINGWEAK:
+	if state == States.PUNCHING:
 		if animation.is_playing() == false:
 			if is_on_floor():
 				if INPUT_AXIS == 0:
@@ -724,7 +744,7 @@ func punchingweak(delta: float, INPUT_AXIS: float) -> void:
 		if punchcooldown.time_left > 0:
 			if Input.is_action_just_pressed("character_x") and is_on_floor():
 				await get_tree().create_timer(punchcooldown.time_left).timeout
-				if state == States.PUNCHINGWEAK and is_on_floor():
+				if state == States.PUNCHING and is_on_floor():
 					punchcooldown.start()
 					change_state(States.PUNCH2)
 		else:
@@ -753,11 +773,11 @@ func punch2(delta: float, INPUT_AXIS: float) -> void:
 				await get_tree().create_timer(punchcooldown.time_left).timeout
 				if state == States.PUNCH2 and is_on_floor():
 					punchcooldown.start()
-					change_state(States.PUNCHINGWEAK)
+					change_state(States.PUNCHING)
 		else:
 			if Input.is_action_just_pressed("character_x") and is_on_floor():
 				punchcooldown.start()
-				change_state(States.PUNCHINGWEAK)
+				change_state(States.PUNCHING)
 
 func punchingmid(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -808,6 +828,94 @@ func airjabbing(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.FALLING)
 		if animation.get_current_animation_position() >= 0.1 and is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+				squish()
+			else:
+				change_state(States.WALKING)
+				squish()
+
+func chargekicking(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS * 0.3, ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if Input.is_action_pressed("character_s") == false:
+		if animation.current_animation_position < 0.4 or animation.current_animation_position > 1.6:
+			change_state(States.KICK)
+		if animation.current_animation_position >= 0.4 and animation.current_animation_position < 1.2:
+			change_state(States.CHARGEKICKWEAK)
+		if animation.current_animation_position >= 1.2 and animation.current_animation_position <= 1.6:
+			velocity.x += 300 * spritesheet.scale.x
+			change_state(States.CHARGEKICKSTRONG)
+	if animation.is_playing() == false:
+		spontaniously_combust()
+		change_state(States.CHARGEKICKEXPLODE)
+
+func chargekickweak(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	hitSoundType = $"Spritesheet/Sound effects/Kick"
+	directionalKnockback(700, -100, true)
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+
+func chargekickstrong(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	hitSoundType = $"Spritesheet/Sound effects/Kick"
+	directionalKnockback(800, -200, true)
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+
+func chargekickexplode(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = 0
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if state == States.CHARGEKICKEXPLODE:
+		if animation.is_playing() == false:
+			if is_on_floor():
+				if INPUT_AXIS == 0:
+					change_state(States.IDLE)
+				else:
+					change_state(States.WALKING)
+			else:
+				change_state(States.FALLING)
+
+func sexkick(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	hitSoundType = $"Spritesheet/Sound effects/Kick"
+	directionalKnockback(400, -100, true)
+	# What can this transition to
+	if state == States.SEXKICK:
+		if animation.is_playing() == false:
+			if is_on_floor():
+				if INPUT_AXIS == 0:
+					change_state(States.IDLE)
+				else:
+					change_state(States.WALKING)
+			else:
+				change_state(States.FALLING)
+		if animation.get_current_animation_position() >= 0.2 and is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
 				squish()
@@ -974,126 +1082,6 @@ func airstomping(delta: float, INPUT_AXIS: float) -> void:
 				else:
 					change_state(States.WALKING)
 
-var collidingWithHurtbox: bool = false
-var collidingWithLava: bool = false
-var radical: bool = false
-var isOnBoard: bool = false
-var justJumpedOffBoard: bool = false
-var canWallJump: bool = false
-var howToDie: String
-@onready var hitSoundType: AudioStreamPlayer2D = $"Spritesheet/Sound effects/Weakpunch"
-
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtsEnzo") or area.is_in_group("Explosion"):
-		# Flip sprite
-		if area.global_position.x >= global_position.x:
-			$Spritesheet.scale.x = 1
-		else:
-			$Spritesheet.scale.x = -1
-		# Check for self's hurtbox's state
-		if invincibility_timer.time_left == 0.0:
-			if hurtbox.get_meta("state") == "blocking":
-				#Block
-				change_state(States.BLOCKHIT)
-				blocktimer.start()
-				give_score(25, true)
-			if hurtbox.get_meta("state") == "vuln":
-				#Hurt
-				howToDie = area.get_meta("deathtype")
-				change_state(States.HURT)
-				check_and_damage(true, true, 200)
-				if health >= 1:
-					velocity.y = -300
-		if hurtbox.get_meta("state") == "blockingperfect":
-			#Perfect Block
-			change_state(States.BLOCKPERFECT)
-			invincibility_timer.wait_time = 0.6
-			invincibility_timer.start()
-			blocktimer.stop()
-			give_score(50, true)
-	if area.is_in_group("Lava"):
-		if lava_invincibility.time_left == 0:
-			howToDie = "burn"
-			change_state(States.BURNJUMPING)
-			if area.global_position.y > global_position.y:
-				velocity.y = -800
-			else:
-				velocity.y = 800
-			lava_invincibility.start()
-			check_and_damage(false, false, 200)
-	if area.is_in_group("Skateboard"):
-		isOnBoard = true
-		if radical == false and justJumpedOffBoard == false:
-			velocity.x = 0
-			radical = true
-		change_state(States.SKATING)
-		skateboard = area
-		add_child(skateboard)
-	if area.is_in_group("Heal"):
-		if health + area.get_meta("heal") > 5:
-			if regen + (area.get_meta("heal") - (5 - health)) > 5:
-				regen_give(5 - regen)
-				change_regen(regen + (5 - regen)) 
-			else:
-				regen_give(area.get_meta("heal") - (5 - health))
-				change_regen(regen + (area.get_meta("heal") - (5 - health))) 
-			heart_heal(5 - health)
-			change_hp(health + (5 - health))
-		else:
-			heart_heal(area.get_meta("heal"))
-			change_hp(health + area.get_meta("heal"))
-		Globalvars.EnzoHeal.emit()
-
-func _on_hurtbox_area_exited(area: Area2D) -> void:
-	if area.is_in_group("Skateboard"):
-		isOnBoard = false
-		skateboard = area
-		remove_child(skateboard)
-		if state != States.SKATEJUMPDETATCH:
-			radical = false
-
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtsEnzo"):
-				# Hitting hitbox
-				# Clash
-				if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
-					if hitbox.get_meta("type") == "norm":
-						#Rebound
-						print("Enzo has rebound")
-						pr_rebound.position = hitboxshape.position
-						pr_rebound.set_emitting(true)
-					if hitbox.get_meta("type") == "parry":
-						#Projectile Parry
-						give_score(100, true)
-						pr_parry.set_emitting(true)
-				else:
-					#Clank
-					print("Clank")
-					if area.global_position.x >= position.x:
-						$Spritesheet.scale.x = 1
-						velocity.x = -300
-					else:
-						$Spritesheet.scale.x = -1
-						velocity.x = 300
-					hurtboxstun(0.3)
-					pr_clank.position = hitboxshape.position
-					pr_clank.set_emitting(true)
-	if area.is_in_group("EnemyHurtbox"):
-		# No wall
-		# Enzo Hit something
-		randomizeAudioPitch(hitSoundType, 0.3)
-		hitSoundType.play()
-		if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
-			# Melee parry
-			give_score(100, true)
-			pr_parry.set_emitting(true)
-
-func collides_with_hitbox(area: Area2D) -> bool:
-	if area.is_in_group("HurtsEnzo"):
-		return true
-	else:
-		return false
-
 func hurt(delta: float, INPUT_AXIS: float) -> void:
 	# What to do
 	if $Spritesheet.scale.x == 1:
@@ -1222,9 +1210,9 @@ func blockperfect(delta: float, INPUT_AXIS: float) -> void:
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.JUMPING)
 			if Input.is_action_just_pressed("character_x"):
-				change_state(States.CHARGEPUNCHING)
+				change_state(States.CHARGEPUNCHCHARGE)
 			if Input.is_action_just_pressed("character_s"):
-				change_state(States.KICK)
+				change_state(States.CHARGEKICKCHARGE)
 			if Input.is_action_just_pressed("character_c"):
 				if INPUT_AXIS != 0:
 					if not Input.is_action_pressed("ui_up"):
@@ -1437,6 +1425,11 @@ func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
 				change_state(States.SPIKER1)
 			else:
 				change_state(States.AIRJAB)
+		if Input.is_action_just_pressed("character_s"):
+			if Input.is_action_pressed("ui_down"):
+				pass
+			else:
+				change_state(States.SEXKICK)
 		if Input.is_action_just_pressed("character_c"):
 			if INPUT_AXIS != 0:
 				if not Input.is_action_pressed("ui_up"):
@@ -1450,6 +1443,130 @@ func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
 					pass
 	await get_tree().create_timer(0.3).timeout
 	justJumpedOffBoard = false
+
+# Handle Hit/Hurtboxes
+
+var collidingWithHurtbox: bool = false
+var collidingWithLava: bool = false
+var radical: bool = false
+var isOnBoard: bool = false
+var justJumpedOffBoard: bool = false
+var canWallJump: bool = false
+var howToDie: String
+@onready var hitSoundType: AudioStreamPlayer2D = $"Spritesheet/Sound effects/Weakpunch"
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("EnemyHitbox") or area.is_in_group("EnvironmentalHitbox"):
+		# Flip sprite
+		if area.global_position.x >= global_position.x:
+			$Spritesheet.scale.x = 1
+		else:
+			$Spritesheet.scale.x = -1
+		# Check for self's hurtbox's state
+		if invincibility_timer.time_left == 0.0:
+			if hurtbox.get_meta("state") == "blocking":
+				#Block
+				change_state(States.BLOCKHIT)
+				blocktimer.start()
+				give_score(25, true)
+			if hurtbox.get_meta("state") == "vuln":
+				#Hurt
+				howToDie = area.get_meta("deathtype")
+				change_state(States.HURT)
+				check_and_damage(true, true, 200)
+				if health >= 1:
+					velocity.y = -300
+		if hurtbox.get_meta("state") == "blockingperfect":
+			#Perfect Block
+			change_state(States.BLOCKPERFECT)
+			invincibility_timer.wait_time = 0.6
+			invincibility_timer.start()
+			blocktimer.stop()
+			give_score(50, true)
+	if area.is_in_group("Lava"):
+		if lava_invincibility.time_left == 0:
+			howToDie = "burn"
+			change_state(States.BURNJUMPING)
+			if area.global_position.y > global_position.y:
+				velocity.y = -800
+			else:
+				velocity.y = 800
+			lava_invincibility.start()
+			check_and_damage(false, false, 200)
+	if area.is_in_group("Skateboard"):
+		isOnBoard = true
+		if radical == false and justJumpedOffBoard == false:
+			velocity.x = 0
+			radical = true
+		change_state(States.SKATING)
+		skateboard = area
+		add_child(skateboard)
+	if area.is_in_group("Heal"):
+		if health + area.get_meta("heal") > 5:
+			if regen + (area.get_meta("heal") - (5 - health)) > 5:
+				regen_give(5 - regen)
+				change_regen(regen + (5 - regen)) 
+			else:
+				regen_give(area.get_meta("heal") - (5 - health))
+				change_regen(regen + (area.get_meta("heal") - (5 - health))) 
+			heart_heal(5 - health)
+			change_hp(health + (5 - health))
+		else:
+			heart_heal(area.get_meta("heal"))
+			change_hp(health + area.get_meta("heal"))
+		Globalvars.EnzoHeal.emit()
+
+func _on_hurtbox_area_exited(area: Area2D) -> void:
+	if area.is_in_group("Skateboard"):
+		isOnBoard = false
+		skateboard = area
+		remove_child(skateboard)
+		if state != States.SKATEJUMPDETATCH:
+			radical = false
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("EnemyHitbox"):
+				# Hitting hitbox
+				# Clash
+				if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
+					if hitbox.get_meta("type") == "norm":
+						#Rebound
+						print("Enzo has rebound")
+						pr_rebound.position = hitboxshape.position
+						pr_rebound.set_emitting(true)
+					if hitbox.get_meta("type") == "parry":
+						#Projectile Parry
+						give_score(100, true)
+						pr_parry.set_emitting(true)
+				else:
+					#Clank
+					print("Clank")
+					if area.global_position.x >= position.x:
+						$Spritesheet.scale.x = 1
+						velocity.x = -300
+					else:
+						$Spritesheet.scale.x = -1
+						velocity.x = 300
+					hurtboxstun(0.3)
+					pr_clank.position = hitboxshape.position
+					pr_clank.set_emitting(true)
+	if area.is_in_group("EnemyHurtbox"):
+		# No wall
+		# Enzo Hit something
+		randomizeAudioPitch(hitSoundType, 0.3)
+		hitSoundType.play()
+		if area.get_meta("state") == "parriable" and hitbox.get_meta("type") == "parry":
+			# Melee parry
+			give_score(100, true)
+			pr_parry.set_emitting(true)
+
+func collides_with_hitbox(area: Area2D) -> bool:
+	if area.is_in_group("EnemyHitbox"):
+		return true
+	else:
+		return false
+
+# Handle Misc crap
 
 func update_animations(INPUT_AXIS: float) -> void:
 	if state == States.IDLE:
@@ -1484,15 +1601,15 @@ func update_animations(INPUT_AXIS: float) -> void:
 		animation.play("sprint")
 	if state == States.HALTING:
 		animation.play("skid")
-	if state == States.CHARGEPUNCHING:
+	if state == States.CHARGEPUNCHCHARGE:
 		animation.play("chargepunchcharge")
-	if state == States.PUNCHINGWEAK:
+	if state == States.PUNCHING:
 		animation.play("punch")
 	if state == States.PUNCH2:
 		animation.play("punch2")
-	if state == States.PUNCHINGMID:
+	if state == States.CHARGEPUNCHWEAK:
 		animation.play("chargepunchweak")
-	if state == States.PUNCHINGSTRONG:
+	if state == States.CHARGEPUNCHSTRONG:
 		animation.play("chargepunchstrong")
 	if state == States.HURT:
 		animation.play("hurt")
@@ -1540,7 +1657,7 @@ func update_animations(INPUT_AXIS: float) -> void:
 	if state == States.SIDESWEEP:
 		animation.play("sidesweep")
 	if state == States.PARRYFORWARDS:
-		animation.play("parryfoward")
+		animation.play("parryforward")
 	if state == States.PARRYFUPWARDS:
 		animation.play("parryfupward")
 	if state == States.PARRYUPWARDS:
@@ -1575,6 +1692,18 @@ func update_animations(INPUT_AXIS: float) -> void:
 		animation.play("blockrelease")
 	if state == States.BLOCKPERFECT:
 		animation.play("blockperfect")
+	if state == States.SEXKICK:
+		animation.play("sexkick")
+	if state == States.CHARGEKICKCHARGE:
+		animation.play("chargekickcharge")
+		if INPUT_AXIS != 0:
+			$Spritesheet.scale.x = INPUT_AXIS
+	if state == States.CHARGEKICKWEAK:
+		animation.play("chargekickweak")
+	if state == States.CHARGEKICKSTRONG:
+		animation.play("chargekickstrong")
+	if state == States.CHARGEKICKEXPLODE:
+		animation.play("chargekickexploded")
 
 func hitStop(_timeScale: float, _duration: float) -> void:
 	pass

@@ -1,8 +1,8 @@
 extends RigidBody2D
 
 @onready var label = $Label
-@onready var hitboxshape = $Crate/CrateHitbox/Hitbox
-@onready var hitbox = $Crate/CrateHitbox
+@onready var hurtboxshape = $Crate/CrateHitbox/HurtboxShape
+@onready var hurtbox = $Crate/CrateHurtbox
 @onready var crate: Sprite2D = $Crate
 @onready var crate_collision: CollisionShape2D = $CollisionShape2D
 @onready var animation = $Crate/CrateAnimationPlayer
@@ -23,14 +23,14 @@ func _physics_process(_delta: float) -> void:
 	label.text = str(sfx_explode.pitch_scale)
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("PlayerHitbox"):
 		explode()
-	if area.is_in_group("Explosion"):
+	if area.is_in_group("EnvironmentalHitbox"):
 		await get_tree().create_timer(0.3).timeout
 		explode()
 	if area.is_in_group("CloseExplosion"):
 		explode()
-	if area.is_in_group("HurtsEnzo"):
+	if area.is_in_group("EnemyHitbox"):
 		explode()
 
 func _on_area_2d_area_exited(_area: Area2D) -> void:

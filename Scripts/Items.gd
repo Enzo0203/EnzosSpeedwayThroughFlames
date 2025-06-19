@@ -15,5 +15,5 @@ func _physics_process(delta: float):
 	$Spritesheet/AnimationPlayer.play("idle")
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		queue_free()

@@ -39,19 +39,19 @@ var EnzoInArea2: bool = false
 var Obstacle: bool
 
 func _on_enzo_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea = true
 
 func _on_enzo_detector_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea = false
 
 func _on_enzo_detector_2_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea2 = true
 
 func _on_enzo_detector_2_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoInArea2 = false
 
 func _on_obstacle_detector_body_entered(_body: Node2D) -> void:
@@ -113,24 +113,23 @@ func dead(delta):
 	collision_mask = 0
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
+	if area.is_in_group("PlayerHitbox") or area.is_in_group("EnvironmentalHitbox"):
 		if is_dead == false:
-			if area.is_in_group("EnzoHitbox") or area.is_in_group("Explosion"):
-				addToMiniCombo(1)
-				give_score(100, true)
-				hitStop(0.1, 0.3)
-				change_state(States.DEAD)
-				velocity = area.get_meta("kbdirection")
-				is_dead = true
-				Globalvars.EnzoComboUpdated.emit()
-				Globalvars.EnzoCombo += 1
+			addToMiniCombo(1)
+			give_score(100, true)
+			hitStop(0.1, 0.3)
+			change_state(States.DEAD)
+			velocity = area.get_meta("kbdirection")
+			is_dead = true
+			Globalvars.EnzoComboUpdated.emit()
+			Globalvars.EnzoCombo += 1
 
 func addToMiniCombo(value: int):
 	Globalvars.EnzoMiniCombo += value
 	Globalvars.EnzoMiniComboUpdated.emit()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHitbox"):
+	if area.is_in_group("PlayerHitbox"):
 		# compare strength
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
 			# Insert Minicounter below

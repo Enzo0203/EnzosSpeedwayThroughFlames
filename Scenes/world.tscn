@@ -1883,7 +1883,7 @@ _data = {
 
 [node name="World" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="." groups=["tileset"]]
+[node name="TileMap" type="TileMap" parent="." groups=["EnvironmentalCollision"]]
 position = Vector2(0, -1)
 tile_set = SubResource("TileSet_6yvbu")
 format = 2

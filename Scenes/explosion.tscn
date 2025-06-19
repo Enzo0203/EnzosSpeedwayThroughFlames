@@ -7,6 +7,7 @@
 [sub_resource type="Animation" id="Animation_n3uk2"]
 resource_name = "Orange Instant"
 length = 1.10001
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -22,7 +23,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -34,7 +35,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Small hurtbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Small hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -97,7 +98,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -109,7 +110,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Small hurtbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Small hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -172,11 +173,11 @@ script = ExtResource("1_ckycj")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_jinow")
+&"": SubResource("AnimationLibrary_jinow")
 }
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["Explosion"]]
-collision_layer = 8
+[node name="Hitbox" type="Area2D" parent="." groups=["EnvironmentalHitbox", "Explosion"]]
+collision_layer = 2048
 collision_mask = 0
 monitoring = false
 metadata/dmg = 3
@@ -184,17 +185,17 @@ metadata/strength = 100
 metadata/kbdirection = Vector2(0, -500)
 metadata/deathtype = "burn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_yuply")
 disabled = true
 debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
-[node name="Small hurtbox" type="Area2D" parent="." groups=["CloseExplosion"]]
-collision_layer = 8
+[node name="Small hitbox" type="Area2D" parent="." groups=["CloseExplosion"]]
+collision_layer = 2048
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Small hurtbox"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Small hitbox"]
 polygon = PackedVector2Array(-34.2857, 0, -1.42857, -1.42857, 0, -32.8571, 1.42857, -1.42857, 32.8571, 0, 1.42857, 1.42857, 0, 30, -1.42857, 1.42857)
 disabled = true
 

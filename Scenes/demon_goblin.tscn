@@ -783,7 +783,7 @@ debug_color = Color(0.156863, 0.509804, 0, 0.419608)
 [node name="ObstacleDetector" type="Area2D" parent="Spritesheet"]
 visible = false
 collision_layer = 0
-collision_mask = 1065
+collision_mask = 41
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/ObstacleDetector"]
 position = Vector2(21, 21)
@@ -806,7 +806,7 @@ collision_mask = 9
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["HurtsEnzo"]]
+[node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnemyHitbox"]]
 position = Vector2(3, 42)
 collision_layer = 1024
 collision_mask = 16

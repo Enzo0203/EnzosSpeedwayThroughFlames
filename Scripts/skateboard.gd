@@ -10,13 +10,13 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var EnzoIsOn = false
 
 func _on_enzo_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoIsOn = true
 		set_collision_layer_value(6, true)
 		velocity.x = Globalvars.EnzoVelocity
 
 func _on_enzo_detector_area_exited(area: Area2D) -> void:
-	if area.is_in_group("EnzoHurtbox"):
+	if area.is_in_group("PlayerHurtbox"):
 		EnzoIsOn = false
 		set_collision_layer_value(6, false)
  

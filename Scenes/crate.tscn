@@ -37,7 +37,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Crate/CrateHitbox/Hitbox:disabled")
+tracks/2/path = NodePath("Crate/CrateHurtbox/HurtboxShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -78,7 +78,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Crate/CrateHitbox/Hitbox:disabled")
+tracks/2/path = NodePath("Crate/CrateHurtbox/HurtboxShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -122,7 +122,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hitbox/HitboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -134,7 +134,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Small hurtbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Small hitbox/SmallhitboxShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -197,7 +197,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hitbox/HitboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -209,7 +209,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Small hurtbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Small hitbox/SmallhitboxShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -294,7 +294,7 @@ scale_min = 0.01
 scale_max = 0.07
 color_ramp = SubResource("GradientTexture1D_kg52v")
 
-[node name="RigidBody2d" type="RigidBody2D" groups=["tileset"]]
+[node name="RigidBody2d" type="RigidBody2D" groups=["EnvironmentalCollision", "tileset"]]
 collision_layer = 8
 collision_mask = 0
 gravity_scale = 0.0
@@ -309,11 +309,11 @@ libraries = {
 &"": SubResource("AnimationLibrary_c16v8")
 }
 
-[node name="CrateHitbox" type="Area2D" parent="Crate" groups=["hazard"]]
+[node name="CrateHurtbox" type="Area2D" parent="Crate" groups=["EnvironmentalHurtbox", "hazard"]]
 collision_layer = 8
 collision_mask = 3092
 
-[node name="Hitbox" type="CollisionShape2D" parent="Crate/CrateHitbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Crate/CrateHurtbox"]
 shape = SubResource("RectangleShape2D_tplgh")
 debug_color = Color(0.984314, 0, 0.356863, 0.282353)
 
@@ -341,7 +341,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_jinow")
 }
 
-[node name="Hurtbox" type="Area2D" parent="Explosion" groups=["Explosion"]]
+[node name="Hitbox" type="Area2D" parent="Explosion" groups=["EnvironmentalHitbox", "Explosion"]]
 visible = false
 collision_layer = 2048
 collision_mask = 0
@@ -351,19 +351,19 @@ metadata/strength = 100
 metadata/kbdirection = Vector2(0, -500)
 metadata/deathtype = "burn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Explosion/Hurtbox"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Explosion/Hitbox"]
 visible = false
 shape = SubResource("CircleShape2D_o3bdv")
 disabled = true
 debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
-[node name="Small hurtbox" type="Area2D" parent="Explosion" groups=["CloseExplosion"]]
+[node name="Small hitbox" type="Area2D" parent="Explosion" groups=["CloseExplosion"]]
 visible = false
 collision_layer = 2048
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Explosion/Small hurtbox"]
+[node name="SmallhitboxShape" type="CollisionPolygon2D" parent="Explosion/Small hitbox"]
 visible = false
 polygon = PackedVector2Array(-34.2857, 0, -1.42857, -1.42857, 0, -32.8571, 1.42857, -1.42857, 32.8571, 0, 1.42857, 1.42857, 0, 30, -1.42857, 1.42857)
 disabled = true
@@ -381,5 +381,5 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_uv5pw")
 
-[connection signal="area_entered" from="Crate/CrateHitbox" to="." method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="Crate/CrateHitbox" to="." method="_on_area_2d_area_exited"]
+[connection signal="area_entered" from="Crate/CrateHurtbox" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Crate/CrateHurtbox" to="." method="_on_area_2d_area_exited"]

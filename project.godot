@@ -35,7 +35,20 @@ window/vsync/vsync_mode=0
 
 [editor]
 
-movie_writer/movie_file="C:/Users/Enzo/Desktop/EnzoGameplay.avi"
+movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoGameplay.avi"
+movie_writer/disable_vsync=true
+
+[global_group]
+
+PlayerCollision=""
+EnemyCollision=""
+PlayerHitbox=""
+EnemyHitbox=""
+EnemyHurtbox=""
+PlayerHurtbox=""
+EnvironmentalCollision=""
+EnvironmentalHitbox=""
+EnvironmentalHurtbox=""
 
 [gui]
 
@@ -86,7 +99,7 @@ character_c={
 2d_physics/layer_9="Pickups"
 2d_physics/layer_10="Camera attractors"
 2d_physics/layer_11="EnemyAttack"
-2d_physics/layer_12="Environment attack"
+2d_physics/layer_12="EnvironmentAttack"
 
 [physics]
 

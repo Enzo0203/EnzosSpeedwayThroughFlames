@@ -35,7 +35,6 @@ collision_layer = 64
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SkateboardEnzoDetector"]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_bige3")
 debug_color = Color(0, 0.647059, 0.180392, 0.419608)
 

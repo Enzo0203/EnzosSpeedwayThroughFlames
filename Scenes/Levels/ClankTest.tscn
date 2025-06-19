@@ -1,19 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqswfm0ot0eea"]
+[gd_scene load_steps=9 format=3 uid="uid://cqswfm0ot0eea"]
 
+[ext_resource type="Script" uid="uid://bqcyj8arg2fm4" path="res://Scenes/Levels/ClankTest.gd" id="1_1pqah"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="1_sot3c"]
 [ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier sheet.png" id="2_1pqah"]
+[ext_resource type="Texture2D" uid="uid://dh3a8cyoarhku" path="res://Sprites/HUD/Particles/TextClank.png" id="4_2c7da"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c7da"]
 resource_local_to_scene = true
 size = Vector2(49, 90)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pqah"]
-size = Vector2(75, 34)
+size = Vector2(82.5, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sot3c"]
 size = Vector2(55, 113)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kxwl"]
+size = Vector2(114, 46)
+
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_1pqah")
 
 [node name="Enzo" type="CharacterBody2D" parent="."]
 position = Vector2(-112, -2)
@@ -23,24 +29,30 @@ position = Vector2(8, 8)
 texture = ExtResource("1_sot3c")
 hframes = 7
 vframes = 35
-frame = 15
+frame = 184
 
-[node name="Hurtbox" type="Area2D" parent="Enzo"]
+[node name="Hurtbox" type="Area2D" parent="Enzo" groups=["PlayerHurtbox"]]
 position = Vector2(14, 13)
+collision_layer = 4
+collision_mask = 1024
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Enzo/Hurtbox"]
 shape = SubResource("RectangleShape2D_2c7da")
 debug_color = Color(0.996078, 0, 0.211765, 0.211765)
 
-[node name="Hitbox" type="Area2D" parent="Enzo"]
+[node name="Hitbox" type="Area2D" parent="Enzo" groups=["PlayerHitbox"]]
 position = Vector2(39, 3)
+collision_layer = 16
+collision_mask = 1152
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Enzo/Hitbox"]
+position = Vector2(3.75, 0)
 shape = SubResource("RectangleShape2D_1pqah")
-debug_color = Color(0.96738, 0, 0.481915, 0.211765)
+disabled = true
+debug_color = Color(0.945716, 6.16074e-06, 0.591172, 0.42)
 
 [node name="Demon" type="CharacterBody2D" parent="."]
-position = Vector2(80, 8)
+position = Vector2(8, 8)
 
 [node name="Sprite" type="Sprite2D" parent="Demon"]
 texture = ExtResource("2_1pqah")
@@ -48,16 +60,41 @@ hframes = 5
 vframes = 5
 frame = 18
 
-[node name="Area2D" type="Area2D" parent="Demon"]
+[node name="Hurtbox" type="Area2D" parent="Demon" groups=["EnemyHurtbox"]]
 position = Vector2(-1, -6)
+collision_layer = 128
+collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Demon/Area2D"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Demon/Hurtbox"]
 shape = SubResource("RectangleShape2D_sot3c")
 debug_color = Color(0.996078, 0, 0.211765, 0.211765)
 
-[node name="Area2D2" type="Area2D" parent="Demon"]
+[node name="Hitbox" type="Area2D" parent="Demon" groups=["EnemyHitbox"]]
+position = Vector2(0, -6)
+collision_layer = 1024
+collision_mask = 20
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Demon/Area2D2"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Demon/Hitbox"]
+position = Vector2(-3, -17)
+shape = SubResource("RectangleShape2D_3kxwl")
+disabled = true
+debug_color = Color(0.945716, 6.16074e-06, 0.591172, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+texture = ExtResource("4_2c7da")
+one_shot = true
+fixed_fps = 30
+direction = Vector2(0, -1)
+spread = 0.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+
+[connection signal="area_entered" from="Enzo/Hurtbox" to="." method="enzoHurtboxAreaEntered"]
+[connection signal="area_entered" from="Enzo/Hitbox" to="." method="enzoHitboxAreaEntered"]
+[connection signal="area_entered" from="Demon/Hurtbox" to="." method="demonHurtboxAreaEntered"]
+[connection signal="area_entered" from="Demon/Hitbox" to="." method="demonHitboxAreaEntered"]
