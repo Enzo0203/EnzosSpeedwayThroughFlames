@@ -519,17 +519,15 @@ func sprinting(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, RUNNING_ACCELERATION * delta)
 	# What can this transition to
 	if state == States.SPRINTING:
-		if INPUT_AXIS == 0:
-			change_state(States.HALTING)
 		if not is_on_floor():
 			change_state(States.FALLSPRINTING)
 		if not Input.is_action_pressed("character_a"):
 			change_state(States.HALTING)
 		if velocity.x < 600 and velocity.x > -600:
 			change_state(States.HALTING)
-		if velocity.x > 0 and INPUT_AXIS == -1:
+		if velocity.x > 0 and INPUT_AXIS != 1:
 			change_state(States.HALTING)
-		if velocity.x < 0 and INPUT_AXIS == 1:
+		if velocity.x < 0 and INPUT_AXIS != -1:
 			change_state(States.HALTING)
 		if Input.is_action_pressed("character_z"):
 			change_state(States.JUMPSPRINTING)
@@ -569,6 +567,10 @@ func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
 		velocity.y = RUNNING_JUMP_VELOCITY / 2
 	if Input.is_action_just_pressed("ui_down"):
 		velocity.y = velocity.y + 500
+	if velocity.x > 0 and INPUT_AXIS == -1:
+		change_state(States.HALTING)
+	if velocity.x < 0 and INPUT_AXIS == 1:
+		change_state(States.HALTING)
 	# What can this transition to
 	if is_on_floor():
 		squish()
@@ -694,14 +696,36 @@ func halting(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	if animation.is_playing() == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
+	if state == States.HALTING:
+		if not is_on_floor():
 			change_state(States.FALLING)
+		if is_on_floor():
+			if Input.is_action_just_pressed("character_z"):
+				change_state(States.JUMPING)
+			if Input.is_action_just_pressed("character_x"):
+				change_state(States.CHARGEPUNCHCHARGE)
+			if Input.is_action_just_pressed("character_s"):
+				change_state(States.CHARGEKICKCHARGE)
+			if Input.is_action_just_pressed("character_c"):
+				if INPUT_AXIS != 0:
+					if not Input.is_action_pressed("ui_up"):
+						change_state(States.PARRYFORWARDS)
+					else:
+						change_state(States.PARRYFUPWARDS)
+				else:
+					if Input.is_action_pressed("ui_up"):
+						change_state(States.PARRYUPWARDS)
+					else:
+						blocktimer.start()
+						change_state(States.BLOCKPREP)
+		if animation.is_playing() == false:
+			if is_on_floor():
+				if INPUT_AXIS == 0:
+					change_state(States.IDLE)
+				else:
+					change_state(States.WALKING)
+			else:
+				change_state(States.FALLING)
 
 func chargepunching(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)

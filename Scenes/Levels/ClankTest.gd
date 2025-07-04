@@ -29,16 +29,30 @@ func demonHurt() -> void:
 	await get_tree().create_timer(0.5).timeout
 	$Demon/Sprite.frame = 18
 
-func enzoHurtboxAreaEntered(area: Area2D) -> void:
+func _enzoHitboxAreaEntered(area: Area2D) -> void:
+	if area.is_in_group("EnemyHitbox"):
+		$Enzo/Hitbox/HitboxShape.disabled = true
+		$CPUParticles2D.emitting = true
+
+func _enzoHurtboxAreaEntered(area: Area2D) -> void:
 	if area.is_in_group("EnemyHitbox"):
 		enzoHurt()
 
-func enzoHitboxAreaEntered(area: Area2D) -> void:
-	pass # Replace with function body.
-
-func demonHurtboxAreaEntered(area: Area2D) -> void:
+func _demonHitboxAreaEntered(area: Area2D) -> void:
 	if area.is_in_group("PlayerHitbox"):
-		demonHurt()
+		$Demon/Hitbox/HitboxShape.disabled = true
 
-func demonHitboxAreaEntered(area: Area2D) -> void:
-	pass # Replace with function body.
+func _demonHurtboxAreaEntered(area: Area2D) -> void:
+	if area.is_in_group("PlayerHitbox"):
+		# Shoot raycast from Self's Hurtbox's CollisionShape to Player's Hitbox's CollisionShape
+		$Demon/Raycast.global_position = $Demon/Hurtbox/HurtboxShape.global_position
+		$Demon/Raycast.target_position = ($Demon/Raycast.global_position - area.get_child(0).global_position) * -1
+		$Demon/Raycast.force_raycast_update()
+		if $Demon/Raycast.is_colliding() == false or $Demon/Hitbox.overlaps_area(area):
+			demonHurt()
+
+func is_player_hitbox(area: Area2D) -> bool:
+	if area.is_in_group("PlayerHitbox"):
+		return true
+	else:
+		return false
