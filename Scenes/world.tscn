@@ -1960,20 +1960,20 @@ centered = false
 
 [node name="Back" type="ParallaxLayer" parent="Background"]
 motion_scale = Vector2(0.6, 1)
-motion_mirroring = Vector2(960, 0)
+motion_mirroring = Vector2(1920, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Back"]
 texture_filter = 1
-position = Vector2(0, -49)
+position = Vector2(0, -142)
 texture = ExtResource("12_hd6d8")
 centered = false
 
 [node name="Trees" type="ParallaxLayer" parent="Background"]
-motion_mirroring = Vector2(960, 0)
+motion_mirroring = Vector2(1920, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Trees"]
 texture_filter = 1
-position = Vector2(0, -394)
+position = Vector2(0, -511)
 texture = ExtResource("10_v5pho")
 centered = false
 
