@@ -1,36 +1,36 @@
 extends CharacterBody2D
 
-@onready var enzo_detector: Area2D = $SkateboardEnzoDetector
-@onready var label: Label = $Label
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+const MAX_SPEED: float = 600
+const ACCELERATION: float = 10
+const FRICTION: float = 5
+const JUMP_HEIGHT: float = -500
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var grabbox: Area2D = $Grabbox
 
-var EnzoIsOn = false
+signal detachSkateboard
 
-func _on_enzo_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("PlayerHurtbox"):
-		EnzoIsOn = true
-		set_collision_layer_value(6, true)
-		velocity.x = Globalvars.EnzoVelocity
-
-func _on_enzo_detector_area_exited(area: Area2D) -> void:
-	if area.is_in_group("PlayerHurtbox"):
-		EnzoIsOn = false
-		set_collision_layer_value(6, false)
- 
-func _physics_process(delta):
-	label.text = str(EnzoIsOn)
+func _physics_process(delta: float) -> void:
+	detachSkateboard.connect(_detach_skateboard)
 	move_and_slide()
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
-	if EnzoIsOn == true:
-		if velocity.x > -400 and velocity.x < 400:
-			velocity.x = move_toward(velocity.x, 400 * Globalvars.EnzoDirection, 1000 * delta)
-		if velocity.x < -800 or velocity.x > 800:
-			velocity.x = move_toward(velocity.x, 800 * Globalvars.EnzoDirection, 1000 * delta)
-		if (Globalvars.EnzoState == 26 or Globalvars.EnzoState == 27) and Input.is_action_just_pressed("character_z") and is_on_floor():
-			velocity.y = -450
+	if grabbox.get_meta("active") == true:
+		velocity.x = move_toward(velocity.x, MAX_SPEED * Globalvars.EnzoDirection, ACCELERATION)
+		if Globalvars.EnzoState == 28 and is_on_floor():
+			velocity.y = JUMP_HEIGHT
 	else:
-		velocity.x = move_toward(velocity.x, 0, 200 * delta)
+		velocity.x = move_toward(velocity.x, 0, FRICTION)
+
+var enzo: Area2D
+
+func _on_grabbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("PlayerHurtbox"):
+		enzo = area
+		grabbox.set_meta("active", true)
+		velocity.x = Globalvars.EnzoVelocity
+
+func _detach_skateboard() -> void:
+	grabbox.set_meta("active", false)
+	enzo = null

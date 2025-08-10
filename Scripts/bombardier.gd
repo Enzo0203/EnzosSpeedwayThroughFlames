@@ -29,8 +29,6 @@ var is_dead: bool = false
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 
 @onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
-@onready var anticlip: RayCast2D = $Spritesheet/Anticlip
-
 
 var health: int = 30
 
@@ -79,7 +77,7 @@ func idle(delta: float):
 	velocity.y = min(velocity.y, 600)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	# What to do
-	if position.x <= Globalvars.EnzoPositionX:
+	if position.x <= Globalvars.EnzoPosition.x:
 		sprite.scale.x = -1
 	else:
 		sprite.scale.x = 1

@@ -95,10 +95,11 @@ func _physics_process(_delta: float) -> void:
 	Score5.play(str(Globalvars.EnzoScore).pad_zeros(6)[-5])
 	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[-6])
 	#Combo
-	ComboTimeBar.value = ComboTimer.time_left
-	ComboTimer.wait_time = Globalvars.EnzoCombo * 2
-	ComboTimer.wait_time = max(ComboTimer.wait_time, 4)
-	ComboTimer.wait_time = min(ComboTimer.wait_time, ComboTimeBar.max_value)
+	if Globalvars.EnzoCombo > 0:
+		ComboTimeBar.value = ComboTimer.time_left
+		ComboTimer.wait_time = Globalvars.EnzoCombo * 2
+		ComboTimer.wait_time = max(ComboTimer.wait_time, 4)
+		ComboTimer.wait_time = min(ComboTimer.wait_time, ComboTimeBar.max_value)
 	if ComboTimer.time_left == 0:
 		Globalvars.EnzoCombo = 0
 	if Globalvars.EnzoCombo < 10:
@@ -130,10 +131,11 @@ func _physics_process(_delta: float) -> void:
 	MultiNumber1.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-1])
 	MultiNumber2.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-3])
 	#Minicombo
-	MiniComboTimeBar.value = MiniComboTimer.time_left
-	MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
-	MiniComboTimer.wait_time = max(ComboTimer.wait_time, 3)
-	MiniComboTimer.wait_time = min(ComboTimer.wait_time, MiniComboTimeBar.max_value)
+	if Globalvars.EnzoMiniCombo > 0:
+		MiniComboTimeBar.value = MiniComboTimer.time_left
+		MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
+		MiniComboTimer.wait_time = max(ComboTimer.wait_time, 3)
+		MiniComboTimer.wait_time = min(ComboTimer.wait_time, MiniComboTimeBar.max_value)
 	if MiniComboTimer.time_left == 0:
 		Globalvars.EnzoMiniCombo = 0
 	if Globalvars.EnzoMiniCombo == 0:

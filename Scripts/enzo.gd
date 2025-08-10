@@ -15,8 +15,6 @@ var regen: int = Globalvars.EnzoRegen
 var regenarr: Array = Globalvars.EnzoRegenArr
 var regenstate: String = "noregen"
 
-var skateboard: Area2D
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -35,12 +33,21 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var pr_clank: CPUParticles2D = $Spritesheet/Texts/Clank
 @onready var pr_rebound: CPUParticles2D = $Spritesheet/Texts/Rebound
 @onready var pr_parry: CPUParticles2D = $Spritesheet/Texts/Parry
-
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 @onready var hitbox: Area2D = $Spritesheet/Hitbox
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 
-enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD, BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING, KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL, DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2, AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE}
+enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, #0-4
+SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, #5-9
+PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD, #10-14
+BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, #15-19
+BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, #20-24
+SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, #25-29
+SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING,
+KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL,
+DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2,
+AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK,
+CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE}
 
 var state: int = States.IDLE
 
@@ -168,16 +175,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	Globalvars.EnzoState = state
 	Globalvars.EnzoVelocity = velocity.x
-	Globalvars.EnzoPositionX = global_position.x
-	Globalvars.EnzoPositionY = global_position.y
+	Globalvars.EnzoPosition = global_position
 	Globalvars.EnzoHealth = health
 	Globalvars.EnzoHealthArr = healtharr
 	Globalvars.EnzoRegen = regen
 	Globalvars.EnzoRegenArr = regenarr
 	Globalvars.EnzoRegenState = regenstate
-	labelstate.text = str(coyote_jump_timer.time_left)
-	labelspeed.text = str(velocity.y)
-	labelthird.text = str(regentimer.time_left)
+	labelstate.text = str(state)
+	if skateboard:
+		labelspeed.text = str(skateboard.get_child(1).global_position)
+		labelthird.text = str(global_position == skateboard.get_child(1).global_position)
 	if velocity.x > 100 and velocity.x < 800:
 		Globalvars.EnzoMovement = 1
 	elif velocity.x < -100 and velocity.x > -800:
@@ -299,8 +306,8 @@ func _physics_process(delta: float) -> void:
 			chargekickexplode(delta, INPUT_AXIS)
 	update_animations(INPUT_AXIS)
 	check_for_death()
-	attachToBoard()
 	check_and_regen()
+	set_skating()
 	if is_on_floor():
 		canEnzoStomp = true
 		$Spritesheet/Walljumpdetector/Walljumpdetector.disabled = true
@@ -1354,26 +1361,29 @@ func wallkicking(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.FALLING)
 
+var isOnBoard: bool = false:
+	set(value):
+		if value == false:
+			if skateboard:
+				skateboard.get_parent().detachSkateboard.emit()
+				skateboard = null
+
+var skateboard: Area2D = null
+
 func skating(_delta: float, INPUT_AXIS: float) -> void:
 	# What to do
-	velocity.x = 0
+	velocity = Vector2(0, 0)
+	attachToGrabBox(skateboard)
 	# Transitions
 	if Input.is_action_just_pressed("character_z"):
 		change_state(States.SKATEJUMPDETATCH)
 		velocity.y = -400
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.SKATECROUCHPREP)
-	if radical == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
 
 func skatecrouchprep(_delta: float, INPUT_AXIS: float) -> void:
-	velocity.x = 0
+	velocity = Vector2(0, 0)
+	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
 		change_state(States.SKATEJUMP)
 	if Input.is_action_just_released("ui_down"):
@@ -1381,48 +1391,26 @@ func skatecrouchprep(_delta: float, INPUT_AXIS: float) -> void:
 	if animation.is_playing() == false:
 		if state == States.SKATECROUCHPREP:
 			change_state(States.SKATECROUCHING)
-	if radical == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
 
 func skatecrouching(_delta: float, INPUT_AXIS: float) -> void:
-	velocity.x = 0
+	velocity = Vector2(0, 0)
+	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
 		change_state(States.SKATEJUMP)
 	if Input.is_action_just_released("ui_down"):
 		change_state(States.SKATING)
-	if radical == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
 
 func skatejumping(_delta: float, INPUT_AXIS: float) -> void:
+	velocity = Vector2(0, 0)
+	attachToGrabBox(skateboard)
 	if animation.is_playing() == false:
 		if state == States.SKATEJUMP:
 			if Input.is_action_pressed("ui_down"):
 				change_state(States.SKATECROUCHING)
 			else:
 				change_state(States.SKATING)
-	if radical == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
 
 func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
-	justJumpedOffBoard = true
 	velocity.x = 330 * Globalvars.EnzoDirection
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
@@ -1465,16 +1453,11 @@ func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
 					change_state(States.PARRYUPWARDS)
 				else:
 					pass
-	await get_tree().create_timer(0.3).timeout
-	justJumpedOffBoard = false
 
 # Handle Hit/Hurtboxes
 
 var collidingWithHurtbox: bool = false
 var collidingWithLava: bool = false
-var radical: bool = false
-var isOnBoard: bool = false
-var justJumpedOffBoard: bool = false
 var canWallJump: bool = false
 var howToDie: String
 @onready var hitSoundType: AudioStreamPlayer2D = $"Spritesheet/Sound effects/Weakpunch"
@@ -1517,14 +1500,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				velocity.y = 800
 			lava_invincibility.start()
 			check_and_damage(false, false, 200)
-	if area.is_in_group("Skateboard"):
-		isOnBoard = true
-		if radical == false and justJumpedOffBoard == false:
-			velocity.x = 0
-			radical = true
-		change_state(States.SKATING)
-		skateboard = area
-		add_child(skateboard)
 	if area.is_in_group("Heal"):
 		if health + area.get_meta("heal") > 5:
 			if regen + (area.get_meta("heal") - (5 - health)) > 5:
@@ -1539,14 +1514,13 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			heart_heal(area.get_meta("heal"))
 			change_hp(health + area.get_meta("heal"))
 		Globalvars.EnzoHeal.emit()
-
-func _on_hurtbox_area_exited(area: Area2D) -> void:
 	if area.is_in_group("Skateboard"):
 		isOnBoard = false
 		skateboard = area
-		remove_child(skateboard)
-		if state != States.SKATEJUMPDETATCH:
-			radical = false
+		change_state(States.SKATING)
+
+func _on_hurtbox_area_exited(area: Area2D) -> void:
+	pass
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnemyHitbox"):
@@ -1751,12 +1725,6 @@ func destroy() -> void:
 func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
 	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)
 
-func attachToBoard() -> void:
-	if skateboard:
-		if state == States.SKATING or state == States.SKATECROUCHPREP or state == States.SKATECROUCHING or state == States.SKATEJUMP:
-			velocity = Vector2(0, 0) 
-			position = Vector2(skateboard.global_position.x, skateboard.global_position.y - 40)
-
 func directionalKnockback(valueX: float, valueY: float, directional: bool) -> void:
 	if directional == false:
 		hitbox.set_meta("kbdirection", Vector2(valueX, valueY))
@@ -1773,3 +1741,10 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
 	else:
 		Globalvars.EnzoScore += amount
+
+func attachToGrabBox(grabBox: Area2D) -> void:
+	global_position = grabBox.get_child(1).global_position
+
+func set_skating() -> void:
+	if state != States.SKATING and state != States.SKATECROUCHPREP and state != States.SKATECROUCHING and state != States.SKATEJUMP:
+		isOnBoard = false

@@ -73,10 +73,10 @@ func idle(delta):
 		change_state(States.ATTACKPREP)
 
 func walking(delta):
-	if Globalvars.EnzoPositionX > position.x:
+	if Globalvars.EnzoPosition.x > global_position.x:
 		velocity.x = move_toward(velocity.x, 200, 1000 * delta)
 		sprite.scale.x = 1
-	if Globalvars.EnzoPositionX < position.x:
+	if Globalvars.EnzoPosition.x < global_position.x:
 		velocity.x = move_toward(velocity.x, -200, 1000 * delta)
 		sprite.scale.x = -1
 	if not is_on_floor():

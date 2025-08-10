@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 @onready var label = $Label
-@onready var hurtboxshape = $Crate/CrateHitbox/HurtboxShape
+@onready var hurtboxshape = $Crate/CrateHurtbox/HurtboxShape
 @onready var hurtbox = $Crate/CrateHurtbox
 @onready var crate: Sprite2D = $Crate
 @onready var crate_collision: CollisionShape2D = $CollisionShape2D

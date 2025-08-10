@@ -118,13 +118,13 @@ texture = ExtResource("1_pwcmh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_6xgel")
+&"": SubResource("AnimationLibrary_6xgel")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v4303")
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["HurtsEnzo", "hazard"]]
+[node name="Hurtbox" type="Area2D" parent="." groups=["EnemyHitbox"]]
 collision_layer = 2048
 collision_mask = 0
 metadata/deathtype = "spike"
@@ -134,7 +134,7 @@ shape = SubResource("RectangleShape2D_jhlnx")
 disabled = true
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)
 
-[node name="Hurtbox2" type="Area2D" parent="." groups=["HurtsEnzo", "hazard"]]
+[node name="Hurtbox2" type="Area2D" parent="." groups=["EnemyHitbox"]]
 collision_layer = 2048
 collision_mask = 0
 metadata/deathtype = "spike"

@@ -4,8 +4,7 @@ var EnzoState: int
 var EnzoMovement: int
 var EnzoDirection: int
 var EnzoVelocity: float
-var EnzoPositionX: float
-var EnzoPositionY: float
+var EnzoPosition: Vector2
 
 var EnzoHealth: int = 5
 var EnzoHealthArr: Array = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]

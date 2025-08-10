@@ -57,7 +57,7 @@ func idle(delta):
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	# What to do
-	if position.x <= Globalvars.EnzoPositionX:
+	if global_position.x <= Globalvars.EnzoPosition.x:
 		sprite.scale.x = 1
 	else:
 		sprite.scale.x = -1
