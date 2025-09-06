@@ -10,7 +10,7 @@ var is_dead = false
 
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Spritesheet
-@onready var ball = preload("res://Scenes/Projectiles/white_ball.tscn")
+@onready var ball = preload("res://Scenes/EnemyWeapons/white_ball.tscn")
 @onready var marker = $Spritesheet/Marker2D
 @onready var healthbar: TextureRect = $Health/Health
 @onready var healthbarbackdrop: TextureRect = $Health/Healthbackdrop
@@ -86,11 +86,8 @@ func throw(delta):
 func launch_ball():
 	if state == States.THROWING:
 		var ball_instance = ball.instantiate()
-		ball_instance.spawnPosition = marker.global_position
-		if sprite.scale.x == -1:
-			ball_instance.launchDirection.x = -1
-		else:
-			ball_instance.launchDirection.x = 1
+		ball_instance.instanceSpawnPosition = marker.global_position
+		ball_instance.instanceInitVelocity.x = 500 * sprite.scale.x
 		get_parent().add_child(ball_instance)
 
 func reload(delta):

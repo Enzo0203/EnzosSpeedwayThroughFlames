@@ -12,11 +12,12 @@ const JUMP_HEIGHT: float = -500
 signal detachSkateboard
 
 func _physics_process(delta: float) -> void:
+	$Label.text = str(enzo)
 	detachSkateboard.connect(_detach_skateboard)
 	move_and_slide()
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
-	if grabbox.get_meta("active") == true:
+	if enzo:
 		velocity.x = move_toward(velocity.x, MAX_SPEED * Globalvars.EnzoDirection, ACCELERATION)
 		if Globalvars.EnzoState == 28 and is_on_floor():
 			velocity.y = JUMP_HEIGHT
@@ -28,9 +29,7 @@ var enzo: Area2D
 func _on_grabbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("PlayerHurtbox"):
 		enzo = area
-		grabbox.set_meta("active", true)
 		velocity.x = Globalvars.EnzoVelocity
 
 func _detach_skateboard() -> void:
-	grabbox.set_meta("active", false)
 	enzo = null

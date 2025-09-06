@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jvtx37bsg3vl"
-path="res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"
+uid="uid://6c5h7snw3wa6"
+path="res://.godot/imported/BlackFade.png-21c9be5fbb88693c12e5671da2cba65c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Bombardier Sheet.png"
-dest_files=["res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"]
+source_file="res://Sprites/Title Screen/BlackFade.png"
+dest_files=["res://.godot/imported/BlackFade.png-21c9be5fbb88693c12e5671da2cba65c.ctex"]
 
 [params]
 

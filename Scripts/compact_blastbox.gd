@@ -15,13 +15,13 @@ extends CharacterBody2D
 var collidingWith = null
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var spawnPosition
-var launchDirection: Vector2
+var instanceSpawnPosition
+var instanceInitVelocity: Vector2
 
 func _ready() -> void:
-	if spawnPosition and launchDirection:
-		global_position = spawnPosition
-		velocity = launchDirection
+	if instanceSpawnPosition and instanceInitVelocity:
+		global_position = instanceSpawnPosition
+		velocity = instanceInitVelocity
 	animation.play("fuse")
 	explosion.hide()
 	await get_tree().create_timer(3).timeout

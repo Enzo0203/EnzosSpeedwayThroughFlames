@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jvtx37bsg3vl"
-path="res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"
+uid="uid://cmuppv241nnv7"
+path="res://.godot/imported/Start Game Button.png-f4c9cbe4d0857e251f123f3f0e269a56.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Bombardier Sheet.png"
-dest_files=["res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"]
+source_file="res://Sprites/Title Screen/Start Game Button.png"
+dest_files=["res://.godot/imported/Start Game Button.png-f4c9cbe4d0857e251f123f3f0e269a56.ctex"]
 
 [params]
 

@@ -54,9 +54,15 @@ func _ready() -> void:
 	Globalvars.EnzoMiniComboUpdated.connect(_on_minicombo_update)
 
 func _physics_process(_delta: float) -> void:
-	$ScoreLabel.text = str([comboMultiplier, miniComboMultiplier, Globalvars.EnzoScoreMultiplier])
-	set_health()
-	# Hearts
+	$ScoreLabel.text = str(Globalvars.Enzo)
+	handleHealth()
+	handleCombo()
+	handleMiniCombo()
+	handleMultiplier()
+	handleScore()
+	handlePortrait()
+
+func handleHealth() -> void:
 	if Globalvars.EnzoHealth == 0:
 		Overlay.play("Black Screen of Death")
 		if get_tree():
@@ -66,35 +72,23 @@ func _physics_process(_delta: float) -> void:
 			Globalvars.EnzoHealth = 5
 			Globalvars.EnzoHealthArr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
 			get_tree().reload_current_scene()
-	# Speech bubble
-	## States. in order
-	## 0-4 IDLE, JUMPING, FALLING, WALKING, RUNNING, 
-	## 5-9 SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHING, 
-	## 10-14 PUNCHINGWEAK, PUNCHINGMID, PUNCHINGSTRONG, HURT, DEAD, 
-	## 15-19 BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKPREP, 
-	## 20 BLOCKING
-	if Globalvars.EnzoState == 13 or Globalvars.EnzoState == 15 or Globalvars.EnzoState == 16:
-		SpubbleDelay.start()
-		SpeechBubble.play("Hurt")
-	elif Globalvars.EnzoHealth <= 1: 
-		if SpubbleDelay.time_left == 0:
-			SpeechBubble.play("LowHP")
-			SpubbleDelay.start()
-	else:
-		if SpubbleDelay.time_left == 0:
-			if Globalvars.EnzoCombo < 3:
-				SpeechBubble.play("Idle")
-			else:
-				SpeechBubble.play("Combo")
-	#Score
-	##.pad_zeros makes it so that the score says, for example, 000100 instead of 100
-	Score1.play(str(Globalvars.EnzoScore).pad_zeros(6)[-1])
-	Score2.play(str(Globalvars.EnzoScore).pad_zeros(6)[-2])
-	Score3.play(str(Globalvars.EnzoScore).pad_zeros(6)[-3])
-	Score4.play(str(Globalvars.EnzoScore).pad_zeros(6)[-4])
-	Score5.play(str(Globalvars.EnzoScore).pad_zeros(6)[-5])
-	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[-6])
-	#Combo
+	Heart1.play(str(health[0]))
+	Heart2.play(str(health[1]))
+	Heart3.play(str(health[2]))
+	Heart4.play(str(health[3]))
+	Heart5.play(str(health[4]))
+	#Heart6.play(str(health[5]))
+	#Heart7.play(str(health[6]))
+	#Heart8.play(str(health[7]))
+	#Heart9.play(str(health[8]))
+	#Heart10.play(str(health[9]))
+	Regen5.play(str(regen[0]))
+	Regen4.play(str(regen[1]))
+	Regen3.play(str(regen[2]))
+	Regen2.play(str(regen[3]))
+	Regen1.play(str(regen[4]))
+
+func handleCombo() -> void:
 	if Globalvars.EnzoCombo > 0:
 		ComboTimeBar.value = ComboTimer.time_left
 		ComboTimer.wait_time = Globalvars.EnzoCombo * 2
@@ -126,11 +120,8 @@ func _physics_process(_delta: float) -> void:
 		$Combo/ComboNumber3.position = Vector2(747, 418)
 		$Combo/ComboNumber3.visible = true
 		comboMultiplier = 1.5
-	#Score Mult
-	Globalvars.EnzoScoreMultiplier = 1 + miniComboMultiplier + comboMultiplier
-	MultiNumber1.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-1])
-	MultiNumber2.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-3])
-	#Minicombo
+
+func handleMiniCombo() -> void:
 	if Globalvars.EnzoMiniCombo > 0:
 		MiniComboTimeBar.value = MiniComboTimer.time_left
 		MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
@@ -184,6 +175,35 @@ func _physics_process(_delta: float) -> void:
 		$Combo/MiniComboNumber3.position = Vector2(707, 265)
 		$Combo/MiniComboNumber3.visible = true
 
+func handleMultiplier() -> void:
+	Globalvars.EnzoScoreMultiplier = 1 + miniComboMultiplier + comboMultiplier
+	MultiNumber1.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-1])
+	MultiNumber2.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-3])
+
+func handleScore() -> void:
+	##.pad_zeros makes it so that the score says, for example, 000100 instead of 100
+	Score1.play(str(Globalvars.EnzoScore).pad_zeros(6)[-1])
+	Score2.play(str(Globalvars.EnzoScore).pad_zeros(6)[-2])
+	Score3.play(str(Globalvars.EnzoScore).pad_zeros(6)[-3])
+	Score4.play(str(Globalvars.EnzoScore).pad_zeros(6)[-4])
+	Score5.play(str(Globalvars.EnzoScore).pad_zeros(6)[-5])
+	Score6.play(str(Globalvars.EnzoScore).pad_zeros(6)[-6])
+
+func handlePortrait() -> void:
+	if Globalvars.EnzoState == 13 or Globalvars.EnzoState == 15 or Globalvars.EnzoState == 16:
+		SpubbleDelay.start()
+		SpeechBubble.play("Hurt")
+	elif Globalvars.EnzoHealth <= 1: 
+		if SpubbleDelay.time_left == 0:
+			SpeechBubble.play("LowHP")
+			SpubbleDelay.start()
+	else:
+		if SpubbleDelay.time_left == 0:
+			if Globalvars.EnzoCombo < 3:
+				SpeechBubble.play("Idle")
+			else:
+				SpeechBubble.play("Combo")
+
 func _on_enzo_hurt() -> void:
 	Overlay.play("Hurt")
 func _on_enzo_heal() -> void:
@@ -192,20 +212,3 @@ func _on_combo_update() -> void:
 	ComboTimer.start()
 func _on_minicombo_update() -> void:
 	MiniComboTimer.start()
-
-func set_health() -> void:
-	Heart1.play(str(health[0]))
-	Heart2.play(str(health[1]))
-	Heart3.play(str(health[2]))
-	Heart4.play(str(health[3]))
-	Heart5.play(str(health[4]))
-	Heart6.play(str(health[5]))
-	Heart7.play(str(health[6]))
-	Heart8.play(str(health[7]))
-	Heart9.play(str(health[8]))
-	Heart10.play(str(health[9]))
-	Regen5.play(str(regen[0]))
-	Regen4.play(str(regen[1]))
-	Regen3.play(str(regen[2]))
-	Regen2.play(str(regen[3]))
-	Regen1.play(str(regen[4]))

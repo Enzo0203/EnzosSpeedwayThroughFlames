@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=4 uid="uid://do8r4ukdgr63b"]
 
-[ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/blastbox.gd" id="1_a7645"]
-[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/Blastbox Sheet.png" id="2_28f84"]
+[ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/blastbox.gd" id="1_0242f"]
+[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/Blastbox Sheet.png" id="2_ss6vh"]
 
 [sub_resource type="Animation" id="Animation_do03d"]
 resource_name = "fuse"
@@ -232,11 +232,11 @@ color_ramp = SubResource("GradientTexture1D_82fsh")
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 9
-script = ExtResource("1_a7645")
+script = ExtResource("1_0242f")
 
 [node name="Blastbox" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
-texture = ExtResource("2_28f84")
+texture = ExtResource("2_ss6vh")
 hframes = 5
 
 [node name="BBAnimationPlayer" type="AnimationPlayer" parent="Blastbox"]

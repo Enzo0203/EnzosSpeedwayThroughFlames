@@ -19,7 +19,7 @@ var regenstate: String = "noregen"
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animation: AnimationPlayer = $AnimationPlayer
-@onready var spritesheet: Sprite2D = $Spritesheet
+@onready var sprite: Sprite2D = $Spritesheet
 @onready var coyote_jump_timer: Timer = $CoyoteJumpTimer
 @onready var invincibility_timer: Timer = $Invincibility
 @onready var lava_invincibility: Timer = $LavaInvincibility
@@ -49,130 +49,27 @@ DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2,
 AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK,
 CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE}
 
-var state: int = States.IDLE
+var state: int
 
-func change_state(newState: int) -> void:
-	state = newState
+var instanceSpawnPosition: Vector2
+var instanceInitVelocity: Vector2
+var instanceReason: String
 
-func change_hp(new_health: int) -> void:
-	health = new_health
-
-func change_regen(new_regen: int) -> void:
-	regen = new_regen
-
-func force_damage() -> void:
-	change_hp(health - 1)
-	heart_hit()
-	if regentimer.time_left > 0:
-		regenstate = "regenbroken"
-		change_regen(regen - 1)
-		regenarr[regen] = 0
-		if regen != 0:
-			regenarr[0] = 1
-		regentimer.wait_time = 6
-		regentimer.start()
-	if health > 0:
-		Globalvars.EnzoHurt.emit()
-
-func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
-	if invincibility_timer.time_left == 0.0:
-		force_damage()
-		if Globalvars.EnzoScore - scoreDeduction >= 0:
-			Globalvars.EnzoScore -= scoreDeduction
-		else:
-			Globalvars.EnzoScore = 0
-		if makeInvincible == true:
-			if health >= 1:
-				modulate = Color(1, 1, 1, 0.7)
-				invincibility_timer.wait_time = 2
-				invincibility_timer.start()
-		if doHitStop == true:
-			hitStop(0.5, 0.5)
-	if health <= 0:
-		hitStop(0.3, 1.0)
-
-func check_for_death() -> void:
-	if health <= 0:
-		health = 0
-		healtharr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-		change_state(States.DEAD)
-
-func heart_hit() -> void:
-	healtharr[health] = 1
-
-func heart_heal(amount: int) -> void:
-	if amount == 1:
-		healtharr[health] = 3
-	if amount == 2:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-	if amount == 3:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-	if amount == 4:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-		healtharr[health + 3] = 3
-	if amount == 5:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-		healtharr[health + 3] = 3
-		healtharr[health + 4] = 3
-
-func regen_give(amount: int) -> void:
-	if amount == 1:
-		regenarr[regen] = 1
-	if amount == 2:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-	if amount == 3:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-	if amount == 4:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-		regenarr[regen + 3] = 1
-	if amount == 5:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-		regenarr[regen + 3] = 1
-		regenarr[regen + 4] = 1
-
-func check_and_regen() -> void:
-	if health < 5 and regen > 0 and regenstate == "noregen":
-		regentimer.wait_time = 5
-		regenarr[0] = 2
-		regentimer.start()
-		regenstate = "regen"
-	if regentimer.time_left <= 5 and regenstate == "regenbroken":
-		print("i am placing blocks n shit")
-		regenstate = "regen"
-		regentimer.wait_time = 5
-		regenarr[0] = 2
-	if regentimer.time_left == 0 and regenstate == "regen":
-		print("uff referencia")
-		heart_heal(1)
-		change_hp(health + 1)
-		change_regen(regen - 1)
-		regenarr[regen] = 0
-		regenstate = "noregen"
-	if health == 5 or regen == 0:
-		if regen != 0:
-			regenarr[0] = 1
-		regentimer.stop()
-		regenstate = "noregen"
+# Main functions
 
 func _ready() -> void:
 	animation.speed_scale = 1
+	if instanceSpawnPosition and instanceInitVelocity:
+		global_position = instanceSpawnPosition
+		velocity = instanceInitVelocity
+	if instanceReason:
+		if instanceReason == "JeepEntrance":
+			state = States.SKATEJUMPDETATCH
+	else:
+		state = States.IDLE
 
-# Runs every frame
 func _physics_process(delta: float) -> void:
+	# Update global vars
 	Globalvars.EnzoState = state
 	Globalvars.EnzoVelocity = velocity.x
 	Globalvars.EnzoPosition = global_position
@@ -181,22 +78,15 @@ func _physics_process(delta: float) -> void:
 	Globalvars.EnzoRegen = regen
 	Globalvars.EnzoRegenArr = regenarr
 	Globalvars.EnzoRegenState = regenstate
-	labelstate.text = str(state)
+	Globalvars.EnzoDirection = $Spritesheet.scale.x
+	# Debug labels
+	labelstate.text = str(coyote_jump_timer.time_left)
 	if skateboard:
 		labelspeed.text = str(skateboard.get_child(1).global_position)
 		labelthird.text = str(global_position == skateboard.get_child(1).global_position)
-	if velocity.x > 100 and velocity.x < 800:
-		Globalvars.EnzoMovement = 1
-	elif velocity.x < -100 and velocity.x > -800:
-		Globalvars.EnzoMovement = -1
-	elif velocity.x >= 800:
-		Globalvars.EnzoMovement = 2
-	elif velocity.x <= -800:
-		Globalvars.EnzoMovement = -2
-	else:
-		Globalvars.EnzoMovement = 0
-	Globalvars.EnzoDirection = $Spritesheet.scale.x
+	# Input axis
 	var INPUT_AXIS:float = Input.get_axis("ui_left", "ui_right")
+	# The State Machine
 	match state:
 		States.IDLE:
 			idle(delta, INPUT_AXIS)
@@ -304,10 +194,12 @@ func _physics_process(delta: float) -> void:
 			chargekickstrong(delta, INPUT_AXIS)
 		States.CHARGEKICKEXPLODE:
 			chargekickexplode(delta, INPUT_AXIS)
+	# Constant functions
 	update_animations(INPUT_AXIS)
 	check_for_death()
 	check_and_regen()
 	set_skating()
+	# Check for stomp refresh
 	if is_on_floor():
 		canEnzoStomp = true
 		$Spritesheet/Walljumpdetector/Walljumpdetector.disabled = true
@@ -327,24 +219,17 @@ func _physics_process(delta: float) -> void:
 	var just_left_ledge: bool = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if just_left_ledge:
 		coyote_jump_timer.start()
+	if Input.is_action_just_pressed("character_z"):
+		coyote_jump_timer.stop()
+	# Invincibility transparency
 	if invincibility_timer.time_left == 0.0:
 		modulate = Color(1, 1, 1)
+	# Walljump check
 	if $Spritesheet/Walljumpdetector.has_overlapping_bodies():
 		canWallJump = true
 	else:
 		canWallJump = false
 
-# Explode for no fucking reason
-@onready var explosion: PackedScene = preload("res://Scenes/explosion.tscn")
-func spontaniously_combust() -> void:
-	var exploded: bool = false
-	if exploded == false:
-		var explosion_instance: Node = explosion.instantiate()
-		explosion_instance.spawnPosition = ExplosionMarker.global_position
-		explosion_instance.explosionSize = 0.8
-		explosion_instance.cantHurtEnzo = true
-		get_parent().add_child(explosion_instance)
-		exploded = true
 
 # Moves
 
@@ -877,7 +762,7 @@ func chargekicking(delta: float, INPUT_AXIS: float) -> void:
 		if animation.current_animation_position >= 0.4 and animation.current_animation_position < 1.2:
 			change_state(States.CHARGEKICKWEAK)
 		if animation.current_animation_position >= 1.2 and animation.current_animation_position <= 1.6:
-			velocity.x += 300 * spritesheet.scale.x
+			velocity.x += 300 * sprite.scale.x
 			change_state(States.CHARGEKICKSTRONG)
 	if animation.is_playing() == false:
 		spontaniously_combust()
@@ -1454,7 +1339,7 @@ func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
 				else:
 					pass
 
-# Handle Hit/Hurtboxes
+# Handle Hit/Hurtboxes and damage
 
 var collidingWithHurtbox: bool = false
 var collidingWithLava: bool = false
@@ -1564,7 +1449,126 @@ func collides_with_hitbox(area: Area2D) -> bool:
 	else:
 		return false
 
-# Handle Misc crap
+func force_damage() -> void:
+	change_hp(health - 1)
+	heart_hit()
+	if regentimer.time_left > 0:
+		regenstate = "regenbroken"
+		change_regen(regen - 1)
+		regenarr[regen] = 0
+		if regen != 0:
+			regenarr[0] = 1
+		regentimer.wait_time = 6
+		regentimer.start()
+	if health > 0:
+		Globalvars.EnzoHurt.emit()
+
+func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
+	if invincibility_timer.time_left == 0.0:
+		force_damage()
+		if Globalvars.EnzoScore - scoreDeduction >= 0:
+			Globalvars.EnzoScore -= scoreDeduction
+		else:
+			Globalvars.EnzoScore = 0
+		if makeInvincible == true:
+			if health >= 1:
+				modulate = Color(1, 1, 1, 0.7)
+				invincibility_timer.wait_time = 2
+				invincibility_timer.start()
+		if doHitStop == true:
+			hitStop(0.5, 0.5)
+	if health <= 0:
+		hitStop(0.3, 1.0)
+
+func check_for_death() -> void:
+	if health <= 0:
+		health = 0
+		healtharr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+		change_state(States.DEAD)
+
+# Handle health/regen
+
+func change_state(newState: int) -> void:
+	state = newState
+
+func change_hp(new_health: int) -> void:
+	health = new_health
+
+func change_regen(new_regen: int) -> void:
+	regen = new_regen
+
+func heart_hit() -> void:
+	healtharr[health] = 1
+
+func heart_heal(amount: int) -> void:
+	if amount == 1:
+		healtharr[health] = 3
+	if amount == 2:
+		healtharr[health] = 3
+		healtharr[health + 1] = 3
+	if amount == 3:
+		healtharr[health] = 3
+		healtharr[health + 1] = 3
+		healtharr[health + 2] = 3
+	if amount == 4:
+		healtharr[health] = 3
+		healtharr[health + 1] = 3
+		healtharr[health + 2] = 3
+		healtharr[health + 3] = 3
+	if amount == 5:
+		healtharr[health] = 3
+		healtharr[health + 1] = 3
+		healtharr[health + 2] = 3
+		healtharr[health + 3] = 3
+		healtharr[health + 4] = 3
+
+func regen_give(amount: int) -> void:
+	if amount == 1:
+		regenarr[regen] = 1
+	if amount == 2:
+		regenarr[regen] = 1
+		regenarr[regen + 1] = 1
+	if amount == 3:
+		regenarr[regen] = 1
+		regenarr[regen + 1] = 1
+		regenarr[regen + 2] = 1
+	if amount == 4:
+		regenarr[regen] = 1
+		regenarr[regen + 1] = 1
+		regenarr[regen + 2] = 1
+		regenarr[regen + 3] = 1
+	if amount == 5:
+		regenarr[regen] = 1
+		regenarr[regen + 1] = 1
+		regenarr[regen + 2] = 1
+		regenarr[regen + 3] = 1
+		regenarr[regen + 4] = 1
+
+func check_and_regen() -> void:
+	if health < 5 and regen > 0 and regenstate == "noregen":
+		regentimer.wait_time = 5
+		regenarr[0] = 2
+		regentimer.start()
+		regenstate = "regen"
+	if regentimer.time_left <= 5 and regenstate == "regenbroken":
+		print("i am placing blocks n shit")
+		regenstate = "regen"
+		regentimer.wait_time = 5
+		regenarr[0] = 2
+	if regentimer.time_left == 0 and regenstate == "regen":
+		print("uff referencia")
+		heart_heal(1)
+		change_hp(health + 1)
+		change_regen(regen - 1)
+		regenarr[regen] = 0
+		regenstate = "noregen"
+	if health == 5 or regen == 0:
+		if regen != 0:
+			regenarr[0] = 1
+		regentimer.stop()
+		regenstate = "noregen"
+
+# Misc functions
 
 func update_animations(INPUT_AXIS: float) -> void:
 	if state == States.IDLE:
@@ -1707,17 +1711,17 @@ func hitStop(_timeScale: float, _duration: float) -> void:
 	pass
 
 func squish() -> void:
-	spritesheet.position.y = 14
-	spritesheet.scale.y = 0.7
+	sprite.position.y = 14
+	sprite.scale.y = 0.7
 	await get_tree().create_timer(0.05).timeout
-	spritesheet.position.y = 10
-	spritesheet.scale.y = 0.8
+	sprite.position.y = 10
+	sprite.scale.y = 0.8
 	await get_tree().create_timer(0.05).timeout
-	spritesheet.position.y = 6
-	spritesheet.scale.y = 0.9
+	sprite.position.y = 6
+	sprite.scale.y = 0.9
 	await get_tree().create_timer(0.05).timeout
-	spritesheet.position.y = 0
-	spritesheet.scale.y = 1
+	sprite.position.y = 0
+	sprite.scale.y = 1
 
 func destroy() -> void:
 	queue_free()
@@ -1748,3 +1752,15 @@ func attachToGrabBox(grabBox: Area2D) -> void:
 func set_skating() -> void:
 	if state != States.SKATING and state != States.SKATECROUCHPREP and state != States.SKATECROUCHING and state != States.SKATEJUMP:
 		isOnBoard = false
+
+# Explode for no fucking reason
+@onready var explosion: PackedScene = preload("res://Scenes/Miscellaneous/explosion.tscn")
+func spontaniously_combust() -> void:
+	var exploded: bool = false
+	if exploded == false:
+		var explosion_instance: Node = explosion.instantiate()
+		explosion_instance.spawnPosition = ExplosionMarker.global_position
+		explosion_instance.explosionSize = 0.8
+		explosion_instance.cantHurtEnzo = true
+		get_parent().add_child(explosion_instance)
+		exploded = true

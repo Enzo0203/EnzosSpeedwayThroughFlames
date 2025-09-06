@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://ba8kn82016cck"]
 
 [ext_resource type="Script" uid="uid://dtha7moi082yu" path="res://Scripts/d_white.gd" id="1_fkcf2"]
-[ext_resource type="Texture2D" uid="uid://b5ryhganu03r7" path="res://Sprites/General Sprites/D-White sheet.png" id="2_vnbog"]
+[ext_resource type="Texture2D" uid="uid://b5ryhganu03r7" path="res://Sprites/General Sprites/D-White Sheet.png" id="2_vnbog"]
 [ext_resource type="AudioStream" uid="uid://hr1o38iyijtk" path="res://Sfx/SwooshWeak.wav" id="4_uc5dp"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="5_f7682"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="7_tbr1e"]

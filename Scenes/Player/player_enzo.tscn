@@ -1,21 +1,21 @@
-[gd_scene load_steps=83 format=3 uid="uid://eatffjhnbskb"]
+[gd_scene load_steps=82 format=3 uid="uid://eatffjhnbskb"]
 
-[ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/enzo.gd" id="1_cdf8x"]
-[ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_k85s5"]
-[ext_resource type="Texture2D" uid="uid://tx7i7kxffs0r" path="res://Sprites/HUD/Particles/TextBlock.png" id="3_epb8m"]
-[ext_resource type="AudioStream" uid="uid://bb2j584xkriq3" path="res://Sfx/Jump.wav" id="4_2je52"]
-[ext_resource type="Texture2D" uid="uid://dh3a8cyoarhku" path="res://Sprites/HUD/Particles/TextClank.png" id="4_sfdtb"]
-[ext_resource type="AudioStream" uid="uid://bjqhmi6q1vrw8" path="res://Sfx/SwooshWeak3.wav" id="5_2exsf"]
-[ext_resource type="Texture2D" uid="uid://byemvy6ae1ec3" path="res://Sprites/HUD/Particles/TextRebound.png" id="5_ptfm3"]
-[ext_resource type="Texture2D" uid="uid://kdnmo0wxd1ij" path="res://Sprites/HUD/Particles/TextParry.png" id="6_6j3nt"]
-[ext_resource type="AudioStream" uid="uid://chi2xk0kabye5" path="res://Sfx/SwooshStrong.wav" id="6_7vwt1"]
-[ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="7_5ge7j"]
-[ext_resource type="AudioStream" uid="uid://bc6p0h4ufmnna" path="res://Sfx/Shine.wav" id="8_8svgg"]
-[ext_resource type="AudioStream" uid="uid://b4gp20uhgrw0u" path="res://Sfx/Block.wav" id="9_k3e4j"]
-[ext_resource type="AudioStream" uid="uid://cpgxtj1g7w84d" path="res://Sfx/Punch1.wav" id="13_so2dw"]
-[ext_resource type="AudioStream" uid="uid://bevpeor2yh8tm" path="res://Sfx/Punch3.wav" id="14_745yk"]
-[ext_resource type="AudioStream" uid="uid://bfiik53drw8og" path="res://Sfx/Kick1.wav" id="14_wsy0l"]
-[ext_resource type="FontFile" uid="uid://dktciom3fh1u7" path="res://Fonts/flames-new-roman-black.ttf" id="16_ypc4d"]
+[ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/enzo.gd" id="1_o30bu"]
+[ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_6b6sq"]
+[ext_resource type="Texture2D" uid="uid://tx7i7kxffs0r" path="res://Sprites/HUD/Particles/TextBlock.png" id="3_k7fhu"]
+[ext_resource type="Texture2D" uid="uid://dh3a8cyoarhku" path="res://Sprites/HUD/Particles/TextClank.png" id="4_i6v0c"]
+[ext_resource type="Texture2D" uid="uid://byemvy6ae1ec3" path="res://Sprites/HUD/Particles/TextRebound.png" id="5_6cjy1"]
+[ext_resource type="Texture2D" uid="uid://kdnmo0wxd1ij" path="res://Sprites/HUD/Particles/TextParry.png" id="6_b7bpl"]
+[ext_resource type="AudioStream" uid="uid://bb2j584xkriq3" path="res://Sfx/Jump.wav" id="7_b6ds8"]
+[ext_resource type="AudioStream" uid="uid://bjqhmi6q1vrw8" path="res://Sfx/SwooshWeak3.wav" id="8_7iwhy"]
+[ext_resource type="AudioStream" uid="uid://chi2xk0kabye5" path="res://Sfx/SwooshStrong.wav" id="9_2y6so"]
+[ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="10_t6rol"]
+[ext_resource type="AudioStream" uid="uid://bc6p0h4ufmnna" path="res://Sfx/Shine.wav" id="11_6fvpj"]
+[ext_resource type="AudioStream" uid="uid://b4gp20uhgrw0u" path="res://Sfx/Block.wav" id="12_vh6n7"]
+[ext_resource type="AudioStream" uid="uid://cpgxtj1g7w84d" path="res://Sfx/Punch1.wav" id="13_itu5e"]
+[ext_resource type="AudioStream" uid="uid://bevpeor2yh8tm" path="res://Sfx/Punch3.wav" id="14_fc8nm"]
+[ext_resource type="AudioStream" uid="uid://bfiik53drw8og" path="res://Sfx/Kick1.wav" id="15_ktdoi"]
+[ext_resource type="FontFile" uid="uid://dktciom3fh1u7" path="res://Fonts/flames-new-roman-black.ttf" id="16_0vul7"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -32,7 +32,7 @@ point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(106, 53)
+size = Vector2(61, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3wga"]
 resource_local_to_scene = true
@@ -49,33 +49,6 @@ stereo = true
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j2ivr"]
 radius = 8.0
 height = 78.0
-
-[sub_resource type="Animation" id="Animation_n0hxd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [234]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionBox:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_4pq4l"]
 resource_name = "airjab"
@@ -6440,7 +6413,6 @@ tracks/7/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i00x7"]
 _data = {
-&"RESET": SubResource("Animation_n0hxd"),
 &"airjab": SubResource("Animation_4pq4l"),
 &"airstompattack": SubResource("Animation_gkj4c"),
 &"airstomphold": SubResource("Animation_lwiut"),
@@ -6506,13 +6478,13 @@ collision_mask = 41
 floor_stop_on_slope = false
 floor_constant_speed = true
 floor_snap_length = 32.0
-script = ExtResource("1_cdf8x")
+script = ExtResource("1_o30bu")
 
 [node name="Spritesheet" type="Sprite2D" parent="."]
-texture = ExtResource("2_k85s5")
+texture = ExtResource("2_6b6sq")
 hframes = 7
 vframes = 35
-frame = 234
+frame = 12
 
 [node name="Texts" type="Node2D" parent="Spritesheet"]
 
@@ -6520,7 +6492,7 @@ frame = 234
 position = Vector2(0, -38)
 emitting = false
 amount = 1
-texture = ExtResource("3_epb8m")
+texture = ExtResource("3_k7fhu")
 lifetime = 0.5
 one_shot = true
 randomness = 1.0
@@ -6537,7 +6509,7 @@ scale_amount_curve = SubResource("Curve_ehqkl")
 position = Vector2(0, 38)
 emitting = false
 amount = 1
-texture = ExtResource("4_sfdtb")
+texture = ExtResource("4_i6v0c")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 15
@@ -6549,7 +6521,7 @@ initial_velocity_max = 300.0
 [node name="Rebound" type="CPUParticles2D" parent="Spritesheet/Texts"]
 emitting = false
 amount = 1
-texture = ExtResource("5_ptfm3")
+texture = ExtResource("5_6cjy1")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 20
@@ -6562,7 +6534,7 @@ initial_velocity_max = 300.0
 position = Vector2(0, -38)
 emitting = false
 amount = 1
-texture = ExtResource("6_6j3nt")
+texture = ExtResource("6_b7bpl")
 lifetime = 0.5
 one_shot = true
 fixed_fps = 30
@@ -6578,13 +6550,13 @@ scale_amount_curve = SubResource("Curve_au0cc")
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["PlayerHitbox"]]
 collision_layer = 16
 collision_mask = 1168
-metadata/dmg = 3
-metadata/strength = 3
+metadata/dmg = 2
+metadata/strength = 2
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
-position = Vector2(26, -10.5)
+position = Vector2(45, -11)
 shape = SubResource("RectangleShape2D_8s6kh")
 disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
@@ -6615,41 +6587,41 @@ debug_color = Color(0.494118, 0.286275, 0, 0.419608)
 position = Vector2(0, 50)
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("4_2je52")
+stream = ExtResource("7_b6ds8")
 volume_db = 10.0
 bus = &"Sound Effects"
 
 [node name="WeakPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("5_2exsf")
+stream = ExtResource("8_7iwhy")
 volume_db = 5.0
 
 [node name="MidPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("6_7vwt1")
+stream = ExtResource("9_2y6so")
 volume_db = 7.0
 
 [node name="StrongPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("7_5ge7j")
+stream = ExtResource("10_t6rol")
 volume_db = 10.0
 pitch_scale = 0.7
 
 [node name="Shine" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("8_8svgg")
+stream = ExtResource("11_6fvpj")
 
 [node name="Block" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("9_k3e4j")
+stream = ExtResource("12_vh6n7")
 
 [node name="Clank" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
 stream = SubResource("AudioStreamWAV_wton5")
 
 [node name="Weakpunch" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("13_so2dw")
+stream = ExtResource("13_itu5e")
 
 [node name="Midpunch" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("14_745yk")
+stream = ExtResource("14_fc8nm")
 volume_db = 5.0
 
 [node name="Kick" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
-stream = ExtResource("14_wsy0l")
+stream = ExtResource("15_ktdoi")
 volume_db = 10.0
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
@@ -6695,7 +6667,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 8
-theme_override_fonts/font = ExtResource("16_ypc4d")
+theme_override_fonts/font = ExtResource("16_0vul7")
 theme_override_font_sizes/font_size = 14
 text = "FUUUUUUCK!!"
 
@@ -6710,7 +6682,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 8
-theme_override_fonts/font = ExtResource("16_ypc4d")
+theme_override_fonts/font = ExtResource("16_0vul7")
 theme_override_font_sizes/font_size = 14
 text = "i am speed"
 
@@ -6725,7 +6697,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 8
-theme_override_fonts/font = ExtResource("16_ypc4d")
+theme_override_fonts/font = ExtResource("16_0vul7")
 theme_override_font_sizes/font_size = 14
 text = "soon youll see it see it shinin
 "

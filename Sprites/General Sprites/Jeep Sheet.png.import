@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jvtx37bsg3vl"
-path="res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"
+uid="uid://bdbovh2xgywst"
+path="res://.godot/imported/Jeep Sheet.png-a2d1cddff958c3408775ee2c39792e46.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Bombardier Sheet.png"
-dest_files=["res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"]
+source_file="res://Sprites/General Sprites/Jeep Sheet.png"
+dest_files=["res://.godot/imported/Jeep Sheet.png-a2d1cddff958c3408775ee2c39792e46.ctex"]
 
 [params]
 

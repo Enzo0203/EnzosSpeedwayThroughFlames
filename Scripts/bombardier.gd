@@ -67,10 +67,6 @@ func _physics_process(delta: float) -> void:
 	update_animations()
 	set_health()
 	check_for_death()
-	if $Spritesheet.scale.x == -1:
-		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
-	else:
-		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
 func idle(delta: float):
 	velocity.y += gravity * delta
@@ -165,21 +161,21 @@ func bigthrowing(delta: float):
 				else:
 					change_state(States.JUMPING)
 
-@onready var compactblastbox = preload("res://Scenes/compact_blastbox.tscn")
+@onready var compactblastbox = preload("res://Scenes/EnemyWeapons/compact_blastbox.tscn")
 func launch_compact_blastbox():
 	if cpbbcooldown.time_left == 0:
 		var compactblastbox_instance = compactblastbox.instantiate()
-		compactblastbox_instance.spawnPosition = marker.global_position
-		compactblastbox_instance.launchDirection = Vector2(-500 * sprite.scale.x, -100)
+		compactblastbox_instance.instanceSpawnPosition = marker.global_position
+		compactblastbox_instance.instanceInitVelocity = Vector2(-500 * sprite.scale.x, -100)
 		get_parent().add_child(compactblastbox_instance)
 		cpbbcooldown.start()
 
-@onready var blastbox = preload("res://Scenes/blastbox.tscn")
+@onready var blastbox = preload("res://Scenes/EnemyWeapons/blastbox.tscn")
 func launch_blastbox():
 	if blastboxcooldown.time_left == 0:
 		var blastbox_instance = blastbox.instantiate()
-		blastbox_instance.spawnPosition = marker_2.global_position
-		blastbox_instance.launchDirection = Vector2(-400 * sprite.scale.x, -150)
+		blastbox_instance.instanceSpawnPosition = marker_2.global_position
+		blastbox_instance.instanceInitVelocity = Vector2(-400 * sprite.scale.x, -150)
 		get_parent().add_child(blastbox_instance)
 		blastboxcooldown.start()
 

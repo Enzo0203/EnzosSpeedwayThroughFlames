@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bqcyj8arg2fm4" path="res://Scenes/Levels/ClankTest.gd" id="1_1pqah"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="1_sot3c"]
-[ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier sheet.png" id="2_1pqah"]
+[ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier Sheet.png" id="2_1pqah"]
 [ext_resource type="Texture2D" uid="uid://dh3a8cyoarhku" path="res://Sprites/HUD/Particles/TextClank.png" id="4_2c7da"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c7da"]
