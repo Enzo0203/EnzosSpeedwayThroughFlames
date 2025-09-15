@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Enzo's Speedway Through Flames"
-run/main_scene="res://Scenes/Levels/world.tscn"
+run/main_scene="uid://q2rdc5lhfiis"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://estficon.png"
 config/windows_native_icon="res://estficon.ico"
@@ -35,8 +35,7 @@ window/vsync/vsync_mode=0
 
 [editor]
 
-movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoGameplay.avi"
-movie_writer/disable_vsync=true
+movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoFlames.avi"
 
 [global_group]
 
@@ -49,6 +48,7 @@ PlayerHurtbox=""
 EnvironmentalCollision=""
 EnvironmentalHitbox=""
 EnvironmentalHurtbox=""
+TilesetCollision=""
 
 [gui]
 

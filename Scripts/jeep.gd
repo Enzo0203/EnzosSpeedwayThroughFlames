@@ -1,18 +1,20 @@
 extends CharacterBody2D
 
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 @onready var animation: AnimationPlayer = $AnimationPlayer
 
 var crashed: bool = false
 
 func _ready() -> void:
-	pass
+	crashed = false
+	animation.play("Drive")
+	velocity.x = 500
 
-func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		crashed = false
-		animation.play("Drive")
-		velocity.x = 500
+func _physics_process(delta: float) -> void:
 	move_and_slide()
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
 	if is_on_wall() and !crashed:
 		crashed = true
 		launch_enzo()

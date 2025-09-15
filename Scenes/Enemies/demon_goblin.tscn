@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://dlw1wfk1kmu6d"]
 
-[ext_resource type="Texture2D" uid="uid://d7y7fv5yh7vx" path="res://Sprites/General Sprites/Demon goblin Sheet.png" id="1_wlxbx"]
+[ext_resource type="Texture2D" uid="uid://by3gtkliwmwif" path="res://Sprites/General Sprites/Demon goblin sheet.png" id="1_wlxbx"]
 [ext_resource type="Script" uid="uid://bk1427ivshjqb" path="res://Scripts/demon_goblin.gd" id="2_lcivg"]
 
 [sub_resource type="Animation" id="Animation_f2n7f"]

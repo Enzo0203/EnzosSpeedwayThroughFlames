@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jvtx37bsg3vl"
-path="res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"
+uid="uid://cgkhpb8ai8w0v"
+path="res://.godot/imported/Bombardier sheet.png-ade367f5882a58ad9dc0142c422cd3ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Bombardier Sheet.png"
-dest_files=["res://.godot/imported/Bombardier Sheet.png-c389001bcf3835914e9b68c8154fd218.ctex"]
+source_file="res://Sprites/General Sprites/Bombardier sheet.png"
+dest_files=["res://.godot/imported/Bombardier sheet.png-ade367f5882a58ad9dc0142c422cd3ce.ctex"]
 
 [params]
 

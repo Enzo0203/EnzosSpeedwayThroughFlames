@@ -74,9 +74,9 @@ func idle(delta: float):
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	# What to do
 	if position.x <= Globalvars.EnzoPosition.x:
-		sprite.scale.x = -1
-	else:
 		sprite.scale.x = 1
+	else:
+		sprite.scale.x = -1
 	# What can this transition to
 	if state == States.IDLE:
 		if EnzoInArea1 == true and EnzoInArea2 == false and EnzoInArea3 == false:
@@ -166,7 +166,7 @@ func launch_compact_blastbox():
 	if cpbbcooldown.time_left == 0:
 		var compactblastbox_instance = compactblastbox.instantiate()
 		compactblastbox_instance.instanceSpawnPosition = marker.global_position
-		compactblastbox_instance.instanceInitVelocity = Vector2(-500 * sprite.scale.x, -100)
+		compactblastbox_instance.instanceInitVelocity = Vector2(500 * sprite.scale.x, -100)
 		get_parent().add_child(compactblastbox_instance)
 		cpbbcooldown.start()
 
@@ -175,7 +175,7 @@ func launch_blastbox():
 	if blastboxcooldown.time_left == 0:
 		var blastbox_instance = blastbox.instantiate()
 		blastbox_instance.instanceSpawnPosition = marker_2.global_position
-		blastbox_instance.instanceInitVelocity = Vector2(-400 * sprite.scale.x, -150)
+		blastbox_instance.instanceInitVelocity = Vector2(400 * sprite.scale.x, -150)
 		get_parent().add_child(blastbox_instance)
 		blastboxcooldown.start()
 

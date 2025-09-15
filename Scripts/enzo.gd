@@ -6,14 +6,16 @@ const RUNNING_SPEED: float = 900.0
 const ACCELERATION: float = 1000
 const RUNNING_ACCELERATION: float = 1500
 const FRICTION: float = 600
-const HALTING_FRICTION: float = 1000
+const HALTING_FRICTION: float = 2400
 const JUMP_VELOCITY: float = -370.0
 const RUNNING_JUMP_VELOCITY: float = -530.0
-var health: int = Globalvars.EnzoHealth
-var healtharr: Array = Globalvars.EnzoHealthArr
-var regen: int = Globalvars.EnzoRegen
-var regenarr: Array = Globalvars.EnzoRegenArr
-var regenstate: String = "noregen"
+
+var health: int
+var healtharr: Array
+var regen: int
+var regenarr: Array
+var regenstate: String
+var direction: float
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -58,6 +60,12 @@ var instanceReason: String
 # Main functions
 
 func _ready() -> void:
+	isDead = false
+	health = 5
+	healtharr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
+	regen = 0
+	regenarr = [0, 0, 0, 0, 0]
+	regenstate = "noregen"
 	animation.speed_scale = 1
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
@@ -67,18 +75,22 @@ func _ready() -> void:
 			state = States.SKATEJUMPDETATCH
 	else:
 		state = States.IDLE
+	await get_tree().physics_frame
+	if Globalvars.Enzo == null:
+		Globalvars.Enzo = self
 
 func _physics_process(delta: float) -> void:
 	# Update global vars
-	Globalvars.EnzoState = state
-	Globalvars.EnzoVelocity = velocity.x
-	Globalvars.EnzoPosition = global_position
-	Globalvars.EnzoHealth = health
-	Globalvars.EnzoHealthArr = healtharr
-	Globalvars.EnzoRegen = regen
-	Globalvars.EnzoRegenArr = regenarr
-	Globalvars.EnzoRegenState = regenstate
-	Globalvars.EnzoDirection = $Spritesheet.scale.x
+	#Globalvars.EnzoState = state
+	#Globalvars.EnzoVelocity = velocity.x
+	#Globalvars.EnzoPosition = global_position
+	#Globalvars.EnzoHealth = health
+	#Globalvars.EnzoHealthArr = healtharr
+	#Globalvars.EnzoRegen = regen
+	#Globalvars.EnzoRegenArr = regenarr
+	#Globalvars.EnzoRegenState = regenstate
+	#Globalvars.EnzoDirection = $Spritesheet.scale.x
+	direction = $Spritesheet.scale.x
 	# Debug labels
 	labelstate.text = str(coyote_jump_timer.time_left)
 	if skateboard:
@@ -229,7 +241,6 @@ func _physics_process(delta: float) -> void:
 		canWallJump = true
 	else:
 		canWallJump = false
-
 
 # Moves
 
@@ -460,9 +471,9 @@ func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		velocity.y = velocity.y + 500
 	if velocity.x > 0 and INPUT_AXIS == -1:
-		change_state(States.HALTING)
+		change_state(States.FALLING)
 	if velocity.x < 0 and INPUT_AXIS == 1:
-		change_state(States.HALTING)
+		change_state(States.FALLING	)
 	# What can this transition to
 	if is_on_floor():
 		squish()
@@ -584,13 +595,42 @@ func dropkicking(delta: float, INPUT_AXIS: float) -> void:
 
 func halting(delta: float, INPUT_AXIS: float) -> void:
 	# What to do
-	velocity.x = move_toward(velocity.x, 0, HALTING_FRICTION * delta)
+	if ($Spritesheet.scale.x == 1 and INPUT_AXIS == -1) or ($Spritesheet.scale.x == -1 and INPUT_AXIS == 1):
+		velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, HALTING_FRICTION * delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0, 1600 * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
 	if state == States.HALTING:
 		if not is_on_floor():
-			change_state(States.FALLING)
+			if Input.is_action_pressed("ui_down"):
+				if Input.is_action_just_pressed("character_z"):
+					change_state(States.GROUNDPOUNDPREP)
+				if Input.is_action_just_pressed("character_s") and canEnzoStomp == true:
+					velocity.y = -400
+					change_state(States.AIRSTOMPPREP)
+			if Input.is_action_just_pressed("character_x"):
+				if INPUT_AXIS != 0:
+					change_state(States.SPIKER1)
+				else:
+					change_state(States.AIRJAB)
+			if Input.is_action_just_pressed("character_s"):
+				if Input.is_action_pressed("ui_down"):
+					pass
+				else:
+					change_state(States.SEXKICK)
+			if Input.is_action_just_pressed("character_c"):
+				if INPUT_AXIS != 0:
+					if not Input.is_action_pressed("ui_up"):
+						change_state(States.PARRYFORWARDS)
+					else:
+						change_state(States.PARRYFUPWARDS)
+				else:
+					if Input.is_action_pressed("ui_up"):
+						change_state(States.PARRYUPWARDS)
+					else:
+						pass
 		if is_on_floor():
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.JUMPING)
@@ -1345,6 +1385,7 @@ var collidingWithHurtbox: bool = false
 var collidingWithLava: bool = false
 var canWallJump: bool = false
 var howToDie: String
+var isDead: bool = false
 @onready var hitSoundType: AudioStreamPlayer2D = $"Spritesheet/Sound effects/Weakpunch"
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -1481,10 +1522,12 @@ func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int
 		hitStop(0.3, 1.0)
 
 func check_for_death() -> void:
-	if health <= 0:
+	if health <= 0 and isDead == false:
 		health = 0
 		healtharr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 		change_state(States.DEAD)
+		isDead = true
+		Globalvars.EnzoDeath.emit()
 
 # Handle health/regen
 
@@ -1742,6 +1785,7 @@ func hurtboxstun(duration: float) -> void:
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:
+		@warning_ignore("narrowing_conversion")
 		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
 	else:
 		Globalvars.EnzoScore += amount

@@ -14,5 +14,3 @@ func _physics_process(delta: float) -> void:
 	if $Farclouds.motion_offset.x <= $Farclouds.motion_mirroring.x * -1:
 		$Farclouds.motion_offset.x = 0
 	$"../Jeep/AnimationPlayer".play("Drive")
-	var jeepBacknForth = create_tween()
-	jeepBacknForth.tween_property($"../Jeep", "position", Vector2(550, 369), 3.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)

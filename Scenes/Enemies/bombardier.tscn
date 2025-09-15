@@ -1,8 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://c7cm41byq6hvq"]
+[gd_scene load_steps=19 format=3 uid="uid://c7cm41byq6hvq"]
 
-[ext_resource type="Texture2D" uid="uid://jvtx37bsg3vl" path="res://Sprites/General Sprites/Bombardier Sheet.png" id="1_fe1fo"]
 [ext_resource type="Script" uid="uid://ds0y7pabud0h4" path="res://Scripts/bombardier.gd" id="1_vayxy"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="2_eg1a6"]
+[ext_resource type="Texture2D" uid="uid://cgkhpb8ai8w0v" path="res://Sprites/General Sprites/Bombardier sheet.png" id="2_vqjra"]
 [ext_resource type="Texture2D" uid="uid://51vf8nbtb68f" path="res://Sprites/HUD/DemonHeartFull.png" id="3_aq33k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6tv6m"]
@@ -88,7 +88,7 @@ tracks/4/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.7, 0.8),
+"times": PackedFloat32Array(0, 0.666667, 0.777778),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -136,10 +136,10 @@ tracks/8/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(72, 124), Vector2(31, 124), Vector2(72, 124)]
+"values": [Vector2(72, 124)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -148,10 +148,10 @@ tracks/9/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0, -11), Vector2(20.5, -11), Vector2(0, -11)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_n6an0"]
@@ -377,7 +377,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -11)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_qacm3"]
@@ -501,7 +501,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -11)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ywomt"]
@@ -626,7 +626,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -11)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_20b7o"]
@@ -750,22 +750,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -11)]
-}
-
-[sub_resource type="Animation" id="Animation_c1ibg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(72, 124)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_h4ikx"]
@@ -889,7 +874,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -11)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lx0kx"]
@@ -900,7 +885,6 @@ _data = {
 &"Idle": SubResource("Animation_qacm3"),
 &"Jump": SubResource("Animation_ywomt"),
 &"JumpThrow": SubResource("Animation_20b7o"),
-&"RESET": SubResource("Animation_c1ibg"),
 &"Throw": SubResource("Animation_h4ikx")
 }
 
@@ -911,11 +895,10 @@ collision_mask = 9
 script = ExtResource("1_vayxy")
 
 [node name="Spritesheet" type="Sprite2D" parent="."]
-scale = Vector2(-1, 1)
-texture = ExtResource("1_fe1fo")
+texture = ExtResource("2_vqjra")
 hframes = 5
 vframes = 5
-frame = 18
+frame = 24
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnemyHitbox"]]
 position = Vector2(0, -11)
@@ -926,23 +909,23 @@ metadata/strength = 4
 metadata/deathtype = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
-position = Vector2(-33, -20.5)
+position = Vector2(31, -20.5)
 shape = SubResource("RectangleShape2D_6tv6m")
+disabled = true
 debug_color = Color(0.921569, 0, 0.694118, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
 position = Vector2(0, -11)
 collision_layer = 128
 collision_mask = 2068
-metadata/state = "parriable"
+metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
-position = Vector2(20.5, -11)
 shape = SubResource("RectangleShape2D_juhp6")
+disabled = true
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
 
 [node name="EnzoDetector1" type="Area2D" parent="Spritesheet"]
-visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -950,39 +933,41 @@ monitorable = false
 [node name="EnzoDetector1" type="CollisionShape2D" parent="Spritesheet/EnzoDetector1"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_xdckb")
+disabled = true
 debug_color = Color(0, 0.811765, 0.301961, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="Spritesheet"]
-visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
 [node name="EnzoDetector2" type="CollisionShape2D" parent="Spritesheet/EnzoDetector2"]
-position = Vector2(-189, 1.5)
+position = Vector2(189, 1.5)
 shape = SubResource("RectangleShape2D_y6bl0")
+disabled = true
 debug_color = Color(0.0392157, 0.611765, 0, 0.419608)
 
 [node name="EnzoDetector3" type="Area2D" parent="Spritesheet"]
-visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 
 [node name="EnzoDetector3" type="CollisionShape2D" parent="Spritesheet/EnzoDetector3"]
-position = Vector2(-129.5, 24.5)
+position = Vector2(129.5, 24.5)
 shape = SubResource("RectangleShape2D_lrs4e")
+disabled = true
 debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 
 [node name="Marker2D" type="Marker2D" parent="Spritesheet"]
-position = Vector2(-21, -40)
+position = Vector2(29, -43)
 
 [node name="Marker2D2" type="Marker2D" parent="Spritesheet"]
-position = Vector2(-65, -32)
+position = Vector2(67, -33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -6.5)
 shape = SubResource("RectangleShape2D_0fd5m")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

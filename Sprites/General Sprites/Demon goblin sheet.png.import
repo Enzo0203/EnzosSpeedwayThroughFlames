@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d7y7fv5yh7vx"
-path="res://.godot/imported/Demon goblin Sheet.png-539795f97fe533768d7b332654b49df9.ctex"
+uid="uid://by3gtkliwmwif"
+path="res://.godot/imported/Demon goblin sheet.png-25bff95f1dff55360fa0849baa9951cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Demon goblin Sheet.png"
-dest_files=["res://.godot/imported/Demon goblin Sheet.png-539795f97fe533768d7b332654b49df9.ctex"]
+source_file="res://Sprites/General Sprites/Demon goblin sheet.png"
+dest_files=["res://.godot/imported/Demon goblin sheet.png-25bff95f1dff55360fa0849baa9951cc.ctex"]
 
 [params]
 

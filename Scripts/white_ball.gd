@@ -28,7 +28,7 @@ func _physics_process(delta):
 		global_position.y = move_toward(global_position.y, target_y, 300 * delta)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("EnvironmentalCollision"):
+	if body.is_in_group("EnvironmentalCollision") or body.is_in_group("TilesetCollision"):
 		destroy()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
