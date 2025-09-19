@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum States {IDLE, WALKING, ATTACKPREP, ATTACKING, DEAD}
 
-var state = States.IDLE
-var is_dead = false
+var state: int = States.IDLE
+var is_dead: bool = false
 
 @onready var animation: AnimationPlayer = $Spritesheet/AnimationPlayer
 @onready var sprite: Sprite2D = $Spritesheet
@@ -16,10 +16,10 @@ var is_dead = false
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 
-func change_state(newState):
+func change_state(newState: int) -> void:
 	state = newState
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	match state:
 		States.IDLE:
 			idle(delta)
@@ -60,7 +60,7 @@ func _on_obstacle_detector_body_entered(_body: Node2D) -> void:
 func _on_obstacle_detector_body_exited(_body: Node2D) -> void:
 	Obstacle = false
 
-func idle(delta):
+func idle(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, 0, 500 * delta)
 	velocity.y += gravity * delta
@@ -72,7 +72,7 @@ func idle(delta):
 	if EnzoInArea2 == true:
 		change_state(States.ATTACKPREP)
 
-func walking(delta):
+func walking(delta: float) -> void:
 	if Globalvars.EnzoPosition.x > global_position.x:
 		velocity.x = move_toward(velocity.x, 200, 1000 * delta)
 		sprite.scale.x = 1
@@ -90,7 +90,7 @@ func walking(delta):
 	if EnzoInArea2 == true and Obstacle == false and is_on_floor():
 		change_state(States.ATTACKPREP)
 
-func attackprep(delta):
+func attackprep(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 300 * delta)
@@ -99,7 +99,7 @@ func attackprep(delta):
 			change_state(States.ATTACKING)
 			velocity.x = 300 * sprite.scale.x
 
-func attacking(delta):
+func attacking(delta: float) -> void:
 	if state == States.ATTACKING:
 		velocity.y += gravity * delta
 		velocity.y = min(velocity.y, 500)
@@ -107,7 +107,7 @@ func attacking(delta):
 		if velocity.x > -120 and velocity.x < 120:
 			change_state(States.IDLE)
 
-func dead(delta):
+func dead(delta: float) -> void:
 	# What to do
 	velocity.y += gravity * delta
 	collision_mask = 0
@@ -124,7 +124,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			Globalvars.EnzoComboUpdated.emit()
 			Globalvars.EnzoCombo += 1
 
-func addToMiniCombo(value: int):
+func addToMiniCombo(value: int) -> void:
 	Globalvars.EnzoMiniCombo += value
 	Globalvars.EnzoMiniComboUpdated.emit()
 
@@ -150,7 +150,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				velocity.x = 200
 			hurtboxstun(0.3)
 
-func update_animations():
+func update_animations() -> void:
 	if state == States.IDLE:
 		animation.play("idle")
 	if state == States.WALKING:
@@ -165,19 +165,19 @@ func update_animations():
 	if state == States.DEAD:
 		animation.play("dead")
 
-func hitStop(_timeScale, _duration):
+func hitStop(_timeScale: float, _duration: float) -> void:
 	pass
 
-func randomizeAudioPitch(audio):
+func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 	audio.pitch_scale = randf_range(0.7, 1.1)
 
-func hurtboxstun(duration):
+func hurtboxstun(duration: float) -> void:
 	hitboxshape.set_deferred("monitorable", false)
 	await get_tree().create_timer(duration).timeout
 	hitboxshape.set_deferred("monitorable", true)
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:
-		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+		Globalvars.EnzoScore += roundi(amount * Globalvars.EnzoScoreMultiplier)
 	else:
 		Globalvars.EnzoScore += amount

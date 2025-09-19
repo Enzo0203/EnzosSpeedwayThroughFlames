@@ -1,21 +1,21 @@
 extends CharacterBody2D
 
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
 
-@onready var sprite = $Sprite2D
+@onready var sprite: Sprite2D = $Sprite2D
 @onready var label: Label = $Label
 
 @onready var hitbox: Area2D = $Hitbox
 
-var instanceSpawnPosition
+var instanceSpawnPosition: Vector2
 var instanceInitVelocity: Vector2
 
-func _ready():
+func _ready() -> void:
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
 		velocity = instanceInitVelocity
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	label.text = str(hitbox.is_monitorable())
 	velocity.y += gravity * delta
 	$AnimationPlayer.play("ball")
@@ -24,8 +24,6 @@ func _physics_process(delta):
 		sprite.scale.x = 1
 	else:
 		sprite.scale.x = -1
-	if target_y != null:
-		global_position.y = move_toward(global_position.y, target_y, 300 * delta)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("EnvironmentalCollision") or body.is_in_group("TilesetCollision"):
@@ -55,20 +53,19 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			#Clank
 			destroy()
 
-var target_y = null
 
-func destroy():
+func destroy() -> void:
 	queue_free()
 
-func hitboxstun(duration):
+func hitboxstun(duration: float) -> void:
 	hitbox.set_deferred("monitorable", false)
 	await get_tree().create_timer(duration).timeout
 	hitbox.set_deferred("monitorable", true)
 
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
+func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	pass # Replace with function body.
 
 
-func _on_hurtbox_body_entered(body: Node2D) -> void:
+func _on_hurtbox_body_entered(_body: Node2D) -> void:
 	pass # Replace with function body.

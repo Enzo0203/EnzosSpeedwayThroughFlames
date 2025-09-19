@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Enzo's Speedway Through Flames"
 run/main_scene="uid://q2rdc5lhfiis"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://estficon.png"
 config/windows_native_icon="res://estficon.ico"
 
@@ -35,6 +35,7 @@ window/vsync/vsync_mode=0
 
 [editor]
 
+movie_writer/video_quality=0.3
 movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoFlames.avi"
 
 [global_group]
@@ -52,8 +53,8 @@ TilesetCollision=""
 
 [gui]
 
-theme/custom_font="res://Fonts/flames-new-roman-black.ttf"
 theme/default_font_antialiasing=0
+theme/custom_font="res://Fonts/flames-new-roman-black.ttf"
 
 [input]
 

@@ -9,7 +9,7 @@ var spawnPosition: Vector2
 var explosionSize: float
 var cantHurtEnzo: bool
 
-func _ready():
+func _ready() -> void:
 	global_position = spawnPosition
 	scale = Vector2(explosionSize, explosionSize)
 	if cantHurtEnzo == true:
@@ -20,8 +20,8 @@ func _ready():
 	if animation.is_playing() == false:
 		destroy()
 
-func randomizeAudioPitch():
+func randomizeAudioPitch() -> void:
 	sfx_explode.pitch_scale = randf_range(0.1, 2)
 
-func destroy():
+func destroy() -> void:
 	queue_free()

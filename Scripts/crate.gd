@@ -1,19 +1,18 @@
 extends RigidBody2D
 
-@onready var label = $Label
-@onready var hurtboxshape = $Crate/CrateHurtbox/HurtboxShape
-@onready var hurtbox = $Crate/CrateHurtbox
+@onready var label: Label = $Label
+@onready var hurtboxshape: CollisionShape2D = $Crate/CrateHurtbox/HurtboxShape
+@onready var hurtbox: Area2D = $Crate/CrateHurtbox
 @onready var crate: Sprite2D = $Crate
 @onready var crate_collision: CollisionShape2D = $CollisionShape2D
-@onready var animation = $Crate/CrateAnimationPlayer
-@onready var explosionsprite = $Explosion
-@onready var sfx_explode = $Explosion/ExplosionSfx
+@onready var animation: AnimationPlayer = $Crate/CrateAnimationPlayer
+@onready var explosionsprite: Sprite2D = $Explosion
+@onready var sfx_explode: AudioStreamPlayer2D = $Explosion/ExplosionSfx
 @onready var marker: Marker2D = $Marker2D
 @onready var explosion_animation: AnimationPlayer = $Explosion/AnimationPlayer
 @onready var explosion: Sprite2D = $Explosion
 
-var collidingWith = null
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready() -> void:
 	animation.play("idle")
@@ -36,8 +35,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 func _on_area_2d_area_exited(_area: Area2D) -> void:
 	pass
 
-func explode():
-	var exploded = false
+func explode() -> void:
+	var exploded: bool = false
 	if exploded == false:
 		randomizeAudioPitch(sfx_explode)
 		explosion.show()
@@ -50,9 +49,9 @@ func explode():
 		destroy()
 		exploded = true
 
-func destroy():
+func destroy() -> void:
 	hide()
 	set_process(false)
 
-func randomizeAudioPitch(audio):
+func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 	audio.pitch_scale = randf_range(0.6, 1.4)

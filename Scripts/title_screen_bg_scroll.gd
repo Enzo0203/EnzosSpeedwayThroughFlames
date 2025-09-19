@@ -1,6 +1,6 @@
 extends ParallaxBackground
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	$Ground.motion_offset.x -= 3
 	if $Ground.motion_offset.x <= $Ground.motion_mirroring.x * -1:
 		$Ground.motion_offset.x = 0

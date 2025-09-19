@@ -2,20 +2,19 @@ extends CharacterBody2D
 
 @onready var blastbox: Sprite2D = $CompactBlastbox
 @onready var blastbox_collision: CollisionShape2D = $CollisionShape2D
-@onready var animation = $CompactBlastbox/CpbbAnimationPlayer
-@onready var explosionsprite = $Explosion
-@onready var sfx_explode = $Explosion/ExplosionSfx
+@onready var animation: AnimationPlayer = $CompactBlastbox/CpbbAnimationPlayer
+@onready var explosionsprite: Sprite2D = $Explosion
+@onready var sfx_explode: AudioStreamPlayer2D = $Explosion/ExplosionSfx
 @onready var marker: Marker2D = $Marker2D
 @onready var explosion_animation: AnimationPlayer = $Explosion/AnimationPlayer
 @onready var explosion: Sprite2D = $Explosion
 
-@onready var hurtbox = $CompactBlastbox/Hurtbox
-@onready var hurtboxshape = $CompactBlastbox/Hurtbox/HurtboxShape
+@onready var hurtbox: Area2D = $CompactBlastbox/Hurtbox
+@onready var hurtboxshape: CollisionShape2D = $CompactBlastbox/Hurtbox/HurtboxShape
 
-var collidingWith = null
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var instanceSpawnPosition
+var instanceSpawnPosition: Vector2
 var instanceInitVelocity: Vector2
 
 func _ready() -> void:
@@ -39,8 +38,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("PlayerHitbox"):
 		velocity = area.get_meta("kbdirection")
 
-func explode():
-	var exploded = false
+func explode() -> void:
+	var exploded: bool = false
 	if exploded == false:
 		velocity = Vector2(0, 0)
 		explosion.show()
@@ -54,6 +53,6 @@ func explode():
 		destroy()
 		exploded = true
 
-func destroy():
+func destroy() -> void:
 	hide()
 	set_process(false)

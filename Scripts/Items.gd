@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var spawnPosition
+var spawnPosition: Vector2
 
-func _ready():
+func _ready() -> void:
 	if spawnPosition:
 		global_position = spawnPosition
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
 	move_and_slide()
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)

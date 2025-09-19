@@ -23,6 +23,7 @@ flip_h = true
 position = Vector2(0, 8)
 collision_layer = 128
 collision_mask = 2072
+metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Sprite/Hurtbox"]
 shape = SubResource("RectangleShape2D_7ndne")

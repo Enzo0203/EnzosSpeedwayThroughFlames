@@ -794,6 +794,7 @@ debug_color = Color(0.698039, 0.494118, 0, 0.419608)
 position = Vector2(3, 42)
 collision_layer = 128
 collision_mask = 2064
+metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
 position = Vector2(0, -10.5)

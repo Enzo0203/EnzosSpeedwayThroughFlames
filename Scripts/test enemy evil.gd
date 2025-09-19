@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var hurtbox: Area2D = $Sprite/Hurtbox
 @onready var raycast: RayCast2D = $Sprite/Hurtbox/HitDetector
@@ -9,14 +9,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum States {IDLE, HURT}
 
-var state = States.IDLE
+var state: int = States.IDLE
 
-func change_state(newState):
+func change_state(newState: int) -> void:
 	state = newState
 
-var hitboxInSight = false
+var hitboxInSight: bool = false
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	$Label2.text = str(raycast.get_collider())
 	match state:
 		States.IDLE:
@@ -33,16 +33,16 @@ func _physics_process(delta):
 	else:
 		$Sprite/Hurtbox/HitDetector.scale.x = 1
 
-func idle(delta):
+func idle(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, 0, 500 * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 2000)
 	# What can this transition to
 
-var bounceSpeed
+var bounceSpeed: Variant
 
-func hurt(delta):
+func hurt(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, 500 * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 2000)

@@ -1295,7 +1295,7 @@ var isOnBoard: bool = false:
 
 var skateboard: Area2D = null
 
-func skating(_delta: float, INPUT_AXIS: float) -> void:
+func skating(_delta: float, _INPUT_AXIS: float) -> void:
 	# What to do
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
@@ -1306,7 +1306,7 @@ func skating(_delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.SKATECROUCHPREP)
 
-func skatecrouchprep(_delta: float, INPUT_AXIS: float) -> void:
+func skatecrouchprep(_delta: float, _INPUT_AXIS: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
@@ -1317,7 +1317,7 @@ func skatecrouchprep(_delta: float, INPUT_AXIS: float) -> void:
 		if state == States.SKATECROUCHPREP:
 			change_state(States.SKATECROUCHING)
 
-func skatecrouching(_delta: float, INPUT_AXIS: float) -> void:
+func skatecrouching(_delta: float, _INPUT_AXIS: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
@@ -1325,7 +1325,7 @@ func skatecrouching(_delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_released("ui_down"):
 		change_state(States.SKATING)
 
-func skatejumping(_delta: float, INPUT_AXIS: float) -> void:
+func skatejumping(_delta: float, _INPUT_AXIS: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if animation.is_playing() == false:
@@ -1445,7 +1445,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		skateboard = area
 		change_state(States.SKATING)
 
-func _on_hurtbox_area_exited(area: Area2D) -> void:
+func _on_hurtbox_area_exited(_area: Area2D) -> void:
 	pass
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

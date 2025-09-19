@@ -1,17 +1,17 @@
 extends CharacterBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 enum States {IDLE, THROWING, RELOADING, HURT, DEAD}
 
-var state = States.IDLE
-var is_dead = false
+var state: int = States.IDLE
+var is_dead: bool = false
 
-@onready var animation = $AnimationPlayer
-@onready var sprite = $Spritesheet
-@onready var ball = preload("res://Scenes/EnemyWeapons/white_ball.tscn")
-@onready var marker = $Spritesheet/Marker2D
+@onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Spritesheet
+@onready var ball: PackedScene = preload("res://Scenes/EnemyWeapons/white_ball.tscn")
+@onready var marker: Marker2D = $Spritesheet/Marker2D
 @onready var healthbar: TextureRect = $Health/Health
 @onready var healthbarbackdrop: TextureRect = $Health/Healthbackdrop
 @onready var stuntimer: Timer = $Stuntimer
@@ -20,15 +20,15 @@ var is_dead = false
 @onready var enzoDetector: RayCast2D = $Spritesheet/EnzoDetector
 
 
-var health = 2
+var health: int = 2
 
-func change_state(newState):
+func change_state(newState: int) -> void:
 	state = newState
 
 func _ready() -> void:
 	healthbarbackdrop.size.x = 24 * health
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	match state:
 		States.IDLE:
 			idle(delta)
@@ -49,10 +49,10 @@ func _physics_process(delta):
 	else:
 		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
-var EnzoInArea
-var HasBall = true
+var EnzoInArea: bool
+var HasBall: bool = true
 
-func idle(delta):
+func idle(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -74,7 +74,7 @@ func idle(delta):
 				await get_tree().create_timer(0.6).timeout
 				launch_ball()
 
-func throw(delta):
+func throw(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -83,14 +83,14 @@ func throw(delta):
 			HasBall = false
 			change_state(States.RELOADING)
 
-func launch_ball():
+func launch_ball() -> void:
 	if state == States.THROWING:
-		var ball_instance = ball.instantiate()
+		var ball_instance: Node = ball.instantiate()
 		ball_instance.instanceSpawnPosition = marker.global_position
 		ball_instance.instanceInitVelocity.x = 500 * sprite.scale.x
 		get_parent().add_child(ball_instance)
 
-func reload(delta):
+func reload(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -107,9 +107,9 @@ func reload(delta):
 			else:
 				change_state(States.IDLE)
 
-var bounceSpeed
+var bounceSpeed: Variant
 
-func hurt(delta):
+func hurt(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 2000)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -134,7 +134,7 @@ func hurt(delta):
 			velocity.y = bounceSpeed / 2 * -1
 			bounceSpeed = null
 
-func dead(delta):
+func dead(delta: float) -> void:
 	# What to do
 	velocity.y += gravity * delta
 	collision_mask = 0
@@ -152,16 +152,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			stuntimer.start()
 			hitStop(0.1, 0.3)
 
-func damage(amount):
+func damage(amount: int) -> void:
 	health -= amount
 	give_score(10 * amount, true)
 	addToMiniCombo(amount)
 
-func addToMiniCombo(value: int):
+func addToMiniCombo(value: int) -> void:
 	Globalvars.EnzoMiniCombo += value
 	Globalvars.EnzoMiniComboUpdated.emit()
 
-func check_for_death():
+func check_for_death() -> void:
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
@@ -169,7 +169,7 @@ func check_for_death():
 		Globalvars.EnzoCombo += 1
 		is_dead = true
 
-func update_animations():
+func update_animations() -> void:
 	if state == States.IDLE:
 		animation.play("idle")
 	if state == States.THROWING:
@@ -181,17 +181,17 @@ func update_animations():
 	if state == States.DEAD:
 		animation.play("dead")
 
-func hitStop(timeScale, duration):
+func hitStop(_timeScale: float, _duration: float) -> void:
 	pass
 
-func randomizeAudioPitch(audio):
+func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 	audio.pitch_scale = randf_range(0.7, 1.1)
 
-func set_health():
+func set_health() -> void:
 	healthbar.size.x = 24 * health
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:
-		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+		Globalvars.EnzoScore += roundi(amount * Globalvars.EnzoScoreMultiplier)
 	else:
 		Globalvars.EnzoScore += amount

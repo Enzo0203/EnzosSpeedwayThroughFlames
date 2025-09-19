@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 	set_health()
 	check_for_death()
 
-func idle(delta: float):
+func idle(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 600)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -82,7 +82,7 @@ func idle(delta: float):
 		if EnzoInArea1 == true and EnzoInArea2 == false and EnzoInArea3 == false:
 			if jumptimer.time_left == 0 and is_on_floor():
 				change_state(States.JUMPING)
-				jumptimer.wait_time = randi_range(0.5, 1)
+				jumptimer.wait_time = randf_range(0.5, 1.0)
 				jumptimer.start()
 				velocity.y = -600
 				velocity.x = 50 * sprite.scale.x
@@ -99,7 +99,7 @@ func idle(delta: float):
 		if EnzoInArea1 == true and EnzoInArea2 == true and EnzoInArea3 == true:
 			if jumptimer.time_left == 0 and blastboxcooldown.time_left != 0 and is_on_floor():
 				change_state(States.JUMPING)
-				jumptimer.wait_time = randi_range(0.3, 1)
+				jumptimer.wait_time = randf_range(0.3, 1.0)
 				jumptimer.start()
 				velocity.y = -400
 				if randi_range(0, 1) == 0:
@@ -109,7 +109,7 @@ func idle(delta: float):
 			if blastboxcooldown.time_left == 0:
 				change_state(States.BIGTHROWING)
 
-func jumping(delta: float):
+func jumping(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	#Transitions
@@ -122,7 +122,7 @@ func jumping(delta: float):
 				change_state(States.JUMPTHROWING)
 				launch_compact_blastbox()
 
-func throwing(delta: float):
+func throwing(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -134,7 +134,7 @@ func throwing(delta: float):
 			else:
 				change_state(States.JUMPING)
 
-func jumpthrowing(delta: float):
+func jumpthrowing(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	if state == States.JUMPTHROWING:
@@ -145,7 +145,7 @@ func jumpthrowing(delta: float):
 			else:
 				change_state(States.JUMPING)
 
-func bigthrowing(delta: float):
+func bigthrowing(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -161,27 +161,27 @@ func bigthrowing(delta: float):
 				else:
 					change_state(States.JUMPING)
 
-@onready var compactblastbox = preload("res://Scenes/EnemyWeapons/compact_blastbox.tscn")
-func launch_compact_blastbox():
+@onready var compactblastbox: PackedScene = preload("res://Scenes/EnemyWeapons/compact_blastbox.tscn")
+func launch_compact_blastbox() -> void:
 	if cpbbcooldown.time_left == 0:
-		var compactblastbox_instance = compactblastbox.instantiate()
+		var compactblastbox_instance: Node = compactblastbox.instantiate()
 		compactblastbox_instance.instanceSpawnPosition = marker.global_position
 		compactblastbox_instance.instanceInitVelocity = Vector2(500 * sprite.scale.x, -100)
 		get_parent().add_child(compactblastbox_instance)
 		cpbbcooldown.start()
 
-@onready var blastbox = preload("res://Scenes/EnemyWeapons/blastbox.tscn")
-func launch_blastbox():
+@onready var blastbox: PackedScene = preload("res://Scenes/EnemyWeapons/blastbox.tscn")
+func launch_blastbox() -> void:
 	if blastboxcooldown.time_left == 0:
-		var blastbox_instance = blastbox.instantiate()
+		var blastbox_instance: Node = blastbox.instantiate()
 		blastbox_instance.instanceSpawnPosition = marker_2.global_position
 		blastbox_instance.instanceInitVelocity = Vector2(400 * sprite.scale.x, -150)
 		get_parent().add_child(blastbox_instance)
 		blastboxcooldown.start()
 
-var bounceSpeed
+var bounceSpeed: Variant
 
-func hurt(delta: float):
+func hurt(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 2000)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -201,7 +201,7 @@ func hurt(delta: float):
 			velocity.y = bounceSpeed / 2 * -1
 			bounceSpeed = null
 
-func dead(delta: float):
+func dead(delta: float) -> void:
 	# What to do
 	velocity.y += gravity * delta
 	collision_mask = 0
@@ -229,12 +229,12 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 				else:
 					damage(area.get_meta("dmg"))
 
-func damage(amount):
+func damage(amount: int) -> void:
 	health -= amount
 	give_score(10 * amount, true)
 	addToMiniCombo(amount)
 
-func addToMiniCombo(value: int):
+func addToMiniCombo(value: int) -> void:
 	Globalvars.EnzoMiniCombo += value
 	Globalvars.EnzoMiniComboUpdated.emit()
 
@@ -260,7 +260,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				$Spritesheet.scale.x = 1
 				velocity.x = 300
 
-func update_animations():
+func update_animations() -> void:
 	if state == States.IDLE:
 		animation.play("Idle")
 	if state == States.JUMPING:
@@ -276,25 +276,25 @@ func update_animations():
 	if state == States.DEAD:
 		animation.play("Dead")
 
-func hitStop(_timeScale, _duration):
+func hitStop(_timeScale: float, _duration: float) -> void:
 	pass
 
-@onready var snackbox = preload("res://Scenes/Items/snackbox.tscn")
-func check_for_death():
+@onready var snackbox: PackedScene = preload("res://Scenes/Items/snackbox.tscn")
+func check_for_death() -> void:
 	if health <= 0 and is_dead == false:
 		health = 0
 		change_state(States.DEAD)
 		Globalvars.EnzoComboUpdated.emit()
 		Globalvars.EnzoCombo += 1
-		var snackbox_instance = snackbox.instantiate()
+		var snackbox_instance: Node = snackbox.instantiate()
 		snackbox_instance.spawnPosition = hurtbox.global_position
 		get_parent().add_child(snackbox_instance)
 		is_dead = true
 
-func randomizeAudioPitch(_audio):
+func randomizeAudioPitch(_audio: String) -> void:
 	pass
 
-func set_health():
+func set_health() -> void:
 	if health <= 10:
 		healthbar.size.x = 24 * health
 		healthbar2.size.x = 0
@@ -305,10 +305,9 @@ func set_health():
 	if health > 20 and health <= 30:
 		healthbar3.size.x = 24 * (health - 20)
 
-var EnzoInArea1 = false
-var EnzoInArea2 = false
-var EnzoInArea3 = false
-var HasBall = true
+var EnzoInArea1: bool = false
+var EnzoInArea2: bool = false
+var EnzoInArea3: bool = false
 
 func _on_enzo_detector_1_area_entered(area: Area2D) -> void:
 	if area.is_in_group("PlayerHurtbox"):
@@ -336,6 +335,6 @@ func _on_enzo_detector_3_area_exited(area: Area2D) -> void:
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:
-		Globalvars.EnzoScore += amount * Globalvars.EnzoScoreMultiplier
+		Globalvars.EnzoScore += roundi(amount * Globalvars.EnzoScoreMultiplier)
 	else:
 		Globalvars.EnzoScore += amount

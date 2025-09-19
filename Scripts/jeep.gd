@@ -25,9 +25,9 @@ func _physics_process(delta: float) -> void:
 	if crashed:
 		velocity.x = move_toward(velocity.x, 0, 5)
 
-@onready var enzo = preload("res://Scenes/Player/player_enzo.tscn")
-func launch_enzo():
-	var enzo_instance = enzo.instantiate()
+@onready var enzo: PackedScene = preload("res://Scenes/Player/player_enzo.tscn")
+func launch_enzo() -> void:
+	var enzo_instance: Node = enzo.instantiate()
 	enzo_instance.instanceSpawnPosition = $EnzoLauncherPosition.global_position
 	enzo_instance.instanceInitVelocity.x = 500
 	enzo_instance.instanceInitVelocity.y = -500
