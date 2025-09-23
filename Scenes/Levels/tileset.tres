@@ -135,6 +135,10 @@ texture_region_size = Vector2i(30, 30)
 6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15, -15, 15, -15, 15, 15, -15, 15)
 7:4/0 = 0
 7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15, -15, 15, -15, 15, 15, -15, 15)
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_14eav"]
 resource_name = "Objects"
