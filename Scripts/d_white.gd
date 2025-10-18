@@ -29,6 +29,10 @@ func _ready() -> void:
 	healthbarbackdrop.size.x = 24 * health
 
 func _physics_process(delta: float) -> void:
+	if enzoDetector.get_collider() != null:
+		$Label.text = str(enzoDetector.get_collider())
+	else:
+		$Label.text = "null"
 	match state:
 		States.IDLE:
 			idle(delta)
@@ -68,7 +72,7 @@ func idle(delta: float) -> void:
 	if state == States.IDLE:
 		if HasBall == false:
 			change_state(States.RELOADING)
-		if HasBall == true and enzoDetector.is_colliding():
+		if HasBall == true and enzoDetector.get_collider() != null:
 			if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 				change_state(States.THROWING)
 				await get_tree().create_timer(0.6).timeout

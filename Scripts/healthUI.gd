@@ -47,21 +47,18 @@ var miniComboMultiplier: float = 0
 var comboMultiplier: float = 0
 
 func _ready() -> void:
-	Overlay.play("SceneTransition")
-	hudVisible = false
 	Globalvars.EnzoHurt.connect(_on_enzo_hurt)
 	Globalvars.EnzoHeal.connect(_on_enzo_heal)
 	Globalvars.EnzoDeath.connect(_on_enzo_death)
 	Globalvars.EnzoComboUpdated.connect(_on_combo_update)
 	Globalvars.EnzoMiniComboUpdated.connect(_on_minicombo_update)
-
-var hudVisible: bool
+	Overlay.play("SceneTransition")
 
 func _physics_process(_delta: float) -> void:
 	if Globalvars.Enzo:
-		if hudVisible == false:
+		if Overlay.is_playing() == false or Overlay.current_animation == "SceneTransition":
 			Overlay.play("Idle")
-			hudVisible = true
+			visible = true
 		health = Globalvars.EnzoHealthArr
 		regen = Globalvars.EnzoRegenArr
 		handleHealth()
@@ -211,16 +208,15 @@ func _on_enzo_heal() -> void:
 	pass
 
 func _on_enzo_death() -> void:
-	if Globalvars.EnzoHealth == 0:
-		Overlay.play("Black Screen of Death")
-		if get_tree():
-			await get_tree().create_timer(3.5).timeout
-		if get_tree():
-			Globalvars.EnzoScore = 000000
-			Globalvars.EnzoHealth = 5
-			Globalvars.EnzoHealthArr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
-			await get_tree().process_frame
-			get_tree().reload_current_scene()
+	Overlay.play("Black Screen of Death")
+	if get_tree():
+		await get_tree().create_timer(3.5).timeout
+	if get_tree():
+		Globalvars.EnzoScore = 000000
+		Globalvars.EnzoHealth = 5
+		Globalvars.EnzoHealthArr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
+		await get_tree().process_frame
+		get_tree().reload_current_scene()
 
 func _on_combo_update() -> void:
 	ComboTimer.start()

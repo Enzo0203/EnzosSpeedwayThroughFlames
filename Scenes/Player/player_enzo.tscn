@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://eatffjhnbskb"]
+[gd_scene load_steps=86 format=3 uid="uid://eatffjhnbskb"]
 
 [ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/enzo.gd" id="1_o30bu"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_6b6sq"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://bevpeor2yh8tm" path="res://Sfx/Punch3.wav" id="14_fc8nm"]
 [ext_resource type="AudioStream" uid="uid://bfiik53drw8og" path="res://Sfx/Kick1.wav" id="15_ktdoi"]
 [ext_resource type="FontFile" uid="uid://dktciom3fh1u7" path="res://Fonts/flames-new-roman-black.ttf" id="16_0vul7"]
+[ext_resource type="AudioStream" uid="uid://cygro0te4i48h" path="res://Sfx/ChargeUp.wav" id="16_6b6sq"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -32,7 +33,7 @@ point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(61, 27)
+size = Vector2(51, 30.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3wga"]
 resource_local_to_scene = true
@@ -1624,6 +1625,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Spritesheet/Sound effects/Charge Up:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_owl7v"]
 resource_name = "chargepunchstrong"
@@ -2751,7 +2764,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_314nh"]
 resource_name = "groundpound"
-length = 0.13334
+length = 0.5333403
 step = 0.0666667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2760,10 +2773,10 @@ tracks/0/path = NodePath("Spritesheet:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000005, 0.26666668, 0.33333337, 0.40000004, 0.46666673),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [67, 68]
+"values": [67, 68, 67, 68, 67, 68, 67, 68]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -4159,6 +4172,18 @@ tracks/11/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Spritesheet/Sound effects/Charge Up:playing")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_olb0h"]
 resource_name = "punch2"
@@ -5233,10 +5258,10 @@ tracks/1/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false, true]
+"values": [true]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -5970,7 +5995,7 @@ script = ExtResource("1_o30bu")
 texture = ExtResource("2_6b6sq")
 hframes = 7
 vframes = 36
-frame = 244
+frame = 171
 
 [node name="Texts" type="Node2D" parent="Spritesheet"]
 
@@ -6042,9 +6067,8 @@ metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Spritesheet/Hitbox"]
-position = Vector2(45, -11)
+position = Vector2(-19.5, -21.75)
 shape = SubResource("RectangleShape2D_8s6kh")
-disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["PlayerHurtbox"]]
@@ -6110,6 +6134,9 @@ volume_db = 5.0
 stream = ExtResource("15_ktdoi")
 volume_db = 10.0
 
+[node name="Charge Up" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+stream = ExtResource("16_6b6sq")
+
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_o30bu")
@@ -6120,7 +6147,7 @@ libraries = {
 }
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.3
 one_shot = true
 
 [node name="Invincibility" type="Timer" parent="."]

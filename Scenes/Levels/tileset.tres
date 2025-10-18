@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=23 format=3 uid="uid://ccfdqj05p2w51"]
+[gd_resource type="TileSet" load_steps=24 format=3 uid="uid://ccfdqj05p2w51"]
 
 [ext_resource type="Texture2D" uid="uid://5vhvbr506qvy" path="res://Sprites/Backgrounds/TilesetGrass.png" id="1_3d56a"]
 [ext_resource type="PackedScene" uid="uid://eatffjhnbskb" path="res://Scenes/Player/player_enzo.tscn" id="2_888vd"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://devu83rlhpbyw" path="res://Scenes/Items/pastel.tscn" id="8_qorp4"]
 [ext_resource type="PackedScene" uid="uid://bspfygrecpepr" path="res://Scenes/Miscellaneous/camera_attractor.tscn" id="9_6j6w5"]
 [ext_resource type="PackedScene" uid="uid://dmwv8mqy10fmr" path="res://Scenes/Enemies/test enemy evil.tscn" id="10_xc6wi"]
+[ext_resource type="PackedScene" uid="uid://dm2ocjvd048s1" path="res://Scenes/Miscellaneous/screen_locker.tscn" id="11_8nv6c"]
 [ext_resource type="PackedScene" uid="uid://lcv2h2ct6fk2" path="res://Scenes/StageHazards/caltrop.tscn" id="11_qorp4"]
 [ext_resource type="PackedScene" uid="uid://7e6v68d1olpd" path="res://Scenes/Enemies/test enemy.tscn" id="12_75bsa"]
 [ext_resource type="PackedScene" uid="uid://bas8dbolydmy" path="res://Scenes/Player/jeep.tscn" id="13_43vf8"]
@@ -159,6 +160,7 @@ scenes/14/scene = ExtResource("7_xc6wi")
 scenes/15/scene = ExtResource("8_qorp4")
 scenes/16/scene = ExtResource("9_6j6w5")
 scenes/17/scene = ExtResource("10_xc6wi")
+scenes/18/scene = ExtResource("11_8nv6c")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k2qm2"]
 texture = ExtResource("18_cm746")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c7cm41byq6hvq"]
+[gd_scene load_steps=20 format=3 uid="uid://c7cm41byq6hvq"]
 
 [ext_resource type="Script" uid="uid://ds0y7pabud0h4" path="res://Scripts/bombardier.gd" id="1_vayxy"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="2_eg1a6"]
@@ -877,6 +877,129 @@ tracks/9/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_vqjra"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet/EnzoDetector1/EnzoDetector1:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spritesheet/EnzoDetector2/EnzoDetector2:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spritesheet/Hitbox/HitboxShape:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Spritesheet/EnzoDetector3/EnzoDetector3:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CollisionShape2D:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Spritesheet/Hurtbox:metadata/state")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["vuln"]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:shape:size")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(72, 124)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Spritesheet/Hurtbox/HurtboxShape:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lx0kx"]
 _data = {
 &"Bigthrow": SubResource("Animation_vxb8r"),
@@ -885,6 +1008,7 @@ _data = {
 &"Idle": SubResource("Animation_qacm3"),
 &"Jump": SubResource("Animation_ywomt"),
 &"JumpThrow": SubResource("Animation_20b7o"),
+&"RESET": SubResource("Animation_vqjra"),
 &"Throw": SubResource("Animation_h4ikx")
 }
 
@@ -898,7 +1022,6 @@ script = ExtResource("1_vayxy")
 texture = ExtResource("2_vqjra")
 hframes = 5
 vframes = 5
-frame = 24
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnemyHitbox"]]
 position = Vector2(0, -11)
@@ -922,10 +1045,10 @@ metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
 shape = SubResource("RectangleShape2D_juhp6")
-disabled = true
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
 
 [node name="EnzoDetector1" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -933,10 +1056,10 @@ monitorable = false
 [node name="EnzoDetector1" type="CollisionShape2D" parent="Spritesheet/EnzoDetector1"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_xdckb")
-disabled = true
 debug_color = Color(0, 0.811765, 0.301961, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -944,10 +1067,10 @@ monitorable = false
 [node name="EnzoDetector2" type="CollisionShape2D" parent="Spritesheet/EnzoDetector2"]
 position = Vector2(189, 1.5)
 shape = SubResource("RectangleShape2D_y6bl0")
-disabled = true
 debug_color = Color(0.0392157, 0.611765, 0, 0.419608)
 
 [node name="EnzoDetector3" type="Area2D" parent="Spritesheet"]
+visible = false
 collision_layer = 0
 collision_mask = 4
 monitorable = false
@@ -955,7 +1078,6 @@ monitorable = false
 [node name="EnzoDetector3" type="CollisionShape2D" parent="Spritesheet/EnzoDetector3"]
 position = Vector2(129.5, 24.5)
 shape = SubResource("RectangleShape2D_lrs4e")
-disabled = true
 debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 
 [node name="Marker2D" type="Marker2D" parent="Spritesheet"]
@@ -967,7 +1089,6 @@ position = Vector2(67, -33)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -6.5)
 shape = SubResource("RectangleShape2D_0fd5m")
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -11,3 +11,9 @@ metadata/zoom = Vector2(1, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_wfkfe")
 debug_color = Color(0.878431, 0.956863, 0, 0.133333)
+
+[node name="CamAttractTopLeft" type="Marker2D" parent="."]
+position = Vector2(-480, -270)
+
+[node name="CamAttractBottomRight" type="Marker2D" parent="."]
+position = Vector2(480, 270)

@@ -36,7 +36,10 @@ window/vsync/vsync_mode=0
 [editor]
 
 movie_writer/video_quality=0.3
+movie_writer/ogv/audio_quality=0.2
+movie_writer/ogv/encoding_speed=1
 movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoFlames.avi"
+movie_writer/fps=20
 
 [global_group]
 
