@@ -11,9 +11,11 @@ const JUMP_HEIGHT: float = -500
 
 signal detachSkateboard
 
+func _ready() -> void:
+	detachSkateboard.connect(_detach_skateboard)
+
 func _physics_process(delta: float) -> void:
 	$Label.text = str(enzo)
-	detachSkateboard.connect(_detach_skateboard)
 	move_and_slide()
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)

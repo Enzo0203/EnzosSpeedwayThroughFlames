@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kf5j6sj1bmmq"
-path="res://.godot/imported/Plainbackcloud.png-0d80f8d79ee33ef9edefff4bdf5b7d1e.ctex"
+uid="uid://cqpjgve5tkhfu"
+path="res://.godot/imported/Enzo Icon Idle.png-148a80186fcb203dbc4d9d3e4bf617cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/Plainbackcloud.png"
-dest_files=["res://.godot/imported/Plainbackcloud.png-0d80f8d79ee33ef9edefff4bdf5b7d1e.ctex"]
+source_file="res://Sprites/HUD/Enzo Icon Idle.png"
+dest_files=["res://.godot/imported/Enzo Icon Idle.png-148a80186fcb203dbc4d9d3e4bf617cc.ctex"]
 
 [params]
 

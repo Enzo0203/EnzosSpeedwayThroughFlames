@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
-
+var gravity: float = 0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var label: Label = $Label
 
@@ -14,6 +13,10 @@ func _ready() -> void:
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
 		velocity = instanceInitVelocity
+	gravity = 0
+	await get_tree().create_timer(0.3, false).timeout
+	if velocity.x > -500 and velocity.x < 500:
+		gravity = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
 
 func _physics_process(delta: float) -> void:
 	label.text = str(hitbox.is_monitorable())
@@ -30,12 +33,15 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		destroy()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("PlayerHurtbox") or area.is_in_group("hazard"):
+	if area.is_in_group("hazard"):
 		destroy()
+	if area.is_in_group("PlayerHurtbox"):
+		if area.get_meta("state") != "intangible":
+			destroy()
 	if area.is_in_group("PlayerHitbox"):
 		#Check for strength value
 		if area.get_meta("strength") - 1 > hitbox.get_meta("strength"):
-			#Make it hurt enemies and not you
+			#Make it hurt enemies and not enzo
 			hitbox.add_to_group("PlayerHitbox")
 			hitbox.set_collision_layer_value(5, true)
 			#Flip direction
@@ -53,13 +59,12 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			#Clank
 			destroy()
 
-
 func destroy() -> void:
 	queue_free()
 
 func hitboxstun(duration: float) -> void:
 	hitbox.set_deferred("monitorable", false)
-	await get_tree().create_timer(duration).timeout
+	await get_tree().create_timer(duration, false).timeout
 	hitbox.set_deferred("monitorable", true)
 
 

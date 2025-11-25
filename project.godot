@@ -30,6 +30,7 @@ gdscript/warnings/inferred_declaration=1
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/size/resizable=false
+window/size/maximize_disabled=true
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
@@ -40,6 +41,17 @@ movie_writer/ogv/audio_quality=0.2
 movie_writer/ogv/encoding_speed=1
 movie_writer/movie_file="C:/Users/enzox/Desktop/EnzoFlames.avi"
 movie_writer/fps=20
+
+[file_customization]
+
+folder_colors={
+"res://Fonts/": "pink",
+"res://Music/": "purple",
+"res://Scenes/": "green",
+"res://Scripts/": "gray",
+"res://Sfx/": "yellow",
+"res://Sprites/": "red"
+}
 
 [global_group]
 
@@ -57,7 +69,7 @@ TilesetCollision=""
 [gui]
 
 theme/default_font_antialiasing=0
-theme/custom_font="res://Fonts/flames-new-roman-black.ttf"
+theme/custom_font="uid://cetlduosmfub3"
 
 [input]
 

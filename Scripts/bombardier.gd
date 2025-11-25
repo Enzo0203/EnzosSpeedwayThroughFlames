@@ -28,8 +28,6 @@ var is_dead: bool = false
 @onready var hitboxshape: CollisionShape2D = $Spritesheet/Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 
-@onready var raycast: RayCast2D = $Spritesheet/Hurtbox/HitDetector
-
 var health: int = 30
 
 func change_state(newState: int) -> void:
@@ -154,12 +152,12 @@ func bigthrowing(delta: float) -> void:
 		if state == States.BIGTHROWING and animation.current_animation_position > 0.75:
 			launch_blastbox()
 			blastboxcooldown.start()
-			await get_tree().create_timer(0.25).timeout
-			if state == States.BIGTHROWING:
-				if is_on_floor():
-					change_state(States.IDLE)
-				else:
-					change_state(States.JUMPING)
+			if animation.is_playing() == false:
+				if state == States.BIGTHROWING:
+					if is_on_floor():
+						change_state(States.IDLE)
+					else:
+						change_state(States.JUMPING)
 
 @onready var compactblastbox: PackedScene = preload("res://Scenes/EnemyWeapons/compact_blastbox.tscn")
 func launch_compact_blastbox() -> void:
@@ -304,6 +302,20 @@ func set_health() -> void:
 		healthbar3.size.x = 0
 	if health > 20 and health <= 30:
 		healthbar3.size.x = 24 * (health - 20)
+	if health == 30:
+		healthbar.visible = false
+		healthbarbackdrop.visible = false
+		healthbar2.visible = false
+		healthbarbackdrop2.visible = false
+		healthbar3.visible = false
+		healthbarbackdrop3.visible = false
+	else:
+		healthbar.visible = true
+		healthbarbackdrop.visible = true
+		healthbar2.visible = true
+		healthbarbackdrop2.visible = true
+		healthbar3.visible = true
+		healthbarbackdrop3.visible = true
 
 var EnzoInArea1: bool = false
 var EnzoInArea2: bool = false

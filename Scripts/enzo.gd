@@ -1,3 +1,5 @@
+@icon("a")
+
 extends CharacterBody2D
 class_name player
 
@@ -7,7 +9,7 @@ const ACCELERATION: float = 3000
 const RUNNING_ACCELERATION: float = 1500
 const FRICTION: float = 1000
 const HALTING_FRICTION: float = 2400
-const JUMP_VELOCITY: float = -400.0
+const JUMP_VELOCITY: float = -500.0
 const RUNNING_JUMP_VELOCITY: float = -530.0
 
 var health: int
@@ -49,7 +51,8 @@ SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING,
 KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL,
 DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER1, SPIKER2,
 AIRJAB, BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK,
-CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE, WALLRUN}
+CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE, WALLRUN,
+DODGE, LANDING, LANDINGWALK, LANDINGAIRJAB, LANDINGSEXKICK}
 
 var state: int
 
@@ -87,8 +90,6 @@ func _physics_process(delta: float) -> void:
 	#Globalvars.EnzoHealthArr = healtharr
 	#Globalvars.EnzoRegen = regen
 	#Globalvars.EnzoRegenArr = regenarr
-	#Globalvars.EnzoRegenState = regenstate
-	#Globalvars.EnzoDirection = $Spritesheet.scale.x
 	direction = $Spritesheet.scale.x
 	# Debug labels
 	labelstate.text = str(roundi(acos(get_floor_normal().dot(Vector2.UP)) * rad_to_deg(1)))
@@ -102,7 +103,7 @@ func _physics_process(delta: float) -> void:
 		States.IDLE:
 			idle(delta, INPUT_AXIS)
 		States.JUMPING:
-			jumping(INPUT_AXIS)
+			jumping(delta, INPUT_AXIS)
 		States.FALLING:
 			falling(delta, INPUT_AXIS)
 		States.WALKING:
@@ -207,6 +208,16 @@ func _physics_process(delta: float) -> void:
 			chargekickexplode(delta, INPUT_AXIS)
 		States.WALLRUN:
 			wallrunning(delta, INPUT_AXIS)
+		States.DODGE:
+			dodge(delta, INPUT_AXIS)
+		States.LANDING:
+			landing(delta, INPUT_AXIS)
+		States.LANDINGWALK:
+			landingwalk(delta, INPUT_AXIS)
+		States.LANDINGAIRJAB:
+			landingairjab(delta, INPUT_AXIS)
+		States.LANDINGSEXKICK:
+			landingsexkick(delta, INPUT_AXIS)
 	# Constant functions
 	update_animations(INPUT_AXIS)
 	check_for_death()
@@ -232,11 +243,13 @@ func _physics_process(delta: float) -> void:
 	var just_left_ledge: bool = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if just_left_ledge:
 		coyote_jump_timer.start()
-	if Input.is_action_just_pressed("character_z"):
-		coyote_jump_timer.stop()
 	# Invincibility transparency
 	if invincibility_timer.time_left == 0.0:
-		modulate = Color(1, 1, 1)
+		modulate.a = 1
+	if hurtbox.get_meta("state") == "intangible":
+		modulate.v = 2
+	else:
+		modulate.v = 1
 	# Walljump check
 	if $Spritesheet/Walljumpdetector.has_overlapping_bodies():
 		canWallJump = true
@@ -249,7 +262,7 @@ func idle(delta: float, INPUT_AXIS: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	# What can this transition to
-	actionable(true, false, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if INPUT_AXIS != 0:
 		change_state(States.WALKING)
 	if not is_on_floor():
@@ -257,16 +270,18 @@ func idle(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.CROUCHPREP)
 
-func jumping(INPUT_AXIS: float) -> void:
+func jumping(delta: float, INPUT_AXIS: float) -> void:
 	# What to do
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
 	if Input.is_action_just_released("character_z") and velocity.y < JUMP_VELOCITY / 2:
 		velocity.y = JUMP_VELOCITY / 2
 	randomizeAudioPitch($"Spritesheet/Sound effects/Jump", 0.3)
 	# Transitions
-	actionable(false, true, INPUT_AXIS)
-	await get_tree().create_timer(0.1).timeout
-	# What this can transition to after the 0.1 delay
-	if state == States.JUMPING:
+	actionable(INPUT_AXIS)
+	# What this can transition to
+	if animation.is_playing() == false:
 		if not is_on_floor():
 			change_state(States.FALLING)
 		else:
@@ -280,21 +295,26 @@ func falling(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
-	# Cut off jump when button released, keep in mind in Godot the Y axis is reverted.
-	if Input.is_action_just_released("character_z") and velocity.y < JUMP_VELOCITY / 2:
-		velocity.y = JUMP_VELOCITY / 2
+	# Cut off jump when button released
 	if not Input.is_action_pressed("character_z") and velocity.y < JUMP_VELOCITY / 2:
 		velocity.y = JUMP_VELOCITY / 2
+	# Fastfall
 	if Input.is_action_just_pressed("ui_down"):
 		velocity.y = velocity.y + 500
 	# What can this transition to
-	actionable(false, true, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if is_on_floor():
-		change_state(States.IDLE)
-		squish()
-	if Input.is_action_pressed("character_z"):
-		if coyote_jump_timer.time_left > 0.0:
+		if INPUT_AXIS == 0:
+			if INPUT_AXIS == 0:
+				change_state(States.LANDING)
+			else:
+				change_state(States.LANDINGWALK)
+		else:
+			change_state(States.LANDINGWALK)
+	if Input.is_action_just_pressed("character_z"):
+		if coyote_jump_timer.time_left > 0.0 and not Input.is_action_pressed("ui_down"):
 			velocity.y = JUMP_VELOCITY
+			coyote_jump_timer.stop()
 			change_state(States.JUMPING)
 	if Input.is_action_just_pressed("character_z"):
 		if canWallJump and is_on_wall() and INPUT_AXIS != 0:
@@ -306,7 +326,7 @@ func walking(delta: float, INPUT_AXIS: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(true, false, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if INPUT_AXIS == 0:
 		change_state(States.IDLE)
 	if not is_on_floor():
@@ -331,7 +351,7 @@ func running(delta: float, INPUT_AXIS: float) -> void:
 	if is_on_floor():
 		if Input.is_action_just_pressed("character_z"):
 			change_state(States.JUMPING)
-	actionable(true, false, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.CROUCHPREP)
 
@@ -400,9 +420,10 @@ func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
 		velocity.y = velocity.y + 500
 	if (velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1):
 		change_state(States.FALLING)
+	if not Input.is_action_pressed("character_a"):
+		change_state(States.FALLING)
 	# What can this transition to
 	if is_on_floor():
-		squish()
 		if velocity.x > 600 or velocity.x < -600:
 			change_state(States.SPRINTING)
 		if (velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1):
@@ -410,8 +431,9 @@ func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
 	if velocity.x < 600 and velocity.x > -600:
 		change_state(States.FALLING)
 	if coyote_jump_timer.time_left > 0.0:
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("character_z") and not Input.is_action_pressed("ui_down"):
 			change_state(States.JUMPSPRINTING)
+			coyote_jump_timer.stop()
 	if is_on_wall_only() and ((velocity.x > 0 and INPUT_AXIS == 1) or (velocity.x < 0 and INPUT_AXIS == -1)):
 		velocity.y = abs(RUNNING_SPEED / 2) * -1
 		change_state(States.WALLRUN)
@@ -529,7 +551,7 @@ func halting(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	actionable(true, true, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if animation.is_playing() == false:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
@@ -578,9 +600,10 @@ func punchingweak(delta: float, INPUT_AXIS: float) -> void:
 			change_state(States.FALLING)
 	if Input.is_action_just_pressed("character_x") and is_on_floor():
 		if punchcooldown.time_left > 0:
-			await get_tree().create_timer(punchcooldown.time_left).timeout
+			await get_tree().create_timer(punchcooldown.time_left, false).timeout
 		punchcooldown.start()
-		change_state(States.PUNCH2)
+		if state == States.PUNCHING:
+			change_state(States.PUNCH2)
 
 func punch2(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -599,7 +622,7 @@ func punch2(delta: float, INPUT_AXIS: float) -> void:
 			change_state(States.FALLING)
 	if Input.is_action_just_pressed("character_x") and is_on_floor():
 		if punchcooldown.time_left > 0:
-			await get_tree().create_timer(punchcooldown.time_left).timeout
+			await get_tree().create_timer(punchcooldown.time_left, false).timeout
 		punchcooldown.start()
 		change_state(States.PUNCHING)
 
@@ -650,13 +673,12 @@ func airjabbing(delta: float, INPUT_AXIS: float) -> void:
 				change_state(States.WALKING)
 		else:
 			change_state(States.FALLING)
-	if animation.get_current_animation_position() >= 0.1 and is_on_floor():
-		if INPUT_AXIS == 0:
-			change_state(States.IDLE)
-			squish()
-		else:
-			change_state(States.WALKING)
-			squish()
+	if is_on_floor():
+		if animation.get_current_animation_position() >= 0.1:
+			if animation.get_current_animation_position() < 0.2:
+				change_state(States.LANDINGAIRJAB)
+			else:
+				change_state(States.LANDING)
 
 func chargekicking(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS * 0.3, ACCELERATION * delta)
@@ -727,6 +749,9 @@ func sexkick(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	hitSoundType = $"Spritesheet/Sound effects/Kick"
 	directionalKnockback(400, -100, true)
+	# Cut off jump when button released
+	if not Input.is_action_pressed("character_z") and velocity.y < JUMP_VELOCITY / 2:
+		velocity.y = JUMP_VELOCITY / 2
 	# What can this transition to
 	if animation.is_playing() == false:
 		if is_on_floor():
@@ -737,12 +762,7 @@ func sexkick(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 	if animation.get_current_animation_position() >= 0.2 and is_on_floor():
-		if INPUT_AXIS == 0:
-			change_state(States.IDLE)
-			squish()
-		else:
-			change_state(States.WALKING)
-			squish()
+		change_state(States.LANDINGSEXKICK)
 
 func parryforwards(delta: float, INPUT_AXIS: float) -> void:
 	if is_on_floor():
@@ -804,17 +824,18 @@ func spiking1(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	hitSoundType = $"Spritesheet/Sound effects/Weakpunch"
 	directionalKnockback(100, -500, true)
+	# Cut off jump when button released
+	if not Input.is_action_pressed("character_z") and velocity.y < JUMP_VELOCITY / 2:
+		velocity.y = JUMP_VELOCITY / 2
 	# Transitions
 	if animation.is_playing() == false:
 		if not is_on_floor():
 			change_state(States.SPIKER2)
 	if is_on_floor():
 		if INPUT_AXIS == 0:
-			change_state(States.IDLE)
-			squish()
+			change_state(States.LANDING)
 		else:
-			change_state(States.WALKING)
-			squish()
+			change_state(States.LANDINGWALK)
 
 func spiking2(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
@@ -904,7 +925,7 @@ func hurt(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	await get_tree().create_timer(0.45).timeout
+	await get_tree().create_timer(0.45, false).timeout
 	if state == States.HURT:
 		if INPUT_AXIS == 0:
 			change_state(States.IDLE)
@@ -926,12 +947,11 @@ func burnjumping(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	# What this can transition to
 	if is_on_floor():
-		squish()
 		change_state(States.BURNRUNNING)
 
 func burnrunning(delta: float) -> void:
 	# What to do
-	velocity.x = move_toward(velocity.x, RUNNING_SPEED * Globalvars.EnzoDirection, ACCELERATION * delta)
+	velocity.x = move_toward(velocity.x, RUNNING_SPEED * sprite.scale.x, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What this can transition to
@@ -980,6 +1000,14 @@ func blocking(delta: float, _INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
+	if Input.is_action_just_pressed("ui_left"):
+		velocity.x = -500
+		sprite.scale.x = 1
+		change_state(States.DODGE)
+	if Input.is_action_just_pressed("ui_right"):
+		velocity.x = 500
+		sprite.scale.x = -1
+		change_state(States.DODGE)
 	await blocktimer.timeout
 	if state == States.BLOCKING:
 		change_state(States.BLOCKREL)
@@ -1002,6 +1030,14 @@ func blockprep(delta: float, _INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
+	if Input.is_action_just_pressed("ui_left"):
+		velocity.x = -500
+		sprite.scale.x = 1
+		change_state(States.DODGE)
+	if Input.is_action_just_pressed("ui_right"):
+		velocity.x = 500
+		sprite.scale.x = -1
+		change_state(States.DODGE)
 	if animation.is_playing() == false:
 		change_state(States.BLOCKING)
 
@@ -1012,7 +1048,15 @@ func blockperfect(delta: float, INPUT_AXIS: float) -> void:
 	# What can this transition to
 	if not is_on_floor():
 		change_state(States.FALLING)
-	actionable(true, false, INPUT_AXIS)
+	actionable(INPUT_AXIS)
+	if Input.is_action_just_pressed("ui_left"):
+		velocity.x = -500
+		sprite.scale.x = 1
+		change_state(States.DODGE)
+	if Input.is_action_just_pressed("ui_right"):
+		velocity.x = 500
+		sprite.scale.x = -1
+		change_state(States.DODGE)
 	await get_tree().create_timer(0.6).timeout
 	if state == States.BLOCKPERFECT:
 		if is_on_floor():
@@ -1037,6 +1081,23 @@ func blockrelease(delta: float, INPUT_AXIS: float) -> void:
 				change_state(States.WALKING)
 		else:
 			change_state(States.FALLING)
+
+func dodge(delta: float, INPUT_AXIS: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+	await get_tree().create_timer(0.4).timeout
+	if state == States.DODGE:
+		actionable(INPUT_AXIS)
 
 func gpoundprep(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = -200
@@ -1159,21 +1220,21 @@ func skatejumping(_delta: float, _INPUT_AXIS: float) -> void:
 			change_state(States.SKATING)
 
 func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
-	velocity.x = 330 * Globalvars.EnzoDirection
+	velocity.x = 330 * sprite.scale.x
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# Transitions
-	actionable(false, true, INPUT_AXIS)
+	actionable(INPUT_AXIS)
 	if is_on_floor():
 		if isOnBoard == true:
 			change_state(States.SKATING)
-		elif INPUT_AXIS == 0:
-			change_state(States.IDLE)
 		else:
-			change_state(States.WALKING)
-		squish()
+			if INPUT_AXIS == 0:
+				change_state(States.LANDING)
+			else:
+				change_state(States.LANDINGWALK)
 
 func wallrunning(delta: float, INPUT_AXIS: float) -> void:
 	velocity.x = 1000 * sprite.scale.x
@@ -1182,11 +1243,11 @@ func wallrunning(delta: float, INPUT_AXIS: float) -> void:
 	if is_on_floor():
 		if isOnBoard == true:
 			change_state(States.SKATING)
-		elif INPUT_AXIS == 0:
-			change_state(States.IDLE)
 		else:
-			change_state(States.WALKING)
-		squish()
+			if INPUT_AXIS == 0:
+				change_state(States.LANDING)
+			else:
+				change_state(States.LANDINGWALK)
 	if not is_on_wall():
 		velocity.y = -30
 		change_state(States.FALLSPRINTING)
@@ -1200,11 +1261,89 @@ func wallrunning(delta: float, INPUT_AXIS: float) -> void:
 		velocity.y = -400
 		change_state(States.WALLKICKING)
 
-func actionable(ground: bool, air: bool, INPUT_AXIS: float) -> void:
-	if ground and is_on_floor():
-		if Input.is_action_just_pressed("character_z"):
-			velocity.y = JUMP_VELOCITY
+func landing(delta: float, INPUT_AXIS: float) -> void:
+	# What to do
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	# What can this transition to
+	actionable(INPUT_AXIS)
+	if INPUT_AXIS != 0:
+		change_state(States.WALKING)
+	if not is_on_floor():
+		change_state(States.FALLING)
+	if Input.is_action_pressed("character_a"):
+		change_state(States.RUNNING)
+	if Input.is_action_just_pressed("ui_down"):
+		change_state(States.CROUCHPREP)
+	if animation.is_playing() == false:
+		if INPUT_AXIS == 0:
+			change_state(States.IDLE)
+		else:
+			change_state(States.WALKING)
+		if not is_on_floor():
+			change_state(States.FALLING)
+
+func landingwalk(delta: float, INPUT_AXIS: float) -> void:
+	# What to do
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	# What can this transition to
+	actionable(INPUT_AXIS)
+	if not is_on_floor():
+		change_state(States.FALLING)
+	if Input.is_action_pressed("character_a"):
+		change_state(States.RUNNING)
+	if Input.is_action_just_pressed("ui_down"):
+		change_state(States.CROUCHPREP)
+	if animation.is_playing() == false:
+		if INPUT_AXIS == 0:
+			change_state(States.IDLE)
+		else:
+			change_state(States.WALKING)
+		if not is_on_floor():
+			change_state(States.FALLING)
+
+func landingairjab(delta: float, INPUT_AXIS: float) -> void:
+	# What to do
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	# What can this transition to
+	actionable(INPUT_AXIS)
+	if not is_on_floor():
+		change_state(States.FALLING)
+	if Input.is_action_pressed("character_a"):
+		change_state(States.RUNNING)
+	if Input.is_action_just_pressed("ui_down"):
+		change_state(States.CROUCHPREP)
+	if animation.is_playing() == false:
+		if INPUT_AXIS == 0:
+			change_state(States.IDLE)
+		else:
+			change_state(States.WALKING)
+		if not is_on_floor():
+			change_state(States.FALLING)
+
+func landingsexkick(delta: float, INPUT_AXIS: float) -> void:
+	# What to do
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	# What can this transition to
+	actionable(INPUT_AXIS)
+	if not is_on_floor():
+		change_state(States.FALLING)
+	if Input.is_action_pressed("character_a"):
+		change_state(States.RUNNING)
+	if Input.is_action_just_pressed("ui_down"):
+		change_state(States.CROUCHPREP)
+	if animation.is_playing() == false:
+		if INPUT_AXIS == 0:
+			change_state(States.IDLE)
+		else:
+			change_state(States.WALKING)
+		if not is_on_floor():
+			change_state(States.FALLING)
+
+func actionable(INPUT_AXIS: float) -> void:
+	if is_on_floor():
+		if Input.is_action_just_pressed("character_z") and not Input.is_action_just_pressed("character_x") and not Input.is_action_just_pressed("character_s") and not Input.is_action_just_pressed("character_c"):
 			change_state(States.JUMPING)
+			velocity.y = JUMP_VELOCITY
 		if Input.is_action_just_pressed("character_x"):
 			change_state(States.CHARGEPUNCHCHARGE)
 		if Input.is_action_just_pressed("character_s"):
@@ -1221,7 +1360,7 @@ func actionable(ground: bool, air: bool, INPUT_AXIS: float) -> void:
 				else:
 					blocktimer.start()
 					change_state(States.BLOCKPREP)
-	if air and not is_on_floor():
+	if not is_on_floor():
 		if Input.is_action_pressed("ui_down"):
 			if Input.is_action_just_pressed("character_z"):
 				change_state(States.GROUNDPOUNDPREP)
@@ -1259,13 +1398,8 @@ var isDead: bool = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("EnemyHitbox") or area.is_in_group("EnvironmentalHitbox"):
-		# Flip sprite
-		if area.global_position.x >= global_position.x:
-			$Spritesheet.scale.x = 1
-		else:
-			$Spritesheet.scale.x = -1
 		# Check for self's hurtbox's state
-		if invincibility_timer.time_left == 0.0:
+		if invincibility_timer.time_left == 0.0 and hurtbox.get_meta("state") != "intangible":
 			if hurtbox.get_meta("state") == "blocking":
 				#Block
 				change_state(States.BLOCKHIT)
@@ -1313,6 +1447,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		isOnBoard = false
 		skateboard = area
 		change_state(States.SKATING)
+	if area.is_in_group("LevelExitJeep"):
+		destroy()
+		Globalvars.LevelEndSequence = 1
 
 func _on_hurtbox_area_exited(_area: Area2D) -> void:
 	pass
@@ -1324,7 +1461,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if hitbox.get_meta("strength") - 1 > area.get_meta("strength"):
 			if hitbox.get_meta("type") == "norm":
 				#Rebound
-				print("Enzo has rebound")
 				pr_rebound.position = hitboxshape.position
 				pr_rebound.set_emitting(true)
 			if hitbox.get_meta("type") == "parry":
@@ -1333,7 +1469,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 				pr_parry.set_emitting(true)
 		else:
 			#Clank
-			print("Clank")
 			if area.global_position.x >= position.x:
 				$Spritesheet.scale.x = 1
 				velocity.x = -300
@@ -1383,7 +1518,7 @@ func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int
 			Globalvars.EnzoScore = 0
 		if makeInvincible == true:
 			if health >= 1:
-				modulate = Color(1, 1, 1, 0.7)
+				modulate.a = 0.7
 				invincibility_timer.wait_time = 2
 				invincibility_timer.start()
 		if doHitStop == true:
@@ -1464,12 +1599,10 @@ func check_and_regen() -> void:
 		regentimer.start()
 		regenstate = "regen"
 	if regentimer.time_left <= 5 and regenstate == "regenbroken":
-		print("i am placing blocks n shit")
 		regenstate = "regen"
 		regentimer.wait_time = 5
 		regenarr[0] = 2
 	if regentimer.time_left == 0 and regenstate == "regen":
-		print("uff referencia")
 		heart_heal(1)
 		change_hp(health + 1)
 		change_regen(regen - 1)
@@ -1624,6 +1757,16 @@ func update_animations(INPUT_AXIS: float) -> void:
 			animation.play("wallrun")
 		else:
 			animation.play("wallrunpanic")
+	if state == States.DODGE:
+		animation.play("dodge")
+	if state == States.LANDING:
+		animation.play("land")
+	if state == States.LANDINGWALK:
+		animation.play("landwalk")
+	if state == States.LANDINGAIRJAB:
+		animation.play("landairjab")
+	if state == States.LANDINGSEXKICK:
+		animation.play("landsexkick")
 
 var hitStopped: bool = false
 
@@ -1636,21 +1779,9 @@ func hitStop(duration: float) -> void:
 	#process_mode = Node.PROCESS_MODE_PAUSABLE
 	#disable_mode = CollisionObject2D.DISABLE_MODE_REMOVE
 
-func squish() -> void:
-	sprite.position.y = 14
-	sprite.scale.y = 0.7
-	await get_tree().create_timer(0.05).timeout
-	sprite.position.y = 10
-	sprite.scale.y = 0.8
-	await get_tree().create_timer(0.05).timeout
-	sprite.position.y = 6
-	sprite.scale.y = 0.9
-	await get_tree().create_timer(0.05).timeout
-	sprite.position.y = 0
-	sprite.scale.y = 1
-
 func destroy() -> void:
 	queue_free()
+	Globalvars.Enzo = null
 
 func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
 	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)

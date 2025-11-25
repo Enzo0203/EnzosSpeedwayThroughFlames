@@ -18,7 +18,6 @@ extends Control
 @onready var Overlay: AnimationPlayer = $Overlay/AnimationPlayer
 @onready var SpeechBubble: AnimationPlayer = $EnzoSpeechBubble/AnimationPlayer
 @onready var SpubbleDelay: Timer = $SpeechBubbleDelay
-@onready var score: Label = $ScoreLabel
 @onready var Score1: AnimationPlayer = $Score/Score1/AnimationPlayer
 @onready var Score2: AnimationPlayer = $Score/Score2/AnimationPlayer
 @onready var Score3: AnimationPlayer = $Score/Score3/AnimationPlayer
@@ -47,18 +46,19 @@ var miniComboMultiplier: float = 0
 var comboMultiplier: float = 0
 
 func _ready() -> void:
+	visible = true
+	Overlay.play("SceneTransition")
 	Globalvars.EnzoHurt.connect(_on_enzo_hurt)
 	Globalvars.EnzoHeal.connect(_on_enzo_heal)
 	Globalvars.EnzoDeath.connect(_on_enzo_death)
 	Globalvars.EnzoComboUpdated.connect(_on_combo_update)
 	Globalvars.EnzoMiniComboUpdated.connect(_on_minicombo_update)
-	Overlay.play("SceneTransition")
 
 func _physics_process(_delta: float) -> void:
 	if Globalvars.Enzo:
 		if Overlay.is_playing() == false or Overlay.current_animation == "SceneTransition":
+			$Overlay.visible = true
 			Overlay.play("Idle")
-			visible = true
 		health = Globalvars.EnzoHealthArr
 		regen = Globalvars.EnzoRegenArr
 		handleHealth()
@@ -67,6 +67,8 @@ func _physics_process(_delta: float) -> void:
 	handleMiniCombo()
 	handleMultiplier()
 	handleScore()
+	if Globalvars.LevelEndSequence == 1:
+		visible = false
 
 func handleHealth() -> void:
 	Heart1.play(str(health[0]))

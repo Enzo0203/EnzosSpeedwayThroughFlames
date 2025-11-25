@@ -19,14 +19,16 @@ var is_dead: bool = false
 @onready var hurtbox: Area2D = $Spritesheet/Hurtbox
 @onready var enzoDetector: RayCast2D = $Spritesheet/EnzoDetector
 
-
-var health: int = 2
+@export var health: int
+@export var maxHealth: int
 
 func change_state(newState: int) -> void:
 	state = newState
 
 func _ready() -> void:
-	healthbarbackdrop.size.x = 24 * health
+	healthbarbackdrop.size.x = 24 * maxHealth
+	healthbar.position.x = healthbarbackdrop.size.x / 2 * -1
+	healthbarbackdrop.position.x = healthbarbackdrop.size.x / 2 * -1
 
 func _physics_process(delta: float) -> void:
 	if enzoDetector.get_collider() != null:
@@ -75,7 +77,7 @@ func idle(delta: float) -> void:
 		if HasBall == true and enzoDetector.get_collider() != null:
 			if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 				change_state(States.THROWING)
-				await get_tree().create_timer(0.6).timeout
+				await get_tree().create_timer(1.0).timeout
 				launch_ball()
 
 func throw(delta: float) -> void:
@@ -91,7 +93,7 @@ func launch_ball() -> void:
 	if state == States.THROWING:
 		var ball_instance: Node = ball.instantiate()
 		ball_instance.instanceSpawnPosition = marker.global_position
-		ball_instance.instanceInitVelocity.x = 500 * sprite.scale.x
+		ball_instance.instanceInitVelocity.x = 400 * sprite.scale.x
 		get_parent().add_child(ball_instance)
 
 func reload(delta: float) -> void:
@@ -104,7 +106,7 @@ func reload(delta: float) -> void:
 			if HasBall == true and enzoDetector.is_colliding():
 				if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 					change_state(States.THROWING)
-					await get_tree().create_timer(0.6).timeout
+					await get_tree().create_timer(1.0).timeout
 					launch_ball()
 				else:
 					change_state(States.IDLE)
@@ -122,7 +124,7 @@ func hurt(delta: float) -> void:
 			if HasBall == true and enzoDetector.is_colliding():
 				if enzoDetector.get_collider().is_in_group("PlayerHurtbox"):
 					change_state(States.THROWING)
-					await get_tree().create_timer(0.6).timeout
+					await get_tree().create_timer(1.0, false).timeout
 					launch_ball()
 				else:
 					change_state(States.IDLE)
@@ -193,6 +195,12 @@ func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 
 func set_health() -> void:
 	healthbar.size.x = 24 * health
+	if health == maxHealth:
+		healthbar.visible = false
+		healthbarbackdrop.visible = false
+	else:
+		healthbar.visible = true
+		healthbarbackdrop.visible = true
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://q2rdc5lhfiis"]
+[gd_scene load_steps=24 format=3 uid="uid://q2rdc5lhfiis"]
 
 [ext_resource type="Script" uid="uid://dwfglmaxygrde" path="res://Scripts/title_screen_bg_scroll.gd" id="1_he7ib"]
 [ext_resource type="Texture2D" uid="uid://cf6ts5aineel2" path="res://Sprites/Backgrounds/Plaingroundback.png" id="2_tn82s"]
@@ -8,10 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://kf5j6sj1bmmq" path="res://Sprites/Backgrounds/Plainbackcloud.png" id="4_7ga8a"]
 [ext_resource type="Texture2D" uid="uid://bdbovh2xgywst" path="res://Sprites/General Sprites/Jeep Sheet.png" id="7_7ga8a"]
 [ext_resource type="Texture2D" uid="uid://s7ek132il52s" path="res://Sprites/Title Screen/Title.png" id="8_o411o"]
-[ext_resource type="Texture2D" uid="uid://cmuppv241nnv7" path="res://Sprites/Title Screen/Start Game Button.png" id="9_4ldc7"]
+[ext_resource type="Texture2D" uid="uid://cmuppv241nnv7" path="res://Sprites/Title Screen/Start Game Button Sheet.png" id="9_4ldc7"]
 [ext_resource type="Script" uid="uid://dxiiqqrbxpke0" path="res://Scenes/Levels/title_screen.gd" id="9_wsvtn"]
 [ext_resource type="Texture2D" uid="uid://6c5h7snw3wa6" path="res://Sprites/Title Screen/BlackFade.png" id="11_d535p"]
+[ext_resource type="Texture2D" uid="uid://bvrxvox00s30n" path="res://Sprites/Title Screen/Settings Button Sheet.png" id="11_oga1r"]
 [ext_resource type="AudioStream" uid="uid://rilkomxda77c" path="res://Music/Title Theme.wav" id="12_njea7"]
+[ext_resource type="Texture2D" uid="uid://bqrhw4f1j3f6t" path="res://Sprites/Title Screen/Settings/Settings Background.png" id="13_5iqpf"]
+[ext_resource type="Texture2D" uid="uid://dd2w04tke4gbr" path="res://Sprites/Title Screen/Settings/SliderBack.png" id="14_odgie"]
+[ext_resource type="Texture2D" uid="uid://kns7ayicsaby" path="res://Sprites/Title Screen/Settings/SliderFill.png" id="15_e46xu"]
+[ext_resource type="FontFile" uid="uid://cetlduosmfub3" path="res://Fonts/Flames New Roman Black.ttf" id="16_e46xu"]
 
 [sub_resource type="Animation" id="Animation_o411o"]
 resource_name = "Drive"
@@ -36,6 +41,16 @@ _data = {
 &"Drive": SubResource("Animation_o411o")
 }
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_62gd0"]
+
+[sub_resource type="Theme" id="Theme_62gd0"]
+default_font = ExtResource("16_e46xu")
+default_font_size = 14
+
+[sub_resource type="Theme" id="Theme_e46xu"]
+
+[sub_resource type="Theme" id="Theme_t256i"]
+
 [node name="Title Screen" type="Node2D"]
 
 [node name="Background" type="ParallaxBackground" parent="."]
@@ -48,32 +63,35 @@ scale = Vector2(1.15385, 1.15385)
 texture = ExtResource("2_xun6r")
 
 [node name="Farclouds" type="ParallaxLayer" parent="Background"]
-motion_mirroring = Vector2(832, 0)
+motion_mirroring = Vector2(960, 0)
 
 [node name="Farclouds" type="Sprite2D" parent="Background/Farclouds"]
-position = Vector2(383, 180)
 texture = ExtResource("4_7ga8a")
+centered = false
 
 [node name="Clouds" type="ParallaxLayer" parent="Background"]
-motion_mirroring = Vector2(832, 0)
+motion_mirroring = Vector2(960, 0)
 
 [node name="Clouds" type="Sprite2D" parent="Background/Clouds"]
-position = Vector2(391, 252)
+position = Vector2(-1, 20)
 texture = ExtResource("3_fjkip")
+centered = false
 
 [node name="Background" type="ParallaxLayer" parent="Background"]
 motion_mirroring = Vector2(1920, 0)
 
 [node name="Background" type="Sprite2D" parent="Background/Background"]
-position = Vector2(960, 192)
+position = Vector2(0, -56)
 texture = ExtResource("2_tn82s")
+centered = false
 
 [node name="Ground" type="ParallaxLayer" parent="Background"]
 motion_mirroring = Vector2(958, 0)
 
 [node name="Ground" type="Sprite2D" parent="Background/Ground"]
-position = Vector2(479, 268)
+position = Vector2(0, -52)
 texture = ExtResource("2_vac3x")
+centered = false
 
 [node name="Jeep" type="Sprite2D" parent="."]
 position = Vector2(728, 369)
@@ -90,23 +108,125 @@ libraries = {
 position = Vector2(333, 124)
 texture = ExtResource("8_o411o")
 
-[node name="Interface" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_wsvtn")
 
-[node name="Start" type="Sprite2D" parent="Interface"]
-position = Vector2(205, 284)
+[node name="TitleScreenButtons" type="CanvasLayer" parent="UI"]
+
+[node name="StartButton" type="Sprite2D" parent="UI/TitleScreenButtons"]
+position = Vector2(204, 295)
 texture = ExtResource("9_4ldc7")
-hframes = 2
+hframes = 3
 frame = 1
 
-[node name="BlackFade" type="Sprite2D" parent="Interface"]
+[node name="OptionsButton" type="Sprite2D" parent="UI/TitleScreenButtons"]
+position = Vector2(204, 398)
+texture = ExtResource("11_oga1r")
+hframes = 3
+frame = 1
+
+[node name="BlackFade" type="Sprite2D" parent="UI/TitleScreenButtons"]
 position = Vector2(410, 270)
 texture = ExtResource("11_d535p")
+
+[node name="OptionButtons" type="CanvasLayer" parent="UI"]
+layer = 2
+visible = false
+
+[node name="OptionsBackground" type="Sprite2D" parent="UI/OptionButtons"]
+texture = ExtResource("13_5iqpf")
+centered = false
+
+[node name="Back" type="Label" parent="UI/OptionButtons"]
+offset_left = 184.99997
+offset_top = 86.000015
+offset_right = 590.0
+offset_bottom = 114.000015
+scale = Vector2(1.4, 1.4)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Back"
+horizontal_alignment = 1
+
+[node name="Volume" type="TextureProgressBar" parent="UI/OptionButtons"]
+offset_left = 368.0
+offset_top = 128.0
+offset_right = 880.0
+offset_bottom = 203.0
+scale = Vector2(0.7, 0.7)
+value = 50.0
+texture_under = ExtResource("14_odgie")
+texture_over = SubResource("CompressedTexture2D_62gd0")
+texture_progress = ExtResource("15_e46xu")
+
+[node name="VolumeText" type="Label" parent="UI/OptionButtons/Volume"]
+layout_mode = 0
+offset_left = -228.57138
+offset_top = 14.285721
+offset_right = -106.57138
+offset_bottom = 44.28572
+scale = Vector2(2, 2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Volume:"
+
+[node name="VolumeNumber" type="Label" parent="UI/OptionButtons/Volume"]
+layout_mode = 0
+offset_left = 144.28568
+offset_top = 7.142853
+offset_right = 236.28568
+offset_bottom = 35.142853
+scale = Vector2(2.5, 2.5)
+theme = SubResource("Theme_62gd0")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "50%"
+horizontal_alignment = 1
+
+[node name="Resolution" type="Label" parent="UI/OptionButtons"]
+offset_left = 184.99998
+offset_top = 190.0
+offset_right = 590.0
+offset_bottom = 218.0
+scale = Vector2(1.4, 1.4)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Resolution: 960 x 540"
+horizontal_alignment = 1
+
+[node name="WindowMode" type="Label" parent="UI/OptionButtons"]
+offset_left = 215.00006
+offset_top = 240.00002
+offset_right = 575.00006
+offset_bottom = 268.0
+scale = Vector2(1.4, 1.4)
+theme = SubResource("Theme_e46xu")
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Window Mode: Windowed"
+horizontal_alignment = 1
+
+[node name="Filtering" type="Label" parent="UI/OptionButtons"]
+offset_left = 280.00006
+offset_top = 286.00003
+offset_right = 550.0001
+offset_bottom = 314.00003
+scale = Vector2(1.4, 1.4)
+theme = SubResource("Theme_t256i")
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Filtering: Nearest"
+horizontal_alignment = 1
 
 [node name="Title Theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_njea7")
 autoplay = true
+
+[connection signal="value_changed" from="UI/OptionButtons/Volume" to="UI" method="_on_volume_value_changed"]

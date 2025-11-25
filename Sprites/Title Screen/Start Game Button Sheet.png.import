@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kf5j6sj1bmmq"
-path="res://.godot/imported/Plainbackcloud.png-0d80f8d79ee33ef9edefff4bdf5b7d1e.ctex"
+uid="uid://cmuppv241nnv7"
+path="res://.godot/imported/Start Game Button Sheet.png-7a14f655d7695fa2a36f097ce5cc7ffd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/Plainbackcloud.png"
-dest_files=["res://.godot/imported/Plainbackcloud.png-0d80f8d79ee33ef9edefff4bdf5b7d1e.ctex"]
+source_file="res://Sprites/Title Screen/Start Game Button Sheet.png"
+dest_files=["res://.godot/imported/Start Game Button Sheet.png-7a14f655d7695fa2a36f097ce5cc7ffd.ctex"]
 
 [params]
 

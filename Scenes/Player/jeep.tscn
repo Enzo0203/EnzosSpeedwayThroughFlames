@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bas8dbolydmy"]
+[gd_scene load_steps=13 format=3 uid="uid://bas8dbolydmy"]
 
 [ext_resource type="Texture2D" uid="uid://bdbovh2xgywst" path="res://Sprites/General Sprites/Jeep Sheet.png" id="1_h2vk3"]
 [ext_resource type="Script" uid="uid://7cojj025r0sg" path="res://Scripts/jeep.gd" id="1_iw30q"]
@@ -56,25 +56,78 @@ tracks/0/keys = {
 "values": [0, 1, 2, 0, 3, 4]
 }
 
+[sub_resource type="Animation" id="Animation_l6n12"]
+resource_name = "Wait"
+length = 1.60002
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 12, 13, 15, 16, 15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_f0cw0"]
+resource_name = "Leave"
+length = 3.1000102
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1, 1.1, 1.2, 1.3000001, 1.4, 1.5, 1.6, 1.7, 1.8000001, 2, 2.3, 2.5, 2.7, 2.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 1, 35, 36, 37, 35, 1, 4]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iw30q"]
 _data = {
 &"AfterCrash": SubResource("Animation_rbcsn"),
 &"Crash": SubResource("Animation_iw30q"),
-&"Drive": SubResource("Animation_h2vk3")
+&"Drive": SubResource("Animation_h2vk3"),
+&"Leave": SubResource("Animation_f0cw0"),
+&"Wait": SubResource("Animation_l6n12")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6n12"]
+size = Vector2(64, 15.000002)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0cw0"]
+size = Vector2(55, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw30q"]
+size = Vector2(64, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rbcsn"]
+size = Vector2(64, 28)
 
 [node name="Jeep" type="CharacterBody2D"]
 position = Vector2(0, -11)
 collision_layer = 0
+floor_max_angle = 0.83775806
+floor_snap_length = 18.0
 script = ExtResource("1_iw30q")
+type = "Enter"
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_h2vk3")
 hframes = 4
-vframes = 3
+vframes = 10
+frame = 17
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-92, 5, 92, 5, 92, 37, 43, 37, 43, 56, -62, 56, -62, 37, -92, 37)
+polygon = PackedVector2Array(-92, 5, 92, 5, 92, 36, 43, 36, 28, 56, -47, 56, -62, 36, -92, 36)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -83,3 +136,47 @@ libraries = {
 
 [node name="EnzoLauncherPosition" type="Marker2D" parent="."]
 position = Vector2(-30, -61)
+
+[node name="OnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+rect = Rect2(-2500, -1250, 5000, 2500)
+
+[node name="EnzoDetectorNodes" type="Node2D" parent="."]
+visible = false
+
+[node name="Collision" type="StaticBody2D" parent="EnzoDetectorNodes"]
+collision_mask = 0
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="EnzoDetectorNodes/Collision"]
+position = Vector2(-14.5, 24)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_l6n12")
+one_way_collision = true
+debug_color = Color(0, 0.6, 0.7019608, 0.41960785)
+
+[node name="SpecialGrabbox" type="Area2D" parent="EnzoDetectorNodes" groups=["LevelExitJeep"]]
+collision_layer = 64
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnzoDetectorNodes/SpecialGrabbox"]
+position = Vector2(-49.5, 25)
+shape = SubResource("RectangleShape2D_f0cw0")
+debug_color = Color(0.11771149, 0.6476693, 3.85046e-07, 0.41960785)
+
+[node name="Collision" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+position = Vector2(-84.5, 24)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_iw30q")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Collision"]
+position = Vector2(78, 24)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_rbcsn")
+one_way_collision = true
+
+[connection signal="screen_exited" from="OnScreenNotifier" to="." method="_on_on_screen_notifier_screen_exited"]
+[connection signal="area_entered" from="EnzoDetectorNodes/SpecialGrabbox" to="." method="_on_special_grabbox_area_entered"]

@@ -47,7 +47,7 @@ func hurt(delta: float) -> void:
 		if bounceSpeed:
 			velocity.y = bounceSpeed / 2 * -1
 			bounceSpeed = null
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2, false).timeout
 	# What can this transition to
 	change_state(States.IDLE)
 
