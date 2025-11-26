@@ -233,8 +233,8 @@ size = Vector2(20, 85)
 
 [node name="RookieHellballer" type="CharacterBody2D" groups=["EnemyCollision"]]
 position = Vector2(0, -5)
-collision_layer = 128
-collision_mask = 9
+collision_layer = 32
+collision_mask = 2
 script = ExtResource("1_fkcf2")
 health = 2
 maxHealth = 2
@@ -245,8 +245,8 @@ hframes = 6
 vframes = 6
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
-collision_layer = 128
-collision_mask = 2064
+collision_layer = 32
+collision_mask = 16
 metadata/state = "vuln"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
@@ -254,16 +254,11 @@ position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_2mhsb")
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
-[node name="HitDetector" type="RayCast2D" parent="Spritesheet/Hurtbox"]
-target_position = Vector2(0, 0)
-collision_mask = 9
-hit_from_inside = true
-
 [node name="EnzoDetector" type="RayCast2D" parent="Spritesheet"]
 modulate = Color(0.0221348, 0.268932, 1.68458e-07, 1)
 position = Vector2(0, 32)
 target_position = Vector2(300, -27)
-collision_mask = 13
+collision_mask = 18
 hit_from_inside = true
 collide_with_areas = true
 

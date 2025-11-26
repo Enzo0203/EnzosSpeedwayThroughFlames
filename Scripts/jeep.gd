@@ -15,9 +15,11 @@ func _ready() -> void:
 		animation.play("Drive")
 		velocity.x = 500
 		$EnzoDetectorNodes.queue_free()
+		$OnScreenNotifier.rect = Rect2(-2500, -1250, 5000, 2500)
 	if type == "Exit":
 		enzoGotInCar = false
 		animation.play("Wait")
+		$OnScreenNotifier.rect = Rect2(-100, -100, 200, 200)
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
@@ -50,6 +52,8 @@ func launch_enzo() -> void:
 func _on_on_screen_notifier_screen_exited() -> void:
 	if type == "Enter":
 		queue_free()
+	if type == "Exit":
+		Globalvars.LevelEndSequence = 2
 
 func _on_special_grabbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("PlayerHurtbox") and type == "Exit":

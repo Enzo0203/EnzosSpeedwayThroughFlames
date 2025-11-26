@@ -210,7 +210,7 @@ func _on_enzo_heal() -> void:
 	pass
 
 func _on_enzo_death() -> void:
-	Overlay.play("Black Screen of Death")
+	Overlay.play("Death")
 	if get_tree():
 		await get_tree().create_timer(3.5).timeout
 	if get_tree():

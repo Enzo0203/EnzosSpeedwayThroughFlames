@@ -6500,8 +6500,7 @@ cache/0/128/0/glyphs/73/texture_idx = 0
 
 [node name="Player" type="CharacterBody2D" groups=["PlayerCollision"]]
 position = Vector2(0, -5)
-collision_layer = 2
-collision_mask = 41
+collision_layer = 16
 floor_stop_on_slope = false
 floor_constant_speed = true
 floor_max_angle = 0.83775806
@@ -6577,7 +6576,7 @@ scale_amount_curve = SubResource("Curve_au0cc")
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["PlayerHitbox"]]
 collision_layer = 16
-collision_mask = 1168
+collision_mask = 96
 script = ExtResource("7_6b6sq")
 metadata/dmg = 5
 metadata/strength = 5
@@ -6593,8 +6592,8 @@ debug_color = Color(0.913725, 0, 0.721569, 0.419608)
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["PlayerHurtbox"]]
 editor_description = "neut"
 position = Vector2(0, 4)
-collision_layer = 4
-collision_mask = 3392
+collision_layer = 16
+collision_mask = 96
 script = ExtResource("8_k7fhu")
 metadata/state = "vuln"
 
@@ -6606,7 +6605,6 @@ debug_color = Color(1, 0, 0.133333, 0.419608)
 [node name="Walljumpdetector" type="Area2D" parent="Spritesheet"]
 visible = false
 collision_layer = 0
-collision_mask = 9
 
 [node name="Walljumpdetector" type="CollisionShape2D" parent="Spritesheet/Walljumpdetector"]
 position = Vector2(14, 1)
@@ -6691,7 +6689,7 @@ one_shot = true
 
 [node name="CamAttractorDetector" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 512
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CamAttractorDetector"]
 shape = SubResource("CircleShape2D_o30bu")

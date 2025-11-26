@@ -230,8 +230,8 @@ scale_max = 0.07
 color_ramp = SubResource("GradientTexture1D_82fsh")
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-collision_layer = 0
-collision_mask = 9
+collision_layer = 96
+collision_mask = 4
 script = ExtResource("1_03j0k")
 
 [node name="CompactBlastbox" type="Sprite2D" parent="."]
@@ -244,8 +244,8 @@ libraries = {
 }
 
 [node name="Hurtbox" type="Area2D" parent="CompactBlastbox"]
-collision_layer = 0
-collision_mask = 2068
+collision_layer = 96
+collision_mask = 80
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="CompactBlastbox/Hurtbox"]
 shape = SubResource("RectangleShape2D_luxac")
@@ -273,8 +273,8 @@ libraries = {
 }
 
 [node name="Hitbox" type="Area2D" parent="Explosion" groups=["EnvironmentalHitbox"]]
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 96
+collision_mask = 80
 monitoring = false
 metadata/dmg = 3
 metadata/strength = 100
@@ -287,8 +287,8 @@ disabled = true
 debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
 [node name="SmallHitbox" type="Area2D" parent="Explosion" groups=["CloseExplosion"]]
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 96
+collision_mask = 80
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Explosion/SmallHitbox"]

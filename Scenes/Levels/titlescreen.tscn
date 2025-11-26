@@ -97,7 +97,8 @@ centered = false
 position = Vector2(728, 369)
 texture = ExtResource("7_7ga8a")
 hframes = 4
-vframes = 3
+vframes = 10
+frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Jeep"]
 libraries = {
@@ -130,6 +131,7 @@ hframes = 3
 frame = 1
 
 [node name="BlackFade" type="Sprite2D" parent="UI/TitleScreenButtons"]
+visible = false
 position = Vector2(410, 270)
 texture = ExtResource("11_d535p")
 

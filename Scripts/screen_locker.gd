@@ -20,3 +20,12 @@ func _physics_process(_delta: float) -> void:
 		if has_overlapping_areas() == false:
 			checkingForEnemies = false
 			hasEnemies = false
+		elif not get_overlapping_areas().any(are_enemies):
+			checkingForEnemies = false
+			hasEnemies = false
+
+func are_enemies(area: Area2D) -> bool:
+	if area.is_in_group("EnemyHurtbox"):
+		return true
+	else:
+		return false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dlw1wfk1kmu6d"]
+[gd_scene load_steps=17 format=3 uid="uid://dpkaon1a7mynk"]
 
 [ext_resource type="Texture2D" uid="uid://by3gtkliwmwif" path="res://Sprites/General Sprites/Demon goblin sheet.png" id="1_wlxbx"]
 [ext_resource type="Script" uid="uid://bk1427ivshjqb" path="res://Scripts/demon_goblin.gd" id="2_lcivg"]
@@ -851,8 +851,8 @@ size = Vector2(22, 55)
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["EnemyCollision"]]
 position = Vector2(0, -5)
-collision_layer = 128
-collision_mask = 1033
+collision_layer = 32
+collision_mask = 2
 floor_constant_speed = true
 script = ExtResource("2_lcivg")
 
@@ -872,7 +872,7 @@ libraries = {
 visible = false
 position = Vector2(3, 0)
 collision_layer = 0
-collision_mask = 4
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/EnzoDetector"]
 position = Vector2(0, 127)
@@ -881,7 +881,7 @@ debug_color = Color(0, 0.643137, 0.27451, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="Spritesheet"]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/EnzoDetector2"]
 position = Vector2(50.5, 28)
@@ -891,7 +891,7 @@ debug_color = Color(0.156863, 0.509804, 0, 0.419608)
 [node name="ObstacleDetector" type="Area2D" parent="Spritesheet"]
 visible = false
 collision_layer = 0
-collision_mask = 41
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/ObstacleDetector"]
 position = Vector2(21, 21)
@@ -900,8 +900,8 @@ debug_color = Color(0.698039, 0.494118, 0, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
 position = Vector2(3, 22)
-collision_layer = 128
-collision_mask = 2064
+collision_layer = 32
+collision_mask = 80
 metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
@@ -917,8 +917,8 @@ collide_with_areas = true
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["EnemyHitbox"]]
 position = Vector2(3, 42)
-collision_layer = 1024
-collision_mask = 16
+collision_layer = 32
+collision_mask = 80
 metadata/dmg = 2
 metadata/strength = 2
 metadata/deathtype = "blunt"

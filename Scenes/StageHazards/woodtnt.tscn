@@ -271,7 +271,7 @@ scale_max = 0.07
 color_ramp = SubResource("GradientTexture1D_kg52v")
 
 [node name="RigidBody2d" type="RigidBody2D" groups=["EnvironmentalCollision", "tileset"]]
-collision_layer = 8
+collision_layer = 7
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_37ejq")
@@ -286,8 +286,8 @@ libraries = {
 }
 
 [node name="CrateHurtbox" type="Area2D" parent="Crate" groups=["EnvironmentalHurtbox", "hazard"]]
-collision_layer = 8
-collision_mask = 3092
+collision_layer = 64
+collision_mask = 112
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Crate/CrateHurtbox"]
 shape = SubResource("RectangleShape2D_tplgh")
@@ -320,8 +320,8 @@ libraries = {
 
 [node name="Hitbox" type="Area2D" parent="Explosion" groups=["EnvironmentalHitbox", "Explosion"]]
 visible = false
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 64
+collision_mask = 112
 monitoring = false
 metadata/dmg = 3
 metadata/strength = 100
@@ -336,8 +336,8 @@ debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
 [node name="Small hitbox" type="Area2D" parent="Explosion" groups=["CloseExplosion"]]
 visible = false
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 64
+collision_mask = 112
 monitoring = false
 
 [node name="SmallhitboxShape" type="CollisionPolygon2D" parent="Explosion/Small hitbox"]

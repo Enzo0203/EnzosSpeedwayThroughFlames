@@ -50,10 +50,6 @@ func _physics_process(delta: float) -> void:
 	update_animations()
 	set_health()
 	check_for_death()
-	if $Spritesheet.scale.x == -1:
-		$Spritesheet/Hurtbox/HitDetector.scale.x = -1
-	else:
-		$Spritesheet/Hurtbox/HitDetector.scale.x = 1
 
 var EnzoInArea: bool
 var HasBall: bool = true
