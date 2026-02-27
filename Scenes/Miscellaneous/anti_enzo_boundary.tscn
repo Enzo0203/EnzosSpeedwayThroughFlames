@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3q8h330mw38p"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m3sga"]
+normal = Vector2(-1, 0)
+
+[node name="AntiEnzoBoundary" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_m3sga")
+debug_color = Color(0, 0, 1, 0.42000002)

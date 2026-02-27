@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://cu8dhsgrx4c16"]
+
+[ext_resource type="Script" uid="uid://b82f7xdsngkwj" path="res://Scripts/HUDandUI/end_of_demo.gd" id="1_1dl5n"]
+[ext_resource type="Texture2D" uid="uid://ly2cqmet5c8p" path="res://Sprites/EndOfDemo.png" id="1_yir1c"]
+[ext_resource type="AudioStream" uid="uid://b0hkiy3h3ygtw" path="res://Music/Demoenduo.wav" id="2_lp4b3"]
+[ext_resource type="Texture2D" uid="uid://by6fhpa0c2q4" path="res://Sprites/UI/PressButton.png" id="4_b87pw"]
+
+[sub_resource type="Animation" id="Animation_lp4b3"]
+resource_name = "anim"
+length = 1.264
+loop_mode = 1
+step = 0.316
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33333334, 0.6666667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1dl5n"]
+_data = {
+&"anim": SubResource("Animation_lp4b3")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jubjf"]
+atlas = ExtResource("4_b87pw")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62ylt"]
+atlas = ExtResource("4_b87pw")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p4wxx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jubjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62ylt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_1dl5n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yir1c")
+centered = false
+hframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_1dl5n")
+}
+autoplay = "anim"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lp4b3")
+autoplay = true
+
+[node name="PressButton" type="AnimatedSprite2D" parent="."]
+position = Vector2(33, 507)
+sprite_frames = SubResource("SpriteFrames_p4wxx")
+autoplay = "default"
+frame_progress = 0.8790503

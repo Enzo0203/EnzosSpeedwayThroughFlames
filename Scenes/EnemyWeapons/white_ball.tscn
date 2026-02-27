@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpmq0bb3118cr"]
+[gd_scene load_steps=10 format=3 uid="uid://cpmq0bb3118cr"]
 
-[ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/white_ball.gd" id="1_tldaj"]
+[ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/EnemyWeapons/white_ball.gd" id="1_tldaj"]
 [ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/D-White ball sheet.png" id="2_vnc03"]
+[ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_dimt7"]
+[ext_resource type="AudioStream" uid="uid://2hxfxy1vr08i" path="res://Sfx/Combat/Hitsounds/DodgeballHit.ogg" id="4_5eted"]
 
 [sub_resource type="Animation" id="Animation_schjl"]
 length = 0.001
@@ -50,7 +52,7 @@ resource_local_to_scene = true
 radius = 9.84886
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-collision_layer = 96
+collision_layer = 32
 collision_mask = 0
 script = ExtResource("1_tldaj")
 
@@ -63,18 +65,21 @@ hframes = 2
 libraries = {
 &"": SubResource("AnimationLibrary_4w3o2")
 }
+autoplay = "ball"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dqv0b")
 disabled = true
 
-[node name="Hitbox" type="Area2D" parent="." groups=["EnemyHitbox"]]
-collision_layer = 96
-collision_mask = 20
-metadata/dmg = 1
-metadata/strength = 1
-metadata/kbdirection = Vector2(0, -200)
-metadata/deathtype = "blunt"
+[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox", "Projectile"]]
+collision_layer = 32
+collision_mask = 18
+script = ExtResource("3_dimt7")
+Damage = 1
+Strength = 1
+Knockback = Vector2(0, -100)
+Parriable = true
+DeathType = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_ju3r4")
@@ -85,5 +90,13 @@ visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5eted")
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]
+[connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]
+[connection signal="parried" from="Hitbox" to="." method="_on_hitbox_parried"]
+[connection signal="rebounded" from="Hitbox" to="." method="_on_hitbox_rebounded"]

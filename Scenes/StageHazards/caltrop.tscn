@@ -1,14 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://lcv2h2ct6fk2"]
 
-[ext_resource type="Script" uid="uid://8tm57t3acdj7" path="res://Scripts/caltrop.gd" id="1_gvtda"]
 [ext_resource type="Texture2D" uid="uid://db0bo5son2l3r" path="res://Sprites/General Sprites/Caltrop.png" id="1_pwcmh"]
+[ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_57wqk"]
 
 [sub_resource type="Animation" id="Animation_k7dbc"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Hurtbox2/Hurtbox2:disabled")
+tracks/0/path = NodePath("../Hitbox2/Hitbox2Shape:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -20,7 +20,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Hurtbox/Hurtbox1:visible")
+tracks/1/path = NodePath("../Hitbox/HitboxShape:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -32,7 +32,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../Hurtbox2/Hurtbox2:visible")
+tracks/2/path = NodePath("../Hitbox2/Hitbox2Shape:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -50,7 +50,7 @@ step = 0.0333333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Hurtbox/Hurtbox1:disabled")
+tracks/0/path = NodePath("../Hitbox/HitboxShape:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -62,7 +62,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Hurtbox2/Hurtbox2:disabled")
+tracks/1/path = NodePath("../Hitbox2/Hitbox2Shape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -74,7 +74,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../Hurtbox/Hurtbox1:visible")
+tracks/2/path = NodePath("../Hitbox/HitboxShape:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -86,7 +86,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Hurtbox2/Hurtbox2:visible")
+tracks/3/path = NodePath("../Hitbox2/Hitbox2Shape:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -111,7 +111,6 @@ size = Vector2(30, 30)
 [node name="Caltrop" type="StaticBody2D"]
 collision_layer = 64
 collision_mask = 0
-script = ExtResource("1_gvtda")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_pwcmh")
@@ -120,25 +119,33 @@ texture = ExtResource("1_pwcmh")
 libraries = {
 &"": SubResource("AnimationLibrary_6xgel")
 }
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v4303")
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["EnemyHitbox"]]
-collision_layer = 64
+[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox"]]
+collision_layer = 32
 collision_mask = 0
+script = ExtResource("3_57wqk")
+Damage = 2
+Clankable = false
+DeathType = "spike"
 metadata/deathtype = "spike"
 
-[node name="Hurtbox1" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_jhlnx")
 disabled = true
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)
 
-[node name="Hurtbox2" type="Area2D" parent="." groups=["EnemyHitbox"]]
-collision_layer = 64
+[node name="Hitbox2" type="Area2D" parent="." groups=["Hitbox"]]
+collision_layer = 32
 collision_mask = 0
+script = ExtResource("3_57wqk")
+Damage = 2
+Clankable = false
 metadata/deathtype = "spike"
 
-[node name="Hurtbox2" type="CollisionShape2D" parent="Hurtbox2"]
+[node name="Hitbox2Shape" type="CollisionShape2D" parent="Hitbox2"]
 shape = SubResource("RectangleShape2D_jhlnx")
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)

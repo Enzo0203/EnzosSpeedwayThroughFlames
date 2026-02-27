@@ -1,6 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://q2rdc5lhfiis"]
+[gd_scene load_steps=23 format=3 uid="uid://q2rdc5lhfiis"]
 
-[ext_resource type="Script" uid="uid://dwfglmaxygrde" path="res://Scripts/title_screen_bg_scroll.gd" id="1_he7ib"]
+[ext_resource type="Script" uid="uid://dwfglmaxygrde" path="res://Scripts/HUDandUI/title_screen_bg_scroll.gd" id="1_he7ib"]
 [ext_resource type="Texture2D" uid="uid://cf6ts5aineel2" path="res://Sprites/Backgrounds/Plaingroundback.png" id="2_tn82s"]
 [ext_resource type="Texture2D" uid="uid://bjtyd7leopmuo" path="res://Sprites/Title Screen/Title screen ground.png" id="2_vac3x"]
 [ext_resource type="Texture2D" uid="uid://c4d8pis7dwvpp" path="res://Sprites/Backgrounds/Plainsky.png" id="2_xun6r"]
@@ -9,14 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://bdbovh2xgywst" path="res://Sprites/General Sprites/Jeep Sheet.png" id="7_7ga8a"]
 [ext_resource type="Texture2D" uid="uid://s7ek132il52s" path="res://Sprites/Title Screen/Title.png" id="8_o411o"]
 [ext_resource type="Texture2D" uid="uid://cmuppv241nnv7" path="res://Sprites/Title Screen/Start Game Button Sheet.png" id="9_4ldc7"]
-[ext_resource type="Script" uid="uid://dxiiqqrbxpke0" path="res://Scenes/Levels/title_screen.gd" id="9_wsvtn"]
+[ext_resource type="Script" uid="uid://dxiiqqrbxpke0" path="res://Scripts/HUDandUI/title_screen.gd" id="9_wsvtn"]
 [ext_resource type="Texture2D" uid="uid://6c5h7snw3wa6" path="res://Sprites/Title Screen/BlackFade.png" id="11_d535p"]
 [ext_resource type="Texture2D" uid="uid://bvrxvox00s30n" path="res://Sprites/Title Screen/Settings Button Sheet.png" id="11_oga1r"]
 [ext_resource type="AudioStream" uid="uid://rilkomxda77c" path="res://Music/Title Theme.wav" id="12_njea7"]
 [ext_resource type="Texture2D" uid="uid://bqrhw4f1j3f6t" path="res://Sprites/Title Screen/Settings/Settings Background.png" id="13_5iqpf"]
 [ext_resource type="Texture2D" uid="uid://dd2w04tke4gbr" path="res://Sprites/Title Screen/Settings/SliderBack.png" id="14_odgie"]
 [ext_resource type="Texture2D" uid="uid://kns7ayicsaby" path="res://Sprites/Title Screen/Settings/SliderFill.png" id="15_e46xu"]
-[ext_resource type="FontFile" uid="uid://cetlduosmfub3" path="res://Fonts/Flames New Roman Black.ttf" id="16_e46xu"]
+[ext_resource type="Theme" uid="uid://bc011y2rioato" path="res://MiscResources/theme.tres" id="16_62gd0"]
 
 [sub_resource type="Animation" id="Animation_o411o"]
 resource_name = "Drive"
@@ -42,10 +42,6 @@ _data = {
 }
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_62gd0"]
-
-[sub_resource type="Theme" id="Theme_62gd0"]
-default_font = ExtResource("16_e46xu")
-default_font_size = 14
 
 [sub_resource type="Theme" id="Theme_e46xu"]
 
@@ -98,7 +94,6 @@ position = Vector2(728, 369)
 texture = ExtResource("7_7ga8a")
 hframes = 4
 vframes = 10
-frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Jeep"]
 libraries = {
@@ -137,7 +132,6 @@ texture = ExtResource("11_d535p")
 
 [node name="OptionButtons" type="CanvasLayer" parent="UI"]
 layer = 2
-visible = false
 
 [node name="OptionsBackground" type="Sprite2D" parent="UI/OptionButtons"]
 texture = ExtResource("13_5iqpf")
@@ -172,6 +166,7 @@ offset_top = 14.285721
 offset_right = -106.57138
 offset_bottom = 44.28572
 scale = Vector2(2, 2)
+theme = ExtResource("16_62gd0")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 14
@@ -184,7 +179,7 @@ offset_top = 7.142853
 offset_right = 236.28568
 offset_bottom = 35.142853
 scale = Vector2(2.5, 2.5)
-theme = SubResource("Theme_62gd0")
+theme = ExtResource("16_62gd0")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 5
@@ -230,5 +225,3 @@ horizontal_alignment = 1
 [node name="Title Theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_njea7")
 autoplay = true
-
-[connection signal="value_changed" from="UI/OptionButtons/Volume" to="UI" method="_on_volume_value_changed"]

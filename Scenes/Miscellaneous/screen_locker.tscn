@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dm2ocjvd048s1"]
 
-[ext_resource type="Script" uid="uid://cm3jc5ma1gs2q" path="res://Scripts/screen_locker.gd" id="1_2ym3m"]
+[ext_resource type="Script" uid="uid://cm3jc5ma1gs2q" path="res://Scripts/Technical/screen_locker.gd" id="1_2ym3m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wfkfe"]
 size = Vector2(960, 540)

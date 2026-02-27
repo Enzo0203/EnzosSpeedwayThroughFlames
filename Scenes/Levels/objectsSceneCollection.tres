@@ -1,0 +1,45 @@
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://bva3ua0bbnc1f"]
+
+[ext_resource type="PackedScene" uid="uid://lcv2h2ct6fk2" path="res://Scenes/StageHazards/caltrop.tscn" id="1_wkq7x"]
+[ext_resource type="PackedScene" uid="uid://b7eqkwrnfbtps" path="res://Scenes/StageHazards/lava.tscn" id="2_pf6gy"]
+[ext_resource type="PackedScene" uid="uid://cfhxp35yy5oed" path="res://Scenes/StageHazards/woodtnt.tscn" id="3_cjy1n"]
+[ext_resource type="PackedScene" uid="uid://syewcoe1n7wo" path="res://Scenes/StageHazards/skateboard.tscn" id="4_pai1i"]
+[ext_resource type="PackedScene" uid="uid://bn1asnr7yf2j6" path="res://Scenes/Items/snackbox.tscn" id="5_ynri5"]
+[ext_resource type="PackedScene" uid="uid://cjpdwwtfsxaiw" path="res://Scenes/Items/chips.tscn" id="6_og430"]
+[ext_resource type="PackedScene" uid="uid://devu83rlhpbyw" path="res://Scenes/Items/pastel.tscn" id="7_kl6fu"]
+[ext_resource type="PackedScene" uid="uid://bspfygrecpepr" path="res://Scenes/Miscellaneous/camera_attractor.tscn" id="8_4juht"]
+[ext_resource type="PackedScene" uid="uid://dm2ocjvd048s1" path="res://Scenes/Miscellaneous/screen_locker.tscn" id="9_lehg8"]
+[ext_resource type="PackedScene" uid="uid://d3q8h330mw38p" path="res://Scenes/Miscellaneous/anti_enzo_boundary.tscn" id="10_pf6gy"]
+[ext_resource type="PackedScene" uid="uid://eatffjhnbskb" path="res://Scenes/Player/player_enzo.tscn" id="10_vnw0c"]
+[ext_resource type="PackedScene" uid="uid://bas8dbolydmy" path="res://Scenes/Player/jeep.tscn" id="11_lghli"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_3mqg2"]
+resource_name = "Level Hazards"
+scenes/1/scene = ExtResource("1_wkq7x")
+scenes/2/scene = ExtResource("2_pf6gy")
+scenes/3/scene = ExtResource("3_cjy1n")
+scenes/4/scene = ExtResource("4_pai1i")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_5npvc"]
+resource_name = "Items"
+scenes/1/scene = ExtResource("5_ynri5")
+scenes/2/scene = ExtResource("6_og430")
+scenes/3/scene = ExtResource("7_kl6fu")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_8018r"]
+resource_name = "Technical"
+scenes/1/scene = ExtResource("8_4juht")
+scenes/2/scene = ExtResource("9_lehg8")
+scenes/3/scene = ExtResource("10_pf6gy")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_bg1ok"]
+resource_name = "Misc"
+scenes/1/scene = ExtResource("10_vnw0c")
+scenes/2/scene = ExtResource("11_lghli")
+
+[resource]
+tile_size = Vector2i(30, 30)
+sources/0 = SubResource("TileSetScenesCollectionSource_3mqg2")
+sources/1 = SubResource("TileSetScenesCollectionSource_5npvc")
+sources/2 = SubResource("TileSetScenesCollectionSource_8018r")
+sources/3 = SubResource("TileSetScenesCollectionSource_bg1ok")

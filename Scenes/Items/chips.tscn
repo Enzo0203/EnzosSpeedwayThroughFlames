@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjpdwwtfsxaiw"]
 
-[ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items.gd" id="1_68bdb"]
+[ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items/Items.gd" id="1_68bdb"]
 [ext_resource type="Texture2D" uid="uid://cg1xylfmdpi6q" path="res://Sprites/General Sprites/Chips Sheet.png" id="2_ld38n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo83l"]
@@ -61,7 +61,7 @@ hframes = 6
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["Heal"]]
 position = Vector2(0, 30)
-collision_layer = 0
+collision_layer = 64
 collision_mask = 16
 metadata/heal = 3
 

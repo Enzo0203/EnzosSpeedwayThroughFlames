@@ -1,0 +1,186 @@
+extends CharacterBody2D
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+enum States {IDLE, WALKING, ATTACKPREP, ATTACKING, DEAD}
+
+var state: int = States.IDLE
+var is_dead: bool = false
+
+@onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Spritesheet
+@onready var label: Label = $Label
+
+@onready var hitbox: Area2D = $Hitbox
+@onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
+@onready var hurtbox: Area2D = $Hurtbox
+
+func change_state(newState: int) -> void:
+	state = newState
+
+func _physics_process(delta: float) -> void:
+	match state:
+		States.IDLE:
+			idle(delta)
+		States.WALKING:
+			walking(delta)
+		States.ATTACKPREP:
+			attackprep(delta)
+		States.ATTACKING:
+			attacking(delta)
+		States.DEAD:
+			dead(delta)
+	move_and_slide()
+	update_animations()
+	flip_hitboxes()
+
+var EnzoInArea: bool = false
+var EnzoInArea2: bool = false
+var Obstacle: bool
+
+func _on_enzo_detector_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Hurtbox"):
+		EnzoInArea = true
+
+func _on_enzo_detector_area_exited(area: Area2D) -> void:
+	if area.is_in_group("Hurtbox"):
+		EnzoInArea = false
+
+func _on_enzo_detector_2_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Hurtbox"):
+		EnzoInArea2 = true
+
+func _on_enzo_detector_2_area_exited(area: Area2D) -> void:
+	if area.is_in_group("Hurtbox"):
+		EnzoInArea2 = false
+
+func _on_obstacle_detector_body_entered(_body: Node2D) -> void:
+	Obstacle = true
+
+func _on_obstacle_detector_body_exited(_body: Node2D) -> void:
+	Obstacle = false
+
+func idle(delta: float) -> void:
+	# What to do
+	velocity.x = move_toward(velocity.x, 0, 500 * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if EnzoInArea == true and EnzoInArea2 == false:
+		change_state(States.WALKING)
+		await get_tree().create_timer(0.6).timeout
+	if EnzoInArea2 == true:
+		change_state(States.ATTACKPREP)
+		await get_tree().create_timer(1.0).timeout
+		if state == States.ATTACKPREP:
+			$PaletteSwapAnims.play("Parriable")
+
+func walking(delta: float) -> void:
+	if Globalvars.EnzoPosition.x > global_position.x:
+		velocity.x = move_toward(velocity.x, 200, 1000 * delta)
+		sprite.scale.x = 1
+	if Globalvars.EnzoPosition.x < global_position.x:
+		velocity.x = move_toward(velocity.x, -200, 1000 * delta)
+		sprite.scale.x = -1
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		velocity.y = min(velocity.y, 500)
+	else:
+		if Obstacle:
+			velocity.y = -420
+	if EnzoInArea == false:
+		change_state(States.IDLE)
+	if EnzoInArea2 == true and Obstacle == false and is_on_floor():
+		change_state(States.ATTACKPREP)
+		await get_tree().create_timer(1.0).timeout
+		if state == States.ATTACKPREP:
+			$PaletteSwapAnims.play("Parriable")
+
+func attackprep(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	velocity.x = move_toward(velocity.x, 0, 300 * delta)
+	if animation.is_playing() == false:
+		if state == States.ATTACKPREP:
+			change_state(States.ATTACKING)
+			velocity.x = 300 * sprite.scale.x
+
+func attacking(delta: float) -> void:
+	if state == States.ATTACKING:
+		velocity.y += gravity * delta
+		velocity.y = min(velocity.y, 500)
+		velocity.x = move_toward(velocity.x, 0, 200 * delta)
+		if velocity.x > -120 and velocity.x < 120:
+			change_state(States.IDLE)
+
+func dead(delta: float) -> void:
+	# What to do
+	velocity.y += gravity * delta
+	collision_mask = 0
+
+func addToMiniCombo(value: int) -> void:
+	Globalvars.EnzoMiniCombo += value
+	Globalvars.EnzoMiniComboUpdated.emit()
+
+func flip_hitboxes() -> void:
+	$Hurtbox.scale.x = sprite.scale.x
+	$Hitbox.scale.x = sprite.scale.x
+	$EnzoDetector.scale.x = sprite.scale.x
+	$EnzoDetector2.scale.x = sprite.scale.x
+	$ObstacleDetector.scale.x = sprite.scale.x
+
+func update_animations() -> void:
+	if state == States.IDLE:
+		animation.play("idle")
+	if state == States.WALKING:
+		if is_on_floor():
+			animation.play("walk")
+		else:
+			animation.play("fall")
+	if state == States.ATTACKPREP:
+		animation.play("attackprep")
+	if state == States.ATTACKING:
+		animation.play("attack")
+	if state == States.DEAD:
+		animation.play("dead")
+
+func hitStop(_timeScale: float, _duration: float) -> void:
+	pass
+
+func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
+	audio.pitch_scale = randf_range(0.7, 1.1)
+
+func hurtboxstun(duration: float) -> void:
+	hitboxshape.set_deferred("monitorable", false)
+	await get_tree().create_timer(duration).timeout
+	hitboxshape.set_deferred("monitorable", true)
+
+func give_score(amount: int, accountForMultiplier: bool) -> void:
+	if accountForMultiplier == true:
+		Globalvars.EnzoScore += roundi(amount * Globalvars.EnzoScoreMultiplier)
+	else:
+		Globalvars.EnzoScore += amount
+
+func _on_hurtbox_hurt(_area: Area2D, _Damage:int, Knockback: Vector2, _DeathType: String) -> void:
+	if is_dead == false:
+		addToMiniCombo(1)
+		give_score(100, true)
+		hitStop(0.1, 0.3)
+		change_state(States.DEAD)
+		$PaletteSwapAnims.play("Hurt")
+		velocity = Knockback
+		is_dead = true
+		Globalvars.EnzoComboUpdated.emit()
+		Globalvars.EnzoCombo += 1
+		Globalvars.EnzoKills += 1
+
+func _on_hitbox_clank(area: Area2D) -> void:
+	if area.global_position.x >= position.x:
+		velocity.x = -200
+	else:
+		velocity.x = 200
+	hurtboxstun(0.3)
+
+func _on_hitbox_hurt_something(_area: Area2D) -> void:
+	$Kick.play()

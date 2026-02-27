@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmei5556chpa8"]
+[gd_scene load_steps=9 format=3 uid="uid://cmei5556chpa8"]
 
-[ext_resource type="Script" uid="uid://dh8tkidg7ibbv" path="res://Scripts/explosion.gd" id="1_ckycj"]
+[ext_resource type="Script" uid="uid://dh8tkidg7ibbv" path="res://Scripts/StageHazards/explosion.gd" id="1_ckycj"]
 [ext_resource type="Texture2D" uid="uid://xv1lroaqugdg" path="res://Sprites/General Sprites/Explosion Sheet.png" id="1_qid8r"]
+[ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_q5ouu"]
 [ext_resource type="AudioStream" uid="uid://dexoqgy785lht" path="res://Sfx/Explosion.wav" id="4_8nctb"]
 
 [sub_resource type="Animation" id="Animation_n3uk2"]
@@ -68,18 +69,6 @@ tracks/4/keys = {
 "update": 1,
 "values": [true, false]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("GPUParticles2D:emitting")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_v115k"]
 length = 0.001
@@ -143,18 +132,6 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("GPUParticles2D:emitting")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jinow"]
 _data = {
@@ -176,10 +153,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_jinow")
 }
 
-[node name="Hitbox" type="Area2D" parent="." groups=["EnvironmentalHitbox", "Explosion"]]
-collision_layer = 2048
+[node name="Hitbox" type="Area2D" parent="." groups=["Explosion", "Hitbox"]]
+collision_layer = 64
 collision_mask = 0
 monitoring = false
+script = ExtResource("3_q5ouu")
+Damage = 3
+Strength = 99
+Knockback = Vector2(0, -500)
+Clankable = false
+DeathType = "burn"
 metadata/dmg = 3
 metadata/strength = 100
 metadata/kbdirection = Vector2(0, -500)
@@ -191,7 +174,7 @@ disabled = true
 debug_color = Color(0.827451, 0.396078, 0, 0.419608)
 
 [node name="Small hitbox" type="Area2D" parent="." groups=["CloseExplosion"]]
-collision_layer = 2048
+collision_layer = 64
 collision_mask = 0
 monitoring = false
 

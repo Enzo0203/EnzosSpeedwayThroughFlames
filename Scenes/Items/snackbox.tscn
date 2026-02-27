@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bn1asnr7yf2j6"]
 
-[ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items.gd" id="1_b0gah"]
+[ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items/Items.gd" id="1_b0gah"]
 [ext_resource type="Texture2D" uid="uid://deshvawiy8woo" path="res://Sprites/General Sprites/SnackBox Sheet.png" id="2_gfl15"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo83l"]
@@ -61,7 +61,7 @@ hframes = 6
 
 [node name="Hitbox" type="Area2D" parent="Spritesheet" groups=["Heal"]]
 position = Vector2(0, 30)
-collision_layer = 0
+collision_layer = 64
 collision_mask = 16
 metadata/heal = 1
 

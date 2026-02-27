@@ -1,0 +1,19 @@
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://qxwv6l3eiwnf"]
+
+[ext_resource type="PackedScene" uid="uid://7e6v68d1olpd" path="res://Scenes/Enemies/test enemy.tscn" id="1_1lm6e"]
+[ext_resource type="PackedScene" uid="uid://dmwv8mqy10fmr" path="res://Scenes/Enemies/test enemy evil.tscn" id="2_ecdp8"]
+[ext_resource type="PackedScene" uid="uid://ba8kn82016cck" path="res://Scenes/Enemies/rookie_hellballer.tscn" id="3_vlfe2"]
+[ext_resource type="PackedScene" uid="uid://dpkaon1a7mynk" path="res://Scenes/Enemies/demon_goblin.tscn" id="4_f6jkj"]
+[ext_resource type="PackedScene" uid="uid://c7cm41byq6hvq" path="res://Scenes/Enemies/bombardier.tscn" id="5_a627t"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_kmyxh"]
+resource_name = "Enemies"
+scenes/1/scene = ExtResource("1_1lm6e")
+scenes/2/scene = ExtResource("2_ecdp8")
+scenes/3/scene = ExtResource("3_vlfe2")
+scenes/4/scene = ExtResource("4_f6jkj")
+scenes/5/scene = ExtResource("5_a627t")
+
+[resource]
+tile_size = Vector2i(30, 30)
+sources/0 = SubResource("TileSetScenesCollectionSource_kmyxh")

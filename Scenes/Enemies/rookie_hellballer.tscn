@@ -1,7 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://ba8kn82016cck"]
+[gd_scene load_steps=23 format=3 uid="uid://ba8kn82016cck"]
 
-[ext_resource type="Script" uid="uid://dtha7moi082yu" path="res://Scripts/d_white.gd" id="1_fkcf2"]
+[ext_resource type="Script" uid="uid://dtha7moi082yu" path="res://Scripts/Enemies/d_white.gd" id="1_fkcf2"]
+[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_i4iyn"]
 [ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/D-White sheet.png" id="2_vnbog"]
+[ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="4_2mjlo"]
 [ext_resource type="AudioStream" uid="uid://hr1o38iyijtk" path="res://Sfx/SwooshWeak.wav" id="4_uc5dp"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="5_f7682"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="7_tbr1e"]
@@ -45,7 +47,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet/Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -74,7 +76,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet/Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -102,7 +104,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet/Hurtbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -154,7 +156,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Hurtbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -207,7 +209,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Spritesheet/Hurtbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -227,11 +229,132 @@ _data = {
 &"throw": SubResource("Animation_m3jlb")
 }
 
+[sub_resource type="Animation" id="Animation_2y6so"]
+resource_name = "Hurt"
+length = 0.66667336
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.40000004, 0.53333336, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7iwhy"]
+resource_name = "Idle"
+length = 0.03333667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4s5j2"]
+resource_name = "Parriable"
+length = 0.55556667
+step = 0.11111111
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.11111111, 0.22222222, 0.33333334, 0.44444448, 0.5555556),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_b0gc5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i4iyn"]
+_data = {
+&"Hurt": SubResource("Animation_2y6so"),
+&"Idle": SubResource("Animation_7iwhy"),
+&"Parriable": SubResource("Animation_4s5j2"),
+&"RESET": SubResource("Animation_b0gc5")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7d0"]
 resource_local_to_scene = true
 size = Vector2(20, 85)
 
-[node name="RookieHellballer" type="CharacterBody2D" groups=["EnemyCollision"]]
+[node name="RookieHellballer" type="CharacterBody2D"]
 position = Vector2(0, -5)
 collision_layer = 32
 collision_mask = 2
@@ -240,21 +363,26 @@ health = 2
 maxHealth = 2
 
 [node name="Spritesheet" type="Sprite2D" parent="."]
+material = ExtResource("2_i4iyn")
 texture = ExtResource("2_vnbog")
 hframes = 6
 vframes = 6
 
-[node name="Hurtbox" type="Area2D" parent="Spritesheet" groups=["EnemyHurtbox"]]
+[node name="Marker2D" type="Marker2D" parent="Spritesheet"]
+position = Vector2(41, -2)
+
+[node name="Hurtbox" type="Area2D" parent="." groups=["Enemy", "Hurtbox"]]
 collision_layer = 32
 collision_mask = 16
+script = ExtResource("4_2mjlo")
 metadata/state = "vuln"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spritesheet/Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_2mhsb")
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
-[node name="EnzoDetector" type="RayCast2D" parent="Spritesheet"]
+[node name="EnzoDetector" type="RayCast2D" parent="."]
 modulate = Color(0.0221348, 0.268932, 1.68458e-07, 1)
 position = Vector2(0, 32)
 target_position = Vector2(300, -27)
@@ -262,20 +390,20 @@ collision_mask = 18
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="Marker2D" type="Marker2D" parent="Spritesheet"]
-position = Vector2(41, -2)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_l6x4n")
 }
 
+[node name="PaletteSwapAnims" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_i4iyn")
+}
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_4a7d0")
-
-[node name="Marker2D" type="Marker2D" parent="."]
-modulate = Color(0.945098, 0, 0.588235, 1)
 
 [node name="Sound effects" type="Node2D" parent="."]
 
@@ -331,4 +459,4 @@ offset_left = -712.0
 offset_right = -672.0
 offset_bottom = 28.0
 
-[connection signal="area_entered" from="Spritesheet/Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
