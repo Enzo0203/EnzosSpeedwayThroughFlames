@@ -15,7 +15,7 @@ extends Control
 @onready var Regen3: AnimationPlayer = $Hearts/Regenoutline3/AnimationPlayer
 @onready var Regen4: AnimationPlayer = $Hearts/Regenoutline4/AnimationPlayer
 @onready var Regen5: AnimationPlayer = $Hearts/Regenoutline5/AnimationPlayer
-@onready var HurtOverlay: AnimationPlayer = $HurtOverlay/AnimationPlayer
+@onready var Overlay: AnimationPlayer = $Overlay/AnimationPlayer
 @onready var SpubbleDelay: Timer = $SpeechBubbleDelay
 @onready var Score1: AnimationPlayer = $Score/Score1/AnimationPlayer
 @onready var Score2: AnimationPlayer = $Score/Score2/AnimationPlayer
@@ -45,7 +45,9 @@ var miniComboMultiplier: float = 0
 var comboMultiplier: float = 0
 
 func _ready() -> void:
-	HurtOverlay.play("SceneTransition")
+	visible = true
+	$"..".visible = true
+	Overlay.play("SceneTransition")
 	Globalvars.EnzoHurt.connect(_on_enzo_hurt)
 	Globalvars.EnzoHeal.connect(_on_enzo_heal)
 	Globalvars.EnzoDeath.connect(_on_enzo_death)
@@ -54,17 +56,21 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if Globalvars.Enzo:
-		if HurtOverlay.is_playing() == false or HurtOverlay.current_animation == "SceneTransition":
-			$HurtOverlay.visible = true
-			HurtOverlay.play("Idle")
+		if Overlay.is_playing() == false or Overlay.current_animation == "SceneTransition":
+			$Overlay.visible = true
+			Overlay.play("Idle")
 		health = Globalvars.EnzoHealthArr
 		regen = Globalvars.EnzoRegenArr
 		handleHealth()
 		#handlePortrait()
-	handleCombo()
-	handleMiniCombo()
-	handleMultiplier()
-	handleScore()
+		handleCombo()
+		handleMiniCombo()
+		handleMultiplier()
+		handleScore()
+	if get_tree().paused:
+		visible = false
+	elif Globalvars.Enzo and Globalvars.LevelEndSequence == 0:
+		visible = true
 	if Globalvars.LevelEndSequence == 1:
 		visible = false
 
@@ -204,15 +210,15 @@ func handleScore() -> void:
 				#SpeechBubble.play("Combo")
 
 func _on_enzo_hurt() -> void:
-	HurtOverlay.play("Hurt")
+	Overlay.play("Hurt")
 
 func _on_enzo_heal() -> void:
 	pass
 
 func _on_enzo_death() -> void:
-	HurtOverlay.play("Death")
+	Overlay.play("Death")
 	if get_tree():
-		await get_tree().create_timer(3.5).timeout
+		await get_tree().create_timer(3.5, false).timeout
 	if get_tree():
 		Globalvars.EnzoKills = 0
 		Globalvars.EnzoScore = 000000

@@ -1,28 +1,26 @@
 extends Area2D
 
+@onready var deactivator: Area2D = $LockerDeactivator
+
 var checkingForEnemies: bool = false
 signal unlockScreen
 
-var hasEnemies:bool:
-	set(value):
-		hasEnemies = value
-		if value == false:
-			unlockScreen.emit()
 
 func _ready() -> void:
-	await area_entered
+	await get_tree().process_frame
+	await deactivator.area_entered
 	checkingForEnemies = true
 	await unlockScreen
-	$"..".queue_free()
+	queue_free()
 
 func _physics_process(_delta: float) -> void:
 	if checkingForEnemies:
-		if has_overlapping_areas() == false:
+		if deactivator.has_overlapping_areas() == false:
 			checkingForEnemies = false
-			hasEnemies = false
-		elif not get_overlapping_areas().any(are_enemies):
+			unlockScreen.emit()
+		elif not deactivator.get_overlapping_areas().any(are_enemies):
 			checkingForEnemies = false
-			hasEnemies = false
+			unlockScreen.emit()
 
 func are_enemies(area: Area2D) -> bool:
 	if area.is_in_group("Enemy"):

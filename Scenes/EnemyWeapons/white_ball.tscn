@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpmq0bb3118cr"]
+[gd_scene format=3 uid="uid://cpmq0bb3118cr"]
 
 [ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/EnemyWeapons/white_ball.gd" id="1_tldaj"]
-[ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/D-White ball sheet.png" id="2_vnc03"]
+[ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/Enemies/D-White ball sheet.png" id="2_vnc03"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_dimt7"]
 [ext_resource type="AudioStream" uid="uid://2hxfxy1vr08i" path="res://Sfx/Combat/Hitsounds/DodgeballHit.ogg" id="4_5eted"]
 
@@ -51,27 +51,25 @@ radius = 1.41421
 resource_local_to_scene = true
 radius = 9.84886
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1889828284]
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("1_tldaj")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=483460550]
 position = Vector2(-1, 0)
 texture = ExtResource("2_vnc03")
 hframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_4w3o2")
-}
-autoplay = "ball"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=129384373]
+libraries/ = SubResource("AnimationLibrary_4w3o2")
+autoplay = &"ball"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1562683582]
 shape = SubResource("CircleShape2D_dqv0b")
 disabled = true
 
-[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox", "Projectile"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1529746478 groups=["Hitbox", "Projectile"]]
 collision_layer = 32
 collision_mask = 18
 script = ExtResource("3_dimt7")
@@ -81,17 +79,23 @@ Knockback = Vector2(0, -100)
 Parriable = true
 DeathType = "blunt"
 
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=1352693097]
 shape = SubResource("CircleShape2D_ju3r4")
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1314590399]
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+[node name="Hit" type="AudioStreamPlayer2D" parent="." unique_id=2091884841]
 stream = ExtResource("4_5eted")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=792458920]
+rect = Rect2(-24, -24, 48, 48)
+
+[node name="Hitstopper" type="Timer" parent="." unique_id=83111861]
+one_shot = true
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
@@ -100,3 +104,4 @@ stream = ExtResource("4_5eted")
 [connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]
 [connection signal="parried" from="Hitbox" to="." method="_on_hitbox_parried"]
 [connection signal="rebounded" from="Hitbox" to="." method="_on_hitbox_rebounded"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

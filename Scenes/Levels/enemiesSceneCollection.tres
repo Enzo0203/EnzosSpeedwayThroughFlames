@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://qxwv6l3eiwnf"]
+[gd_resource type="TileSet" format=3 uid="uid://qxwv6l3eiwnf"]
 
 [ext_resource type="PackedScene" uid="uid://7e6v68d1olpd" path="res://Scenes/Enemies/test enemy.tscn" id="1_1lm6e"]
 [ext_resource type="PackedScene" uid="uid://dmwv8mqy10fmr" path="res://Scenes/Enemies/test enemy evil.tscn" id="2_ecdp8"]

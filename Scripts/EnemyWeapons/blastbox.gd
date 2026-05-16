@@ -1,12 +1,14 @@
 extends CharacterBody2D
 
-@onready var animation: AnimationPlayer = $Blastbox/BBAnimationPlayer
 @onready var marker: Marker2D = $Marker2D
 
 @onready var explosion: PackedScene = preload("res://Scenes/Miscellaneous/explosion.tscn")
 
-@onready var hurtbox: Area2D = $Blastbox/Hurtbox
-@onready var hurtboxshape: CollisionShape2D = $Blastbox/Hurtbox/HurtboxShape
+@onready var hurtbox: Area2D = $BlastboxSprite/Hurtbox
+@onready var hurtboxshape: CollisionShape2D = $BlastboxSprite/Hurtbox/HurtboxShape
+
+@export var blast_radius: float = 0.5
+@export var fuse_length: float = 3
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -17,8 +19,7 @@ func _ready() -> void:
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
 		velocity = instanceInitVelocity
-	animation.play("fuse")
-	await get_tree().create_timer(3).timeout
+	await get_tree().create_timer(fuse_length, false, true).timeout
 	explode()
 
 func _physics_process(delta: float) -> void:
@@ -31,7 +32,7 @@ func _physics_process(delta: float) -> void:
 func explode() -> void:
 	var explosion_instance: Node = explosion.instantiate()
 	explosion_instance.spawnPosition = marker.global_position
-	explosion_instance.explosionSize = 0.85
+	explosion_instance.explosionSize = blast_radius
 	explosion_instance.cantHurtEnzo = false
 	get_parent().add_child(explosion_instance)
 	destroy()

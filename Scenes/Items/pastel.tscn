@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://devu83rlhpbyw"]
+[gd_scene format=3 uid="uid://devu83rlhpbyw"]
 
 [ext_resource type="Script" uid="uid://cpew2aks6hpge" path="res://Scripts/Items/Items.gd" id="1_oyuxf"]
-[ext_resource type="Texture2D" uid="uid://8guwux3uyehn" path="res://Sprites/General Sprites/Pastel Sheet.png" id="2_qx3nd"]
+[ext_resource type="Texture2D" uid="uid://8guwux3uyehn" path="res://Sprites/General Sprites/Items/Pastel Sheet.png" id="2_qx3nd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo83l"]
 resource_local_to_scene = true

@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfhxp35yy5oed"]
+[gd_scene format=3 uid="uid://cfhxp35yy5oed"]
 
 [ext_resource type="Script" uid="uid://vp463l1flrtd" path="res://Scripts/StageHazards/woodtnt.gd" id="1_37ejq"]
-[ext_resource type="Texture2D" uid="uid://b5ko6p01vtakl" path="res://Sprites/General Sprites/Wood TNT.png" id="2_ervb8"]
+[ext_resource type="Texture2D" uid="uid://b5ko6p01vtakl" path="res://Sprites/General Sprites/Hazards/Wood TNT.png" id="2_ervb8"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_yk7v6"]
 
 [sub_resource type="Animation" id="Animation_4n7m5"]

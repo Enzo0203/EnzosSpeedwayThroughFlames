@@ -1,12 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://c7cm41byq6hvq"]
+[gd_scene format=3 uid="uid://c7cm41byq6hvq"]
 
 [ext_resource type="Script" uid="uid://ds0y7pabud0h4" path="res://Scripts/Enemies/bombardier.gd" id="1_vayxy"]
 [ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_4s5j2"]
-[ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="2_eg1a6"]
-[ext_resource type="Texture2D" uid="uid://cgkhpb8ai8w0v" path="res://Sprites/General Sprites/Bombardier sheet.png" id="2_vqjra"]
-[ext_resource type="Texture2D" uid="uid://51vf8nbtb68f" path="res://Sprites/HUD/DemonHeartFull.png" id="3_aq33k"]
+[ext_resource type="Texture2D" uid="uid://cgkhpb8ai8w0v" path="res://Sprites/General Sprites/Enemies/Bombardier sheet.png" id="2_vqjra"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="4_ifstu"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="5_5kbf8"]
+[ext_resource type="Texture2D" uid="uid://dpkybxrgshjgl" path="res://Sprites/HUD/Health/DemonHeartToughBar.png" id="6_5kbf8"]
+[ext_resource type="Texture2D" uid="uid://b1q6hcn8euomh" path="res://Sprites/HUD/Health/DemonHeartToughSheet.png" id="7_hfx46"]
 [ext_resource type="AudioStream" uid="uid://3vlfbpqg41vv" path="res://Sfx/Combat/Hitsounds/Slap.wav" id="8_5kbf8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6tv6m"]
@@ -15,7 +15,7 @@ size = Vector2(76, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juhp6"]
 resource_local_to_scene = true
-size = Vector2(72, 136)
+size = Vector2(72, 116)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdckb"]
 resource_local_to_scene = true
@@ -1022,31 +1022,31 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_2y6so"]
 resource_name = "Hurt"
-length = 0.66667336
+length = 0.73333335
 step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.40000004, 0.53333336, 0.6666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1)]
+"values": [[Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)], [Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)], [Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_7iwhy"]
@@ -1055,26 +1055,26 @@ length = 0.03333667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_4s5j2"]
@@ -1084,26 +1084,26 @@ step = 0.11111111
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.11111111, 0.22222222, 0.33333334, 0.44444448, 0.5555556),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0, 0, 0, 1)]
+"update": 0,
+"values": [[Color(1, 0.99607843, 0.45490196, 1)], [Color(0.24705882, 0.24313726, 0.06666667, 1)], [Color(1, 0.99607843, 0.45490196, 1)], [Color(0.24705882, 0.24313726, 0.06666667, 1)], [Color(1, 0.99607843, 0.45490196, 1)], [Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_b0gc5"]
@@ -1111,26 +1111,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t6rol"]
@@ -1141,25 +1141,47 @@ _data = {
 &"RESET": SubResource("Animation_b0gc5")
 }
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbsy5"]
+atlas = ExtResource("6_5kbf8")
+region = Rect2(0, 0, 94, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8tqx"]
+atlas = ExtResource("6_5kbf8")
+region = Rect2(1, 18, 92, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okksv"]
+atlas = ExtResource("6_5kbf8")
+region = Rect2(0, 0, 94, 18)
+
+[sub_resource type="Gradient" id="Gradient_qrsml"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhbao"]
+atlas = ExtResource("7_hfx46")
+region = Rect2(45, 0, 45, 44)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=656121285]
 position = Vector2(0, -5)
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_vayxy")
+health = 30
+maxHealth = 30
 
-[node name="Spritesheet" type="Sprite2D" parent="."]
+[node name="Spritesheet" type="Sprite2D" parent="." unique_id=497032297]
 material = ExtResource("2_4s5j2")
 texture = ExtResource("2_vqjra")
 hframes = 5
 vframes = 5
 
-[node name="Marker2D" type="Marker2D" parent="Spritesheet"]
+[node name="Marker2D" type="Marker2D" parent="Spritesheet" unique_id=741549114]
 position = Vector2(29, -43)
 
-[node name="Marker2D2" type="Marker2D" parent="Spritesheet"]
+[node name="Marker2D2" type="Marker2D" parent="Spritesheet" unique_id=1625088383]
 position = Vector2(67, -33)
 
-[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=826756319 groups=["Hitbox"]]
+visible = false
 position = Vector2(0, -11)
 collision_layer = 32
 collision_mask = 80
@@ -1171,155 +1193,149 @@ metadata/dmg = 4
 metadata/strength = 4
 metadata/deathtype = "blunt"
 
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=191388774]
 position = Vector2(31, -20.5)
 shape = SubResource("RectangleShape2D_6tv6m")
 disabled = true
 debug_color = Color(0.921569, 0, 0.694118, 0.419608)
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["Enemy", "Hurtbox"]]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=365169057 groups=["Enemy", "Hurtbox"]]
+visible = false
 position = Vector2(0, -11)
 collision_layer = 32
 collision_mask = 80
 script = ExtResource("5_5kbf8")
 metadata/state = "vuln"
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -6)
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=1988742268]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_juhp6")
 debug_color = Color(0.996078, 0, 0.196078, 0.419608)
 
-[node name="EnzoDetector1" type="Area2D" parent="."]
+[node name="EnzoDetector1" type="Area2D" parent="." unique_id=545355720]
 visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false
 
-[node name="EnzoDetector1Shape" type="CollisionShape2D" parent="EnzoDetector1"]
+[node name="EnzoDetector1Shape" type="CollisionShape2D" parent="EnzoDetector1" unique_id=1613042869]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_xdckb")
 debug_color = Color(0, 0.811765, 0.301961, 0.419608)
 
-[node name="EnzoDetector2" type="Area2D" parent="."]
+[node name="EnzoDetector2" type="Area2D" parent="." unique_id=1053803130]
 visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false
 
-[node name="EnzoDetector2Shape" type="CollisionShape2D" parent="EnzoDetector2"]
+[node name="EnzoDetector2Shape" type="CollisionShape2D" parent="EnzoDetector2" unique_id=591907432]
 position = Vector2(189, 1.5)
 shape = SubResource("RectangleShape2D_y6bl0")
 debug_color = Color(0.0392157, 0.611765, 0, 0.419608)
 
-[node name="EnzoDetector3" type="Area2D" parent="."]
+[node name="EnzoDetector3" type="Area2D" parent="." unique_id=1299282934]
 visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false
 
-[node name="EnzoDetector3Shape" type="CollisionShape2D" parent="EnzoDetector3"]
+[node name="EnzoDetector3Shape" type="CollisionShape2D" parent="EnzoDetector3" unique_id=419436451]
 position = Vector2(129.5, 24.5)
 shape = SubResource("RectangleShape2D_lrs4e")
 debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318412846]
 visible = false
 position = Vector2(-0.5, -6.5)
 shape = SubResource("RectangleShape2D_0fd5m")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_lx0kx")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1207635848]
+libraries/ = SubResource("AnimationLibrary_lx0kx")
 
-[node name="HitboxDataPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_5kbf8")
-}
+[node name="HitboxDataPlayer" type="AnimationPlayer" parent="." unique_id=2029842024]
+libraries/ = SubResource("AnimationLibrary_5kbf8")
 
-[node name="PaletteSwapAnims" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_t6rol")
-}
+[node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=74713521]
+libraries/ = SubResource("AnimationLibrary_t6rol")
 
-[node name="Health" type="Node2D" parent="."]
-position = Vector2(-96, -58)
+[node name="Health" type="Node2D" parent="." unique_id=933598119]
 
-[node name="Healthbackdrop" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -73.0
-offset_right = 217.0
-offset_bottom = -49.0
-texture = ExtResource("2_eg1a6")
-stretch_mode = 1
+[node name="HealthBar" type="TextureProgressBar" parent="Health" unique_id=1445577422]
+offset_left = -40.0
+offset_top = -110.0
+offset_right = 54.0
+offset_bottom = -92.0
+max_value = 30.0
+value = 30.0
+texture_under = SubResource("AtlasTexture_pbsy5")
+texture_progress = SubResource("AtlasTexture_d8tqx")
+texture_progress_offset = Vector2(1, 1)
 
-[node name="Health" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -73.0
-offset_right = 217.0
-offset_bottom = -49.0
-texture = ExtResource("3_aq33k")
-expand_mode = 1
-stretch_mode = 1
+[node name="DemonHeart" type="Sprite2D" parent="Health" unique_id=648541488]
+position = Vector2(-46, -105)
+texture = ExtResource("7_hfx46")
+hframes = 2
 
-[node name="Healthbackdrop2" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -52.0
-offset_right = 217.0
-offset_bottom = -28.0
-texture = ExtResource("2_eg1a6")
-stretch_mode = 1
+[node name="HealthBarParticle" type="CPUParticles2D" parent="Health" unique_id=868991020]
+position = Vector2(7, -101)
+emitting = false
+amount = 1
+texture = SubResource("AtlasTexture_okksv")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 30
+direction = Vector2(0, -1)
+spread = 20.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+angular_velocity_min = 150.0
+angular_velocity_max = 150.0
+color_ramp = SubResource("Gradient_qrsml")
 
-[node name="Health2" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -52.0
-offset_right = 217.0
-offset_bottom = -28.0
-texture = ExtResource("3_aq33k")
-expand_mode = 1
-stretch_mode = 1
+[node name="DemonHeartParticle" type="CPUParticles2D" parent="Health" unique_id=1021976903]
+position = Vector2(-46, -105)
+emitting = false
+amount = 1
+texture = SubResource("AtlasTexture_xhbao")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 30
+direction = Vector2(0, -1)
+spread = 90.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+angular_velocity_min = 150.0
+angular_velocity_max = 150.0
+color_ramp = SubResource("Gradient_qrsml")
 
-[node name="Healthbackdrop3" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -31.0
-offset_right = 217.0
-offset_bottom = -7.0
-texture = ExtResource("2_eg1a6")
-stretch_mode = 1
+[node name="Hitstopper" type="Timer" parent="." unique_id=2054055879]
+one_shot = true
 
-[node name="Health3" type="TextureRect" parent="Health"]
-offset_left = -24.0
-offset_top = -31.0
-offset_right = 217.0
-offset_bottom = -7.0
-texture = ExtResource("3_aq33k")
-expand_mode = 1
-stretch_mode = 1
-
-[node name="Stuntimer" type="Timer" parent="."]
+[node name="Stuntimer" type="Timer" parent="." unique_id=1276336059]
 wait_time = 0.25
 one_shot = true
 
-[node name="Jumptimer" type="Timer" parent="."]
+[node name="Jumptimer" type="Timer" parent="." unique_id=1521296739]
 wait_time = 2.0
 one_shot = true
 
-[node name="CPBBcooldown" type="Timer" parent="."]
+[node name="CPBBcooldown" type="Timer" parent="." unique_id=2039543450]
 wait_time = 3.0
 one_shot = true
 
-[node name="Blastboxcooldown" type="Timer" parent="."]
+[node name="Blastboxcooldown" type="Timer" parent="." unique_id=366963052]
 wait_time = 2.0
 one_shot = true
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=71379481]
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 14
 text = "i love penis!!!"
 
-[node name="Smack" type="AudioStreamPlayer2D" parent="."]
+[node name="Smack" type="AudioStreamPlayer2D" parent="." unique_id=1363347663]
 stream = ExtResource("8_5kbf8")
 
 [connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]

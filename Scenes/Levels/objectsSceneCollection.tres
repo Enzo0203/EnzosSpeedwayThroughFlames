@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://bva3ua0bbnc1f"]
+[gd_resource type="TileSet" format=3 uid="uid://bva3ua0bbnc1f"]
 
 [ext_resource type="PackedScene" uid="uid://lcv2h2ct6fk2" path="res://Scenes/StageHazards/caltrop.tscn" id="1_wkq7x"]
 [ext_resource type="PackedScene" uid="uid://b7eqkwrnfbtps" path="res://Scenes/StageHazards/lava.tscn" id="2_pf6gy"]

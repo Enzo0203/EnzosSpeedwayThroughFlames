@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://lcv2h2ct6fk2"]
+[gd_scene format=3 uid="uid://lcv2h2ct6fk2"]
 
-[ext_resource type="Texture2D" uid="uid://db0bo5son2l3r" path="res://Sprites/General Sprites/Caltrop.png" id="1_pwcmh"]
+[ext_resource type="Texture2D" uid="uid://db0bo5son2l3r" path="res://Sprites/General Sprites/Hazards/Caltrop.png" id="1_pwcmh"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_57wqk"]
 
 [sub_resource type="Animation" id="Animation_k7dbc"]
@@ -108,23 +108,21 @@ size = Vector2(30, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jhlnx"]
 size = Vector2(30, 30)
 
-[node name="Caltrop" type="StaticBody2D"]
+[node name="Caltrop" type="StaticBody2D" unique_id=1393830043]
 collision_layer = 64
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=900298218]
 texture = ExtResource("1_pwcmh")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
-libraries = {
-&"": SubResource("AnimationLibrary_6xgel")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=90731067]
+libraries/ = SubResource("AnimationLibrary_6xgel")
+autoplay = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=77861870]
 shape = SubResource("RectangleShape2D_v4303")
 
-[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1174450540 groups=["Hitbox"]]
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("3_57wqk")
@@ -133,19 +131,20 @@ Clankable = false
 DeathType = "spike"
 metadata/deathtype = "spike"
 
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=1254387971]
 shape = SubResource("RectangleShape2D_jhlnx")
 disabled = true
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)
 
-[node name="Hitbox2" type="Area2D" parent="." groups=["Hitbox"]]
+[node name="Hitbox2" type="Area2D" parent="." unique_id=1725610016 groups=["Hitbox"]]
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("3_57wqk")
 Damage = 2
 Clankable = false
+DeathType = "spike"
 metadata/deathtype = "spike"
 
-[node name="Hitbox2Shape" type="CollisionShape2D" parent="Hitbox2"]
+[node name="Hitbox2Shape" type="CollisionShape2D" parent="Hitbox2" unique_id=1007031504]
 shape = SubResource("RectangleShape2D_jhlnx")
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)

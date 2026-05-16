@@ -4,7 +4,7 @@ var transitioningScene: bool = false
 
 func _ready() -> void:
 	$PressButton.visible = false
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.5, false).timeout
 	$PressButton.visible = true
 
 func _physics_process(_delta: float) -> void:

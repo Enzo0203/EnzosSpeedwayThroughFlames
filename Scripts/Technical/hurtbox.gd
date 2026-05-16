@@ -1,25 +1,44 @@
 extends Area2D
 
-@export var State: String = "Vuln" # Vuln, Blocking, PerfectBlocking
-@export var Intangible: bool = false # Whether this hurtbox can be hit by a hitbox or not
-var IntangibleGrace: bool = false # Same as above, but used temporarily after getting hurt
-var IntangibleSpecial: bool = false # Ignores hitboxes, regardless if they're "Unstoppable" or not
-@export var Immovable: bool = false # Whether this hurtbox can be grabbed by a grabbox or not
-@export var Parriable: bool = false # Whether this hurtbox can be parried by a parrybox or not
+@export_category("States")
 
-@export var Armored: bool = false # Whether the hurtbox has armor or not
-@export var ArmorHealthLimit: int = 0 # How many damage it takes for the armor to break ("inf" if you want Hyper Armor)
+## What state the hurtbox is in, can be "Vuln", "Blocking" or "PerfectBlocking"
+@export var State: String = "Vuln"
+## If true, this hurtbox can't be hit by hitboxes.
+@export var Intangible: bool = false
+## Intangibility given to segmented-health users after getting hurt.
+var IntangibleGrace: bool = false
+## If true. this hurtbox can't be hit by hitboxes, regardless if they're Unstoppable or not
+var IntangibleSpecial: bool = false
+## If true, this hurtbox can't be grabbed by a grabbox
+@export var Immovable: bool = false
+## If true, this hurtbox can be parried by a parrybox
+@export var Parriable: bool = false
 
-var DamageTakeMultiplier: float = 1.0 # Multiplies the amount of damage taken when this hurtbox is hit (0.0 if you want invincibility)
-var HitStopTakeMultiplier: float = 1.0 # Multiplies the amount of hitstop taken when this hurtbox is hit
-var StunTakeMultiplier: float = 1.0 # Multiplies the amount of hitstun taken when this hurtbox is hit
+@export_category("Armor")
+
+## If true, this hurtbox has armor.
+@export var Armored: bool = false
+## If Armored is true, how many damage it takes for the armor to break. ("inf" if you want Hyper Armor)
+@export var ArmorHealthLimit: int = 0
+
+@export_category("Multipliers")
+
+## Multiplies the amount of damage taken. (0.0 if you want invincibility)
+@export var DamageTakeMultiplier: float = 1.0
+## Multiplies the amount of hitstop taken.
+@export var HitStopTakeMultiplier: float = 1.0
+## Multiplies the amount of hitstun taken.
+@export var StunTakeMultiplier: float = 1.0
+## Multiplies the amount of knockback taken.
+@export var KnockbackTakeMultiplier: Vector2 = Vector2(1.0, 1.0)
 
 signal hurt(
 	area: Area2D,
 	Damage: int, 
 	Knockback: Vector2,
 	DeathType: String)
-signal parried(area: Area2D)
+signal parried(area: Area2D, range: String)
 signal block(area: Area2D)
 signal perfectBlock(area: Area2D)
 
@@ -35,10 +54,10 @@ func _on_area_entered(area: Area2D) -> void:
 					if not area.Damage == 0:
 						emit_signal("hurt", area,
 						area.Damage * area.DamageGiveMultiplier * DamageTakeMultiplier, 
-						area.Knockback * area.scale, 
+						area.Knockback * area.KnockbackGiveMultiplier * KnockbackTakeMultiplier * area.scale, 
 						area.DeathType)
 				if Parriable and area.Parrybox:
-					emit_signal("parried", area)
+					emit_signal("parried", area, "Melee")
 			if State == "Blocking":
 				emit_signal("block", area)
 			if State == "PerfectBlocking":

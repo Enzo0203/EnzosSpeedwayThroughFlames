@@ -17,10 +17,12 @@ var RankScore: int
 func _ready() -> void:
 	Globalvars.LevelEndSequence = 0
 	animation_tree.active = false
+	visible = false
 
 func _physics_process(_delta: float) -> void:
 	if Globalvars.LevelEndSequence == 2:
 		if animation_tree.active == false:
+			visible = true
 			setRankFactors()
 			setRankScore()
 			setRank()
@@ -60,7 +62,7 @@ func setScoreFactor() -> void:
 		ScoreFactor = "A"
 	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 1.10:
 		ScoreFactor = "S"
-	elif Globalvars.EnzoScore >= Globalvars.LevelPars["Score"] * 1.11:
+	elif Globalvars.EnzoScore > Globalvars.LevelPars["Score"] * 1.10:
 		ScoreFactor = "X"
 
 func setKillsFactor() -> void:
@@ -100,7 +102,7 @@ func setTimefactor() -> void:
 		TimeFactor = "A"
 	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 0.90:
 		TimeFactor = "S"
-	elif Globalvars.EnzoTime <= Globalvars.LevelPars["Time"] * 0.89:
+	elif Globalvars.EnzoTime < Globalvars.LevelPars["Time"] * 0.90:
 		TimeFactor = "X"
 
 func setMaxComboFactor() -> void:
@@ -120,7 +122,7 @@ func setMaxComboFactor() -> void:
 		MaxComboFactor = "A"
 	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 1.10:
 		MaxComboFactor = "S"
-	elif Globalvars.EnzoMaxCombo >= Globalvars.LevelPars["MaxCombo"] * 1.11:
+	elif Globalvars.EnzoMaxCombo > Globalvars.LevelPars["MaxCombo"] * 1.10:
 		MaxComboFactor = "X"
 
 func setDeathsfactor() -> void:
@@ -137,11 +139,11 @@ func setDeathsfactor() -> void:
 	elif Globalvars.EnzoDeaths >= 1:
 		DeathsFactor = "B"
 	elif Globalvars.EnzoDeaths >= 0:
-		if Globalvars.EnzoSavedData["Health"] <= 2:
+		if Globalvars.EnzoSavedData["Health"] < 2:
 			DeathsFactor = "A"
-		elif Globalvars.EnzoSavedData["Health"] <= 4:
+		elif Globalvars.EnzoSavedData["Health"] <= 3:
 			DeathsFactor = "S"
-		elif Globalvars.EnzoSavedData["Health"] >= 5:
+		elif Globalvars.EnzoSavedData["Health"] >= 4:
 			DeathsFactor = "X"
 
 func setRankScore() -> void:

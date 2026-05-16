@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://dpyu1s7m5rtrl"]
+[gd_scene format=3 uid="uid://dpyu1s7m5rtrl"]
 
 [ext_resource type="TileSet" uid="uid://ccfdqj05p2w51" path="res://Scenes/Levels/tileset.tres" id="1_pg3ac"]
 [ext_resource type="Script" uid="uid://d3flv4u36drg5" path="res://Scripts/Technical/camera.gd" id="3_ukkol"]
@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cw23skrl85ef5" path="res://Sprites/Backgrounds/Plaingroundfront.png" id="8_b6fv8"]
 [ext_resource type="Script" uid="uid://lta7pw4rhpah" path="res://Scripts/HUDandUI/healthUI.gd" id="9_y1c0i"]
 [ext_resource type="Texture2D" uid="uid://bqtyrmgdg6wrm" path="res://Sprites/HUD/Damage overlay.png" id="10_cs4ge"]
-[ext_resource type="Texture2D" uid="uid://dubrk7fb2g63a" path="res://Sprites/HUD/Heart sheet.png" id="11_fc2f2"]
-[ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Regenoutline.png" id="12_ycpfw"]
+[ext_resource type="Texture2D" uid="uid://dubrk7fb2g63a" path="res://Sprites/HUD/Health/Heart sheet.png" id="11_fc2f2"]
+[ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Health/Regenoutline.png" id="12_ycpfw"]
 [ext_resource type="Texture2D" uid="uid://dnm7ebu6wrta5" path="res://Sprites/HUD/Score Sheet.png" id="13_qbih6"]
 [ext_resource type="Texture2D" uid="uid://daqxm3eq8xds0" path="res://Sprites/HUD/Combo/Combo Empty.png" id="14_hjwpp"]
 [ext_resource type="Texture2D" uid="uid://b6o7nvgk524mj" path="res://Sprites/HUD/Combo/Combo Timer.png" id="15_ry46l"]

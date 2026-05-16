@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://cunf4v8vsc2cb"]
+
+[ext_resource type="Script" uid="uid://blpxmbqaop7is" path="res://Scenes/Miscellaneous/pause_screen.gd" id="1_xdraj"]
+[ext_resource type="Texture2D" uid="uid://cq3cx0y3c5ca7" path="res://Sprites/Title Screen/Pause Background.png" id="2_vqg4g"]
+[ext_resource type="Texture2D" uid="uid://nlb1fq4m21o4" path="res://Sprites/Title Screen/Continue Button Sheet.png" id="3_fbt51"]
+[ext_resource type="Texture2D" uid="uid://bvrxvox00s30n" path="res://Sprites/Title Screen/Settings Button Sheet.png" id="4_6oq67"]
+[ext_resource type="Texture2D" uid="uid://bqrhw4f1j3f6t" path="res://Sprites/Title Screen/Settings Background.png" id="5_t7t0m"]
+[ext_resource type="Texture2D" uid="uid://dd2w04tke4gbr" path="res://Sprites/UI/SliderBack.png" id="6_8204h"]
+[ext_resource type="Texture2D" uid="uid://kns7ayicsaby" path="res://Sprites/UI/SliderFill.png" id="7_kn6hc"]
+[ext_resource type="Theme" uid="uid://bc011y2rioato" path="res://MiscResources/theme.tres" id="8_ptl65"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hb7f7"]
+
+[sub_resource type="Theme" id="Theme_hwtqu"]
+
+[sub_resource type="Theme" id="Theme_l7qjy"]
+
+[node name="PauseScreen" type="Control" unique_id=534886200]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xdraj")
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=2053296897]
+layer = 0
+
+[node name="PauseBackground" type="Sprite2D" parent="Background" unique_id=879473063]
+texture = ExtResource("2_vqg4g")
+centered = false
+
+[node name="PauseMenuButtons" type="CanvasLayer" parent="." unique_id=1454312703]
+
+[node name="ContinueButton" type="Sprite2D" parent="PauseMenuButtons" unique_id=1103464052]
+position = Vector2(187, 346)
+texture = ExtResource("3_fbt51")
+hframes = 3
+
+[node name="SettingsButtonSheet" type="Sprite2D" parent="PauseMenuButtons" unique_id=45049769]
+position = Vector2(187, 453)
+texture = ExtResource("4_6oq67")
+hframes = 3
+
+[node name="SettingButtons" type="CanvasLayer" parent="." unique_id=1533025285]
+layer = 2
+visible = false
+
+[node name="SettingBackground" type="Sprite2D" parent="SettingButtons" unique_id=1518236677]
+texture = ExtResource("5_t7t0m")
+centered = false
+
+[node name="Back" type="Label" parent="SettingButtons" unique_id=928169859]
+offset_left = 184.99997
+offset_top = 86.000015
+offset_right = 590.0
+offset_bottom = 114.000015
+scale = Vector2(1.4, 1.4)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Back"
+horizontal_alignment = 1
+
+[node name="Volume" type="TextureProgressBar" parent="SettingButtons" unique_id=2041787192]
+offset_left = 368.0
+offset_top = 128.0
+offset_right = 880.0
+offset_bottom = 203.0
+scale = Vector2(0.7, 0.7)
+value = 50.0
+texture_under = ExtResource("6_8204h")
+texture_over = SubResource("CompressedTexture2D_hb7f7")
+texture_progress = ExtResource("7_kn6hc")
+
+[node name="VolumeText" type="Label" parent="SettingButtons/Volume" unique_id=682326564]
+layout_mode = 0
+offset_left = -228.57138
+offset_top = 14.285721
+offset_right = -106.57138
+offset_bottom = 44.28572
+scale = Vector2(2, 2)
+theme = ExtResource("8_ptl65")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Volume:"
+
+[node name="VolumeNumber" type="Label" parent="SettingButtons/Volume" unique_id=1416366541]
+layout_mode = 0
+offset_left = 144.28568
+offset_top = 7.142853
+offset_right = 236.28568
+offset_bottom = 35.142853
+scale = Vector2(2.5, 2.5)
+theme = ExtResource("8_ptl65")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 14
+text = "50%"
+horizontal_alignment = 1
+
+[node name="Resolution" type="Label" parent="SettingButtons" unique_id=1816227716]
+offset_left = 184.99998
+offset_top = 190.0
+offset_right = 590.0
+offset_bottom = 218.0
+scale = Vector2(1.4, 1.4)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Resolution: 960 x 540"
+horizontal_alignment = 1
+
+[node name="WindowMode" type="Label" parent="SettingButtons" unique_id=192536624]
+offset_left = 215.00006
+offset_top = 240.00002
+offset_right = 575.00006
+offset_bottom = 268.0
+scale = Vector2(1.4, 1.4)
+theme = SubResource("Theme_hwtqu")
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Window Mode: Windowed"
+horizontal_alignment = 1
+
+[node name="Filtering" type="Label" parent="SettingButtons" unique_id=1936375466]
+offset_left = 280.00006
+offset_top = 286.00003
+offset_right = 550.0001
+offset_bottom = 314.00003
+scale = Vector2(1.4, 1.4)
+theme = SubResource("Theme_l7qjy")
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 14
+text = "Filtering: Nearest"
+horizontal_alignment = 1

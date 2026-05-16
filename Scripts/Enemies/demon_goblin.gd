@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-enum States {IDLE, WALKING, ATTACKPREP, ATTACKING, DEAD}
+enum States {IDLE, WALKING, ATTACKPREP, ATTACKING, TRIPPING, SLIDING, GETTINGUP, DEAD}
 
 var state: int = States.IDLE
 var is_dead: bool = false
@@ -16,10 +16,17 @@ var is_dead: bool = false
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Hurtbox
 
+@onready var hitstopper: Timer = $Hitstopper
+
 func change_state(newState: int) -> void:
 	state = newState
 
 func _physics_process(delta: float) -> void:
+	if hitstopper.time_left > 0:
+		animation.speed_scale = 0
+		return
+	else:
+		animation.speed_scale = 1
 	match state:
 		States.IDLE:
 			idle(delta)
@@ -29,11 +36,17 @@ func _physics_process(delta: float) -> void:
 			attackprep(delta)
 		States.ATTACKING:
 			attacking(delta)
+		States.TRIPPING:
+			tripping(delta)
+		States.SLIDING:
+			sliding(delta)
+		States.GETTINGUP:
+			gettingup(delta)
 		States.DEAD:
 			dead(delta)
-	move_and_slide()
 	update_animations()
 	flip_hitboxes()
+	move_and_slide()
 
 var EnzoInArea: bool = false
 var EnzoInArea2: bool = false
@@ -69,10 +82,9 @@ func idle(delta: float) -> void:
 	# What can this transition to
 	if EnzoInArea == true and EnzoInArea2 == false:
 		change_state(States.WALKING)
-		await get_tree().create_timer(0.6).timeout
 	if EnzoInArea2 == true:
 		change_state(States.ATTACKPREP)
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.2, false, true).timeout
 		if state == States.ATTACKPREP:
 			$PaletteSwapAnims.play("Parriable")
 
@@ -93,7 +105,7 @@ func walking(delta: float) -> void:
 		change_state(States.IDLE)
 	if EnzoInArea2 == true and Obstacle == false and is_on_floor():
 		change_state(States.ATTACKPREP)
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.2, false, true).timeout
 		if state == States.ATTACKPREP:
 			$PaletteSwapAnims.play("Parriable")
 
@@ -104,20 +116,54 @@ func attackprep(delta: float) -> void:
 	if animation.is_playing() == false:
 		if state == States.ATTACKPREP:
 			change_state(States.ATTACKING)
-			velocity.x = 300 * sprite.scale.x
 
 func attacking(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	velocity.x = 300 * sprite.scale.x
+	if is_on_wall():
+		change_state(States.IDLE)
+	await get_tree().create_timer(0.4, false, true).timeout
 	if state == States.ATTACKING:
-		velocity.y += gravity * delta
-		velocity.y = min(velocity.y, 500)
-		velocity.x = move_toward(velocity.x, 0, 200 * delta)
-		if velocity.x > -120 and velocity.x < 120:
+		change_state(States.TRIPPING)
+
+func tripping(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	velocity.x = 300 * sprite.scale.x
+	if velocity.x == 0:
+		change_state(States.GETTINGUP)
+	await get_tree().physics_frame
+	if animation.is_playing() == false:
+		if state == States.TRIPPING:
+			velocity.x = 300 * sprite.scale.x
+			change_state(States.SLIDING)
+
+func sliding(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	velocity.x = move_toward(velocity.x, 0, 200 * delta)
+	if velocity.x == 0:
+		change_state(States.GETTINGUP)
+
+func gettingup(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	velocity.x = 0
+	if animation.is_playing() == false:
+		if state == States.GETTINGUP:
 			change_state(States.IDLE)
 
 func dead(delta: float) -> void:
 	# What to do
 	velocity.y += gravity * delta
 	collision_mask = 0
+
+func hitStop(duration: float) -> void:
+	hitstopper.stop()
+	await get_tree().process_frame
+	hitstopper.wait_time = duration
+	hitstopper.start()
 
 func addToMiniCombo(value: int) -> void:
 	Globalvars.EnzoMiniCombo += value
@@ -142,18 +188,21 @@ func update_animations() -> void:
 		animation.play("attackprep")
 	if state == States.ATTACKING:
 		animation.play("attack")
+	if state == States.TRIPPING:
+		animation.play("trip")
+	if state == States.SLIDING:
+		animation.play("slide")
+	if state == States.GETTINGUP:
+		animation.play("getup")
 	if state == States.DEAD:
 		animation.play("dead")
-
-func hitStop(_timeScale: float, _duration: float) -> void:
-	pass
 
 func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 	audio.pitch_scale = randf_range(0.7, 1.1)
 
 func hurtboxstun(duration: float) -> void:
 	hitboxshape.set_deferred("monitorable", false)
-	await get_tree().create_timer(duration).timeout
+	await get_tree().create_timer(duration, false, true).timeout
 	hitboxshape.set_deferred("monitorable", true)
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
@@ -162,13 +211,13 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 	else:
 		Globalvars.EnzoScore += amount
 
-func _on_hurtbox_hurt(_area: Area2D, _Damage:int, Knockback: Vector2, _DeathType: String) -> void:
+func _on_hurtbox_hurt(_area: Area2D, Damage:int, Knockback: Vector2, _DeathType: String) -> void:
 	if is_dead == false:
 		addToMiniCombo(1)
 		give_score(100, true)
-		hitStop(0.1, 0.3)
 		change_state(States.DEAD)
 		$PaletteSwapAnims.play("Hurt")
+		hitStop(min(0.1 * Damage, 0.3))
 		velocity = Knockback
 		is_dead = true
 		Globalvars.EnzoComboUpdated.emit()
@@ -183,4 +232,4 @@ func _on_hitbox_clank(area: Area2D) -> void:
 	hurtboxstun(0.3)
 
 func _on_hitbox_hurt_something(_area: Area2D) -> void:
-	$Kick.play()
+	$Slap.play()

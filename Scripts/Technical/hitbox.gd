@@ -1,37 +1,58 @@
 extends Area2D
 
-@export var Damage: int # Attack damage
+## How much damage this does at base.
+@export var Damage: int
 
-@export var Strength: int # Clank priority
+## Attack's priority when clanking with other attacks. Higher number = Higher priority.
+@export var Strength: int
 
-@export var Unblockable: bool # Attack ignores blocks and perfect blocks.
-@export var Uncounterable: bool # Attack can't be countered
-@export var Unstoppable: bool # Attack can hit intangible foes and stun through armor
+## If true, attack can damage blocks and perfect blocks.
+@export var Unblockable: bool
+## If true, attack can damage counters.
+@export var Uncounterable: bool
+## If true, attack can damage intangible hurtboxes and ignore armor.
+@export var Unstoppable: bool
 
-@export var Knockback: Vector2 # Knockback inflicted on victim
-@export var SelfKnockback: Vector2 # Knockback inflicted on user
+## How much knockback this deals to the victim.
+@export var Knockback: Vector2
+## How much knockback this deals to the user.
+@export var SelfKnockback: Vector2
 
-@export var DamageGiveMultiplier: float = 1.0 # Multiplies the amount of damage given when this hitbox hits a hurtbox
-@export var HitStopGiveMultiplier: float = 1.0 # Multiplies the amount of hitstop given when this hitbox hits a hurtbox
-@export var StunGiveMultiplier: float = 1.0 # Multiplies the amount of hitstun given when this hitbox hits a hurtbox
+## Multiplies the amount of damage given.
+@export var DamageGiveMultiplier: float = 1.0
+## Multiplies the amount of hitstop given.
+@export var HitStopGiveMultiplier: float = 1.0
+## Multiplies the amount of stun given.
+@export var StunGiveMultiplier: float = 1.0
+## Multiplies the amount of knockback given.
+@export var KnockbackGiveMultiplier: float = 1.0
 
-@export var Clankable: bool = true # Attack can clank
-@export var Parriable: bool # Attack can be parried if clanking with a parrybox
-@export var Stunnable: bool # Attack will deactivate when hitting a hurtbox
-@export var Ghost: bool # Attack can phase through walls
+## Attack can clank if it hits another attack of similar strength.
+@export var Clankable: bool = true
+## Attack can deflect projectiles if it has more strength.
+@export var Deflector: bool = true
+## Attack can be parried.
+@export var Parriable: bool
+## Attack deactivates when hitting a hurtbox.
+@export var Stunnable: bool
+## Attack can phase through walls.
+@export var Ghost: bool
 
-@export var Parrybox: bool # Attack can parry
+## Attack can parry.
+@export var Parrybox: bool
 
-@export var ImpactSfx: String # Audio that plays when hitbox hits something
-@export var DeathType: String # Way that Enzo dies if he gets killed by this attack
+## Sound effect played when this hits something.
+@export var ImpactSfx: String
+## Type of animation Enzo plays when killed by this attack.
+@export var DeathType: String
 
 signal clank(area: Area2D)
 signal clashCounter(area: Area2D)
 signal rebound(area: Area2D)
 signal clashCountered(area: Area2D)
 signal rebounded(area: Area2D)
-signal parry(area: Area2D)
-signal parried(area: Area2D)
+signal parry(area: Area2D, range: String)
+signal parried(area: Area2D, range: String)
 
 signal hurtSomething(area: Area2D)
 signal blocked(area: Area2D)
@@ -48,7 +69,7 @@ func _on_area_entered(area: Area2D) -> void:
 					if not Damage == 0:
 						emit_signal("hurtSomething", area)
 				if area.Parriable and Parrybox:
-					emit_signal("parry", area)
+					emit_signal("parry", area, "Melee")
 			if area.State == "Blocking":
 				emit_signal("blocked", area)
 	if area.is_in_group("Hitbox"):
@@ -61,7 +82,7 @@ func _on_area_entered(area: Area2D) -> void:
 						emit_signal("clashCounter", area)
 				else:
 					if area.Parriable:
-						emit_signal("parry", area)
+						emit_signal("parry", area, "Melee")
 			elif Strength + 1 < area.Strength:
 				if not area.Parrybox:
 					if is_in_group("Projectile"):
@@ -70,7 +91,7 @@ func _on_area_entered(area: Area2D) -> void:
 						emit_signal("clashCountered", area)
 				else:
 					if Parriable:
-						emit_signal("parried", area)
+						emit_signal("parried", area, "Ranged")
 			else:
 				#Clank
 				emit_signal("clank", area)

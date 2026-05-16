@@ -1,4 +1,4 @@
-[gd_scene load_steps=153 format=4 uid="uid://eatffjhnbskb"]
+[gd_scene format=4 uid="uid://eatffjhnbskb"]
 
 [ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/Player/enzo.gd" id="1_o30bu"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_6b6sq"]
@@ -35,6 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://dqd1gmnvtggfp" path="res://Sfx/Combat/EnzoHurtDead.ogg" id="31_l61qk"]
 [ext_resource type="AudioStream" uid="uid://d1ujdnc2tlbun" path="res://Sfx/PlaneDive.ogg" id="32_dxfpo"]
 [ext_resource type="AudioStream" uid="uid://dliyga4hem8sv" path="res://Sfx/Crash.ogg" id="33_l61qk"]
+[ext_resource type="AudioStream" uid="uid://deb6s8h2bue1y" path="res://Sfx/Parry.ogg" id="34_d2p4v"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -67,7 +68,7 @@ size = Vector2(42, 84)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(74.75, 40.5)
+size = Vector2(54, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymy6b"]
 size = Vector2(14, 52)
@@ -1363,7 +1364,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_0pqot"]
 resource_name = "hurt"
-length = 0.50001
+length = 0.53334004
+step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1371,7 +1373,7 @@ tracks/0/path = NodePath("Spritesheet:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [8, 9, 10, 11]
@@ -4202,7 +4204,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(103, 41.75)]
+"values": [Vector2(78, 34)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -4214,7 +4216,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(44.5, 27.125)]
+"values": [Vector2(32, 25)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -6537,7 +6539,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2(51, 30.5), Vector2(54, 96)]
+"values": [Vector2(43, 40), Vector2(54, 96)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -6549,7 +6551,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2(-19.5, -21.75), Vector2(31, 11)]
+"values": [Vector2(-15.5, -17), Vector2(31, 11)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -6570,7 +6572,7 @@ tracks/3/path = NodePath("../Hitbox:Damage")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
+"times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2, 5]
@@ -6582,7 +6584,7 @@ tracks/4/path = NodePath("../Hitbox:Strength")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
+"times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2, 5]
@@ -6594,7 +6596,7 @@ tracks/5/path = NodePath("../Hitbox:Knockback")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
+"times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(100, -500), Vector2(400, 1000)]
@@ -6654,7 +6656,7 @@ tracks/10/path = NodePath("../Hitbox:ImpactSfx")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
+"times": PackedFloat32Array(0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": ["PunchLight", "PunchStrong"]
@@ -6883,7 +6885,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [Vector2(90, 41), Vector2(53, 63), Vector2(55, 53)]
+"values": [Vector2(90, 41), Vector2(37, 50), Vector2(49, 19)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -6895,7 +6897,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [Vector2(30, -8.5), Vector2(41.5, -20.5), Vector2(14.5, -23.5)]
+"values": [Vector2(30, -8.5), Vector2(47.5, -24), Vector2(16.5, -37.5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -7086,26 +7088,26 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [PackedColorArray(0, 0, 0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.40000004, 0.53333336, 0.6666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1)]
+"values": [PackedColorArray(0.8, 0.039215688, 0.043137256, 1), PackedColorArray(0, 0, 0, 1), PackedColorArray(0.8, 0.039215688, 0.043137256, 1), PackedColorArray(0, 0, 0, 1), PackedColorArray(0.8, 0.039215688, 0.043137256, 1), PackedColorArray(0, 0, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_7iwhy"]
@@ -7114,26 +7116,26 @@ length = 0.03333667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_t6rol"]
@@ -7141,26 +7143,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t6rol"]
@@ -7246,6 +7248,15 @@ subpixel_positioning = 0
 multichannel_signed_distance_field = true
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/128/0/ascent = 72.0
 cache/0/128/0/descent = 11.0
 cache/0/128/0/underline_position = -3.59375
@@ -7354,25 +7365,25 @@ cache/0/128/0/glyphs/73/size = Vector2(65, 69)
 cache/0/128/0/glyphs/73/uv_rect = Rect2(243, 180, 65, 69)
 cache/0/128/0/glyphs/73/texture_idx = 0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=518238635]
 position = Vector2(0, -5)
 collision_layer = 16
 floor_stop_on_slope = false
 floor_constant_speed = true
 floor_max_angle = 0.83775806
-floor_snap_length = 18.0
+floor_snap_length = 32.0
 script = ExtResource("1_o30bu")
 
-[node name="Spritesheet" type="Sprite2D" parent="."]
+[node name="Spritesheet" type="Sprite2D" parent="." unique_id=1776584174]
 material = ExtResource("2_i6v0c")
 texture = ExtResource("2_6b6sq")
 hframes = 7
 vframes = 38
 frame = 95
 
-[node name="Texts" type="Node2D" parent="Spritesheet"]
+[node name="Texts" type="Node2D" parent="Spritesheet" unique_id=819118818]
 
-[node name="Block" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="Block" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=23356231]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7387,7 +7398,7 @@ initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 scale_amount_curve = SubResource("Curve_ehqkl")
 
-[node name="Blocked" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="Blocked" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1658595665]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7404,7 +7415,7 @@ angular_velocity_min = -60.0
 angular_velocity_max = 60.0
 scale_amount_curve = SubResource("Curve_ehqkl")
 
-[node name="PerfectBlock" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="PerfectBlock" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=26402471]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7419,7 +7430,7 @@ initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 scale_amount_curve = SubResource("Curve_7iwhy")
 
-[node name="Clank" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="Clank" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1833097971]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7432,7 +7443,7 @@ spread = 20.0
 initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 
-[node name="ClashCounter" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="ClashCounter" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=263929637]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7445,7 +7456,7 @@ spread = 20.0
 initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 
-[node name="ClashCountered" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="ClashCountered" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=626432929]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7460,7 +7471,7 @@ initial_velocity_max = 200.0
 angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 
-[node name="Rebound" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="Rebound" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1113846182]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7473,7 +7484,7 @@ spread = 20.0
 initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 
-[node name="Parry" type="CPUParticles2D" parent="Spritesheet/Texts"]
+[node name="Parry" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=31956166]
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -7490,116 +7501,122 @@ angular_velocity_max = 5.0
 angular_velocity_curve = SubResource("Curve_yom7k")
 scale_amount_curve = SubResource("Curve_au0cc")
 
-[node name="Sound effects" type="Node2D" parent="Spritesheet"]
+[node name="Sound effects" type="Node2D" parent="Spritesheet" unique_id=963703765]
 position = Vector2(0, 53)
 
-[node name="Jump" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="Jump" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=36522233]
 stream = ExtResource("7_b6ds8")
 volume_db = 10.0
 bus = &"Sound Effects"
 
-[node name="WeakPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="WeakPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=658527584]
 stream = ExtResource("8_7iwhy")
 volume_db = 5.0
 bus = &"Sound Effects"
 
-[node name="MidPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="MidPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1648010683]
 stream = ExtResource("9_2y6so")
 volume_db = 7.0
 bus = &"Sound Effects"
 
-[node name="StrongPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="StrongPunchWhiff" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=941170029]
 stream = ExtResource("10_t6rol")
 volume_db = 10.0
 pitch_scale = 0.7
 bus = &"Sound Effects"
 
-[node name="Shine" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="Shine" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=700444217]
 stream = ExtResource("16_itu5e")
 volume_db = 18.0
 bus = &"Sound Effects"
 
-[node name="Block" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="Block" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=681520755]
 stream = ExtResource("12_vh6n7")
 bus = &"Sound Effects"
 
-[node name="Clank" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="Clank" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1925612740]
 stream = SubResource("AudioStreamWAV_wton5")
 bus = &"Sound Effects"
 
-[node name="PunchLight" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="PunchLight" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=724731485]
 stream = ExtResource("18_fc8nm")
 bus = &"Sound Effects"
 
-[node name="PunchMed" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="PunchMed" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1097565600]
 stream = ExtResource("19_ktdoi")
 bus = &"Sound Effects"
 
-[node name="PunchStrong" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="PunchStrong" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1801819867]
 stream = ExtResource("20_0vul7")
 bus = &"Sound Effects"
 
-[node name="PunchHuge" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="PunchHuge" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1851773175]
 stream = ExtResource("21_ktdoi")
 bus = &"Sound Effects"
 
-[node name="KickLight" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="KickLight" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=689733445]
 stream = ExtResource("21_fo2ql")
 bus = &"Sound Effects"
 
-[node name="KickMed" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="KickMed" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1986802849]
 stream = ExtResource("22_mj6lw")
 bus = &"Sound Effects"
 
-[node name="KickStrong" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="KickStrong" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=825176558]
 stream = ExtResource("23_dxfpo")
 bus = &"Sound Effects"
 
-[node name="KickHuge" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="KickHuge" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1905308922]
 stream = ExtResource("25_0vul7")
 bus = &"Sound Effects"
 
-[node name="ChargeUp" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="ChargeUp" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=703685585]
 stream = ExtResource("16_6b6sq")
+volume_db = -80.0
 bus = &"Sound Effects"
 
-[node name="ElectricityCrackling" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="ElectricityCrackling" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=96294093]
 stream = ExtResource("23_6fvpj")
 volume_db = 4.0
 bus = &"Sound Effects"
 
-[node name="SwirlySwooshing" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="SwirlySwooshing" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=375583437]
 stream = ExtResource("24_6fvpj")
 volume_db = 10.0
 bus = &"Sound Effects"
 
-[node name="EnzoHurt" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="EnzoHurt" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1700373908]
 stream = ExtResource("29_mj6lw")
 bus = &"Sound Effects"
 
-[node name="EnzoHurtDanger" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="EnzoHurtDanger" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=486528223]
 stream = ExtResource("30_dxfpo")
 bus = &"Sound Effects"
 
-[node name="EnzoHurtDead" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="EnzoHurtDead" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=1814482713]
 stream = ExtResource("31_l61qk")
 bus = &"Sound Effects"
 
-[node name="PlaneDive" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="PlaneDive" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=576019376]
 stream = ExtResource("32_dxfpo")
 bus = &"Sound Effects"
 
-[node name="Crash" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects"]
+[node name="Crash" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=498865742]
 stream = ExtResource("33_l61qk")
 volume_db = 1.0
 bus = &"Sound Effects"
 
-[node name="CollisionBox" type="CollisionShape2D" parent="."]
+[node name="Parry" type="AudioStreamPlayer2D" parent="Spritesheet/Sound effects" unique_id=910021404]
+stream = ExtResource("34_d2p4v")
+volume_db = 1.0
+bus = &"Sound Effects"
+
+[node name="CollisionBox" type="CollisionShape2D" parent="." unique_id=671112625]
 visible = false
 position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_o30bu")
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["Hurtbox"]]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1496553347 groups=["Hurtbox"]]
 editor_description = "neut"
 visible = false
 position = Vector2(0, 4)
@@ -7608,93 +7625,90 @@ collision_mask = 96
 script = ExtResource("8_k7fhu")
 metadata/state = "vuln"
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=399813060]
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_u3wga")
 debug_color = Color(1, 0, 0.133333, 0.419608)
 
-[node name="Hitbox" type="Area2D" parent="." groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1748236585 groups=["Hitbox"]]
+visible = false
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("7_6b6sq")
 Damage = 5
 Strength = 5
-Knockback = Vector2(400, -200)
-ImpactSfx = "PunchMed"
+Knockback = Vector2(400, 1000)
+ImpactSfx = "PunchStrong"
 metadata/dmg = 3
 metadata/strength = 3
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(40.625, -3.25)
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=904056683]
+position = Vector2(31, 11)
 shape = SubResource("RectangleShape2D_8s6kh")
 disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
 
-[node name="Walljumpdetector" type="Area2D" parent="."]
+[node name="Walljumpdetector" type="Area2D" parent="." unique_id=2104009242]
 visible = false
 collision_layer = 0
 
-[node name="Walljumpdetector" type="CollisionShape2D" parent="Walljumpdetector"]
+[node name="Walljumpdetector" type="CollisionShape2D" parent="Walljumpdetector" unique_id=240671470]
 position = Vector2(14, 1)
 shape = SubResource("RectangleShape2D_ymy6b")
 debug_color = Color(0.494118, 0.286275, 0, 0.419608)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_i00x7")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1055056699]
+libraries/ = SubResource("AnimationLibrary_i00x7")
 
-[node name="HitboxDataPlayer" type="AnimationPlayer" parent="."]
+[node name="HitboxDataPlayer" type="AnimationPlayer" parent="." unique_id=312968785]
 root_node = NodePath("../AnimationPlayer")
-libraries = {
-&"": SubResource("AnimationLibrary_vh6n7")
-}
+callback_mode_process = 0
+libraries/ = SubResource("AnimationLibrary_vh6n7")
 
-[node name="PaletteSwapAnims" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_t6rol")
-}
+[node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=739516780]
+libraries/ = SubResource("AnimationLibrary_t6rol")
 
-[node name="SfxResetter" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_nffmd")
-}
+[node name="SfxResetter" type="AnimationPlayer" parent="." unique_id=464924383]
+libraries/ = SubResource("AnimationLibrary_nffmd")
 
-[node name="CoyoteJumpTimer" type="Timer" parent="."]
+[node name="Hitstopper" type="Timer" parent="." unique_id=1243517027]
+one_shot = true
+
+[node name="CoyoteJumpTimer" type="Timer" parent="." unique_id=1703565811]
 wait_time = 0.3
 one_shot = true
 
-[node name="Intangibility" type="Timer" parent="."]
+[node name="Intangibility" type="Timer" parent="." unique_id=711586997]
 wait_time = 2.0
 one_shot = true
 
-[node name="LavaInvincibility" type="Timer" parent="."]
+[node name="LavaInvincibility" type="Timer" parent="." unique_id=1957242534]
 wait_time = 0.7
 one_shot = true
 
-[node name="Punchcooldown" type="Timer" parent="."]
+[node name="Punchcooldown" type="Timer" parent="." unique_id=1437485427]
 wait_time = 0.12
 one_shot = true
 
-[node name="Regentimer" type="Timer" parent="."]
+[node name="Regentimer" type="Timer" parent="." unique_id=41080260]
 wait_time = 5.0
 one_shot = true
 
-[node name="Blocktimer" type="Timer" parent="."]
+[node name="Blocktimer" type="Timer" parent="." unique_id=1330378454]
 one_shot = true
 
-[node name="CamAttractorDetector" type="Area2D" parent="."]
+[node name="CamAttractorDetector" type="Area2D" parent="." unique_id=491830455]
 visible = false
 collision_layer = 0
 collision_mask = 64
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CamAttractorDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CamAttractorDetector" unique_id=1896592582]
 shape = SubResource("CircleShape2D_o30bu")
 debug_color = Color(0.466667, 0.290196, 0, 0.419608)
 
-[node name="State" type="Label" parent="."]
+[node name="State" type="Label" parent="." unique_id=1087793620]
 visible = false
 offset_left = -6.0
 offset_top = -79.0
@@ -7709,7 +7723,7 @@ theme_override_fonts/font = SubResource("FontFile_6b6sq")
 theme_override_font_sizes/font_size = 14
 text = "FUUUUUUCK!!"
 
-[node name="Speed" type="Label" parent="."]
+[node name="Speed" type="Label" parent="." unique_id=1389538283]
 visible = false
 offset_left = -5.0
 offset_top = -59.0
@@ -7724,7 +7738,7 @@ theme_override_fonts/font = SubResource("FontFile_6b6sq")
 theme_override_font_sizes/font_size = 14
 text = "i am speed"
 
-[node name="Slabel" type="Label" parent="."]
+[node name="Slabel" type="Label" parent="." unique_id=971713994]
 visible = false
 offset_left = -5.0
 offset_top = -39.0
@@ -7740,13 +7754,13 @@ theme_override_font_sizes/font_size = 14
 text = "soon youll see it see it shinin
 "
 
-[node name="AudioListener2D" type="AudioListener2D" parent="."]
+[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=793904417]
 position = Vector2(0, -21)
 
-[node name="ExplosionMarker" type="Marker2D" parent="."]
+[node name="ExplosionMarker" type="Marker2D" parent="." unique_id=1923345290]
 position = Vector2(0, 5)
 
-[node name="HurtboxHint" type="Marker2D" parent="."]
+[node name="HurtboxHint" type="Marker2D" parent="." unique_id=2001158310]
 position = Vector2(21, -33)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

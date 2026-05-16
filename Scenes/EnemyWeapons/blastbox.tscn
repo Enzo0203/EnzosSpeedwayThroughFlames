@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://do8r4ukdgr63b"]
+[gd_scene format=3 uid="uid://do8r4ukdgr63b"]
 
 [ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/EnemyWeapons/blastbox.gd" id="1_0242f"]
-[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/Blastbox Sheet.png" id="2_ss6vh"]
+[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/Objects/Blastbox Sheet.png" id="2_ss6vh"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_ss6vh"]
 
 [sub_resource type="Animation" id="Animation_do03d"]
@@ -33,40 +33,43 @@ size = Vector2(44, 44)
 resource_local_to_scene = true
 size = Vector2(38, 37)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Blastbox" type="CharacterBody2D" unique_id=1403686453]
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_0242f")
+blast_radius = 0.85
 
-[node name="Blastbox" type="Sprite2D" parent="."]
+[node name="BlastboxSprite" type="Sprite2D" parent="." unique_id=428736598]
 position = Vector2(0, -4)
 texture = ExtResource("2_ss6vh")
 hframes = 5
 
-[node name="BBAnimationPlayer" type="AnimationPlayer" parent="Blastbox"]
-libraries = {
-&"": SubResource("AnimationLibrary_2wssj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BlastboxSprite" unique_id=917266325]
+libraries/ = SubResource("AnimationLibrary_2wssj")
+autoplay = &"fuse"
 
-[node name="Hurtbox" type="Area2D" parent="Blastbox" groups=["Hurtbox"]]
+[node name="Hurtbox" type="Area2D" parent="BlastboxSprite" unique_id=1540697779 groups=["Hurtbox"]]
+visible = false
 collision_layer = 32
 collision_mask = 80
 script = ExtResource("3_ss6vh")
+KnockbackTakeMultiplier = Vector2(0.5, 0.5)
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Blastbox/Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="BlastboxSprite/Hurtbox" unique_id=1172952153]
 shape = SubResource("RectangleShape2D_luxac")
 debug_color = Color(1, 0, 0.145098, 0.419608)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=652197814]
+visible = false
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_45f16")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1890281427]
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1621117227]
 modulate = Color(0, 0, 1, 0.117647)
 scale = Vector2(74.15, 50)
 
-[connection signal="area_entered" from="Blastbox/Hurtbox" to="Blastbox/Hurtbox" method="_on_area_entered"]
-[connection signal="hurt" from="Blastbox/Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="area_entered" from="BlastboxSprite/Hurtbox" to="BlastboxSprite/Hurtbox" method="_on_area_entered"]
+[connection signal="hurt" from="BlastboxSprite/Hurtbox" to="." method="_on_hurtbox_hurt"]

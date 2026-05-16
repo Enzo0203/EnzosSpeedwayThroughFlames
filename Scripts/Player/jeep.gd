@@ -59,7 +59,7 @@ func _on_special_grabbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hurtbox") and type == "Exit":
 		animation.play("Leave")
 		enzoGotInCar = true
-		await get_tree().create_timer(2.0).timeout
+		await get_tree().create_timer(2.0, false).timeout
 		velocity.x = move_toward(velocity.x, -10, 5)
 		await animation.animation_finished
 		animation.play("Drive")

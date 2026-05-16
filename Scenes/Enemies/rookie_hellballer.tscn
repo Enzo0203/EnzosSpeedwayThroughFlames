@@ -1,13 +1,21 @@
-[gd_scene load_steps=23 format=3 uid="uid://ba8kn82016cck"]
+[gd_scene format=3 uid="uid://ba8kn82016cck"]
 
 [ext_resource type="Script" uid="uid://dtha7moi082yu" path="res://Scripts/Enemies/d_white.gd" id="1_fkcf2"]
-[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_i4iyn"]
-[ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/D-White sheet.png" id="2_vnbog"]
+[ext_resource type="Shader" uid="uid://c70v7tc5vlywj" path="res://MiscResources/paletteSwap.gdshader" id="2_o2sl4"]
+[ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/Enemies/D-White sheet.png" id="2_vnbog"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="4_2mjlo"]
 [ext_resource type="AudioStream" uid="uid://hr1o38iyijtk" path="res://Sfx/SwooshWeak.wav" id="4_uc5dp"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="5_f7682"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="7_tbr1e"]
-[ext_resource type="Texture2D" uid="uid://51vf8nbtb68f" path="res://Sprites/HUD/DemonHeartFull.png" id="8_juogk"]
+[ext_resource type="Texture2D" uid="uid://3cta252ott4x" path="res://Sprites/HUD/Health/DemonHeartWeakSheet.png" id="8_2mjlo"]
+[ext_resource type="Texture2D" uid="uid://co5a8edgqfe4r" path="res://Sprites/HUD/Health/DemonHeartWeakBar.png" id="9_o2sl4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8hpen"]
+resource_local_to_scene = true
+shader = ExtResource("2_o2sl4")
+shader_parameter/origin_colors = [Color(0, 0, 0, 1)]
+shader_parameter/new_colors = [Color(0, 0, 0, 1)]
+shader_parameter/swap_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2mhsb"]
 resource_local_to_scene = true
@@ -236,26 +244,26 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.40000004, 0.53333336, 0.6666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1), Color(0.8, 0.039215688, 0.043137256, 1), Color(0, 0.03876, 0.03876, 1)]
+"values": [[Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)], [Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)], [Color(0.8, 0.039215688, 0.043137256, 1)], [Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_7iwhy"]
@@ -264,55 +272,55 @@ length = 0.03333667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_4s5j2"]
 resource_name = "Parriable"
-length = 0.55556667
-step = 0.11111111
+length = 0.6
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.11111111, 0.22222222, 0.33333334, 0.44444448, 0.5555556),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0.24705882, 0.24313726, 0.06666667, 1), Color(1, 0.99607843, 0.45490196, 1), Color(0, 0, 0, 1)]
+"update": 0,
+"values": [[Color(1, 0.99607843, 0.45490196, 1)], [Color(0.24705882, 0.24313726, 0.06666667, 1)], [Color(1, 0.99607843, 0.45490196, 1)], [Color(0.24705882, 0.24313726, 0.06666667, 1)], [Color(1, 0.99607843, 0.45490196, 1)], [Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="Animation" id="Animation_b0gc5"]
@@ -320,26 +328,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_color")
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_color")
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [[Color(0, 0, 0, 1)]]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i4iyn"]
@@ -354,7 +362,22 @@ _data = {
 resource_local_to_scene = true
 size = Vector2(20, 85)
 
-[node name="RookieHellballer" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hpen"]
+atlas = ExtResource("9_o2sl4")
+region = Rect2(0, 0, 30, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbkf1"]
+atlas = ExtResource("9_o2sl4")
+region = Rect2(1, 10, 28, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2sl4"]
+atlas = ExtResource("9_o2sl4")
+region = Rect2(0, 0, 30, 10)
+
+[sub_resource type="Gradient" id="Gradient_o2sl4"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="RookieHellballer" type="CharacterBody2D" unique_id=2039551914]
 position = Vector2(0, -5)
 collision_layer = 32
 collision_mask = 2
@@ -362,27 +385,28 @@ script = ExtResource("1_fkcf2")
 health = 2
 maxHealth = 2
 
-[node name="Spritesheet" type="Sprite2D" parent="."]
-material = ExtResource("2_i4iyn")
+[node name="Spritesheet" type="Sprite2D" parent="." unique_id=17776987]
+material = SubResource("ShaderMaterial_8hpen")
 texture = ExtResource("2_vnbog")
 hframes = 6
 vframes = 6
 
-[node name="Marker2D" type="Marker2D" parent="Spritesheet"]
+[node name="Marker2D" type="Marker2D" parent="Spritesheet" unique_id=1872132937]
 position = Vector2(41, -2)
 
-[node name="Hurtbox" type="Area2D" parent="." groups=["Enemy", "Hurtbox"]]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=71436394 groups=["Enemy", "Hurtbox"]]
 collision_layer = 32
 collision_mask = 16
 script = ExtResource("4_2mjlo")
 metadata/state = "vuln"
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=1066530949]
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_2mhsb")
+disabled = true
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
-[node name="EnzoDetector" type="RayCast2D" parent="."]
+[node name="EnzoDetector" type="RayCast2D" parent="." unique_id=1107464802]
 modulate = Color(0.0221348, 0.268932, 1.68458e-07, 1)
 position = Vector2(0, 32)
 target_position = Vector2(300, -27)
@@ -390,70 +414,86 @@ collision_mask = 18
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_l6x4n")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2133799427]
+libraries/ = SubResource("AnimationLibrary_l6x4n")
 
-[node name="PaletteSwapAnims" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_i4iyn")
-}
+[node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=1971271918]
+libraries/ = SubResource("AnimationLibrary_i4iyn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=991362969]
 visible = false
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_4a7d0")
 
-[node name="Sound effects" type="Node2D" parent="."]
+[node name="Sound effects" type="Node2D" parent="." unique_id=823163444]
 
-[node name="Swoosh1" type="AudioStreamPlayer2D" parent="Sound effects"]
+[node name="Swoosh1" type="AudioStreamPlayer2D" parent="Sound effects" unique_id=622074659]
 stream = ExtResource("4_uc5dp")
 
-[node name="Swoosh2" type="AudioStreamPlayer2D" parent="Sound effects"]
+[node name="Swoosh2" type="AudioStreamPlayer2D" parent="Sound effects" unique_id=807026635]
 stream = ExtResource("4_uc5dp")
 pitch_scale = 0.8
 
-[node name="Swoosh3" type="AudioStreamPlayer2D" parent="Sound effects"]
+[node name="Swoosh3" type="AudioStreamPlayer2D" parent="Sound effects" unique_id=1814631970]
 stream = ExtResource("5_f7682")
 
-[node name="Health" type="Node2D" parent="."]
+[node name="Health" type="Node2D" parent="." unique_id=454478460]
 
-[node name="Healthbackdrop" type="TextureRect" parent="Health"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -58.0
-offset_right = 24.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HealthBar" type="TextureProgressBar" parent="Health" unique_id=1890854888]
+offset_left = -12.0
+offset_top = -49.0
+offset_right = 18.0
+offset_bottom = -39.0
+max_value = 2.0
+value = 2.0
+texture_under = SubResource("AtlasTexture_8hpen")
+texture_progress = SubResource("AtlasTexture_tbkf1")
+texture_progress_offset = Vector2(1, 1)
+
+[node name="DemonHeart" type="Sprite2D" parent="Health" unique_id=2137990473]
+position = Vector2(-14, -45)
+texture = ExtResource("8_2mjlo")
+hframes = 2
+
+[node name="HealthBarParticle" type="CPUParticles2D" parent="Health" unique_id=1062707803]
+position = Vector2(4, -44)
+emitting = false
+amount = 1
+texture = SubResource("AtlasTexture_o2sl4")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 30
+direction = Vector2(0, -1)
+spread = 20.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+angular_velocity_min = 150.0
+angular_velocity_max = 150.0
+color_ramp = SubResource("Gradient_o2sl4")
+
+[node name="DemonHeartParticle" type="CPUParticles2D" parent="Health" unique_id=635187737]
+position = Vector2(-14, -45)
+emitting = false
+amount = 1
 texture = ExtResource("7_tbr1e")
-stretch_mode = 1
+lifetime = 0.5
+one_shot = true
+fixed_fps = 30
+direction = Vector2(0, -1)
+spread = 90.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+angular_velocity_min = 150.0
+angular_velocity_max = 150.0
+color_ramp = SubResource("Gradient_o2sl4")
 
-[node name="Health" type="TextureRect" parent="Health"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -58.0
-offset_right = 24.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("8_juogk")
-expand_mode = 1
-stretch_mode = 1
-
-[node name="Stuntimer" type="Timer" parent="."]
+[node name="Hitstopper" type="Timer" parent="." unique_id=1531044017]
 one_shot = true
 
-[node name="Label" type="Label" parent="."]
+[node name="Stuntimer" type="Timer" parent="." unique_id=2100272598]
+one_shot = true
+
+[node name="Label" type="Label" parent="." unique_id=39307289]
 visible = false
 offset_left = -712.0
 offset_right = -672.0

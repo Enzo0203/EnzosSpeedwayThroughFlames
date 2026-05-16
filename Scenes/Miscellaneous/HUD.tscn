@@ -1,9 +1,9 @@
-[gd_scene load_steps=93 format=3 uid="uid://cr63vjrjs8uw7"]
+[gd_scene format=3 uid="uid://cr63vjrjs8uw7"]
 
 [ext_resource type="Script" uid="uid://lta7pw4rhpah" path="res://Scripts/HUDandUI/healthUI.gd" id="1_uadbh"]
 [ext_resource type="Texture2D" uid="uid://bqtyrmgdg6wrm" path="res://Sprites/HUD/Damage overlay.png" id="2_8nnfr"]
-[ext_resource type="Texture2D" uid="uid://dubrk7fb2g63a" path="res://Sprites/HUD/Heart sheet.png" id="3_6pcko"]
-[ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Regenoutline.png" id="4_rl55y"]
+[ext_resource type="Texture2D" uid="uid://dubrk7fb2g63a" path="res://Sprites/HUD/Health/Heart sheet.png" id="3_6pcko"]
+[ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Health/Regenoutline.png" id="4_rl55y"]
 [ext_resource type="Texture2D" uid="uid://dnm7ebu6wrta5" path="res://Sprites/HUD/Score Sheet.png" id="5_s8nhs"]
 [ext_resource type="Texture2D" uid="uid://daqxm3eq8xds0" path="res://Sprites/HUD/Combo/Combo Empty.png" id="6_6g772"]
 [ext_resource type="Texture2D" uid="uid://b6o7nvgk524mj" path="res://Sprites/HUD/Combo/Combo Timer.png" id="7_53xug"]
@@ -1552,6 +1552,203 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_evu41"]
+resource_name = "Done"
+length = 0.8889
+step = 0.11111111
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelEndLevelClear:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(21, 22)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LevelEndResultsPaper:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(352, 336)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LevelEndRankPaper:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(800, 336)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RanksSheet:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LevelEndResultsText:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("RanksSheet:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(5.9604645e-08),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("RanksSheet:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Text/Score:visible_ratio")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Text/Kills:visible_ratio")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Text/Time:visible_ratio")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Text/Deaths:visible_ratio")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Text/Factors:visible_ratio")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("PressButton:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_jubjf"]
 resource_name = "FactorReveals"
 length = 3.5555668
@@ -1920,6 +2117,18 @@ tracks/13/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_q6dvr"]
@@ -2290,203 +2499,6 @@ tracks/15/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_evu41"]
-resource_name = "Done"
-length = 0.8889
-step = 0.11111111
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LevelEndLevelClear:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(21, 22)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("LevelEndResultsPaper:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(352, 336)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("LevelEndRankPaper:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(800, 336)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("RanksSheet:scale")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(5.9604645e-08),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("RanksSheet:rotation")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Score:visible_ratio")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Text/Kills:visible_ratio")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Time:visible_ratio")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Text/MaxCombo:visible_ratio")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Text/Deaths:visible_ratio")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("Text/Factors:visible_ratio")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("PressButton:visible")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_evu41"]
 _data = {
 &"Done": SubResource("Animation_evu41"),
@@ -2527,21 +2539,22 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_evu41"]
 states/Done/node = SubResource("AnimationNodeAnimation_gv2hg")
 states/Done/position = Vector2(670.3333, 126.66667)
-states/End/position = Vector2(793.3333, 132.88889)
+states/End/position = Vector2(861.3333, 87.55556)
 states/FactorReveals/node = SubResource("AnimationNodeAnimation_q6dvr")
 states/FactorReveals/position = Vector2(406.6667, 117.95064)
 states/LevelClear/node = SubResource("AnimationNodeAnimation_pys7l")
 states/LevelClear/position = Vector2(274.66666, 113.88481)
 states/RankReveal/node = SubResource("AnimationNodeAnimation_jubjf")
 states/RankReveal/position = Vector2(544, 117.83541)
-states/Start/position = Vector2(149.33334, 120.32932)
+states/Start/position = Vector2(149.33334, 117.60219)
 transitions = ["Start", "LevelClear", SubResource("AnimationNodeStateMachineTransition_62ylt"), "LevelClear", "FactorReveals", SubResource("AnimationNodeStateMachineTransition_i0hon"), "FactorReveals", "RankReveal", SubResource("AnimationNodeStateMachineTransition_ct2i8"), "RankReveal", "Done", SubResource("AnimationNodeStateMachineTransition_sund3")]
 graph_offset = Vector2(-51, 6)
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" unique_id=769105859]
 layer = 2
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="Control" parent="." unique_id=772792321]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -2549,7 +2562,7 @@ offset_bottom = 40.0
 script = ExtResource("1_uadbh")
 metadata/_edit_use_anchors_ = true
 
-[node name="HurtOverlay" type="TextureRect" parent="HUD"]
+[node name="Overlay" type="TextureRect" parent="HUD" unique_id=1272965337]
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
@@ -2557,145 +2570,119 @@ offset_right = 960.0
 offset_bottom = 540.0
 texture = ExtResource("2_8nnfr")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/HurtOverlay"]
-libraries = {
-&"": SubResource("AnimationLibrary_q4kfe")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Overlay" unique_id=1965532773]
+libraries/ = SubResource("AnimationLibrary_q4kfe")
 
-[node name="Hearts" type="Node2D" parent="HUD"]
+[node name="Hearts" type="Node2D" parent="HUD" unique_id=195470363]
 visible = false
 position = Vector2(-83, 5)
 
-[node name="Heart1" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart1" type="Sprite2D" parent="HUD/Hearts" unique_id=1890069424]
 position = Vector2(189, 13)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart1"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart1" unique_id=1733528687]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Regenoutline1" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Regenoutline1" type="Sprite2D" parent="HUD/Hearts" unique_id=2134394428]
 position = Vector2(214, 38)
 texture = ExtResource("4_rl55y")
 hframes = 22
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline1"]
-libraries = {
-&"": SubResource("AnimationLibrary_ds1nv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline1" unique_id=1849462545]
+libraries/ = SubResource("AnimationLibrary_ds1nv")
 
-[node name="Heart2" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart2" type="Sprite2D" parent="HUD/Hearts" unique_id=916782972]
 position = Vector2(240, 11)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart2"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart2" unique_id=1314349281]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Regenoutline2" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Regenoutline2" type="Sprite2D" parent="HUD/Hearts" unique_id=1843222722]
 position = Vector2(265, 36)
 texture = ExtResource("4_rl55y")
 hframes = 22
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline2"]
-libraries = {
-&"": SubResource("AnimationLibrary_ds1nv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline2" unique_id=261271556]
+libraries/ = SubResource("AnimationLibrary_ds1nv")
 
-[node name="Heart3" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart3" type="Sprite2D" parent="HUD/Hearts" unique_id=313822659]
 position = Vector2(289, 9)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart3"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart3" unique_id=1260594205]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Regenoutline3" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Regenoutline3" type="Sprite2D" parent="HUD/Hearts" unique_id=1426804356]
 position = Vector2(314, 34)
 texture = ExtResource("4_rl55y")
 hframes = 22
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline3"]
-libraries = {
-&"": SubResource("AnimationLibrary_ds1nv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline3" unique_id=1742139534]
+libraries/ = SubResource("AnimationLibrary_ds1nv")
 
-[node name="Heart4" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart4" type="Sprite2D" parent="HUD/Hearts" unique_id=681289935]
 position = Vector2(336, 7)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart4"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart4" unique_id=1931236574]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Regenoutline4" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Regenoutline4" type="Sprite2D" parent="HUD/Hearts" unique_id=1704471826]
 position = Vector2(361, 32)
 texture = ExtResource("4_rl55y")
 hframes = 22
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline4"]
-libraries = {
-&"": SubResource("AnimationLibrary_ds1nv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline4" unique_id=244652499]
+libraries/ = SubResource("AnimationLibrary_ds1nv")
 
-[node name="Heart5" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart5" type="Sprite2D" parent="HUD/Hearts" unique_id=1221817307]
 position = Vector2(384, 4)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart5"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart5" unique_id=508675542]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Regenoutline5" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Regenoutline5" type="Sprite2D" parent="HUD/Hearts" unique_id=1721823965]
 position = Vector2(409, 29)
 texture = ExtResource("4_rl55y")
 hframes = 22
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline5"]
-libraries = {
-&"": SubResource("AnimationLibrary_ds1nv")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Regenoutline5" unique_id=1117922590]
+libraries/ = SubResource("AnimationLibrary_ds1nv")
 
-[node name="Heart6" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart6" type="Sprite2D" parent="HUD/Hearts" unique_id=1860142734]
 visible = false
 position = Vector2(190, 57)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart6"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart6" unique_id=1295183196]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Heart7" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart7" type="Sprite2D" parent="HUD/Hearts" unique_id=519619160]
 visible = false
 position = Vector2(240, 55)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart7"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart7" unique_id=1950986602]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Heart8" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart8" type="Sprite2D" parent="HUD/Hearts" unique_id=60436220]
 visible = false
 position = Vector2(289, 53)
 texture = ExtResource("3_6pcko")
@@ -2703,114 +2690,96 @@ centered = false
 hframes = 7
 frame = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart8"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart8" unique_id=1514556163]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Heart9" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart9" type="Sprite2D" parent="HUD/Hearts" unique_id=1760873082]
 visible = false
 position = Vector2(336, 51)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart9"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart9" unique_id=1672806850]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Heart10" type="Sprite2D" parent="HUD/Hearts"]
+[node name="Heart10" type="Sprite2D" parent="HUD/Hearts" unique_id=519898304]
 visible = false
 position = Vector2(384, 48)
 texture = ExtResource("3_6pcko")
 centered = false
 hframes = 7
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart10"]
-libraries = {
-&"": SubResource("AnimationLibrary_x1ydj")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Hearts/Heart10" unique_id=1201771789]
+libraries/ = SubResource("AnimationLibrary_x1ydj")
 
-[node name="Score" type="Node2D" parent="HUD"]
+[node name="Score" type="Node2D" parent="HUD" unique_id=824580731]
 visible = false
 position = Vector2(135, -12)
 
-[node name="Score1" type="Sprite2D" parent="HUD/Score"]
+[node name="Score1" type="Sprite2D" parent="HUD/Score" unique_id=1646281785]
 position = Vector2(788, 64)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 17
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score1"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score1" unique_id=112227910]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Score2" type="Sprite2D" parent="HUD/Score"]
+[node name="Score2" type="Sprite2D" parent="HUD/Score" unique_id=361160542]
 position = Vector2(741, 62)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 17
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score2"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score2" unique_id=2063408547]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Score3" type="Sprite2D" parent="HUD/Score"]
+[node name="Score3" type="Sprite2D" parent="HUD/Score" unique_id=870236279]
 position = Vector2(694, 60)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 17
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score3"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score3" unique_id=1420548060]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Score4" type="Sprite2D" parent="HUD/Score"]
+[node name="Score4" type="Sprite2D" parent="HUD/Score" unique_id=670437607]
 position = Vector2(647, 58)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 17
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score4"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score4" unique_id=1693810613]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Score5" type="Sprite2D" parent="HUD/Score"]
+[node name="Score5" type="Sprite2D" parent="HUD/Score" unique_id=1626560730]
 position = Vector2(600, 56)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score5"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score5" unique_id=816788299]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Score6" type="Sprite2D" parent="HUD/Score"]
+[node name="Score6" type="Sprite2D" parent="HUD/Score" unique_id=1200843935]
 position = Vector2(553, 54)
 texture = ExtResource("5_s8nhs")
 hframes = 18
 frame = 17
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score6"]
-libraries = {
-&"": SubResource("AnimationLibrary_xnooc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score6" unique_id=1962846077]
+libraries/ = SubResource("AnimationLibrary_xnooc")
 
-[node name="Combo" type="Node2D" parent="HUD"]
+[node name="Combo" type="Node2D" parent="HUD" unique_id=1731163098]
 visible = false
 position = Vector2(138, 74)
 
-[node name="ComboEmpty" type="Sprite2D" parent="HUD/Combo"]
+[node name="ComboEmpty" type="Sprite2D" parent="HUD/Combo" unique_id=250518255]
 position = Vector2(651, 404)
 texture = ExtResource("6_6g772")
 
-[node name="ComboTimeBar" type="TextureProgressBar" parent="HUD/Combo"]
+[node name="ComboTimeBar" type="TextureProgressBar" parent="HUD/Combo" unique_id=1419701523]
 offset_left = 604.0
 offset_top = 387.0
 offset_right = 801.0
@@ -2819,7 +2788,7 @@ max_value = 15.0
 fill_mode = 1
 texture_progress = ExtResource("7_53xug")
 
-[node name="MiniComboTimeBar" type="TextureProgressBar" parent="HUD/Combo"]
+[node name="MiniComboTimeBar" type="TextureProgressBar" parent="HUD/Combo" unique_id=791355212]
 offset_left = 593.0
 offset_top = 377.0
 offset_right = 808.0
@@ -2829,156 +2798,140 @@ step = 0.5
 fill_mode = 1
 texture_progress = ExtResource("8_q6dvr")
 
-[node name="MiniComboBackground" type="Sprite2D" parent="HUD/Combo"]
+[node name="MiniComboBackground" type="Sprite2D" parent="HUD/Combo" unique_id=1399293293]
 position = Vector2(623.5, 381.5)
 texture = ExtResource("9_pys7l")
 
-[node name="ComboNumber1" type="Sprite2D" parent="HUD/Combo"]
+[node name="ComboNumber1" type="Sprite2D" parent="HUD/Combo" unique_id=389112513]
 position = Vector2(804, 418)
 texture = ExtResource("10_jubjf")
 hframes = 10
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber1"]
-libraries = {
-&"": SubResource("AnimationLibrary_ve2aq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber1" unique_id=1545662640]
+libraries/ = SubResource("AnimationLibrary_ve2aq")
 
-[node name="ComboNumber3" type="Sprite2D" parent="HUD/Combo"]
+[node name="ComboNumber3" type="Sprite2D" parent="HUD/Combo" unique_id=1694821121]
 position = Vector2(747, 418)
 texture = ExtResource("10_jubjf")
 hframes = 10
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber3"]
-libraries = {
-&"": SubResource("AnimationLibrary_ve2aq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber3" unique_id=2074522002]
+libraries/ = SubResource("AnimationLibrary_ve2aq")
 
-[node name="ComboNumber2" type="Sprite2D" parent="HUD/Combo"]
+[node name="ComboNumber2" type="Sprite2D" parent="HUD/Combo" unique_id=842658243]
 position = Vector2(776, 418)
 texture = ExtResource("10_jubjf")
 hframes = 10
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber2"]
-libraries = {
-&"": SubResource("AnimationLibrary_ve2aq")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/ComboNumber2" unique_id=2028311531]
+libraries/ = SubResource("AnimationLibrary_ve2aq")
 
-[node name="MiniComboNumber1" type="Sprite2D" parent="HUD/Combo"]
+[node name="MiniComboNumber1" type="Sprite2D" parent="HUD/Combo" unique_id=127662582]
 position = Vector2(640, 381)
 texture = ExtResource("11_62ylt")
 hframes = 10
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber1"]
-libraries = {
-&"": SubResource("AnimationLibrary_a0d1c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber1" unique_id=1895505342]
+libraries/ = SubResource("AnimationLibrary_a0d1c")
 
-[node name="MiniComboNumber3" type="Sprite2D" parent="HUD/Combo"]
+[node name="MiniComboNumber3" type="Sprite2D" parent="HUD/Combo" unique_id=1239772696]
 position = Vector2(606, 381)
 texture = ExtResource("11_62ylt")
 hframes = 10
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber3"]
-libraries = {
-&"": SubResource("AnimationLibrary_a0d1c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber3" unique_id=1403917237]
+libraries/ = SubResource("AnimationLibrary_a0d1c")
 
-[node name="MiniComboNumber2" type="Sprite2D" parent="HUD/Combo"]
+[node name="MiniComboNumber2" type="Sprite2D" parent="HUD/Combo" unique_id=1200937785]
 position = Vector2(623, 381)
 texture = ExtResource("11_62ylt")
 hframes = 10
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber2"]
-libraries = {
-&"": SubResource("AnimationLibrary_a0d1c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MiniComboNumber2" unique_id=1901336625]
+libraries/ = SubResource("AnimationLibrary_a0d1c")
 
-[node name="MultiplierNumber1" type="Sprite2D" parent="HUD/Combo"]
+[node name="MultiplierNumber1" type="Sprite2D" parent="HUD/Combo" unique_id=1327038726]
 position = Vector2(547, 429.5)
 texture = ExtResource("12_i0hon")
 hframes = 10
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MultiplierNumber1"]
-libraries = {
-&"": SubResource("AnimationLibrary_a0d1c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MultiplierNumber1" unique_id=461951687]
+libraries/ = SubResource("AnimationLibrary_a0d1c")
 
-[node name="MultiplierNumber2" type="Sprite2D" parent="HUD/Combo"]
+[node name="MultiplierNumber2" type="Sprite2D" parent="HUD/Combo" unique_id=1192733602]
 position = Vector2(526, 428.5)
 texture = ExtResource("12_i0hon")
 hframes = 10
 frame = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MultiplierNumber2"]
-libraries = {
-&"": SubResource("AnimationLibrary_a0d1c")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Combo/MultiplierNumber2" unique_id=363907563]
+libraries/ = SubResource("AnimationLibrary_a0d1c")
 
-[node name="ComboTimer" type="Timer" parent="HUD/Combo"]
+[node name="ComboTimer" type="Timer" parent="HUD/Combo" unique_id=548632626]
 wait_time = 5.0
 one_shot = true
 
-[node name="MiniComboTimer" type="Timer" parent="HUD/Combo"]
+[node name="MiniComboTimer" type="Timer" parent="HUD/Combo" unique_id=1772222410]
 one_shot = true
 
-[node name="SpeechBubbleDelay" type="Timer" parent="HUD"]
+[node name="SpeechBubbleDelay" type="Timer" parent="HUD" unique_id=1031716941]
 one_shot = true
 
-[node name="EnzoIcon" type="Sprite2D" parent="HUD"]
-visible = false
+[node name="EnzoIcon" type="Sprite2D" parent="HUD" unique_id=270798005]
 position = Vector2(58, 44)
 texture = ExtResource("16_8nnfr")
 
-[node name="Flamed" type="Sprite2D" parent="HUD"]
+[node name="Flamed" type="Sprite2D" parent="HUD" unique_id=2045122280]
 visible = false
 position = Vector2(500, 65)
 texture = ExtResource("14_evu41")
 offset = Vector2(324, 180.669)
 
-[node name="BlackFade" type="Sprite2D" parent="HUD"]
+[node name="BlackFade" type="Sprite2D" parent="HUD" unique_id=306231716]
 visible = false
 position = Vector2(550, 270)
 texture = ExtResource("15_gv2hg")
 flip_h = true
 
-[node name="LevelEnd" type="Control" parent="."]
+[node name="LevelEnd" type="Control" parent="." unique_id=1595918514]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("16_q6dvr")
 
-[node name="Background" type="Sprite2D" parent="LevelEnd"]
+[node name="Background" type="Sprite2D" parent="LevelEnd" unique_id=695495647]
 modulate = Color(0, 0.5497381, 0, 1)
 position = Vector2(0, 540)
 texture = ExtResource("16_53xug")
 centered = false
 
-[node name="LevelEndLevelClear" type="Sprite2D" parent="LevelEnd"]
+[node name="LevelEndLevelClear" type="Sprite2D" parent="LevelEnd" unique_id=119159083]
 position = Vector2(21, -138)
 texture = ExtResource("17_q6dvr")
 centered = false
 
-[node name="LevelEndResultsPaper" type="Sprite2D" parent="LevelEnd"]
+[node name="LevelEndResultsPaper" type="Sprite2D" parent="LevelEnd" unique_id=444751727]
 position = Vector2(-290, 336)
 texture = ExtResource("18_pys7l")
 
-[node name="LevelEndRankPaper" type="Sprite2D" parent="LevelEnd"]
+[node name="LevelEndRankPaper" type="Sprite2D" parent="LevelEnd" unique_id=313725149]
 position = Vector2(1049, 336)
 texture = ExtResource("19_jubjf")
 
-[node name="LevelEndResultsText" type="Sprite2D" parent="LevelEnd"]
+[node name="LevelEndResultsText" type="Sprite2D" parent="LevelEnd" unique_id=2028672497]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(59, 178)
 scale = Vector2(1e-05, 1)
 texture = ExtResource("20_62ylt")
 centered = false
 
-[node name="RanksSheet" type="Sprite2D" parent="LevelEnd"]
+[node name="RanksSheet" type="Sprite2D" parent="LevelEnd" unique_id=307468892]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(800.00006, 380.00003)
 texture = ExtResource("21_i0hon")
@@ -2986,16 +2939,16 @@ offset = Vector2(0, -43)
 hframes = 11
 frame = 10
 
-[node name="PressButton" type="AnimatedSprite2D" parent="LevelEnd"]
+[node name="PressButton" type="AnimatedSprite2D" parent="LevelEnd" unique_id=1081207427]
 visible = false
 position = Vector2(927, 507)
 sprite_frames = SubResource("SpriteFrames_i0hon")
 autoplay = "default"
 frame_progress = 0.34318155
 
-[node name="Text" type="Node2D" parent="LevelEnd"]
+[node name="Text" type="Node2D" parent="LevelEnd" unique_id=1507685549]
 
-[node name="Score" type="Label" parent="LevelEnd/Text"]
+[node name="Score" type="Label" parent="LevelEnd/Text" unique_id=81083346]
 offset_left = 264.0
 offset_top = 184.0
 offset_right = 354.0
@@ -3005,7 +2958,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="Kills" type="Label" parent="LevelEnd/Text"]
+[node name="Kills" type="Label" parent="LevelEnd/Text" unique_id=1185963564]
 offset_left = 264.0
 offset_top = 254.0
 offset_right = 304.0
@@ -3015,7 +2968,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="Time" type="Label" parent="LevelEnd/Text"]
+[node name="Time" type="Label" parent="LevelEnd/Text" unique_id=735468778]
 offset_left = 231.00002
 offset_top = 315.0
 offset_right = 306.0
@@ -3025,7 +2978,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="MaxCombo" type="Label" parent="LevelEnd/Text"]
+[node name="MaxCombo" type="Label" parent="LevelEnd/Text" unique_id=1172745153]
 offset_left = 392.0
 offset_top = 376.0
 offset_right = 432.0
@@ -3035,7 +2988,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="Deaths" type="Label" parent="LevelEnd/Text"]
+[node name="Deaths" type="Label" parent="LevelEnd/Text" unique_id=168679817]
 offset_left = 296.00003
 offset_top = 437.00003
 offset_right = 336.00003
@@ -3045,7 +2998,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="Factors" type="Label" parent="LevelEnd/Text"]
+[node name="Factors" type="Label" parent="LevelEnd/Text" unique_id=12420069]
 offset_left = 590.0
 offset_top = 190.00002
 offset_right = 610.43475
@@ -3058,12 +3011,10 @@ autowrap_mode = 1
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="LevelEndAnimations" type="AnimationPlayer" parent="LevelEnd"]
-libraries = {
-&"": SubResource("AnimationLibrary_evu41")
-}
+[node name="LevelEndAnimations" type="AnimationPlayer" parent="LevelEnd" unique_id=1717515200]
+libraries/ = SubResource("AnimationLibrary_evu41")
 
-[node name="AnimationTree" type="AnimationTree" parent="LevelEnd/LevelEndAnimations"]
+[node name="AnimationTree" type="AnimationTree" parent="LevelEnd/LevelEndAnimations" unique_id=723785042]
 deterministic = false
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeStateMachine_evu41")

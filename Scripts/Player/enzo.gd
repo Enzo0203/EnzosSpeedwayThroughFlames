@@ -1,5 +1,3 @@
-@icon("a")
-
 extends CharacterBody2D
 class_name player
 
@@ -24,12 +22,16 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Spritesheet
+
+@onready var hitstopper: Timer = $Hitstopper
+
 @onready var coyote_jump_timer: Timer = $CoyoteJumpTimer
 @onready var intangibility_timer: Timer = $Intangibility
 @onready var lava_invincibility: Timer = $LavaInvincibility
 @onready var punchcooldown: Timer = $Punchcooldown
 @onready var regentimer: Timer = $Regentimer
 @onready var blocktimer: Timer = $Blocktimer
+
 @onready var labelstate: Label = $State
 @onready var labelspeed: Label = $Speed
 @onready var labelthird: Label = $Slabel
@@ -70,7 +72,7 @@ func _ready() -> void:
 	Globalvars.EnzoKills = 0
 	Globalvars.EnzoScore = 000000
 	Globalvars.EnzoMaxCombo = 0
-	isDead = false
+	is_dead = false
 	health = 5
 	healtharr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
 	regen = 0
@@ -90,17 +92,13 @@ func _ready() -> void:
 		Globalvars.Enzo = self
 
 func _physics_process(delta: float) -> void:
-	# Update global vars
-	#Globalvars.EnzoState = state
-	#Globalvars.EnzoVelocity = velocity.x
-	#Globalvars.EnzoPosition = global_position
-	#Globalvars.EnzoHealth = health
-	#Globalvars.EnzoHealthArr = healtharr
-	#Globalvars.EnzoRegen = regen
-	#Globalvars.EnzoRegenArr = regenarr
+	if hitstopper.time_left > 0:
+		animation.speed_scale = 0
+		return
+	else:
+		animation.speed_scale = 1
 	direction = $Spritesheet.scale.x
 	# Debug labels
-	labelstate.text = str(Globalvars.EnzoKills)
 	if skateboard:
 		labelspeed.text = str(skateboard.get_child(1).global_position)
 		labelthird.text = str(global_position == skateboard.get_child(1).global_position)
@@ -226,6 +224,7 @@ func _physics_process(delta: float) -> void:
 			landingsexkick(delta, INPUT_AXIS)
 		States.SHOULDERBASH:
 			shoulderbashing(delta, INPUT_AXIS)
+			
 	# Constant functions
 	update_animations(INPUT_AXIS)
 	flip_hitboxes()
@@ -934,8 +933,7 @@ func hurt(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	await get_tree().create_timer(0.45, false).timeout
-	if state == States.HURT:
+	if animation.is_playing() == false:
 		if INPUT_AXIS == 0:
 			change_state(States.IDLE)
 		else:
@@ -966,10 +964,10 @@ func burnrunning(delta: float) -> void:
 	# What this can transition to
 	if Input.is_action_pressed("character_z") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	if state == States.BURNRUNNING:
 		check_and_damage(false, true, 200)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5, false).timeout
 	if state == States.BURNRUNNING:
 		change_state(States.HALTING)
 
@@ -1030,8 +1028,7 @@ func blockhit(delta: float, _INPUT_AXIS: float) -> void:
 	elif $Spritesheet.scale.x == -1:
 		velocity.x = 50
 	# What can this transition to
-	await get_tree().create_timer(0.2).timeout
-	if state == States.BLOCKHIT:
+	if animation.is_playing() == false:
 		change_state(States.BLOCKING)
 
 func blockprep(delta: float, _INPUT_AXIS: float) -> void:
@@ -1066,8 +1063,7 @@ func blockperfect(delta: float, INPUT_AXIS: float) -> void:
 		velocity.x = 500
 		sprite.scale.x = -1
 		change_state(States.DODGE)
-	await get_tree().create_timer(0.6).timeout
-	if state == States.BLOCKPERFECT:
+	if animation.is_playing() == false:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -1081,8 +1077,7 @@ func blockrelease(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	await get_tree().create_timer(0.4).timeout
-	if state == States.BLOCKREL:
+	if animation.is_playing() == false:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -1104,7 +1099,7 @@ func dodge(delta: float, INPUT_AXIS: float) -> void:
 				change_state(States.WALKING)
 		else:
 			change_state(States.FALLING)
-	await get_tree().create_timer(0.4).timeout
+	await get_tree().create_timer(0.4, false).timeout
 	if state == States.DODGE:
 		actionable(INPUT_AXIS)
 
@@ -1145,8 +1140,7 @@ func groundpoundland(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What this can transition to
-	await get_tree().create_timer(0.24).timeout
-	if state == States.GROUNDPOUNDLAND:
+	if animation.is_playing() == false:
 		if INPUT_AXIS == 0:
 			change_state(States.IDLE)
 		else:
@@ -1168,8 +1162,7 @@ func wallkicking(delta: float, INPUT_AXIS: float) -> void:
 			change_state(States.IDLE)
 		else:
 			change_state(States.WALKING)
-	await get_tree().create_timer(0.24).timeout
-	if state == States.WALLKICKING:
+	if animation.is_playing() == false:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -1399,7 +1392,7 @@ var collidingWithHurtbox: bool = false
 var collidingWithLava: bool = false
 var canWallJump: bool = false
 var howToDie: String
-var isDead: bool = false
+var is_dead: bool = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Lava"):
@@ -1448,9 +1441,9 @@ func collides_with_hitbox(area: Area2D) -> bool:
 
 func _on_hurtbox_hurt(_area: Area2D, _Damage: int, _Knockback: Vector2, DeathType: String) -> void:
 	howToDie = DeathType
+	check_and_damage(true, true, 200)
 	change_state(States.HURT)
 	$PaletteSwapAnims.play("Hurt")
-	check_and_damage(true, true, 200)
 	if health >= 1:
 		velocity.y = -300
 	if health > 1:
@@ -1461,6 +1454,7 @@ func _on_hurtbox_hurt(_area: Area2D, _Damage: int, _Knockback: Vector2, DeathTyp
 		$"Spritesheet/Sound effects/EnzoHurtDead".play()
 
 func _on_hurtbox_block(_area: Area2D) -> void:
+	hitStop(0.1)
 	change_state(States.BLOCKHIT)
 	blocktimer.start()
 	give_score(25, true)
@@ -1472,13 +1466,17 @@ func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 	blocktimer.stop()
 	give_score(50, true)
 
-func _on_hitbox_hurt_something(_area: Area2D) -> void:
+func _on_hitbox_hurt_something(area: Area2D) -> void:
+	hitboxdisable()
 	randomizeAudioPitch(get_node(str("Spritesheet/Sound effects/",hitbox.ImpactSfx)), 0.2)
 	get_node(str("Spritesheet/Sound effects/",hitbox.ImpactSfx)).play()
-	hitStop(min(0.1 * hitbox.Damage, 0.3))
+	if not (area.Parriable and hitbox.Parrybox):
+		hitStop(min(0.1 * hitbox.Damage, 0.3))
 
-func _on_hitbox_parry(_area: Area2D) -> void:
+func _on_hitbox_parry(_area: Area2D, _range: String) -> void:
 	give_score(100, true)
+	$"Spritesheet/Sound effects/Parry".play()
+	hitStop(0.25)
 	pr_parry.set_emitting(true)
 
 func _on_hitbox_clank(area: Area2D) -> void:
@@ -1538,13 +1536,13 @@ func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int
 			hitStop(0.3)
 
 func check_for_death() -> void:
-	if health <= 0 and isDead == false:
+	if health <= 0 and is_dead == false:
 		health = 0
 		healtharr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 		Globalvars.EnzoDeath.emit()
 		Globalvars.EnzoDeaths += 1
 		change_state(States.DEAD)
-		isDead = true
+		is_dead = true
 
 # Handle health/regen
 
@@ -1781,16 +1779,11 @@ func update_animations(INPUT_AXIS: float) -> void:
 	if state == States.SHOULDERBASH:
 		animation.play("shoulderbash")
 
-var hitStopped: bool = false
-
 func hitStop(duration: float) -> void:
-	#disable_mode = CollisionObject2D.DISABLE_MODE_MAKE_STATIC
-	#process_mode = Node.PROCESS_MODE_DISABLED
-	Engine.time_scale = 0
-	await get_tree().create_timer(duration, true, false, true).timeout
-	Engine.time_scale = 1
-	#process_mode = Node.PROCESS_MODE_PAUSABLE
-	#disable_mode = CollisionObject2D.DISABLE_MODE_REMOVE
+	hitstopper.stop()
+	await get_tree().process_frame
+	hitstopper.wait_time = duration
+	hitstopper.start()
 
 func destroy() -> void:
 	queue_free()
@@ -1799,8 +1792,8 @@ func destroy() -> void:
 func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
 	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)
 
-func hurtboxstun(_duration: float) -> void:
-	pass
+func hitboxdisable() -> void:
+	hitboxshape.disabled = true
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:
@@ -1815,7 +1808,6 @@ func set_skating() -> void:
 	if state != States.SKATING and state != States.SKATECROUCHPREP and state != States.SKATECROUCHING and state != States.SKATEJUMP:
 		isOnBoard = false
 
-# Explode for no fucking reason
 @onready var explosion: PackedScene = preload("res://Scenes/Miscellaneous/explosion.tscn")
 func spontaniously_combust() -> void:
 	var exploded: bool = false

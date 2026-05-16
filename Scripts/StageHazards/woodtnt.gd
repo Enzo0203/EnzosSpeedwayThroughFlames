@@ -31,7 +31,7 @@ func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 
 func _on_crate_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, _DeathType: String) -> void:
 	if area.is_in_group("Explosion"):
-		await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(0.3, false).timeout
 		explode()
 	else:
 		explode()

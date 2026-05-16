@@ -12,14 +12,13 @@ var is_dead: bool = false
 @onready var sprite: Sprite2D = $Spritesheet
 @onready var marker: Marker2D = $Spritesheet/Marker2D
 @onready var marker_2: Marker2D = $Spritesheet/Marker2D2
-@onready var healthbar: TextureRect = $Health/Health
-@onready var healthbarbackdrop: TextureRect = $Health/Healthbackdrop
-@onready var healthbar2: TextureRect = $Health/Health2
-@onready var healthbarbackdrop2: TextureRect = $Health/Healthbackdrop2
-@onready var healthbar3: TextureRect = $Health/Health3
-@onready var healthbarbackdrop3: TextureRect = $Health/Healthbackdrop3
+@onready var healthbar: TextureProgressBar = $Health/HealthBar
+@onready var demonheart: Sprite2D = $Health/DemonHeart
+
+@onready var hitstopper: Timer = $Hitstopper
 @onready var stuntimer: Timer = $Stuntimer
 @onready var jumptimer: Timer = $Jumptimer
+
 @onready var label: Label = $Label
 @onready var cpbbcooldown: Timer = $CPBBcooldown
 @onready var blastboxcooldown: Timer = $Blastboxcooldown
@@ -28,23 +27,21 @@ var is_dead: bool = false
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Hurtbox
 
-var health: int = 30
+@export var health: int
+@export var maxHealth: int
+
+@onready var pr_heart: CPUParticles2D = $Health/DemonHeartParticle
+@onready var pr_hpbar: CPUParticles2D = $Health/HealthBarParticle
 
 func change_state(newState: int) -> void:
 	state = newState
 
-func _ready() -> void:
-	if health <= 10:
-		healthbarbackdrop.size.x = 24 * health
-		healthbarbackdrop2.size.x = 0
-		healthbarbackdrop3.size.x = 0
-	if health > 10 and health <= 20:
-		healthbarbackdrop2.size.x = 24 * (health - 10)
-		healthbarbackdrop3.size.x = 0
-	if health > 20 and health <= 30:
-		healthbarbackdrop3.size.x = 24 * (health - 20)
-
 func _physics_process(delta: float) -> void:
+	if hitstopper.time_left > 0:
+		animation.speed_scale = 0
+		return
+	else:
+		animation.speed_scale = 1
 	label.text = str(blastboxcooldown.time_left)
 	match state:
 		States.IDLE:
@@ -116,7 +113,7 @@ func jumping(delta: float) -> void:
 	if state == States.JUMPING:
 		if is_on_floor():
 			change_state(States.IDLE)
-		await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(0.3, false).timeout
 		if state == States.JUMPING:
 			if cpbbcooldown.time_left == 0:
 				change_state(States.JUMPTHROWING)
@@ -126,7 +123,7 @@ func throwing(delta: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if state == States.THROWING:
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.2, false).timeout
 		if state == States.THROWING:
 			if is_on_floor():
 				change_state(States.IDLE)
@@ -137,7 +134,7 @@ func jumpthrowing(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	if state == States.JUMPTHROWING:
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(0.2, false).timeout
 		if state == States.JUMPTHROWING:
 			if is_on_floor():
 				change_state(States.IDLE)
@@ -203,21 +200,23 @@ func dead(delta: float) -> void:
 
 func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType: String) -> void:
 	if is_dead == false:
-			if health - Damage <= 0:
-				change_state(States.DEAD)
-			else:
-				change_state(States.HURT)
-			$PaletteSwapAnims.play("Hurt")
-			velocity = Knockback
-			stuntimer.start()
-			give_score(100, true)
-			hitStop(0.1, 0.3)
-			if health - Damage <= 0:
-				damage(health)
-			else:
-				damage(Damage)
+		if health - Damage <= 0:
+			damage(health)
+			pr_heart.emitting = true
+			pr_hpbar.emitting = true
+			change_state(States.DEAD)
+		else:
+			damage(Damage)
+			change_state(States.HURT)
+		$PaletteSwapAnims.play("Hurt")
+		velocity = Knockback
+		pr_heart.direction = Knockback
+		pr_hpbar.direction = Knockback
+		stuntimer.start()
+		give_score(100, true)
+		hitStop(min(0.1 * Damage, 0.3))
 
-func _on_hurtbox_parried(_area: Area2D) -> void:
+func _on_hurtbox_parried(_area: Area2D, _range: String) -> void:
 	if health - $Hitbox.Damage <= 0:
 		damage(health)
 	else:
@@ -264,8 +263,11 @@ func update_animations() -> void:
 	if state == States.DEAD:
 		animation.play("Dead")
 
-func hitStop(_timeScale: float, _duration: float) -> void:
-	pass
+func hitStop(duration: float) -> void:
+	hitstopper.stop()
+	await get_tree().process_frame
+	hitstopper.wait_time = duration
+	hitstopper.start()
 
 @onready var snackbox: PackedScene = preload("res://Scenes/Items/snackbox.tscn")
 func check_for_death() -> void:
@@ -284,29 +286,17 @@ func randomizeAudioPitch(_audio: String) -> void:
 	pass
 
 func set_health() -> void:
-	if health <= 10:
-		healthbar.size.x = 24 * health
-		healthbar2.size.x = 0
-		healthbar3.size.x = 0
-	if health > 10 and health <= 20:
-		healthbar2.size.x = 24 * (health - 10)
-		healthbar3.size.x = 0
-	if health > 20 and health <= 30:
-		healthbar3.size.x = 24 * (health - 20)
-	if health == 30:
+	$Health/HealthBar.value = health
+	if health == maxHealth:
 		healthbar.visible = false
-		healthbarbackdrop.visible = false
-		healthbar2.visible = false
-		healthbarbackdrop2.visible = false
-		healthbar3.visible = false
-		healthbarbackdrop3.visible = false
+		demonheart.visible = false
 	else:
-		healthbar.visible = true
-		healthbarbackdrop.visible = true
-		healthbar2.visible = true
-		healthbarbackdrop2.visible = true
-		healthbar3.visible = true
-		healthbarbackdrop3.visible = true
+		if not is_dead:
+			healthbar.visible = true
+			demonheart.visible = true
+		else:
+			healthbar.visible = false
+			demonheart.visible = false
 
 var EnzoInArea1: bool = false
 var EnzoInArea2: bool = false
