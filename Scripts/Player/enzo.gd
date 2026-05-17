@@ -1418,6 +1418,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		else:
 			heart_heal(area.get_meta("heal"))
 			change_hp(health + area.get_meta("heal"))
+		$PaletteSwapAnims.play("Heal")
 		Globalvars.EnzoHeal.emit()
 	if area.is_in_group("Skateboard"):
 		isOnBoard = false
@@ -1618,6 +1619,7 @@ func check_and_regen() -> void:
 		change_regen(regen - 1)
 		regenarr[regen] = 0
 		regenstate = "noregen"
+		$PaletteSwapAnims.play("Heal")
 	if health == 5 or regen == 0:
 		if regen != 0:
 			regenarr[0] = 1

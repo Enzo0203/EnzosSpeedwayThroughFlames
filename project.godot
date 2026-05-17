@@ -116,9 +116,6 @@ character_c={
 
 [layer_names]
 
-2d_render/layer_1="Enzo"
-2d_render/layer_2="Blocks"
-2d_render/layer_3="Enemies"
 2d_physics/layer_1="CollidesWithEnzo"
 2d_physics/layer_2="CollidesWithEnemies"
 2d_physics/layer_3="CollidesWithObjects"

@@ -9,5 +9,3 @@ script = ExtResource("1_kp2nj")
 [node name="TestAudio" type="AudioStreamPlayer2D" parent="." unique_id=1210916340]
 stream = ExtResource("2_xgmbk")
 bus = &"Sound Effects"
-
-[connection signal="play_audio_2d" from="." to="." method="_on_play_audio_2d"]

@@ -78,6 +78,7 @@ func _on_hitbox_hurt_something(area: Area2D) -> void:
 	if not area.Intangible:
 		randomizeAudioPitch($Hit, 0.1)
 		$Hit.play()
+		GlobalAudioManager.play_audio_2d("TestAudio", global_position)
 		if hitbox.get_collision_layer_value(6) == true:
 			destroy()
 

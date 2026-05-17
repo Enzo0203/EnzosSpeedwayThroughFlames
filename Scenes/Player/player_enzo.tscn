@@ -36,6 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://d1ujdnc2tlbun" path="res://Sfx/PlaneDive.ogg" id="32_dxfpo"]
 [ext_resource type="AudioStream" uid="uid://dliyga4hem8sv" path="res://Sfx/Crash.ogg" id="33_l61qk"]
 [ext_resource type="AudioStream" uid="uid://deb6s8h2bue1y" path="res://Sfx/Parry.ogg" id="34_d2p4v"]
+[ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="35_r1mvx"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -68,7 +69,7 @@ size = Vector2(42, 84)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(54, 96)
+size = Vector2(53, 67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymy6b"]
 size = Vector2(14, 52)
@@ -146,6 +147,16 @@ tracks/3/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_gkj4c"]
 resource_name = "airstompattack"
@@ -181,6 +192,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -220,6 +241,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_uv601"]
 resource_name = "airstompprep"
@@ -257,6 +288,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_768rc"]
 resource_name = "block"
@@ -292,6 +333,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -354,6 +405,16 @@ tracks/4/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "animation"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AfterimageAnims")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_jonr8"]
 resource_name = "blockperfect"
@@ -414,6 +475,16 @@ tracks/4/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "animation"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AfterimageAnims")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_h7f18"]
 resource_name = "blockprep"
@@ -451,6 +522,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_2c5u4"]
 resource_name = "blockrelease"
@@ -485,6 +566,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -524,6 +615,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_bvg8a"]
 resource_name = "burnrun"
@@ -559,6 +660,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -622,6 +733,16 @@ tracks/4/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "animation"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AfterimageAnims")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_uu1gg"]
 resource_name = "chargekickexploded"
@@ -657,6 +778,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -720,6 +851,16 @@ tracks/4/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "animation"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AfterimageAnims")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_57vgy"]
 resource_name = "chargekickweak"
@@ -769,6 +910,16 @@ tracks/3/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_6rmfj"]
 resource_name = "chargepunchcharge"
@@ -806,6 +957,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -869,6 +1030,16 @@ tracks/4/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "animation"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AfterimageAnims")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_3fcad"]
 resource_name = "chargepunchweak"
@@ -918,6 +1089,16 @@ tracks/3/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_g2x7e"]
 resource_name = "crouch"
@@ -954,6 +1135,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_qmvmr"]
 resource_name = "crouchguard"
@@ -981,6 +1172,26 @@ tracks/1/keys = {
 "clips": PackedStringArray("crouchprep"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray(),
+"times": PackedFloat32Array()
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_211c6"]
 resource_name = "dead"
@@ -1005,6 +1216,26 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("dead"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1034,6 +1265,26 @@ tracks/1/keys = {
 "clips": PackedStringArray("dead"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_cqkpo"]
 resource_name = "deadburn"
@@ -1059,6 +1310,26 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("dead"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1087,6 +1358,26 @@ tracks/1/keys = {
 "clips": PackedStringArray("dead"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_k7fhu"]
 resource_name = "dodge"
@@ -1113,6 +1404,26 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("dodge"),
 "times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SfxResetter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Dodge", "Idle"),
+"times": PackedFloat32Array(0, 0.4)
 }
 
 [sub_resource type="Animation" id="Animation_2tye5"]
@@ -1153,6 +1464,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("dropkickattack"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_1u8ns"]
 resource_name = "dropkickhold"
@@ -1180,6 +1501,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("dropkickhold"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_f0vvj"]
 resource_name = "dropkickprep"
@@ -1205,6 +1536,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("dropkickprep"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Sprint"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1244,6 +1585,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_314nh"]
 resource_name = "groundpound"
@@ -1269,6 +1620,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("groundpound"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Sprint"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1322,6 +1683,16 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_rf73e"]
 resource_name = "groundpoundprep"
@@ -1361,6 +1732,16 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_0pqot"]
 resource_name = "hurt"
@@ -1386,6 +1767,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1425,6 +1816,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_kd0rt"]
 resource_name = "idle2"
@@ -1460,6 +1861,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("Reset"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1501,6 +1912,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("idle"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_a33vj"]
 resource_name = "kick"
@@ -1540,6 +1961,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("kick"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_i6v0c"]
 resource_name = "land"
@@ -1565,6 +1996,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1594,6 +2035,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("idle"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_b7bpl"]
 resource_name = "landsexkick"
@@ -1621,6 +2072,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("idle"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_b6ds8"]
 resource_name = "landwalk"
@@ -1646,6 +2107,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1687,6 +2158,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("parryforward"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Parry", "Idle"),
+"times": PackedFloat32Array(0, 0.1)
+}
 
 [sub_resource type="Animation" id="Animation_dblvb"]
 resource_name = "parryfupward"
@@ -1725,6 +2206,16 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("parryfupward"),
 "times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Parry", "Idle"),
+"times": PackedFloat32Array(0, 0.1)
 }
 
 [sub_resource type="Animation" id="Animation_pnsdn"]
@@ -1765,6 +2256,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("parryupward"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Parry", "Idle"),
+"times": PackedFloat32Array(0, 0.1)
+}
 
 [sub_resource type="Animation" id="Animation_ohopv"]
 resource_name = "punch"
@@ -1802,6 +2303,16 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "clips": PackedStringArray("jab"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1842,6 +2353,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("jab"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_evp7s"]
 resource_name = "rise"
@@ -1867,6 +2388,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1896,6 +2427,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("roll"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_sdr4y"]
 resource_name = "run"
@@ -1921,6 +2462,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -1962,6 +2513,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("sexkick"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_8gi14"]
 resource_name = "shoulderbash"
@@ -2000,6 +2561,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("shoulderbash"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_alds3"]
 resource_name = "skating"
@@ -2025,6 +2596,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("skating"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -2054,6 +2635,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("skating"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_k7tet"]
 resource_name = "skatingcrouchtransi"
@@ -2079,6 +2670,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("skating"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -2108,6 +2709,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("skating"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_la2fi"]
 resource_name = "skid"
@@ -2133,6 +2744,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -2174,6 +2795,16 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_m3cyy"]
 resource_name = "sprint"
@@ -2199,6 +2830,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Sprint"),
 "times": PackedFloat32Array(0)
 }
 
@@ -2228,6 +2869,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("sprintpunch"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Sprint"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_rqfyh"]
 resource_name = "walk"
@@ -2252,6 +2903,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -2293,6 +2954,16 @@ tracks/2/keys = {
 "clips": PackedStringArray("idle"),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "animation"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_o30bu"]
 resource_name = "wallrun"
@@ -2320,6 +2991,16 @@ tracks/1/keys = {
 "clips": PackedStringArray("idle"),
 "times": PackedFloat32Array(0)
 }
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_6b6sq"]
 resource_name = "wallrunpanic"
@@ -2345,6 +3026,16 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
 
@@ -7081,6 +7772,35 @@ _data = {
 &"sprintpunch": SubResource("Animation_jx64v")
 }
 
+[sub_resource type="Animation" id="Animation_oj54q"]
+resource_name = "Heal"
+length = 0.66667336
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:material:shader_parameter/origin_colors")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spritesheet:material:shader_parameter/new_colors")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.39999998),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedColorArray(0, 1, 0.03876, 1), PackedColorArray(0, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_2y6so"]
 resource_name = "Hurt"
 length = 0.66667336
@@ -7167,10 +7887,250 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t6rol"]
 _data = {
+&"Heal": SubResource("Animation_oj54q"),
 &"Hurt": SubResource("Animation_2y6so"),
 &"Idle": SubResource("Animation_7iwhy"),
 &"RESET": SubResource("Animation_t6rol")
 }
+
+[sub_resource type="Animation" id="Animation_sijdg"]
+resource_name = "Dodge"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AfterimageAnims/AfterImager:interval")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:offsets")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedFloat32Array(0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:colors")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(18.892157, 18.892157, 18.892157, 0.75000006, 18.892157, 18.892157, 18.892157, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims/AfterImager:duration")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="Animation" id="Animation_nffmd"]
+resource_name = "Idle"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_g6476"]
+resource_name = "Parry"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AfterimageAnims/AfterImager:interval")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:offsets")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedFloat32Array(0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:colors")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims/AfterImager:duration")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="Animation" id="Animation_rymdf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_s5qp2"]
+resource_name = "Sprint"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AfterimageAnims/AfterImager:interval")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:offsets")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedFloat32Array(0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:colors")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(1, 1, 1, 0.75000006, 1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims/AfterImager:duration")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sijdg"]
+_data = {
+&"Dodge": SubResource("Animation_sijdg"),
+&"Idle": SubResource("Animation_nffmd"),
+&"Parry": SubResource("Animation_g6476"),
+&"RESET": SubResource("Animation_rymdf"),
+&"Sprint": SubResource("Animation_s5qp2")
+}
+
+[sub_resource type="Gradient" id="Gradient_414wy"]
+colors = PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)
 
 [sub_resource type="Animation" id="Animation_m2pg7"]
 resource_name = "Reset"
@@ -7635,17 +8595,18 @@ visible = false
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("7_6b6sq")
-Damage = 5
-Strength = 5
-Knockback = Vector2(400, 1000)
-ImpactSfx = "PunchStrong"
+Damage = 1
+Strength = 10
+Knockback = Vector2(0, -200)
+Parrybox = true
+ImpactSfx = "PunchLight"
 metadata/dmg = 3
 metadata/strength = 3
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=904056683]
-position = Vector2(31, 11)
+position = Vector2(0.5, -36.5)
 shape = SubResource("RectangleShape2D_8s6kh")
 disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
@@ -7669,6 +8630,14 @@ libraries/ = SubResource("AnimationLibrary_vh6n7")
 
 [node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=739516780]
 libraries/ = SubResource("AnimationLibrary_t6rol")
+
+[node name="AfterimageAnims" type="AnimationPlayer" parent="." unique_id=1037440041]
+libraries/ = SubResource("AnimationLibrary_sijdg")
+
+[node name="AfterImager" type="Node" parent="AfterimageAnims" unique_id=2033578979 node_paths=PackedStringArray("sprite")]
+script = ExtResource("35_r1mvx")
+sprite = NodePath("../../Spritesheet")
+afterimage_modulate = SubResource("Gradient_414wy")
 
 [node name="SfxResetter" type="AnimationPlayer" parent="." unique_id=464924383]
 libraries/ = SubResource("AnimationLibrary_nffmd")
