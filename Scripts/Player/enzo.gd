@@ -289,7 +289,6 @@ func jumping(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	if Input.is_action_just_released("character_z") and velocity.y < JUMP_VELOCITY / 2:
 		velocity.y = JUMP_VELOCITY / 2
-	randomizeAudioPitch($"Spritesheet/Sound effects/Jump", 0.3)
 	# Transitions
 	actionable(INPUT_AXIS)
 	# What this can transition to
@@ -1448,11 +1447,11 @@ func _on_hurtbox_hurt(_area: Area2D, _Damage: int, _Knockback: Vector2, DeathTyp
 	if health >= 1:
 		velocity.y = -300
 	if health > 1:
-		$"Spritesheet/Sound effects/EnzoHurt".play()
+		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurt.ogg", global_position)
 	elif health == 1:
-		$"Spritesheet/Sound effects/EnzoHurtDanger".play()
+		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDanger.ogg", global_position)
 	elif health == 0:
-		$"Spritesheet/Sound effects/EnzoHurtDead".play()
+		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 
 func _on_hurtbox_block(_area: Area2D) -> void:
 	hitStop(0.1)
@@ -1469,14 +1468,13 @@ func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 
 func _on_hitbox_hurt_something(area: Area2D) -> void:
 	hitboxdisable()
-	randomizeAudioPitch(get_node(str("Spritesheet/Sound effects/",hitbox.ImpactSfx)), 0.2)
-	get_node(str("Spritesheet/Sound effects/",hitbox.ImpactSfx)).play()
+	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path , hitboxshape.global_position)
 	if not (area.Parriable and hitbox.Parrybox):
 		hitStop(min(0.1 * hitbox.Damage, 0.3))
 
 func _on_hitbox_parry(_area: Area2D, _range: String) -> void:
 	give_score(100, true)
-	$"Spritesheet/Sound effects/Parry".play()
+	GlobalAudioManager.play_audio_2d("res://Sfx/Parry.ogg", hitboxshape.global_position)
 	hitStop(0.25)
 	pr_parry.set_emitting(true)
 
@@ -1655,10 +1653,13 @@ func update_animations(INPUT_AXIS: float) -> void:
 		if INPUT_AXIS != 0:
 			$Spritesheet.scale.x = INPUT_AXIS
 		animation.play("sprint")
+		sprinting_sfx_manager()
 	if state == States.JUMPSPRINTING:
 		animation.play("sprint")
+		sprinting_sfx_manager()
 	if state == States.FALLSPRINTING:
 		animation.play("sprint")
+		sprinting_sfx_manager()
 	if state == States.HALTING:
 		animation.play("skid")
 	if state == States.CHARGEPUNCHCHARGE:
@@ -1781,6 +1782,32 @@ func update_animations(INPUT_AXIS: float) -> void:
 	if state == States.SHOULDERBASH:
 		animation.play("shoulderbash")
 
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	$"Sound effects/RunningFootsteps".stop()
+	$"Sound effects/ElectricityCrackling".stop()
+	$"Sound effects/ChargeUp".stop()
+	$"Sound effects/SwirlySwooshing".stop()
+	
+	# Special behavior
+	
+	if anim_name == "sprint":
+		print("change")
+		$"Sound effects/SprintingFootsteps".play()
+		$"Sound effects/SprintingFootstepsMidair".play()
+	if anim_name != "sprint" and anim_name != "sprintpunch":
+		$"Sound effects/SprintingFootsteps".stop()
+		$"Sound effects/SprintingFootstepsMidair".stop()
+	if anim_name != "groundpound":
+		$"Sound effects/PlaneDive".stop()
+
+func sprinting_sfx_manager() -> void:
+	if is_on_floor():
+		$"Sound effects/SprintingFootsteps".volume_db = 0
+		$"Sound effects/SprintingFootstepsMidair".volume_db = -80
+	else:
+		$"Sound effects/SprintingFootsteps".volume_db = -80
+		$"Sound effects/SprintingFootstepsMidair".volume_db = 0
+
 func hitStop(duration: float) -> void:
 	hitstopper.stop()
 	await get_tree().process_frame
@@ -1790,9 +1817,6 @@ func hitStop(duration: float) -> void:
 func destroy() -> void:
 	queue_free()
 	Globalvars.Enzo = null
-
-func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
-	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)
 
 func hitboxdisable() -> void:
 	hitboxshape.disabled = true

@@ -42,7 +42,7 @@ extends Area2D
 @export var Parrybox: bool
 
 ## Sound effect played when this hits something.
-@export var ImpactSfx: String
+@export var ImpactSfx: AudioStream
 ## Type of animation Enzo plays when killed by this attack.
 @export var DeathType: String
 

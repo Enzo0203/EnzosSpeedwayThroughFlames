@@ -8,6 +8,7 @@ var gravity: float = 0
 
 
 @onready var hitbox: Area2D = $Hitbox
+@onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 
 @onready var hit: AudioStreamPlayer2D = $Hit
 
@@ -51,6 +52,7 @@ func destroy() -> void:
 	queue_free()
 
 func _on_hitbox_parried(area: Area2D, _range: String) -> void:
+	$AfterimageAnims.play("Parried")
 	hitbox.set_collision_layer_value(6, false)
 	hitbox.set_collision_layer_value(5, true)
 	hitbox.set_collision_mask_value(5, false)
@@ -77,8 +79,7 @@ func _on_hitbox_rebounded(area: Area2D) -> void:
 func _on_hitbox_hurt_something(area: Area2D) -> void:
 	if not area.Intangible:
 		randomizeAudioPitch($Hit, 0.1)
-		$Hit.play()
-		GlobalAudioManager.play_audio_2d("TestAudio", global_position)
+		GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position)
 		if hitbox.get_collision_layer_value(6) == true:
 			destroy()
 
@@ -91,5 +92,5 @@ func hitStop(duration: float) -> void:
 func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
 	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)
 
-#func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	#destroy()
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	destroy()

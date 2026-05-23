@@ -27,28 +27,33 @@ func _process(delta: float) -> void:
 			after_image_counter = 0.0
 
 func spawn_afterimage() -> void:
+	# If Hitstopped, don't
 	if $"../../Hitstopper".time_left > 0:
 		return
+	
+	# Make the duplicate
 	var afterimage: Sprite2D = Sprite2D.new()
+	get_tree().current_scene.add_child(afterimage)
 	
 	# Execute order 66
 	for child: Node in afterimage.get_children():
 		child.queue_free()
 	
+	# Match properties
 	afterimage.texture = sprite.texture
 	afterimage.hframes = sprite.hframes
 	afterimage.vframes = sprite.vframes
 	afterimage.frame = sprite.frame
 	afterimage.scale = sprite.scale
 	afterimage.z_index = -1
-	
 	afterimage.global_position = sprite.global_position
 	afterimage.scale = sprite.scale
 	
-	get_tree().current_scene.add_child(afterimage)
-	
+	# Make colors follow gradient
 	var tween: Tween = create_tween()
 	tween.tween_method(
-		func(offset: float) -> void: afterimage.modulate = afterimage_modulate.sample(offset), 
-		0.0, 1.0, duration)
+		func(offset: float) -> void: afterimage.modulate = afterimage_modulate.sample(offset), 0.0, 1.0, duration)
+	
+	# Delete when gradient finishes or when this node stops existing
 	tween.finished.connect(afterimage.queue_free)
+	tree_exiting.connect(afterimage.queue_free)

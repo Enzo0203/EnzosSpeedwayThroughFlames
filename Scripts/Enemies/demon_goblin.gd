@@ -232,4 +232,4 @@ func _on_hitbox_clank(area: Area2D) -> void:
 	hurtboxstun(0.3)
 
 func _on_hitbox_hurt_something(_area: Area2D) -> void:
-	$Slap.play()
+	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position)

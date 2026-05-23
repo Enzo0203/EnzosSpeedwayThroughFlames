@@ -1188,6 +1188,7 @@ collision_mask = 80
 script = ExtResource("4_ifstu")
 Damage = 4
 Strength = 4
+ImpactSfx = ExtResource("8_5kbf8")
 DeathType = "blunt"
 metadata/dmg = 4
 metadata/strength = 4

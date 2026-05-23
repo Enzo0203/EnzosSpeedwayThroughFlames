@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/EnemyWeapons/white_ball.gd" id="1_tldaj"]
 [ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/Enemies/D-White ball sheet.png" id="2_vnc03"]
+[ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="3_3me6a"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_dimt7"]
 [ext_resource type="AudioStream" uid="uid://2hxfxy1vr08i" path="res://Sfx/Combat/Hitsounds/DodgeballHit.ogg" id="4_5eted"]
 
@@ -44,6 +45,97 @@ _data = {
 &"ball": SubResource("Animation_bts1l")
 }
 
+[sub_resource type="Animation" id="Animation_hjepe"]
+resource_name = "Idle"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_btic3"]
+resource_name = "Parried"
+length = 0.06667334
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AfterimageAnims/AfterImager:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AfterimageAnims/AfterImager:interval")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:offsets")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedFloat32Array(0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AfterimageAnims/AfterImager:afterimage_modulate:colors")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AfterimageAnims/AfterImager:duration")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3btb2"]
+_data = {
+&"Idle": SubResource("Animation_hjepe"),
+&"Parried": SubResource("Animation_btic3")
+}
+
+[sub_resource type="Gradient" id="Gradient_601ny"]
+colors = PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]
 radius = 1.41421
 
@@ -65,6 +157,18 @@ hframes = 2
 libraries/ = SubResource("AnimationLibrary_4w3o2")
 autoplay = &"ball"
 
+[node name="AfterimageAnims" type="AnimationPlayer" parent="." unique_id=1785295883]
+libraries/ = SubResource("AnimationLibrary_3btb2")
+autoplay = &"Idle"
+
+[node name="AfterImager" type="Node" parent="AfterimageAnims" unique_id=66219657 node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_3me6a")
+sprite = NodePath("../../Sprite2D")
+active = true
+interval = 0.01
+afterimage_modulate = SubResource("Gradient_601ny")
+duration = 0.2
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1562683582]
 shape = SubResource("CircleShape2D_dqv0b")
 disabled = true
@@ -77,6 +181,7 @@ Damage = 1
 Strength = 1
 Knockback = Vector2(0, -100)
 Parriable = true
+ImpactSfx = ExtResource("4_5eted")
 DeathType = "blunt"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=1352693097]
