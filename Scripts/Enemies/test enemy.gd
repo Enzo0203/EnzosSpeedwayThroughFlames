@@ -61,7 +61,6 @@ func _on_area_entered(area: Area2D) -> void:
 			# There's no wall, Hurt enemy
 			change_state(States.HURT)
 			velocity = area.get_meta("kbdirection")
-			print("test dummy hurt")
 			$Label.text = "hurt"
 		elif raycast.get_collider().is_in_group("EnvironmentalCollision"):
 			#There's a wall

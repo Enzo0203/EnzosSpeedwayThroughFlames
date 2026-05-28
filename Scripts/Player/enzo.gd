@@ -30,7 +30,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var lava_invincibility: Timer = $LavaInvincibility
 @onready var punchcooldown: Timer = $Punchcooldown
 @onready var regentimer: Timer = $Regentimer
-@onready var blocktimer: Timer = $Blocktimer
 
 @onready var labelstate: Label = $State
 @onready var labelspeed: Label = $Speed
@@ -55,9 +54,9 @@ SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, #25-29
 SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING,
 KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL,
 DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER, AIRJAB, 
-BLOCKPREP, BLOCKPERFECT, BLOCKREL, SEXKICK, CHARGEKICKCHARGE, 
-CHARGEKICKWEAK, CHARGEKICKSTRONG, CHARGEKICKEXPLODE, WALLRUN, DODGE, 
-LANDING, LANDINGWALK, LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH
+BLOCKACTIONABLE, BLOCKPERFECT, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, 
+CHARGEKICKEXPLODE, WALLRUN, DODGE, LANDING, LANDINGWALK, 
+LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH, HURTJUMP
 }
 
 var state: int
@@ -65,6 +64,8 @@ var state: int
 var instanceSpawnPosition: Vector2
 var instanceInitVelocity: Vector2
 var instanceReason: String
+
+var INPUT_AXIS: float
 
 # Main functions
 
@@ -103,130 +104,130 @@ func _physics_process(delta: float) -> void:
 		labelspeed.text = str(skateboard.get_child(1).global_position)
 		labelthird.text = str(global_position == skateboard.get_child(1).global_position)
 	# Input axis
-	var INPUT_AXIS: float = Input.get_axis("ui_left", "ui_right")
+	INPUT_AXIS = Input.get_axis("ui_left", "ui_right")
 	# The State Machine
 	match state:
 		States.IDLE:
-			idle(delta, INPUT_AXIS)
+			idle(delta)
 		States.JUMPING:
-			jumping(delta, INPUT_AXIS)
+			jumping(delta)
 		States.FALLING:
-			falling(delta, INPUT_AXIS)
+			falling(delta)
 		States.WALKING:
-			walking(delta, INPUT_AXIS)
+			walking(delta)
 		States.RUNNING:
-			running(delta, INPUT_AXIS)
+			running(delta)
 		States.SPRINTING:
-			sprinting(delta, INPUT_AXIS)
+			sprinting(delta)
 		States.JUMPSPRINTING:
-			jumpsprinting(delta, INPUT_AXIS)
+			jumpsprinting(delta)
 		States.FALLSPRINTING:
-			fallsprinting(delta, INPUT_AXIS)
+			fallsprinting(delta)
 		States.HALTING:
-			halting(delta, INPUT_AXIS)
+			halting(delta)
 		States.CHARGEPUNCHCHARGE:
-			chargepunching(delta, INPUT_AXIS)
+			chargepunching(delta)
 		States.PUNCHING:
-			punchingweak(delta, INPUT_AXIS)
+			punchingweak(delta)
 		States.CHARGEPUNCHWEAK:
-			punchingmid(delta, INPUT_AXIS)
+			punchingmid(delta)
 		States.CHARGEPUNCHSTRONG:
-			punchingstrong(delta, INPUT_AXIS)
+			punchingstrong(delta)
 		States.HURT:
-			hurt(delta, INPUT_AXIS)
+			hurt(delta)
+		States.HURTJUMP:
+			hurtjump(delta)
 		States.DEAD:
 			dead(delta)
 		States.BURNJUMPING:
-			burnjumping(delta, INPUT_AXIS)
+			burnjumping(delta)
 		States.BURNRUNNING:
 			burnrunning(delta)
 		States.CROUCHPREP:
-			crouchprep(delta, INPUT_AXIS)
+			crouchprep(delta)
 		States.CROUCHING:
-			crouching(delta, INPUT_AXIS)
-		States.BLOCKING:
-			blocking(delta, INPUT_AXIS)
-		States.BLOCKHIT:
-			blockhit(delta, INPUT_AXIS)
+			crouching(delta)
 		States.GROUNDPOUNDPREP:
-			gpoundprep(delta, INPUT_AXIS)
+			gpoundprep(delta)
 		States.GROUNDPOUND:
-			groundpounding(delta, INPUT_AXIS)
+			groundpounding(delta)
 		States.GROUNDPOUNDLAND:
-			groundpoundland(delta, INPUT_AXIS)
+			groundpoundland(delta)
 		States.WALLKICKING:
-			wallkicking(delta, INPUT_AXIS)
+			wallkicking(delta)
 		States.SKATING:
-			skating(delta, INPUT_AXIS)
+			skating(delta)
 		States.SKATECROUCHPREP:
-			skatecrouchprep(delta, INPUT_AXIS)
+			skatecrouchprep(delta)
 		States.SKATECROUCHING:
-			skatecrouching(delta, INPUT_AXIS)
+			skatecrouching(delta)
 		States.SKATEJUMP:
-			skatejumping(delta, INPUT_AXIS)
+			skatejumping(delta)
 		States.SKATEJUMPDETATCH:
-			skatedetachjumping(delta, INPUT_AXIS)
+			skatedetachjumping(delta)
 		States.PARRYFORWARDS:
-			parryforwards(delta, INPUT_AXIS)
+			parryforwards(delta)
 		States.PARRYFUPWARDS:
-			parryfupwards(delta, INPUT_AXIS)
+			parryfupwards(delta)
 		States.PARRYUPWARDS:
-			parryupwards(delta, INPUT_AXIS)
+			parryupwards(delta)
 		States.SPRINTPUNCHING:
-			sprintpunch(delta, INPUT_AXIS)
+			sprintpunch(delta)
 		States.KICK:
-			kick(delta, INPUT_AXIS)
+			kick(delta)
 		States.PUNCH2:
-			punch2(delta, INPUT_AXIS)
+			punch2(delta)
 		States.AIRSTOMPPREP:
-			airstompprep(delta, INPUT_AXIS)
+			airstompprep(delta)
 		States.AIRSTOMPHOLD:
-			airstomphold(delta, INPUT_AXIS)
+			airstomphold(delta)
 		States.AIRSTOMPREL:
-			airstomping(delta, INPUT_AXIS)
+			airstomping(delta)
 		States.DROPKICKPREP:
-			dropkickprep(delta, INPUT_AXIS)
+			dropkickprep(delta)
 		States.DROPKICKHOLD:
-			dropkickhold(delta, INPUT_AXIS)
+			dropkickhold(delta)
 		States.DROPKICKREL:
-			dropkicking(delta, INPUT_AXIS)
+			dropkicking(delta)
 		States.SPIKER:
-			spiking(delta, INPUT_AXIS)
+			spiking(delta)
 		States.AIRJAB:
-			airjabbing(delta, INPUT_AXIS)
-		States.BLOCKPREP:
-			blockprep(delta, INPUT_AXIS)
+			airjabbing(delta)
+		States.BLOCKING:
+			blocking(delta)
+		States.BLOCKHIT:
+			blockhit(delta)
+		States.BLOCKACTIONABLE:
+			blockactionable(delta)
 		States.BLOCKPERFECT:
-			blockperfect(delta, INPUT_AXIS)
-		States.BLOCKREL:
-			blockrelease(delta, INPUT_AXIS)
+			blockperfect(delta)
 		States.SEXKICK:
-			sexkick(delta, INPUT_AXIS)
+			sexkick(delta)
 		States.CHARGEKICKCHARGE:
-			chargekicking(delta, INPUT_AXIS)
+			chargekicking(delta)
 		States.CHARGEKICKWEAK:
-			chargekickweak(delta, INPUT_AXIS)
+			chargekickweak(delta)
 		States.CHARGEKICKSTRONG:
-			chargekickstrong(delta, INPUT_AXIS)
+			chargekickstrong(delta)
 		States.CHARGEKICKEXPLODE:
-			chargekickexplode(delta, INPUT_AXIS)
+			chargekickexplode(delta)
 		States.WALLRUN:
-			wallrunning(delta, INPUT_AXIS)
+			wallrunning(delta)
 		States.DODGE:
-			dodge(delta, INPUT_AXIS)
+			dodge(delta)
 		States.LANDING:
-			landing(delta, INPUT_AXIS)
+			landing(delta)
 		States.LANDINGWALK:
-			landingwalk(delta, INPUT_AXIS)
+			landingwalk(delta)
 		States.LANDINGAIRJAB:
-			landingairjab(delta, INPUT_AXIS)
+			landingairjab(delta)
 		States.LANDINGSEXKICK:
-			landingsexkick(delta, INPUT_AXIS)
+			landingsexkick(delta)
 		States.SHOULDERBASH:
-			shoulderbashing(delta, INPUT_AXIS)
+			shoulderbashing(delta)
 			
 	# Constant functions
-	update_animations(INPUT_AXIS)
+	update_animations()
 	flip_hitboxes()
 	check_for_death()
 	check_and_regen()
@@ -270,11 +271,14 @@ func _physics_process(delta: float) -> void:
 
 # Moves
 
-func idle(delta: float, INPUT_AXIS: float) -> void:
+func change_state(newState: int) -> void:
+	state = newState
+
+func idle(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if INPUT_AXIS != 0:
 		change_state(States.WALKING)
 	if not is_on_floor():
@@ -282,7 +286,7 @@ func idle(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.CROUCHPREP)
 
-func jumping(delta: float, INPUT_AXIS: float) -> void:
+func jumping(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -290,7 +294,7 @@ func jumping(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_released("character_z") and velocity.y < JUMP_VELOCITY / 2:
 		velocity.y = JUMP_VELOCITY / 2
 	# Transitions
-	actionable(INPUT_AXIS)
+	actionable()
 	# What this can transition to
 	if animation.is_playing() == false:
 		if not is_on_floor():
@@ -301,7 +305,7 @@ func jumping(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.WALKING)
 
-func falling(delta: float, INPUT_AXIS: float) -> void:
+func falling(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -313,7 +317,7 @@ func falling(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		velocity.y = velocity.y + 500
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if is_on_floor():
 		if INPUT_AXIS == 0:
 			if INPUT_AXIS == 0:
@@ -333,11 +337,11 @@ func falling(delta: float, INPUT_AXIS: float) -> void:
 			velocity.y = -300
 			change_state(States.WALLKICKING)
 
-func walking(delta: float, INPUT_AXIS: float) -> void:
+func walking(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if INPUT_AXIS == 0:
 		change_state(States.IDLE)
 	if not is_on_floor():
@@ -347,7 +351,7 @@ func walking(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.CROUCHPREP)
 
-func running(delta: float, INPUT_AXIS: float) -> void:
+func running(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, RUNNING_ACCELERATION * delta)
 	# What can this transition to
@@ -368,21 +372,20 @@ func running(delta: float, INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("character_s"):
 		change_state(States.KICK)
 	if Input.is_action_just_pressed("character_c"):
-		if INPUT_AXIS != 0:
-			if not Input.is_action_pressed("ui_up"):
-				change_state(States.PARRYFORWARDS)
-			else:
-				change_state(States.PARRYFUPWARDS)
-		else:
-			if Input.is_action_pressed("ui_up"):
-				change_state(States.PARRYUPWARDS)
-			else:
-				blocktimer.start()
-				change_state(States.BLOCKPREP)
+		if INPUT_AXIS == 0 and not Input.is_action_pressed("ui_up"):
+			change_state(States.BLOCKING)
+		elif INPUT_AXIS != 0 and not Input.is_action_pressed("ui_up"):
+			$Spritesheet.scale.x = INPUT_AXIS
+			change_state(States.PARRYFORWARDS)
+		elif INPUT_AXIS != 0 and Input.is_action_pressed("ui_up"):
+			$Spritesheet.scale.x = INPUT_AXIS
+			change_state(States.PARRYFUPWARDS)
+		elif INPUT_AXIS == 0 and Input.is_action_pressed("ui_up"):
+			change_state(States.PARRYUPWARDS)
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.CROUCHPREP)
 
-func sprinting(delta: float, INPUT_AXIS: float) -> void:
+func sprinting(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, RUNNING_ACCELERATION * delta)
 	# What can this transition to
@@ -408,7 +411,7 @@ func sprinting(delta: float, INPUT_AXIS: float) -> void:
 		velocity.x += 150 * $Spritesheet.scale.x
 		velocity.y = -300
 
-func jumpsprinting(delta: float, INPUT_AXIS: float) -> void:
+func jumpsprinting(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * sprite.scale.x, RUNNING_ACCELERATION * delta)
 	velocity.y = RUNNING_JUMP_VELOCITY
@@ -434,7 +437,7 @@ func jumpsprinting(delta: float, INPUT_AXIS: float) -> void:
 		if Input.is_action_pressed("ui_down"):
 			change_state(States.GROUNDPOUNDPREP)
 
-func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
+func fallsprinting(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * sprite.scale.x, RUNNING_ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -476,7 +479,7 @@ func fallsprinting(delta: float, INPUT_AXIS: float) -> void:
 		if Input.is_action_pressed("ui_down"):
 			change_state(States.GROUNDPOUNDPREP)
 
-func shoulderbashing(delta: float, INPUT_AXIS: float) -> void:
+func shoulderbashing(delta: float) -> void:
 	if animation.current_animation_position < 0.2:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	else:
@@ -496,7 +499,7 @@ func shoulderbashing(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func sprintpunch(delta: float, INPUT_AXIS: float) -> void:
+func sprintpunch(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, RUNNING_ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -521,7 +524,7 @@ func sprintpunch(delta: float, INPUT_AXIS: float) -> void:
 		velocity.y = abs(RUNNING_SPEED / 2) * -1
 		change_state(States.WALLRUN)
 
-func dropkickprep(delta: float, INPUT_AXIS: float) -> void:
+func dropkickprep(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, 800 * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -540,7 +543,7 @@ func dropkickprep(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.SPRINTING)
 
-func dropkickhold(delta: float, INPUT_AXIS: float) -> void:
+func dropkickhold(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, 800 * delta)
 	velocity.y += gravity / 2 * delta
 	velocity.y = min(velocity.y, 500)
@@ -562,7 +565,7 @@ func dropkickhold(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.SPRINTING)
 
-func dropkicking(delta: float, INPUT_AXIS: float) -> void:
+func dropkicking(delta: float) -> void:
 	velocity.y += gravity / 2 * delta
 	velocity.y = min(velocity.y, 500)
 	if Input.is_action_just_pressed("ui_down"):
@@ -585,7 +588,7 @@ func dropkicking(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.SPRINTING)
 
-func halting(delta: float, INPUT_AXIS: float) -> void:
+func halting(delta: float) -> void:
 	# What to do
 	if ($Spritesheet.scale.x == 1 and INPUT_AXIS == -1) or ($Spritesheet.scale.x == -1 and INPUT_AXIS == 1):
 		velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, HALTING_FRICTION * delta)
@@ -594,7 +597,7 @@ func halting(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if ($Spritesheet.scale.x == 1 and velocity.x <= -600) or ($Spritesheet.scale.x == -1 and velocity.x >= 600):
 		change_state(States.SPRINTING)
 	if animation.is_playing() == false:
@@ -606,7 +609,7 @@ func halting(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func chargepunching(delta: float, INPUT_AXIS: float) -> void:
+func chargepunching(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -628,7 +631,7 @@ func chargepunching(delta: float, INPUT_AXIS: float) -> void:
 			if not is_on_floor():
 				change_state(States.FALLING)
 
-func punchingweak(delta: float, INPUT_AXIS: float) -> void:
+func punchingweak(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -648,7 +651,7 @@ func punchingweak(delta: float, INPUT_AXIS: float) -> void:
 		if state == States.PUNCHING:
 			change_state(States.PUNCH2)
 
-func punch2(delta: float, INPUT_AXIS: float) -> void:
+func punch2(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -668,7 +671,7 @@ func punch2(delta: float, INPUT_AXIS: float) -> void:
 		if state == States.PUNCH2:
 			change_state(States.PUNCHING)
 
-func punchingmid(delta: float, INPUT_AXIS: float) -> void:
+func punchingmid(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -682,7 +685,7 @@ func punchingmid(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func punchingstrong(delta: float, INPUT_AXIS: float) -> void:
+func punchingstrong(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -696,7 +699,7 @@ func punchingstrong(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func airjabbing(delta: float, INPUT_AXIS: float) -> void:
+func airjabbing(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -716,7 +719,7 @@ func airjabbing(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.LANDING)
 
-func chargekicking(delta: float, INPUT_AXIS: float) -> void:
+func chargekicking(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS * 0.3, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -733,7 +736,7 @@ func chargekicking(delta: float, INPUT_AXIS: float) -> void:
 		spontaniously_combust()
 		change_state(States.CHARGEKICKEXPLODE)
 
-func chargekickweak(delta: float, INPUT_AXIS: float) -> void:
+func chargekickweak(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -747,7 +750,7 @@ func chargekickweak(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func chargekickstrong(delta: float, INPUT_AXIS: float) -> void:
+func chargekickstrong(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -761,7 +764,7 @@ func chargekickstrong(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func chargekickexplode(delta: float, INPUT_AXIS: float) -> void:
+func chargekickexplode(delta: float) -> void:
 	velocity.x = 0
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -775,7 +778,7 @@ func chargekickexplode(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func sexkick(delta: float, INPUT_AXIS: float) -> void:
+func sexkick(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -794,7 +797,7 @@ func sexkick(delta: float, INPUT_AXIS: float) -> void:
 	if animation.get_current_animation_position() >= 0.2 and is_on_floor():
 		change_state(States.LANDINGSEXKICK)
 
-func parryforwards(delta: float, INPUT_AXIS: float) -> void:
+func parryforwards(delta: float) -> void:
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	else:
@@ -810,7 +813,7 @@ func parryforwards(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func parryfupwards(delta: float, INPUT_AXIS: float) -> void:
+func parryfupwards(delta: float) -> void:
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	else:
@@ -826,7 +829,7 @@ func parryfupwards(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func parryupwards(delta: float, INPUT_AXIS: float) -> void:
+func parryupwards(delta: float) -> void:
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	else:
@@ -842,7 +845,7 @@ func parryupwards(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func spiking(delta: float, INPUT_AXIS: float) -> void:
+func spiking(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -864,7 +867,7 @@ func spiking(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.WALKING)
 
-func kick(delta: float, INPUT_AXIS: float) -> void:
+func kick(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -880,7 +883,7 @@ func kick(delta: float, INPUT_AXIS: float) -> void:
 
 var canEnzoStomp: bool
 
-func airstompprep(delta: float, INPUT_AXIS: float) -> void:
+func airstompprep(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -894,7 +897,7 @@ func airstompprep(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.WALKING)
 
-func airstomphold(delta: float, INPUT_AXIS: float) -> void:
+func airstomphold(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -908,7 +911,7 @@ func airstomphold(delta: float, INPUT_AXIS: float) -> void:
 		change_state(States.AIRSTOMPREL)
 		velocity.y =+ 200
 
-func airstomping(delta: float, INPUT_AXIS: float) -> void:
+func airstomping(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -923,7 +926,7 @@ func airstomping(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.WALKING)
 
-func hurt(delta: float, INPUT_AXIS: float) -> void:
+func hurt(delta: float) -> void:
 	# What to do
 	if $Spritesheet.scale.x == 1:
 		velocity.x = -500
@@ -933,12 +936,23 @@ func hurt(delta: float, INPUT_AXIS: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
 	if animation.is_playing() == false:
-		if INPUT_AXIS == 0:
-			change_state(States.IDLE)
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
 		else:
-			change_state(States.WALKING)
-		if not is_on_floor():
 			change_state(States.FALLING)
+
+func hurtjump(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What this can transition to
+	await get_tree().physics_frame
+	if state == States.HURTJUMP:
+		if is_on_floor():
+			change_state(States.IDLE)
 
 func dead(delta: float) -> void:
 	$Hurtbox/HurtboxShape.disabled = true
@@ -946,7 +960,7 @@ func dead(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 
-func burnjumping(delta: float, INPUT_AXIS: float) -> void:
+func burnjumping(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -965,12 +979,12 @@ func burnrunning(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 	await get_tree().create_timer(1.0, false).timeout
 	if state == States.BURNRUNNING:
-		check_and_damage(false, true, 200)
+		check_and_damage(1, false, true, 200)
 	await get_tree().create_timer(0.5, false).timeout
 	if state == States.BURNRUNNING:
 		change_state(States.HALTING)
 
-func crouchprep(delta: float, INPUT_AXIS: float) -> void:
+func crouchprep(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -987,7 +1001,7 @@ func crouchprep(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.FALLING)
 
-func crouching(delta: float, INPUT_AXIS: float) -> void:
+func crouching(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -1001,36 +1015,7 @@ func crouching(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func blocking(delta: float, _INPUT_AXIS: float) -> void:
-	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
-	# What can this transition to
-	if Input.is_action_just_pressed("ui_left"):
-		velocity.x = -500
-		sprite.scale.x = 1
-		change_state(States.DODGE)
-	if Input.is_action_just_pressed("ui_right"):
-		velocity.x = 500
-		sprite.scale.x = -1
-		change_state(States.DODGE)
-	await blocktimer.timeout
-	if state == States.BLOCKING:
-		change_state(States.BLOCKREL)
-
-func blockhit(delta: float, _INPUT_AXIS: float) -> void:
-	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
-	if $Spritesheet.scale.x == 1:
-		velocity.x = -50
-	elif $Spritesheet.scale.x == -1:
-		velocity.x = 50
-	# What can this transition to
-	if animation.is_playing() == false:
-		change_state(States.BLOCKING)
-
-func blockprep(delta: float, _INPUT_AXIS: float) -> void:
+func blocking(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -1044,16 +1029,45 @@ func blockprep(delta: float, _INPUT_AXIS: float) -> void:
 		sprite.scale.x = -1
 		change_state(States.DODGE)
 	if animation.is_playing() == false:
-		change_state(States.BLOCKING)
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
 
-func blockperfect(delta: float, INPUT_AXIS: float) -> void:
+func blockhit(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if animation.is_playing() == false:
+		change_state(States.BLOCKACTIONABLE)
+
+func blockactionable(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	actionable()
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+
+func blockperfect(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
 	if not is_on_floor():
 		change_state(States.FALLING)
-	actionable(INPUT_AXIS)
+	actionable()
 	if Input.is_action_just_pressed("ui_left"):
 		velocity.x = -500
 		sprite.scale.x = 1
@@ -1071,21 +1085,7 @@ func blockperfect(delta: float, INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func blockrelease(delta: float, INPUT_AXIS: float) -> void:
-	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
-	# What can this transition to
-	if animation.is_playing() == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
-
-func dodge(delta: float, INPUT_AXIS: float) -> void:
+func dodge(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -1100,9 +1100,9 @@ func dodge(delta: float, INPUT_AXIS: float) -> void:
 			change_state(States.FALLING)
 	await get_tree().create_timer(0.4, false).timeout
 	if state == States.DODGE:
-		actionable(INPUT_AXIS)
+		actionable()
 
-func gpoundprep(delta: float, INPUT_AXIS: float) -> void:
+func gpoundprep(delta: float) -> void:
 	velocity.y = -200
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -1117,7 +1117,7 @@ func gpoundprep(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.WALKING)
 
-func groundpounding(delta: float, INPUT_AXIS: float) -> void:
+func groundpounding(delta: float) -> void:
 	hitbox.Knockback = Vector2(200, velocity.y)
 	if velocity.y > 300:
 		hitbox.Damage = int(velocity.y / 120)
@@ -1133,7 +1133,7 @@ func groundpounding(delta: float, INPUT_AXIS: float) -> void:
 	if is_on_floor():
 		change_state(States.GROUNDPOUNDLAND)
 
-func groundpoundland(delta: float, INPUT_AXIS: float) -> void:
+func groundpoundland(delta: float) -> void:
 	# What to do
 	velocity.x = 0
 	velocity.y += gravity * delta
@@ -1147,7 +1147,7 @@ func groundpoundland(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func wallkicking(delta: float, INPUT_AXIS: float) -> void:
+func wallkicking(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -1179,7 +1179,7 @@ var isOnBoard: bool = false:
 
 var skateboard: Area2D = null
 
-func skating(_delta: float, _INPUT_AXIS: float) -> void:
+func skating(_delta: float) -> void:
 	# What to do
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
@@ -1190,7 +1190,7 @@ func skating(_delta: float, _INPUT_AXIS: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		change_state(States.SKATECROUCHPREP)
 
-func skatecrouchprep(_delta: float, _INPUT_AXIS: float) -> void:
+func skatecrouchprep(_delta: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
@@ -1200,7 +1200,7 @@ func skatecrouchprep(_delta: float, _INPUT_AXIS: float) -> void:
 	if animation.is_playing() == false:
 		change_state(States.SKATECROUCHING)
 
-func skatecrouching(_delta: float, _INPUT_AXIS: float) -> void:
+func skatecrouching(_delta: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if Input.is_action_just_pressed("character_z"):
@@ -1208,7 +1208,7 @@ func skatecrouching(_delta: float, _INPUT_AXIS: float) -> void:
 	if Input.is_action_just_released("ui_down"):
 		change_state(States.SKATING)
 
-func skatejumping(_delta: float, _INPUT_AXIS: float) -> void:
+func skatejumping(_delta: float) -> void:
 	velocity = Vector2(0, 0)
 	attachToGrabBox(skateboard)
 	if animation.is_playing() == false:
@@ -1217,14 +1217,14 @@ func skatejumping(_delta: float, _INPUT_AXIS: float) -> void:
 		else:
 			change_state(States.SKATING)
 
-func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
+func skatedetachjumping(delta: float) -> void:
 	velocity.x = 330 * sprite.scale.x
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# Transitions
-	actionable(INPUT_AXIS)
+	actionable()
 	if is_on_floor():
 		if isOnBoard == true:
 			change_state(States.SKATING)
@@ -1234,7 +1234,7 @@ func skatedetachjumping(delta: float, INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.LANDINGWALK)
 
-func wallrunning(delta: float, INPUT_AXIS: float) -> void:
+func wallrunning(delta: float) -> void:
 	velocity.x = 1000 * sprite.scale.x
 	velocity.y += gravity / 2 * delta
 	velocity.y = min(velocity.y, 500)
@@ -1259,11 +1259,11 @@ func wallrunning(delta: float, INPUT_AXIS: float) -> void:
 		velocity.y = -400
 		change_state(States.WALLKICKING)
 
-func landing(delta: float, INPUT_AXIS: float) -> void:
+func landing(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if INPUT_AXIS != 0:
 		change_state(States.WALKING)
 	if not is_on_floor():
@@ -1280,11 +1280,11 @@ func landing(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func landingwalk(delta: float, INPUT_AXIS: float) -> void:
+func landingwalk(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if not is_on_floor():
 		change_state(States.FALLING)
 	if Input.is_action_pressed("character_a"):
@@ -1299,11 +1299,11 @@ func landingwalk(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func landingairjab(delta: float, INPUT_AXIS: float) -> void:
+func landingairjab(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if not is_on_floor():
 		change_state(States.FALLING)
 	if Input.is_action_pressed("character_a"):
@@ -1318,11 +1318,11 @@ func landingairjab(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func landingsexkick(delta: float, INPUT_AXIS: float) -> void:
+func landingsexkick(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	# What can this transition to
-	actionable(INPUT_AXIS)
+	actionable()
 	if not is_on_floor():
 		change_state(States.FALLING)
 	if Input.is_action_pressed("character_a"):
@@ -1337,7 +1337,7 @@ func landingsexkick(delta: float, INPUT_AXIS: float) -> void:
 		if not is_on_floor():
 			change_state(States.FALLING)
 
-func actionable(INPUT_AXIS: float) -> void:
+func actionable() -> void:
 	if is_on_floor():
 		if Input.is_action_just_pressed("character_z") and not Input.is_action_just_pressed("character_x") and not Input.is_action_just_pressed("character_s") and not Input.is_action_just_pressed("character_c"):
 			change_state(States.JUMPING)
@@ -1347,17 +1347,16 @@ func actionable(INPUT_AXIS: float) -> void:
 		if Input.is_action_just_pressed("character_s"):
 			change_state(States.CHARGEKICKCHARGE)
 		if Input.is_action_just_pressed("character_c"):
-			if INPUT_AXIS != 0:
-				if not Input.is_action_pressed("ui_up"):
-					change_state(States.PARRYFORWARDS)
-				else:
-					change_state(States.PARRYFUPWARDS)
-			else:
-				if Input.is_action_pressed("ui_up"):
-					change_state(States.PARRYUPWARDS)
-				else:
-					blocktimer.start()
-					change_state(States.BLOCKPREP)
+			if INPUT_AXIS == 0 and not Input.is_action_pressed("ui_up"):
+				change_state(States.BLOCKING)
+			elif INPUT_AXIS != 0 and not Input.is_action_pressed("ui_up"):
+				$Spritesheet.scale.x = INPUT_AXIS
+				change_state(States.PARRYFORWARDS)
+			elif INPUT_AXIS != 0 and Input.is_action_pressed("ui_up"):
+				$Spritesheet.scale.x = INPUT_AXIS
+				change_state(States.PARRYFUPWARDS)
+			elif INPUT_AXIS == 0 and Input.is_action_pressed("ui_up"):
+				change_state(States.PARRYUPWARDS)
 	if not is_on_floor():
 		if Input.is_action_pressed("ui_down"):
 			if Input.is_action_just_pressed("character_z"):
@@ -1374,16 +1373,16 @@ func actionable(INPUT_AXIS: float) -> void:
 			else:
 				change_state(States.SEXKICK)
 		if Input.is_action_just_pressed("character_c"):
-			if INPUT_AXIS != 0:
-				if not Input.is_action_pressed("ui_up"):
-					change_state(States.PARRYFORWARDS)
-				else:
-					change_state(States.PARRYFUPWARDS)
-			else:
-				if Input.is_action_pressed("ui_up"):
-					change_state(States.PARRYUPWARDS)
-				else:
-					pass
+			if INPUT_AXIS == 0 and not Input.is_action_pressed("ui_up"):
+				pass
+			elif INPUT_AXIS != 0 and not Input.is_action_pressed("ui_up"):
+				$Spritesheet.scale.x = INPUT_AXIS
+				change_state(States.PARRYFORWARDS)
+			elif INPUT_AXIS != 0 and Input.is_action_pressed("ui_up"):
+				$Spritesheet.scale.x = INPUT_AXIS
+				change_state(States.PARRYFUPWARDS)
+			elif INPUT_AXIS == 0 and Input.is_action_pressed("ui_up"):
+				change_state(States.PARRYUPWARDS)
 
 # Handle Hit/Hurtboxes and damage
 
@@ -1403,7 +1402,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			else:
 				velocity.y = 800
 			lava_invincibility.start()
-			check_and_damage(false, false, 200)
+			check_and_damage(1, false, false, 200)
 	if area.is_in_group("Heal"):
 		if health + area.get_meta("heal") > 5:
 			if regen + (area.get_meta("heal") - (5 - health)) > 5:
@@ -1412,11 +1411,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			else:
 				regen_give(area.get_meta("heal") - (5 - health))
 				change_regen(regen + (area.get_meta("heal") - (5 - health))) 
-			heart_heal(5 - health)
-			change_hp(health + (5 - health))
+			heal(5 - health)
 		else:
-			heart_heal(area.get_meta("heal"))
-			change_hp(health + area.get_meta("heal"))
+			heal(area.get_meta("heal"))
 		$PaletteSwapAnims.play("Heal")
 		Globalvars.EnzoHeal.emit()
 	if area.is_in_group("Skateboard"):
@@ -1439,13 +1436,17 @@ func collides_with_hitbox(area: Area2D) -> bool:
 	else:
 		return false
 
-func _on_hurtbox_hurt(_area: Area2D, _Damage: int, _Knockback: Vector2, DeathType: String) -> void:
+func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, DeathType: String) -> void:
 	howToDie = DeathType
-	check_and_damage(true, true, 200)
-	change_state(States.HURT)
+	check_and_damage(1, true, true, 200)
 	$PaletteSwapAnims.play("Hurt")
 	if health >= 1:
-		velocity.y = -300
+		if not area.is_in_group("Caltrop"):
+			change_state(States.HURT)
+			velocity.y = -300
+		else:
+			velocity.y = -600
+			change_state(States.HURTJUMP)
 	if health > 1:
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurt.ogg", global_position)
 	elif health == 1:
@@ -1454,16 +1455,21 @@ func _on_hurtbox_hurt(_area: Area2D, _Damage: int, _Knockback: Vector2, DeathTyp
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 
 func _on_hurtbox_block(_area: Area2D) -> void:
-	hitStop(0.1)
 	change_state(States.BLOCKHIT)
-	blocktimer.start()
+	if state == States.BLOCKHIT:
+		animation.stop(true)
+		animation.play("blockhit")
+	if $Spritesheet.scale.x == 1:
+		velocity.x = -50
+	elif $Spritesheet.scale.x == -1:
+		velocity.x = 50
+	hitStop(0.1)
 	give_score(25, true)
 
 func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 	change_state(States.BLOCKPERFECT)
 	intangibility_timer.wait_time = 0.6
 	intangibility_timer.start()
-	blocktimer.stop()
 	give_score(50, true)
 
 func _on_hitbox_hurt_something(area: Area2D) -> void:
@@ -1506,23 +1512,27 @@ func flip_hitboxes() -> void:
 	hurtbox.scale.x = sprite.scale.x
 	$Walljumpdetector.scale.x = sprite.scale.x
 
-func force_damage() -> void:
-	change_hp(health - 1)
-	heart_hit()
+# Handle health/regen
+
+func force_damage(amount: int) -> void:
+	change_hp(health - amount)
+	heart_hit(amount)
 	if regentimer.time_left > 0:
+		# If a regen is active, break it
 		regenstate = "regenbroken"
 		change_regen(regen - 1)
 		regenarr[regen] = 0
 		if regen != 0:
 			regenarr[0] = 1
+		# Make regen take a second longer to heal
 		regentimer.wait_time = 6
 		regentimer.start()
 	if health > 0:
 		Globalvars.EnzoHurt.emit()
 
-func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
+func check_and_damage(amount: int, doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
 	if intangibility_timer.time_left == 0.0:
-		force_damage()
+		force_damage(amount)
 		if Globalvars.EnzoScore - scoreDeduction >= 0:
 			Globalvars.EnzoScore -= scoreDeduction
 		else:
@@ -1534,6 +1544,12 @@ func check_and_damage(doHitStop: bool, makeInvincible: bool, scoreDeduction: int
 		if doHitStop == true:
 			hitStop(0.3)
 
+func heal(amount: int) -> void:
+	await get_tree().physics_frame
+	if not is_dead:
+		heart_heal(amount)
+		change_hp(health + amount)
+
 func check_for_death() -> void:
 	if health <= 0 and is_dead == false:
 		health = 0
@@ -1543,65 +1559,26 @@ func check_for_death() -> void:
 		change_state(States.DEAD)
 		is_dead = true
 
-# Handle health/regen
-
-func change_state(newState: int) -> void:
-	state = newState
-
 func change_hp(new_health: int) -> void:
 	health = new_health
 
 func change_regen(new_regen: int) -> void:
 	regen = new_regen
 
-func heart_hit() -> void:
-	healtharr[health] = 1
+func heart_hit(amount: int) -> void:
+	for i: int in range(amount):
+		healtharr[health - i] = 1
 
 func heart_heal(amount: int) -> void:
-	if amount == 1:
-		healtharr[health] = 3
-	if amount == 2:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-	if amount == 3:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-	if amount == 4:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-		healtharr[health + 3] = 3
-	if amount == 5:
-		healtharr[health] = 3
-		healtharr[health + 1] = 3
-		healtharr[health + 2] = 3
-		healtharr[health + 3] = 3
-		healtharr[health + 4] = 3
+	for i: int in range(amount):
+		healtharr[health + i] = 3
 
 func regen_give(amount: int) -> void:
-	if amount == 1:
-		regenarr[regen] = 1
-	if amount == 2:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-	if amount == 3:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-	if amount == 4:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-		regenarr[regen + 3] = 1
-	if amount == 5:
-		regenarr[regen] = 1
-		regenarr[regen + 1] = 1
-		regenarr[regen + 2] = 1
-		regenarr[regen + 3] = 1
-		regenarr[regen + 4] = 1
+	for i: int in range(amount):
+		regenarr[regen + i] = 1
 
 func check_and_regen() -> void:
+	# If not at full health and it has regen
 	if health < 5 and regen > 0 and regenstate == "noregen":
 		regentimer.wait_time = 5
 		regenarr[0] = 2
@@ -1612,8 +1589,7 @@ func check_and_regen() -> void:
 		regentimer.wait_time = 5
 		regenarr[0] = 2
 	if regentimer.time_left == 0 and regenstate == "regen":
-		heart_heal(1)
-		change_hp(health + 1)
+		heal(1)
 		change_regen(regen - 1)
 		regenarr[regen] = 0
 		regenstate = "noregen"
@@ -1626,7 +1602,7 @@ func check_and_regen() -> void:
 
 # Misc functions
 
-func update_animations(INPUT_AXIS: float) -> void:
+func update_animations() -> void:
 	if state == States.IDLE:
 		if Globalvars.EnzoCombo < 3:
 			animation.play("idle")
@@ -1674,6 +1650,8 @@ func update_animations(INPUT_AXIS: float) -> void:
 		animation.play("chargepunchstrong")
 	if state == States.HURT:
 		animation.play("hurt")
+	if state == States.HURTJUMP:
+		animation.play("hurtjump")
 	if state == States.DEAD:
 		if howToDie == "blunt":
 			animation.play("deadblunt")
@@ -1695,6 +1673,8 @@ func update_animations(INPUT_AXIS: float) -> void:
 		animation.play("block")
 	if state == States.BLOCKHIT:
 		animation.play("blockhit")
+	if state == States.BLOCKACTIONABLE:
+		animation.play("blockactionable")
 	if state == States.GROUNDPOUNDPREP:
 		animation.play("groundpoundprep")
 	if state == States.GROUNDPOUND:
@@ -1746,10 +1726,6 @@ func update_animations(INPUT_AXIS: float) -> void:
 				$Spritesheet.scale.x = INPUT_AXIS
 	if state == States.AIRJAB:
 		animation.play("airjab")
-	if state == States.BLOCKPREP:
-		animation.play("blockprep")
-	if state == States.BLOCKREL:
-		animation.play("blockrelease")
 	if state == States.BLOCKPERFECT:
 		animation.play("blockperfect")
 	if state == States.SEXKICK:
@@ -1787,11 +1763,11 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	$"Sound effects/ElectricityCrackling".stop()
 	$"Sound effects/ChargeUp".stop()
 	$"Sound effects/SwirlySwooshing".stop()
+	$"Sound effects/ChargeUp".stop()
 	
 	# Special behavior
 	
 	if anim_name == "sprint":
-		print("change")
 		$"Sound effects/SprintingFootsteps".play()
 		$"Sound effects/SprintingFootstepsMidair".play()
 	if anim_name != "sprint" and anim_name != "sprintpunch":

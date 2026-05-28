@@ -3,10 +3,13 @@
 [ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/EnemyWeapons/blastbox.gd" id="1_61g1j"]
 [ext_resource type="Texture2D" uid="uid://dsiptst8rer5" path="res://Sprites/General Sprites/Objects/Compact blastbox Sheet.png" id="1_spill"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_61g1j"]
+[ext_resource type="AudioStream" uid="uid://cf0n5kdlqhkn6" path="res://Sfx/CarLock.ogg" id="4_5e4fh"]
+[ext_resource type="AudioStream" uid="uid://b4phhc604ch3a" path="res://Sfx/BombBeep.ogg" id="5_e8fcf"]
 
 [sub_resource type="Animation" id="Animation_do03d"]
 resource_name = "fuse"
 length = 3.0
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -18,6 +21,42 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 3, 4, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Trigger:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Beep:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Beep:pitch_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.90000004, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2.0, 2.25, 3.5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2wssj"]
@@ -41,6 +80,7 @@ script = ExtResource("1_61g1j")
 [node name="BlastboxSprite" type="Sprite2D" parent="." unique_id=2113723791]
 texture = ExtResource("1_spill")
 hframes = 5
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BlastboxSprite" unique_id=42862476]
 libraries/ = SubResource("AnimationLibrary_2wssj")
@@ -67,6 +107,14 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1778538517]
 modulate = Color(0, 0, 1, 0.117647)
 scale = Vector2(74.15, 50)
+
+[node name="Trigger" type="AudioStreamPlayer2D" parent="." unique_id=446514387]
+stream = ExtResource("4_5e4fh")
+
+[node name="Beep" type="AudioStreamPlayer2D" parent="." unique_id=615179502]
+stream = ExtResource("5_e8fcf")
+volume_db = 1.0
+pitch_scale = 2.25
 
 [connection signal="area_entered" from="BlastboxSprite/Hurtbox" to="BlastboxSprite/Hurtbox" method="_on_area_entered"]
 [connection signal="hurt" from="BlastboxSprite/Hurtbox" to="." method="_on_hurtbox_hurt"]

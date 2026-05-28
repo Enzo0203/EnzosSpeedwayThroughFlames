@@ -16,6 +16,7 @@ var instanceSpawnPosition: Vector2
 var instanceInitVelocity: Vector2
 
 func _ready() -> void:
+	$Trigger.pitch_scale = randf_range(0.9, 1.1)
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
 		velocity = instanceInitVelocity

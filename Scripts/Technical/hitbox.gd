@@ -29,7 +29,7 @@ extends Area2D
 
 ## Attack can clank if it hits another attack of similar strength.
 @export var Clankable: bool = true
-## Attack can deflect projectiles if it has more strength.
+## If true and this attack is stronger than a projectile, it deflects it. If false, it destroys it instead.
 @export var Deflector: bool = true
 ## Attack can be parried.
 @export var Parriable: bool
@@ -64,13 +64,13 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hurtbox"):
 		if not area.Intangible and not area.IntangibleGrace and not area.IntangibleSpecial:
-			if area.State == "Vuln":
+			if area.State == area.Hurtbox_States.VULNERABLE:
 				if not area.DamageTakeMultiplier == 0.0:
 					if not Damage == 0:
 						emit_signal("hurtSomething", area)
 				if area.Parriable and Parrybox:
 					emit_signal("parry", area, "Melee")
-			if area.State == "Blocking":
+			if area.State == area.Hurtbox_States.BLOCKING or area.State == area.Hurtbox_States.PERFECT_BLOCKING:
 				emit_signal("blocked", area)
 	if area.is_in_group("Hitbox"):
 		if Clankable and area.Clankable:

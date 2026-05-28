@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-@export var type:String # "enter" or "exit"
+enum Jeep_Type {ENTER, EXIT}
+@export var type: Jeep_Type = Jeep_Type.ENTER
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -10,13 +11,13 @@ var crashed: bool = false
 var enzoGotInCar: bool = false
 
 func _ready() -> void:
-	if type == "Enter":
+	if type == Jeep_Type.ENTER:
 		crashed = false
 		animation.play("Drive")
 		velocity.x = 500
 		$EnzoDetectorNodes.queue_free()
 		$OnScreenNotifier.rect = Rect2(-2500, -1250, 5000, 2500)
-	if type == "Exit":
+	if type == Jeep_Type.EXIT:
 		enzoGotInCar = false
 		animation.play("Wait")
 		$OnScreenNotifier.rect = Rect2(-100, -100, 200, 200)
@@ -25,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
-	if type == "Enter":
+	if type == Jeep_Type.ENTER:
 		if is_on_wall() and !crashed:
 			crashed = true
 			launch_enzo()
@@ -35,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			animation.play("AfterCrash")
 		if crashed:
 			velocity.x = move_toward(velocity.x, 0, 5)
-	if type == "Exit":
+	if type == Jeep_Type.EXIT:
 		if enzoGotInCar == true:
 			if animation.get_current_animation() == "Drive":
 				velocity.x = move_toward(velocity.x, 500, 10)
@@ -50,16 +51,21 @@ func launch_enzo() -> void:
 	get_parent().add_child(enzo_instance)
 
 func _on_on_screen_notifier_screen_exited() -> void:
-	if type == "Enter":
+	if type == Jeep_Type.ENTER:
 		queue_free()
-	if type == "Exit" and enzoGotInCar == true:
+	if type == Jeep_Type.EXIT and enzoGotInCar == true:
 		Globalvars.LevelEndSequence = 2
+		queue_free()
 
 func _on_special_grabbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Hurtbox") and type == "Exit":
+	if area.is_in_group("Hurtbox") and type == Jeep_Type.EXIT:
 		animation.play("Leave")
 		enzoGotInCar = true
 		await get_tree().create_timer(2.0, false).timeout
 		velocity.x = move_toward(velocity.x, -10, 5)
 		await animation.animation_finished
 		animation.play("Drive")
+
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	if anim_name != "Drive":
+		$Engine.stop()

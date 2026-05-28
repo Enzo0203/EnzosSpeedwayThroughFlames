@@ -82,6 +82,6 @@ func setLevelPars() -> void:
 		LevelPars = {
 		"Score": 7500,
 		"Kills": 52,
-		"Time": 100, # In seconds
+		"Time": 120, # In seconds
 		"MaxCombo": 40
 		}

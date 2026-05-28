@@ -42,7 +42,7 @@ position = Vector2(0, 288)
 
 [node name="Jeep" parent="TilemapObjects/UniqueDataObjects" unique_id=1516526785 instance=ExtResource("2_iracw")]
 position = Vector2(19040, 136)
-type = "Exit"
+type = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1315846363]
 position = Vector2(218, 370)
@@ -57,6 +57,8 @@ drag_right_margin = 0.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource("19_q0mot")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D" unique_id=1531849370]
 
 [node name="Background" type="ParallaxBackground" parent="." unique_id=1506768404]
 

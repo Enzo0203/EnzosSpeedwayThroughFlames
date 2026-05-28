@@ -2,8 +2,15 @@ extends Area2D
 
 @export_category("States")
 
+enum Hurtbox_States {
+	## No additional effects.
+	VULNERABLE, 
+	## Blocks hits.
+	BLOCKING, 
+	## Also blocks hits, but has a special interaction.
+	PERFECT_BLOCKING}
 ## What state the hurtbox is in, can be "Vuln", "Blocking" or "PerfectBlocking"
-@export var State: String = "Vuln"
+@export var State: Hurtbox_States = Hurtbox_States.VULNERABLE
 ## If true, this hurtbox can't be hit by hitboxes.
 @export var Intangible: bool = false
 ## Intangibility given to segmented-health users after getting hurt.
@@ -49,7 +56,7 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hitbox"):
 		if not (Intangible or IntangibleGrace or IntangibleSpecial):
-			if State == "Vuln":
+			if State == Hurtbox_States.VULNERABLE:
 				if not DamageTakeMultiplier == 0.0:
 					if not area.Damage == 0:
 						emit_signal("hurt", area,
@@ -58,7 +65,7 @@ func _on_area_entered(area: Area2D) -> void:
 						area.DeathType)
 				if Parriable and area.Parrybox:
 					emit_signal("parried", area, "Melee")
-			if State == "Blocking":
+			if State == Hurtbox_States.BLOCKING:
 				emit_signal("block", area)
-			if State == "PerfectBlocking":
+			if State == Hurtbox_States.PERFECT_BLOCKING:
 				emit_signal("perfectBlock", area)

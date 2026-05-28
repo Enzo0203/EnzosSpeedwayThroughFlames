@@ -2724,6 +2724,7 @@ hframes = 18
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score1" unique_id=112227910]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Score2" type="Sprite2D" parent="HUD/Score" unique_id=361160542]
@@ -2733,6 +2734,7 @@ hframes = 18
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score2" unique_id=2063408547]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Score3" type="Sprite2D" parent="HUD/Score" unique_id=870236279]
@@ -2742,6 +2744,7 @@ hframes = 18
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score3" unique_id=1420548060]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Score4" type="Sprite2D" parent="HUD/Score" unique_id=670437607]
@@ -2751,6 +2754,7 @@ hframes = 18
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score4" unique_id=1693810613]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Score5" type="Sprite2D" parent="HUD/Score" unique_id=1626560730]
@@ -2760,6 +2764,7 @@ hframes = 18
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score5" unique_id=816788299]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Score6" type="Sprite2D" parent="HUD/Score" unique_id=1200843935]
@@ -2769,6 +2774,7 @@ hframes = 18
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score/Score6" unique_id=1962846077]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_xnooc")
 
 [node name="Combo" type="Node2D" parent="HUD" unique_id=1731163098]

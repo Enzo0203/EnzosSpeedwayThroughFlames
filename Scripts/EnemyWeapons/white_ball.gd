@@ -79,7 +79,7 @@ func _on_hitbox_rebounded(area: Area2D) -> void:
 func _on_hitbox_hurt_something(area: Area2D) -> void:
 	if not area.Intangible:
 		randomizeAudioPitch($Hit, 0.1)
-		GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position)
+		GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position, 0, randf_range(0.9, 1.1))
 		if hitbox.get_collision_layer_value(6) == true:
 			destroy()
 
@@ -93,4 +93,7 @@ func randomizeAudioPitch(audio: AudioStreamPlayer2D, pitchRange: float) -> void:
 	audio.pitch_scale = randf_range(1 - pitchRange, 1 + pitchRange)
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	destroy()
+
+func _on_hitbox_blocked(_area: Area2D) -> void:
 	destroy()

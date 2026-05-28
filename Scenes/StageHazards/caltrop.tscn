@@ -122,7 +122,7 @@ autoplay = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=77861870]
 shape = SubResource("RectangleShape2D_v4303")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1174450540 groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1174450540 groups=["Caltrop", "Hitbox"]]
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("3_57wqk")
@@ -136,7 +136,7 @@ shape = SubResource("RectangleShape2D_jhlnx")
 disabled = true
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)
 
-[node name="Hitbox2" type="Area2D" parent="." unique_id=1725610016 groups=["Hitbox"]]
+[node name="Hitbox2" type="Area2D" parent="." unique_id=1725610016 groups=["Caltrop", "Hitbox"]]
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("3_57wqk")
