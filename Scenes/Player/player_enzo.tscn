@@ -8006,6 +8006,7 @@ floor_snap_length = 32.0
 script = ExtResource("1_o30bu")
 
 [node name="Spritesheet" type="Sprite2D" parent="." unique_id=1776584174]
+texture_filter = 1
 material = ExtResource("2_i6v0c")
 texture = ExtResource("2_6b6sq")
 hframes = 7
@@ -8139,11 +8140,11 @@ shape = SubResource("RectangleShape2D_o30bu")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1496553347 groups=["Hurtbox"]]
 editor_description = "neut"
+visible = false
 position = Vector2(0, 4)
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("8_k7fhu")
-State = 1
 metadata/state = "vuln"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=399813060]
@@ -8159,6 +8160,7 @@ script = ExtResource("7_6b6sq")
 Damage = 2
 Strength = 2
 Knockback = Vector2(300, -150)
+Deflector = true
 ImpactSfx = ExtResource("18_fc8nm")
 metadata/dmg = 3
 metadata/strength = 3
@@ -8219,6 +8221,7 @@ bus = &"Sound Effects"
 
 [node name="ChargeUp" type="AudioStreamPlayer2D" parent="Sound effects" unique_id=703685585]
 stream = ExtResource("21_3r4sx")
+volume_db = 10.0
 bus = &"Sound Effects"
 
 [node name="ElectricityCrackling" type="AudioStreamPlayer2D" parent="Sound effects" unique_id=96294093]
@@ -8259,6 +8262,7 @@ stream = ExtResource("30_414wy")
 stream = ExtResource("31_3r4sx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1055056699]
+callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_i00x7")
 
 [node name="HitboxDataPlayer" type="AnimationPlayer" parent="." unique_id=312968785]

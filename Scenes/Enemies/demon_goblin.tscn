@@ -1487,7 +1487,7 @@ tracks/1/keys = {
 "values": [[Color(0, 0, 0, 1)]]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m7baw"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bnikn"]
 _data = {
 &"Hurt": SubResource("Animation_2y6so"),
 &"Idle": SubResource("Animation_7iwhy"),
@@ -1594,7 +1594,7 @@ libraries/ = SubResource("AnimationLibrary_d6wl1")
 libraries/ = SubResource("AnimationLibrary_eskqj")
 
 [node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=1905602305]
-libraries/ = SubResource("AnimationLibrary_m7baw")
+libraries/ = SubResource("AnimationLibrary_bnikn")
 
 [node name="Sound effects" type="Node2D" parent="." unique_id=926522461]
 

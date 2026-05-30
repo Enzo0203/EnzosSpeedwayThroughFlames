@@ -1,8 +1,9 @@
-extends Control
+extends CanvasLayer
 
 var Pausable: bool = true
 
 func _ready() -> void:
+	hide()
 	$Background.hide()
 	$PauseMenuButtons.hide()
 	$SettingButtons.hide()
@@ -13,9 +14,10 @@ func _physics_process(_delta: float) -> void:
 			get_tree().paused = true
 			$Background.show()
 			$PauseMenuButtons.show()
-			selectionScreen = "Main"
+			show()
+			selectionScreen = selectionScreens.MAIN
 	if get_tree().paused == true:
-		handle_titlescreen_buttons(_delta)
+		handle_pausescreen_buttons(_delta)
 		handle_setting_buttons(_delta)
 		outline_selected_option()
 		handle_selection_screens(_delta)
@@ -27,65 +29,70 @@ func _physics_process(_delta: float) -> void:
 @onready var ButtonVolume: TextureProgressBar = $SettingButtons/Volume
 @onready var ButtonResolution: Label = $SettingButtons/Resolution
 
-var selectionScreen: String = "Main"
-var pauseScreenSelectedOption: String = "StartGame"
-var settingsSelectedOption: String = "None"
+enum selectionScreens {MAIN, SETTINGS}
+var selectionScreen: selectionScreens = selectionScreens.MAIN
+enum pauseScreenOptions {NONE, CONTINUE, SETTINGS}
+var pauseScreenSelectedOption: pauseScreenOptions = pauseScreenOptions.CONTINUE
+enum settingsOptions {NONE, BACK, VOLUME, RESOLUTION, WINDOWMODE, FILTERING}
+var settingsSelectedOption: settingsOptions = settingsOptions.NONE
 
-func handle_titlescreen_buttons(_delta: float) -> void:
-	if pauseScreenSelectedOption == "None":
+func handle_pausescreen_buttons(_delta: float) -> void:
+	if pauseScreenSelectedOption == pauseScreenOptions.NONE:
 		ButtonContinue.frame = 0
 		ButtonSettings.frame = 0
 
-	if pauseScreenSelectedOption == "StartGame":
+	if pauseScreenSelectedOption == pauseScreenOptions.CONTINUE:
 		if ButtonContinue.frame != 2:
 			ButtonContinue.frame = 1
 		ButtonSettings.frame = 0
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_down"):
-			pauseScreenSelectedOption = "Settings"
+			pauseScreenSelectedOption = pauseScreenOptions.SETTINGS
 			$SettingButtons.show()
 		# Button press
 		if Input.is_action_just_pressed("character_z"):
+			hide()
 			$Background.hide()
 			$PauseMenuButtons.hide()
 			$SettingButtons.hide()
+			# This await is so that Enzo doesn't jump when you press the jump button to unpause
 			await get_tree().physics_frame
 			get_tree().paused = false
 
-	if pauseScreenSelectedOption == "Settings":
+	if pauseScreenSelectedOption == pauseScreenOptions.SETTINGS:
 		ButtonContinue.frame = 0
 		ButtonSettings.frame = 1
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_up"):
-			pauseScreenSelectedOption = "StartGame"
+			pauseScreenSelectedOption = pauseScreenOptions.CONTINUE
 		# Button press
 		if Input.is_action_just_pressed("character_z"):
-			pauseScreenSelectedOption = "None"
-			settingsSelectedOption = "Back"
-			selectionScreen = "Settings"
+			pauseScreenSelectedOption = pauseScreenOptions.NONE
+			settingsSelectedOption = settingsOptions.BACK
+			selectionScreen = selectionScreens.SETTINGS
 
 func handle_setting_buttons(_delta: float) -> void:
-	if settingsSelectedOption == "Back":
+	if settingsSelectedOption == settingsOptions.BACK:
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_down"):
-			settingsSelectedOption = "Volume"
+			settingsSelectedOption = settingsOptions.VOLUME
 		# Button Press
 		if Input.is_action_just_pressed("character_z"):
-			settingsSelectedOption = "None"
-			selectionScreen = "Main"
-			pauseScreenSelectedOption = "Settings"
+			settingsSelectedOption = settingsOptions.NONE
+			selectionScreen = selectionScreens.MAIN
+			pauseScreenSelectedOption = pauseScreenOptions.SETTINGS
 			$SettingButtons.hide()
 
-	if settingsSelectedOption == "Volume":
+	if settingsSelectedOption == settingsOptions.VOLUME:
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_up"):
-			settingsSelectedOption = "Back"
+			settingsSelectedOption = settingsOptions.BACK
 		if Input.is_action_just_pressed("ui_down"):
-			settingsSelectedOption = "Resolution"
+			settingsSelectedOption = settingsOptions.RESOLUTION
 		# Slider tweak
 		if Input.is_action_pressed("ui_left"):
 			Gamesettings.MasterVolume -= 1
@@ -96,13 +103,13 @@ func handle_setting_buttons(_delta: float) -> void:
 			Gamesettings.MasterVolume = min(100, Gamesettings.MasterVolume)
 			Gamesettings.emit_signal("update")
 
-	if settingsSelectedOption == "Resolution":
+	if settingsSelectedOption == settingsOptions.RESOLUTION:
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_up"):
-			settingsSelectedOption = "Volume"
+			settingsSelectedOption = settingsOptions.VOLUME
 		if Input.is_action_just_pressed("ui_down"):
-			settingsSelectedOption = "WindowMode"
+			settingsSelectedOption = settingsOptions.WINDOWMODE
 		# Option tweak
 		if Input.is_action_pressed("ui_left"):
 			if Gamesettings.Resolution == Gamesettings.ResolutionOptions["720p"]:
@@ -115,13 +122,13 @@ func handle_setting_buttons(_delta: float) -> void:
 				Gamesettings.emit_signal("update")
 				get_window().move_to_center()
 
-	if settingsSelectedOption == "WindowMode":
+	if settingsSelectedOption == settingsOptions.WINDOWMODE:
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_up"):
-			settingsSelectedOption = "Resolution"
+			settingsSelectedOption = settingsOptions.RESOLUTION
 		if Input.is_action_just_pressed("ui_down"):
-			settingsSelectedOption = "Filtering"
+			pass
 		# Option tweak
 		if Input.is_action_pressed("ui_left"):
 			if Gamesettings.WindowMode == Window.MODE_FULLSCREEN:
@@ -132,63 +139,50 @@ func handle_setting_buttons(_delta: float) -> void:
 				Gamesettings.WindowMode = Window.MODE_FULLSCREEN
 				Gamesettings.emit_signal("update")
 
-	if settingsSelectedOption == "Filtering":
-		await get_tree().physics_frame
-		# Selection change
-		if Input.is_action_just_pressed("ui_up"):
-			settingsSelectedOption = "WindowMode"
-		# Option tweak
-		if Input.is_action_pressed("ui_left"):
-			if Gamesettings.Filtering == Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR:
-				Gamesettings.Filtering = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
-			Gamesettings.emit_signal("update")
-		if Input.is_action_pressed("ui_right"):
-			if Gamesettings.Filtering == Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST:
-				Gamesettings.Filtering = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR
-			Gamesettings.emit_signal("update")
+	# Sorry, but linear filtering's causing a visual bug related to the palette swap shader.
+	#if settingsSelectedOption == settingsOptions.FILTERING:
+		#await get_tree().physics_frame
+		## Selection change
+		#if Input.is_action_just_pressed("ui_up"):
+			#settingsSelectedOption = settingsOptions.WINDOWMODE
+		## Option tweak
+		#if Input.is_action_pressed("ui_left"):
+			#if Gamesettings.Filtering == Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR:
+				#Gamesettings.Filtering = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+			#Gamesettings.emit_signal("update")
+		#if Input.is_action_pressed("ui_right"):
+			#if Gamesettings.Filtering == Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST:
+				#Gamesettings.Filtering = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR
+			#Gamesettings.emit_signal("update")
 
 func outline_selected_option() -> void:
-	if settingsSelectedOption == "None":
-		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-	if settingsSelectedOption == "Back":
+	if settingsSelectedOption == settingsOptions.NONE:
+		pass
+	if settingsSelectedOption == settingsOptions.BACK:
 		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.BLACK)
-		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-	if settingsSelectedOption == "Volume":
+	else:
 		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	if settingsSelectedOption == settingsOptions.VOLUME:
 		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.BLACK)
-		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-	if settingsSelectedOption == "Resolution":
-		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	else:
 		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	if settingsSelectedOption == settingsOptions.RESOLUTION:
 		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.BLACK)
-		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-	if settingsSelectedOption == "WindowMode":
-		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	else:
 		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	if settingsSelectedOption == settingsOptions.WINDOWMODE:
 		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.BLACK)
-		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-	if settingsSelectedOption == "Filtering":
-		$SettingButtons/Back.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Volume/VolumeText.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
-		$SettingButtons/Resolution.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	else:
 		$SettingButtons/WindowMode.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
+	if settingsSelectedOption == settingsOptions.FILTERING:
 		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.BLACK)
+	else:
+		$SettingButtons/Filtering.add_theme_color_override("font_outline_color", Color.TRANSPARENT)
 
 func handle_selection_screens(_delta: float) -> void:
-	if selectionScreen == "Main":
+	if selectionScreen == selectionScreens.MAIN:
 		$SettingButtons.visible = false
-	if selectionScreen == "Settings":
+	if selectionScreen == selectionScreens.SETTINGS:
 		$SettingButtons.visible = true
 
 func update_text() -> void:

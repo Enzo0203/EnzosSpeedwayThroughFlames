@@ -334,3 +334,8 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 
 func _on_hitbox_hurt_something(_area: Area2D) -> void:
 	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position)
+
+
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	if anim_name != "Bigthrow":
+		$"Sound Effects/ChargeAttack".stop()

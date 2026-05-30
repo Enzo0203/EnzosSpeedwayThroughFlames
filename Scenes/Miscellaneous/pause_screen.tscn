@@ -15,24 +15,21 @@
 
 [sub_resource type="Theme" id="Theme_l7qjy"]
 
-[node name="PauseScreen" type="Control" unique_id=534886200]
+[node name="PauseScreen" type="CanvasLayer" unique_id=885026300]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_xdraj")
 
-[node name="Background" type="CanvasLayer" parent="." unique_id=2053296897]
-layer = 0
+[node name="Background" type="Control" parent="." unique_id=887960307]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="PauseBackground" type="Sprite2D" parent="Background" unique_id=879473063]
 texture = ExtResource("2_vqg4g")
 centered = false
 
-[node name="PauseMenuButtons" type="CanvasLayer" parent="." unique_id=1454312703]
+[node name="PauseMenuButtons" type="Control" parent="." unique_id=158342201]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="ContinueButton" type="Sprite2D" parent="PauseMenuButtons" unique_id=1103464052]
 position = Vector2(187, 346)
@@ -44,15 +41,16 @@ position = Vector2(187, 453)
 texture = ExtResource("4_6oq67")
 hframes = 3
 
-[node name="SettingButtons" type="CanvasLayer" parent="." unique_id=1533025285]
-layer = 2
-visible = false
+[node name="SettingButtons" type="Control" parent="." unique_id=1472495918]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="SettingBackground" type="Sprite2D" parent="SettingButtons" unique_id=1518236677]
 texture = ExtResource("5_t7t0m")
 centered = false
 
 [node name="Back" type="Label" parent="SettingButtons" unique_id=928169859]
+layout_mode = 0
 offset_left = 184.99997
 offset_top = 86.000015
 offset_right = 590.0
@@ -64,6 +62,7 @@ text = "Back"
 horizontal_alignment = 1
 
 [node name="Volume" type="TextureProgressBar" parent="SettingButtons" unique_id=2041787192]
+layout_mode = 0
 offset_left = 368.0
 offset_top = 128.0
 offset_right = 880.0
@@ -103,6 +102,7 @@ text = "50%"
 horizontal_alignment = 1
 
 [node name="Resolution" type="Label" parent="SettingButtons" unique_id=1816227716]
+layout_mode = 0
 offset_left = 184.99998
 offset_top = 190.0
 offset_right = 590.0
@@ -114,6 +114,7 @@ text = "Resolution: 960 x 540"
 horizontal_alignment = 1
 
 [node name="WindowMode" type="Label" parent="SettingButtons" unique_id=192536624]
+layout_mode = 0
 offset_left = 215.00006
 offset_top = 240.00002
 offset_right = 575.00006
@@ -126,6 +127,8 @@ text = "Window Mode: Windowed"
 horizontal_alignment = 1
 
 [node name="Filtering" type="Label" parent="SettingButtons" unique_id=1936375466]
+visible = false
+layout_mode = 0
 offset_left = 280.00006
 offset_top = 286.00003
 offset_right = 550.0001

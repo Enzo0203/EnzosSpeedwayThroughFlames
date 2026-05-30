@@ -184,4 +184,11 @@ func setText() -> void:
 	$Text/Kills.text = str(Globalvars.EnzoKills)
 	$Text/Time.text = str(Globalvars.EnzoTimeString)
 	$Text/MaxCombo.text = str(Globalvars.EnzoMaxCombo)
-	$Text/Deaths.text = str(Globalvars.EnzoDeaths)
+	if Globalvars.EnzoDeaths == 0:
+		$LevelEndResultsHealthDeath.text = "Health:"
+		$LevelEndResultsHealthDeath.modulate = Color.BLACK
+		$Text/Deaths.text = str(Globalvars.EnzoSavedData["Health"])
+	else:
+		$LevelEndResultsHealthDeath.text = "Deaths:"
+		$LevelEndResultsHealthDeath.modulate = Color.CRIMSON
+		$Text/Deaths.text = str(Globalvars.EnzoDeaths)

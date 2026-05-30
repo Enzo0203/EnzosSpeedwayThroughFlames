@@ -20,13 +20,13 @@
 [ext_resource type="Texture2D" uid="uid://xq3d5erqsvyn" path="res://Sprites/Level End/LevelEndText.png" id="17_q6dvr"]
 [ext_resource type="Texture2D" uid="uid://d1lrv1fdcgd7b" path="res://Sprites/Level End/LevelEndResultsPaper.png" id="18_pys7l"]
 [ext_resource type="Texture2D" uid="uid://bxwbg8wedk8bn" path="res://Sprites/Level End/LevelEndRankPaper.png" id="19_jubjf"]
-[ext_resource type="Texture2D" uid="uid://b12uljlwvxv16" path="res://Sprites/Level End/LevelEndResultsText.png" id="20_62ylt"]
 [ext_resource type="Texture2D" uid="uid://brtrp06ygjrhk" path="res://Sprites/Level End/Ranks Sheet.png" id="21_i0hon"]
 [ext_resource type="Texture2D" uid="uid://by6fhpa0c2q4" path="res://Sprites/UI/PressButton.png" id="23_pys7l"]
 
 [sub_resource type="Animation" id="Animation_f2ror"]
 resource_name = "Death"
 length = 4.0
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -142,10 +142,22 @@ tracks/9/path = NodePath("../BlackFade:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 2.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [false, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../BlackFade:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(2.3, 3.7),
+"transitions": PackedFloat32Array(-4, -2.2191377),
+"update": 0,
+"values": [Vector2(-562, 270), Vector2(540, 270)]
 }
 
 [sub_resource type="Animation" id="Animation_scoup"]
@@ -627,7 +639,7 @@ tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0, 0.66667),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1, 4.594798),
 "update": 0,
 "values": [Vector2(550, 270), Vector2(-562, 270)]
 }
@@ -1607,7 +1619,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/path = NodePath("RanksSheet:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1619,55 +1631,55 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
+tracks/5/path = NodePath("RanksSheet:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(5.9604645e-08),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Vector2(1, 1)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
+tracks/6/path = NodePath("RanksSheet:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("RanksSheet:scale")
+tracks/7/path = NodePath("Text/Score:visible_ratio")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(5.9604645e-08),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [1.0]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("RanksSheet:rotation")
+tracks/8/path = NodePath("Text/Kills:visible_ratio")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [1.0]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Score:visible_ratio")
+tracks/9/path = NodePath("Text/Time:visible_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -1679,7 +1691,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Text/Kills:visible_ratio")
+tracks/10/path = NodePath("Text/MaxCombo:visible_ratio")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -1691,7 +1703,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Time:visible_ratio")
+tracks/11/path = NodePath("Text/Deaths:visible_ratio")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -1703,7 +1715,7 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/12/path = NodePath("Text/Factors:visible_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
@@ -1715,38 +1727,74 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Text/Deaths:visible_ratio")
+tracks/13/path = NodePath("PressButton:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"update": 1,
+"values": [true]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Text/Factors:visible_ratio")
+tracks/14/path = NodePath("LevelEndResultsScore:scale")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [Vector2(1, 1)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("PressButton:visible")
+tracks/15/path = NodePath("LevelEndResultsKills:scale")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("LevelEndResultsTime:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("LevelEndResultsCombo:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("LevelEndResultsHealthDeath:scale")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_jubjf"]
@@ -1804,83 +1852,83 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/path = NodePath("RanksSheet:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(4),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("RanksSheet:scale")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RanksSheet:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(2),
 "update": 0,
 "values": [Vector2(10, 10)]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("RanksSheet:rotation")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RanksSheet:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(2),
 "update": 0,
 "values": [6.2831855]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Factors:visible_ratio")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Text/Factors:visible_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0, 0.44444445, 3.5555556),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.2, 1.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Text/Score:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.44444445),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Text/Kills:visible_ratio")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.7777778, 1.2222222),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Text/Score:visible_ratio")
+tracks/10/path = NodePath("Text/Time:visible_ratio")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.44444445),
+"times": PackedFloat32Array(1.5555556, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -1888,11 +1936,11 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Kills:visible_ratio")
+tracks/11/path = NodePath("Text/MaxCombo:visible_ratio")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.7777778, 1.2222222),
+"times": PackedFloat32Array(2.3333333, 2.777778),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -1900,11 +1948,11 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Text/Time:visible_ratio")
+tracks/12/path = NodePath("Text/Deaths:visible_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(1.5555556, 2),
+"times": PackedFloat32Array(3.1111112, 3.5555556),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -1912,38 +1960,74 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/13/path = NodePath("PressButton:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(2.3333333, 2.777778),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Text/Deaths:visible_ratio")
+tracks/14/path = NodePath("LevelEndResultsScore:scale")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(3.1111112, 3.5555556),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0, 1.0]
+"values": [Vector2(1, 1)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("PressButton:visible")
+tracks/15/path = NodePath("LevelEndResultsKills:scale")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("LevelEndResultsTime:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("LevelEndResultsCombo:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("LevelEndResultsHealthDeath:scale")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_ct2i8"]
@@ -2001,43 +2085,43 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/path = NodePath("RanksSheet:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 2.6000001, 3.3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
+tracks/5/path = NodePath("Text/Score:visible_ratio")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [0.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
+tracks/6/path = NodePath("Text/Kills:visible_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 2.6, 3.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1), Vector2(0, 1), Vector2(1, 1)]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Text/Score:visible_ratio")
+tracks/7/path = NodePath("Text/Time:visible_ratio")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -2049,7 +2133,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Text/Kills:visible_ratio")
+tracks/8/path = NodePath("Text/MaxCombo:visible_ratio")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -2061,7 +2145,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Time:visible_ratio")
+tracks/9/path = NodePath("Text/Deaths:visible_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -2073,7 +2157,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/10/path = NodePath("Text/Factors:visible_ratio")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -2085,50 +2169,86 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Deaths:visible_ratio")
+tracks/11/path = NodePath("PressButton:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Text/Factors:visible_ratio")
+tracks/12/path = NodePath(".:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("PressButton:visible")
+tracks/13/path = NodePath("LevelEndResultsScore:scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 2.3, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(1, 1)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath(".:visible")
+tracks/14/path = NodePath("LevelEndResultsKills:scale")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 2.4, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(1, 1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("LevelEndResultsTime:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 2.5, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("LevelEndResultsCombo:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 2.6, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("LevelEndResultsHealthDeath:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 2.7, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_q6dvr"]
@@ -2184,7 +2304,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/path = NodePath("RanksSheet:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -2196,31 +2316,31 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
+tracks/5/path = NodePath("Text/Score:visible_ratio")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [0.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
+tracks/6/path = NodePath("Text/Kills:visible_ratio")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1)]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Text/Score:visible_ratio")
+tracks/7/path = NodePath("Text/Time:visible_ratio")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -2232,7 +2352,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Text/Kills:visible_ratio")
+tracks/8/path = NodePath("Text/MaxCombo:visible_ratio")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -2244,7 +2364,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Time:visible_ratio")
+tracks/9/path = NodePath("Text/Deaths:visible_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -2256,7 +2376,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/10/path = NodePath("Text/Factors:visible_ratio")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -2268,38 +2388,74 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Deaths:visible_ratio")
+tracks/11/path = NodePath("PressButton:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Text/Factors:visible_ratio")
+tracks/12/path = NodePath("LevelEndResultsScore:scale")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(1e-05, 1)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("PressButton:visible")
+tracks/13/path = NodePath("LevelEndResultsKills:scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1e-05, 1)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("LevelEndResultsTime:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("LevelEndResultsCombo:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("LevelEndResultsHealthDeath:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_pys7l"]
@@ -2357,67 +2513,67 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("LevelEndResultsText:modulate")
+tracks/4/path = NodePath("RanksSheet:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("RanksSheet:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.8888889),
 "transitions": PackedFloat32Array(6, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("LevelEndResultsText:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("RanksSheet:scale")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RanksSheet:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.88888896),
 "transitions": PackedFloat32Array(3, 1),
 "update": 0,
 "values": [Vector2(10, 10), Vector2(1, 1)]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("RanksSheet:rotation")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RanksSheet:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.8888889),
 "transitions": PackedFloat32Array(3, 1),
 "update": 0,
 "values": [6.2831855, 0.0]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Text/Score:visible_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Text/Kills:visible_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Text/Score:visible_ratio")
+tracks/9/path = NodePath("Text/Time:visible_ratio")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -2429,7 +2585,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Text/Kills:visible_ratio")
+tracks/10/path = NodePath("Text/MaxCombo:visible_ratio")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -2441,7 +2597,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Text/Time:visible_ratio")
+tracks/11/path = NodePath("Text/Deaths:visible_ratio")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -2453,7 +2609,7 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Text/MaxCombo:visible_ratio")
+tracks/12/path = NodePath("Text/Factors:visible_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
@@ -2465,38 +2621,74 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Text/Deaths:visible_ratio")
+tracks/13/path = NodePath("PressButton:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"update": 1,
+"values": [false]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Text/Factors:visible_ratio")
+tracks/14/path = NodePath("LevelEndResultsScore:scale")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [Vector2(1, 1)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("PressButton:visible")
+tracks/15/path = NodePath("LevelEndResultsKills:scale")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("LevelEndResultsTime:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("LevelEndResultsCombo:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("LevelEndResultsHealthDeath:scale")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_evu41"]
@@ -2555,6 +2747,7 @@ layer = 2
 
 [node name="HUD" type="Control" parent="." unique_id=772792321]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -2572,6 +2765,7 @@ texture = ExtResource("2_8nnfr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Overlay" unique_id=1965532773]
 libraries/ = SubResource("AnimationLibrary_q4kfe")
+autoplay = &"SceneTransition"
 
 [node name="Hearts" type="Node2D" parent="HUD" unique_id=195470363]
 visible = false
@@ -2888,6 +3082,7 @@ one_shot = true
 one_shot = true
 
 [node name="EnzoIcon" type="Sprite2D" parent="HUD" unique_id=270798005]
+visible = false
 position = Vector2(58, 44)
 texture = ExtResource("16_8nnfr")
 
@@ -2898,13 +3093,11 @@ texture = ExtResource("14_evu41")
 offset = Vector2(324, 180.669)
 
 [node name="BlackFade" type="Sprite2D" parent="HUD" unique_id=306231716]
-visible = false
 position = Vector2(550, 270)
 texture = ExtResource("15_gv2hg")
 flip_h = true
 
 [node name="LevelEnd" type="Control" parent="." unique_id=1595918514]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -2930,12 +3123,60 @@ texture = ExtResource("18_pys7l")
 position = Vector2(1049, 336)
 texture = ExtResource("19_jubjf")
 
-[node name="LevelEndResultsText" type="Sprite2D" parent="LevelEnd" unique_id=2028672497]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(59, 178)
+[node name="LevelEndResultsScore" type="Label" parent="LevelEnd" unique_id=10813818]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 74.0
+offset_top = 187.0
+offset_right = 267.0
+offset_bottom = 242.0
 scale = Vector2(1e-05, 1)
-texture = ExtResource("20_62ylt")
-centered = false
+theme_override_font_sizes/font_size = 30
+text = "Score:"
+
+[node name="LevelEndResultsKills" type="Label" parent="LevelEnd" unique_id=548019373]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 74.0
+offset_top = 256.0
+offset_right = 245.0
+offset_bottom = 311.0
+scale = Vector2(1e-05, 1)
+theme_override_font_sizes/font_size = 30
+text = "Kills"
+
+[node name="LevelEndResultsTime" type="Label" parent="LevelEnd" unique_id=1790080332]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 74.0
+offset_top = 318.0
+offset_right = 245.0
+offset_bottom = 373.0
+scale = Vector2(1e-05, 1)
+theme_override_font_sizes/font_size = 30
+text = "Time:"
+
+[node name="LevelEndResultsCombo" type="Label" parent="LevelEnd" unique_id=570225714]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 379.0
+offset_right = 396.0
+offset_bottom = 434.0
+scale = Vector2(1e-05, 1)
+theme_override_font_sizes/font_size = 30
+text = "Max Combo:"
+
+[node name="LevelEndResultsHealthDeath" type="Label" parent="LevelEnd" unique_id=1090153256]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 439.0
+offset_right = 300.0
+offset_bottom = 494.0
+scale = Vector2(1e-05, 1)
+theme_override_font_sizes/font_size = 30
+text = "Health:"
 
 [node name="RanksSheet" type="Sprite2D" parent="LevelEnd" unique_id=307468892]
 modulate = Color(1, 1, 1, 0)
@@ -2961,6 +3202,7 @@ offset_right = 354.0
 offset_bottom = 208.0
 scale = Vector2(2.3, 2.3)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "EEEEEE"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -2971,6 +3213,7 @@ offset_right = 304.0
 offset_bottom = 278.0
 scale = Vector2(2.3, 2.3)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "EE"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -2981,6 +3224,7 @@ offset_right = 306.0
 offset_bottom = 339.0
 scale = Vector2(2.3, 2.3)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "EE:EE"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -2991,6 +3235,7 @@ offset_right = 432.0
 offset_bottom = 400.0
 scale = Vector2(2.3, 2.3)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "EE"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -3001,6 +3246,7 @@ offset_right = 336.00003
 offset_bottom = 461.00003
 scale = Vector2(2.3, 2.3)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "67"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -3021,6 +3267,7 @@ visible_ratio = 0.0
 libraries/ = SubResource("AnimationLibrary_evu41")
 
 [node name="AnimationTree" type="AnimationTree" parent="LevelEnd/LevelEndAnimations" unique_id=723785042]
+active = false
 deterministic = false
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeStateMachine_evu41")

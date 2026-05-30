@@ -134,6 +134,7 @@ centered = false
 visible = false
 
 [node name="PauseScreen" parent="." unique_id=534886200 instance=ExtResource("12_hiklf")]
+visible = false
 
 [node name="MusicHandler" type="Node" parent="." unique_id=2091034944]
 process_mode = 3

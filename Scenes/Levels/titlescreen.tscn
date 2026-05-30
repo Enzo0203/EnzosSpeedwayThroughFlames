@@ -209,6 +209,7 @@ text = "Window Mode: Windowed"
 horizontal_alignment = 1
 
 [node name="Filtering" type="Label" parent="UI/SettingButtons" unique_id=1333826590]
+visible = false
 offset_left = 280.00006
 offset_top = 286.00003
 offset_right = 550.0001

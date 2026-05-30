@@ -29,8 +29,8 @@ extends Area2D
 
 ## Attack can clank if it hits another attack of similar strength.
 @export var Clankable: bool = true
-## If true and this attack is stronger than a projectile, it deflects it. If false, it destroys it instead.
-@export var Deflector: bool = true
+## If true and this attack is stronger than a projectile, it deflects it. If false, it just clanks instead.
+@export var Deflector: bool = false
 ## Attack can be parried.
 @export var Parriable: bool
 ## Attack deactivates when hitting a hurtbox.
@@ -77,7 +77,10 @@ func _on_area_entered(area: Area2D) -> void:
 			if Strength - 1 > area.Strength:
 				if not Parrybox:
 					if area.is_in_group("Projectile"):
-						emit_signal("rebound", area)
+						if Deflector:
+							emit_signal("rebound", area)
+						else:
+							emit_signal("clashCounter", area)
 					else:
 						emit_signal("clashCounter", area)
 				else:
@@ -86,7 +89,10 @@ func _on_area_entered(area: Area2D) -> void:
 			elif Strength + 1 < area.Strength:
 				if not area.Parrybox:
 					if is_in_group("Projectile"):
-						emit_signal("rebounded", area)
+						if area.Deflector:
+							emit_signal("rebounded", area)
+						else:
+							emit_signal("clank", area)
 					else:
 						emit_signal("clashCountered", area)
 				else:
