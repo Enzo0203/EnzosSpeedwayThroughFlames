@@ -175,7 +175,6 @@ var bounceSpeed: Variant
 
 func hurt(delta: float) -> void:
 	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 2000)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if stuntimer.time_left == 0:
 		if state == States.HURT:

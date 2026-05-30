@@ -1334,9 +1334,9 @@ libraries/ = SubResource("AnimationLibrary_t6rol")
 
 [node name="HealthBar" type="TextureProgressBar" parent="Health" unique_id=1445577422]
 offset_left = -40.0
-offset_top = -110.0
+offset_top = -102.0
 offset_right = 54.0
-offset_bottom = -92.0
+offset_bottom = -84.0
 max_value = 30.0
 value = 30.0
 texture_under = SubResource("AtlasTexture_pbsy5")
@@ -1344,12 +1344,12 @@ texture_progress = SubResource("AtlasTexture_d8tqx")
 texture_progress_offset = Vector2(1, 1)
 
 [node name="DemonHeart" type="Sprite2D" parent="Health" unique_id=648541488]
-position = Vector2(-46, -105)
+position = Vector2(-46, -97)
 texture = ExtResource("7_hfx46")
 hframes = 2
 
 [node name="HealthBarParticle" type="CPUParticles2D" parent="Health" unique_id=868991020]
-position = Vector2(7, -101)
+position = Vector2(7, -93)
 emitting = false
 amount = 1
 texture = SubResource("AtlasTexture_okksv")
@@ -1365,7 +1365,7 @@ angular_velocity_max = 150.0
 color_ramp = SubResource("Gradient_qrsml")
 
 [node name="DemonHeartParticle" type="CPUParticles2D" parent="Health" unique_id=1021976903]
-position = Vector2(-46, -105)
+position = Vector2(-46, -97)
 emitting = false
 amount = 1
 texture = SubResource("AtlasTexture_xhbao")
