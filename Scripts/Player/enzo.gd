@@ -278,7 +278,7 @@ func _physics_process(delta: float) -> void:
 # Moves
 
 func change_state(newState: States) -> void:
-	if state_just_changed:
+	if state_just_changed and newState != States.HURT and newState != States.DEAD:
 		return
 	state_just_changed = true
 	state = newState
