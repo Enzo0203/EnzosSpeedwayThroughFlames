@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c8gfalpq83v05"]
+
+[ext_resource type="Script" uid="uid://dvo46akhcujq8" path="res://Scripts/Technical/music_manager.gd" id="1_txpyg"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_txpyg"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_hmx4d"]
+clip_count = 1
+clip_0/name = &"Main"
+clip_0/stream = SubResource("AudioStreamSynchronized_txpyg")
+clip_0/auto_advance = 0
+
+[node name="Node" type="Node" unique_id=347700581]
+process_mode = 3
+script = ExtResource("1_txpyg")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=61465972]
+stream = SubResource("AudioStreamInteractive_hmx4d")
+bus = &"Music"

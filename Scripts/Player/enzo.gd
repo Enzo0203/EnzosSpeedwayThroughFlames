@@ -297,7 +297,11 @@ func idle(delta: float) -> void:
 
 func jumping(delta: float) -> void:
 	# What to do
-	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	if (abs(velocity.x) < SPEED):
+		velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	else:
+		if (velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1) or INPUT_AXIS == 0:
+			velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	if Input.is_action_just_released("character_z") and velocity.y < JUMP_VELOCITY / 2:
@@ -317,7 +321,11 @@ func jumping(delta: float) -> void:
 
 func falling(delta: float) -> void:
 	# What to do
-	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	if (abs(velocity.x) < SPEED):
+		velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	else:
+		if (velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1) or INPUT_AXIS == 0:
+			velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# Cut off jump when button released
@@ -461,7 +469,6 @@ func fallsprinting(delta: float) -> void:
 		if Input.is_action_just_pressed("character_z") and not Input.is_action_pressed("ui_down"):
 			change_state(States.JUMPSPRINTING)
 			coyote_jump_timer.stop()
-	
 
 func shoulderbashing(delta: float) -> void:
 	if animation.current_animation_position < 0.2:
@@ -1050,6 +1057,14 @@ func blockactionable(delta: float) -> void:
 	velocity.y = min(velocity.y, 500)
 	actionable([States.BLOCKING])
 	# What can this transition to
+	if Input.is_action_just_pressed("ui_left"):
+		velocity.x = -500
+		sprite.scale.x = 1
+		change_state(States.DODGE)
+	if Input.is_action_just_pressed("ui_right"):
+		velocity.x = 500
+		sprite.scale.x = -1
+		change_state(States.DODGE)
 	if animation.is_playing() == false:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
@@ -1499,7 +1514,7 @@ func _on_hurtbox_block(_area: Area2D) -> void:
 
 func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 	change_state(States.BLOCKPERFECT)
-	intangibility_timer.wait_time = 0.6
+	intangibility_timer.wait_time = 0.7
 	intangibility_timer.start()
 	give_score(50, true)
 

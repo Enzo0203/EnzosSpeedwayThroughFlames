@@ -12,11 +12,11 @@
 [ext_resource type="Script" uid="uid://dxiiqqrbxpke0" path="res://Scripts/HUDandUI/title_screen.gd" id="9_wsvtn"]
 [ext_resource type="Texture2D" uid="uid://6c5h7snw3wa6" path="res://Sprites/Title Screen/BlackFade.png" id="11_d535p"]
 [ext_resource type="Texture2D" uid="uid://bvrxvox00s30n" path="res://Sprites/Title Screen/Settings Button Sheet.png" id="11_oga1r"]
-[ext_resource type="AudioStream" uid="uid://rilkomxda77c" path="res://Music/Title Theme.wav" id="12_njea7"]
 [ext_resource type="Texture2D" uid="uid://bqrhw4f1j3f6t" path="res://Sprites/Title Screen/Settings Background.png" id="13_5iqpf"]
 [ext_resource type="Texture2D" uid="uid://dd2w04tke4gbr" path="res://Sprites/UI/SliderBack.png" id="14_odgie"]
 [ext_resource type="Texture2D" uid="uid://kns7ayicsaby" path="res://Sprites/UI/SliderFill.png" id="15_e46xu"]
 [ext_resource type="Theme" uid="uid://bc011y2rioato" path="res://MiscResources/theme.tres" id="16_62gd0"]
+[ext_resource type="AudioStream" uid="uid://bni3tbsdrmn5s" path="res://Music/BarkingUpTheWrongTree.ogg" id="17_e46xu"]
 
 [sub_resource type="Animation" id="Animation_o411o"]
 resource_name = "Drive"
@@ -130,6 +130,7 @@ texture = ExtResource("11_d535p")
 
 [node name="SettingButtons" type="CanvasLayer" parent="UI" unique_id=1843975561]
 layer = 2
+visible = false
 
 [node name="SettingBackground" type="Sprite2D" parent="UI/SettingButtons" unique_id=1438316031]
 texture = ExtResource("13_5iqpf")
@@ -222,5 +223,6 @@ text = "Filtering: Nearest"
 horizontal_alignment = 1
 
 [node name="Title Theme" type="AudioStreamPlayer" parent="." unique_id=1618388028]
-stream = ExtResource("12_njea7")
+stream = ExtResource("17_e46xu")
 autoplay = true
+bus = &"Music"

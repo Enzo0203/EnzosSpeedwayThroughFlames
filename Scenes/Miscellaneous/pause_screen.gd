@@ -22,6 +22,15 @@ func _physics_process(_delta: float) -> void:
 		outline_selected_option()
 		handle_selection_screens(_delta)
 		update_text()
+		await get_tree().physics_frame
+		if Input.is_action_just_pressed("ui_accept") and selectionScreen == selectionScreens.MAIN:
+			hide()
+			$Background.hide()
+			$PauseMenuButtons.hide()
+			$SettingButtons.hide()
+			# This await is so that Enzo doesn't jump when you press the jump button to unpause
+			await get_tree().physics_frame
+			get_tree().paused = false
 
 @onready var ButtonContinue: Sprite2D = $PauseMenuButtons/ContinueButton
 @onready var ButtonSettings: Sprite2D = $PauseMenuButtons/SettingsButtonSheet

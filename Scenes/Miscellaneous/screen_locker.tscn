@@ -71,3 +71,5 @@ collision_mask = 32
 [node name="LockerDeactivatorShape" type="CollisionShape2D" parent="LockerDeactivator" unique_id=921994644]
 shape = SubResource("RectangleShape2D_6edg1")
 debug_color = Color(0.827451, 0.39607844, 0, 0.07058824)
+
+[node name="RewardPosition" type="Marker2D" parent="." unique_id=1162518529]

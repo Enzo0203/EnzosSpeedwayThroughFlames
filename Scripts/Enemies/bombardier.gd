@@ -268,7 +268,7 @@ func hitStop(duration: float) -> void:
 	hitstopper.wait_time = duration
 	hitstopper.start()
 
-@onready var snackbox: PackedScene = preload("res://Scenes/Items/snackbox.tscn")
+#@onready var snackbox: PackedScene = preload("res://Scenes/Items/snackbox.tscn")
 func check_for_death() -> void:
 	if health <= 0 and is_dead == false:
 		health = 0
@@ -276,9 +276,9 @@ func check_for_death() -> void:
 		Globalvars.EnzoComboUpdated.emit()
 		Globalvars.EnzoCombo += 1
 		Globalvars.EnzoKills += 1
-		var snackbox_instance: Node = snackbox.instantiate()
-		snackbox_instance.spawnPosition = hurtbox.global_position
-		get_parent().add_child(snackbox_instance)
+		#var snackbox_instance: Node = snackbox.instantiate()
+		#snackbox_instance.spawnPosition = hurtbox.global_position
+		#get_parent().add_child(snackbox_instance)
 		is_dead = true
 
 func randomizeAudioPitch(_audio: String) -> void:

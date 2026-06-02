@@ -225,7 +225,8 @@ func _on_enzo_death() -> void:
 		Globalvars.EnzoHealth = 5
 		Globalvars.EnzoHealthArr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
 		await get_tree().process_frame
-		get_tree().reload_current_scene()
+		if get_tree():
+			get_tree().reload_current_scene()
 
 func _on_combo_update() -> void:
 	ComboTimer.start()

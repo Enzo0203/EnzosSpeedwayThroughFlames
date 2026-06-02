@@ -39,6 +39,7 @@
 [ext_resource type="AudioStream" uid="uid://grd0fbtua81q" path="res://Sfx/Footsteps/FootstepCrocs1.ogg" id="35_3r4sx"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="35_r1mvx"]
 [ext_resource type="AudioStream" uid="uid://6k3myo1xei8q" path="res://Sfx/Footsteps/FootstepCrocs2.ogg" id="36_5iiub"]
+[ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="40_5iiub"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -66,7 +67,7 @@ size = Vector2(42, 84)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(69, 30)
+size = Vector2(68, 38)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymy6b"]
 size = Vector2(14, 52)
@@ -2647,8 +2648,8 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_0ciaj"]
 resource_name = "wallkick"
-length = 0.26667348
-step = 0.0666667
+length = 0.20000501
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2656,7 +2657,7 @@ tracks/0/path = NodePath("Spritesheet:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"times": PackedFloat32Array(0, 0.05, 0.10000001, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [73, 74, 75, 76]
@@ -7858,7 +7859,7 @@ _data = {
 }
 
 [sub_resource type="Gradient" id="Gradient_414wy"]
-colors = PackedColorArray(1, 1, 1, 0.75000006, 1, 1, 1, 0)
+colors = PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o30bu"]
 
@@ -7996,6 +7997,9 @@ cache/0/128/0/glyphs/73/size = Vector2(65, 69)
 cache/0/128/0/glyphs/73/uv_rect = Rect2(243, 180, 65, 69)
 cache/0/128/0/glyphs/73/texture_idx = 0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr53x"]
+size = Vector2(33.554153, 33.55417)
+
 [node name="Player" type="CharacterBody2D" unique_id=518238635]
 position = Vector2(0, -5)
 collision_layer = 16
@@ -8063,6 +8067,7 @@ initial_velocity_max = 300.0
 scale_amount_curve = SubResource("Curve_7iwhy")
 
 [node name="Clank" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1833097971]
+visible = false
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -8076,6 +8081,7 @@ initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 
 [node name="ClashCounter" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=263929637]
+visible = false
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -8089,6 +8095,7 @@ initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 
 [node name="ClashCountered" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=626432929]
+visible = false
 position = Vector2(0, -30)
 emitting = false
 amount = 1
@@ -8157,9 +8164,9 @@ visible = false
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("7_6b6sq")
-Damage = 2
-Strength = 2
-Knockback = Vector2(300, -150)
+Damage = 1
+Strength = 10
+Knockback = Vector2(200, 0)
 Deflector = true
 ImpactSfx = ExtResource("18_fc8nm")
 metadata/dmg = 3
@@ -8168,7 +8175,7 @@ metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=904056683]
-position = Vector2(40.375, -10.25)
+position = Vector2(43, -2)
 shape = SubResource("RectangleShape2D_8s6kh")
 disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
@@ -8362,10 +8369,23 @@ text = "soon youll see it see it shinin
 "
 
 [node name="ExplosionMarker" type="Marker2D" parent="." unique_id=1923345290]
+visible = false
 position = Vector2(0, 5)
 
 [node name="HurtboxHint" type="Marker2D" parent="." unique_id=2001158310]
+visible = false
 position = Vector2(21, -33)
+
+[node name="Pushbox" type="Area2D" parent="." unique_id=973125806 groups=["Pushbox"]]
+script = ExtResource("40_5iiub")
+
+[node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=2145874454]
+position = Vector2(-1.1920929e-07, 18.999996)
+rotation = 1.1780972
+scale = Vector2(0.99999964, 0.99999994)
+skew = -0.7853984
+shape = SubResource("RectangleShape2D_nr53x")
+debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
