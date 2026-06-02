@@ -123,10 +123,11 @@ autoplay = &"idle"
 shape = SubResource("RectangleShape2D_v4303")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1174450540 groups=["Caltrop", "Hitbox"]]
-collision_layer = 32
+collision_layer = 64
 collision_mask = 0
 script = ExtResource("3_57wqk")
 Damage = 2
+Knockback = Vector2(0, -600)
 Clankable = false
 DeathType = "spike"
 metadata/deathtype = "spike"
@@ -137,10 +138,11 @@ disabled = true
 debug_color = Color(0.976471, 0, 0.423529, 0.419608)
 
 [node name="Hitbox2" type="Area2D" parent="." unique_id=1725610016 groups=["Caltrop", "Hitbox"]]
-collision_layer = 32
+collision_layer = 64
 collision_mask = 0
 script = ExtResource("3_57wqk")
 Damage = 2
+Knockback = Vector2(0, -600)
 Clankable = false
 DeathType = "spike"
 metadata/deathtype = "spike"

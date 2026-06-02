@@ -39,7 +39,6 @@
 [ext_resource type="AudioStream" uid="uid://grd0fbtua81q" path="res://Sfx/Footsteps/FootstepCrocs1.ogg" id="35_3r4sx"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="35_r1mvx"]
 [ext_resource type="AudioStream" uid="uid://6k3myo1xei8q" path="res://Sfx/Footsteps/FootstepCrocs2.ogg" id="36_5iiub"]
-[ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="40_5iiub"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -7997,9 +7996,6 @@ cache/0/128/0/glyphs/73/size = Vector2(65, 69)
 cache/0/128/0/glyphs/73/uv_rect = Rect2(243, 180, 65, 69)
 cache/0/128/0/glyphs/73/texture_idx = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr53x"]
-size = Vector2(33.554153, 33.55417)
-
 [node name="Player" type="CharacterBody2D" unique_id=518238635]
 position = Vector2(0, -5)
 collision_layer = 16
@@ -8375,17 +8371,6 @@ position = Vector2(0, 5)
 [node name="HurtboxHint" type="Marker2D" parent="." unique_id=2001158310]
 visible = false
 position = Vector2(21, -33)
-
-[node name="Pushbox" type="Area2D" parent="." unique_id=973125806 groups=["Pushbox"]]
-script = ExtResource("40_5iiub")
-
-[node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=2145874454]
-position = Vector2(-1.1920929e-07, 18.999996)
-rotation = 1.1780972
-scale = Vector2(0.99999964, 0.99999994)
-skew = -0.7853984
-shape = SubResource("RectangleShape2D_nr53x")
-debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]

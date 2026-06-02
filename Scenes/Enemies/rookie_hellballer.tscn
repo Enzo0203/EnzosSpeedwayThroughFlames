@@ -396,7 +396,7 @@ position = Vector2(41, -2)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=71436394 groups=["Enemy", "Hurtbox"]]
 collision_layer = 32
-collision_mask = 16
+collision_mask = 80
 script = ExtResource("4_2mjlo")
 metadata/state = "vuln"
 

@@ -43,6 +43,14 @@ var EnzoTimeString: String
 var EnzoDeaths: int
 
 func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("fullscreen"):
+		if Gamesettings.WindowMode != Window.MODE_FULLSCREEN:
+			Gamesettings.WindowMode = Window.MODE_FULLSCREEN
+			Gamesettings.emit_signal("update")
+		else:
+			Gamesettings.WindowMode = Window.MODE_WINDOWED
+			Gamesettings.emit_signal("update")
+
 	if Enzo:
 		EnzoState = Enzo.state
 		EnzoVelocity = Enzo.velocity.x
