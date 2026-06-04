@@ -9,21 +9,26 @@ func _ready() -> void:
 	$SettingButtons.hide()
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept") and Pausable:
+	if Input.is_action_just_pressed("ui_cancel") and Pausable:
 		if get_tree().paused == false:
 			get_tree().paused = true
 			$Background.show()
 			$PauseMenuButtons.show()
 			show()
 			selectionScreen = selectionScreens.MAIN
+			pauseScreenSelectedOption = pauseScreenOptions.CONTINUE
+			settingsSelectedOption = settingsOptions.NONE
 	if get_tree().paused == true:
-		handle_pausescreen_buttons(_delta)
-		handle_setting_buttons(_delta)
+		if selectionScreen == selectionScreens.MAIN:
+			handle_pausescreen_buttons(_delta)
+		if selectionScreen == selectionScreens.SETTINGS:
+			handle_setting_buttons(_delta)
+		
 		outline_selected_option()
 		handle_selection_screens(_delta)
 		update_text()
 		await get_tree().physics_frame
-		if Input.is_action_just_pressed("ui_accept") and selectionScreen == selectionScreens.MAIN:
+		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_cancel")) and selectionScreen == selectionScreens.MAIN:
 			hide()
 			$Background.hide()
 			$PauseMenuButtons.hide()
@@ -60,7 +65,7 @@ func handle_pausescreen_buttons(_delta: float) -> void:
 			pauseScreenSelectedOption = pauseScreenOptions.SETTINGS
 			$SettingButtons.show()
 		# Button press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
 			hide()
 			$Background.hide()
 			$PauseMenuButtons.hide()
@@ -77,19 +82,27 @@ func handle_pausescreen_buttons(_delta: float) -> void:
 		if Input.is_action_just_pressed("ui_up"):
 			pauseScreenSelectedOption = pauseScreenOptions.CONTINUE
 		# Button press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
 			pauseScreenSelectedOption = pauseScreenOptions.NONE
 			settingsSelectedOption = settingsOptions.BACK
 			selectionScreen = selectionScreens.SETTINGS
 
 func handle_setting_buttons(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		await get_tree().physics_frame
+		settingsSelectedOption = settingsOptions.NONE
+		selectionScreen = selectionScreens.MAIN
+		pauseScreenSelectedOption = pauseScreenOptions.SETTINGS
+		$SettingButtons.hide()
+
 	if settingsSelectedOption == settingsOptions.BACK:
 		await get_tree().physics_frame
 		# Selection change
 		if Input.is_action_just_pressed("ui_down"):
 			settingsSelectedOption = settingsOptions.VOLUME
 		# Button Press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
+			await get_tree().physics_frame
 			settingsSelectedOption = settingsOptions.NONE
 			selectionScreen = selectionScreens.MAIN
 			pauseScreenSelectedOption = pauseScreenOptions.SETTINGS

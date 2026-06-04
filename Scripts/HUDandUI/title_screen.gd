@@ -45,7 +45,7 @@ func handle_titlescreen_buttons(_delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down"):
 			titleScreenSelectedOption = titleScreenOptions.SETTINGS
 		# Button press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
 			$TitleScreenButtons/BlackFade.visible = true
 			ButtonStart.frame = 2
 			loadSceneTransition = true
@@ -63,7 +63,7 @@ func handle_titlescreen_buttons(_delta: float) -> void:
 		if Input.is_action_just_pressed("ui_up"):
 			titleScreenSelectedOption = titleScreenOptions.STARTGAME
 		# Button press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
 			titleScreenSelectedOption = titleScreenOptions.NONE
 			settingsSelectedOption = settingsOptions.BACK
 			selectionScreen = selectionScreens.SETTINGS
@@ -75,7 +75,7 @@ func handle_setting_buttons(_delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down"):
 			settingsSelectedOption = settingsOptions.VOLUME
 		# Button Press
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("ui_accept"):
 			settingsSelectedOption = settingsOptions.NONE
 			selectionScreen = selectionScreens.TITLE
 			titleScreenSelectedOption = titleScreenOptions.SETTINGS

@@ -28,10 +28,10 @@ func _physics_process(_delta: float) -> void:
 			setRank()
 			setText()
 			animation_tree.active = true
-		if Input.is_action_just_pressed("character_z"):
+		if Input.is_action_just_pressed("input_jump"):
 			anim_state.next()
 		if anim_state.get_current_node() == "Done":
-			if Input.is_action_just_pressed("character_z") and transitioningScene == false:
+			if Input.is_action_just_pressed("input_jump") and transitioningScene == false:
 				transitioningScene = true
 				get_tree().change_scene_to_file("res://Scenes/Miscellaneous/end_of_demo.tscn")
 
