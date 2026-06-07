@@ -23,13 +23,19 @@ func _physics_process(delta: float) -> void:
 		attractor_detector = Globalvars.Enzo.get_node("CamAttractorDetector")
 		if followingEnzo:
 			global_position = Vector2(Globalvars.EnzoPosition.x + enzoMovementOffset, Globalvars.EnzoPosition.y - 25)
-			enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 200)
+			if Globalvars.EnzoVelocity < 300 and Globalvars.EnzoVelocity > -300:
+				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 100)
+			else:
+				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 200)
 			drag_top_margin = 0.2
 			drag_bottom_margin = 0.2
 			
 			zoom = Vector2(1, 1)
 		if headingTowardsEnzo:
-			enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 200)
+			if Globalvars.EnzoVelocity < 200 and Globalvars.EnzoVelocity > -200:
+				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 100)
+			else:
+				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 200)
 
 func isCameraAttractor(area: Area2D) -> bool:
 	if area.is_in_group("CameraAttractor"):

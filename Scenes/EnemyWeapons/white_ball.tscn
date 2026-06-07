@@ -161,9 +161,10 @@ autoplay = &"ball"
 libraries/ = SubResource("AnimationLibrary_3btb2")
 autoplay = &"Idle"
 
-[node name="AfterImager" type="Node" parent="AfterimageAnims" unique_id=66219657 node_paths=PackedStringArray("sprite")]
+[node name="AfterImager" type="Node" parent="AfterimageAnims" unique_id=66219657 node_paths=PackedStringArray("sprite", "hitstopper")]
 script = ExtResource("3_3me6a")
 sprite = NodePath("../../Sprite2D")
+hitstopper = NodePath("../../Hitstopper")
 active = true
 interval = 0.01
 afterimage_modulate = SubResource("Gradient_601ny")

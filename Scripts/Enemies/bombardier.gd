@@ -275,7 +275,6 @@ func flip_hitboxes() -> void:
 	$EnzoDetector2.scale.x = sprite.scale.x
 	$EnzoDetector3.scale.x = sprite.scale.x
 	$WallDetector.scale.x = sprite.scale.x
-	$WallDetector2.scale.x = sprite.scale.x
 
 func update_animations() -> void:
 	if state == States.IDLE:
