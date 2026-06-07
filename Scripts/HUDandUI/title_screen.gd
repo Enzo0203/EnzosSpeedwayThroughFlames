@@ -14,8 +14,10 @@ func _ready() -> void:
 	$TitleScreenButtons/BlackFade.position.x = 1510
 
 func _physics_process(_delta: float) -> void:
-	handle_titlescreen_buttons(_delta)
-	handle_setting_buttons(_delta)
+	if selectionScreen == selectionScreens.TITLE:
+		handle_titlescreen_buttons(_delta)
+	if selectionScreen == selectionScreens.SETTINGS:
+		handle_setting_buttons(_delta)
 	outline_selected_option()
 	handle_selection_screens(_delta)
 	update_text()
@@ -69,6 +71,13 @@ func handle_titlescreen_buttons(_delta: float) -> void:
 			selectionScreen = selectionScreens.SETTINGS
 
 func handle_setting_buttons(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		await get_tree().physics_frame
+		settingsSelectedOption = settingsOptions.NONE
+		selectionScreen = selectionScreens.TITLE
+		titleScreenSelectedOption = titleScreenOptions.SETTINGS
+		$SettingButtons.hide()
+	
 	if settingsSelectedOption == settingsOptions.BACK:
 		await get_tree().physics_frame
 		# Selection change

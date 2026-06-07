@@ -56,7 +56,7 @@ KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL,
 DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER, AIRJAB, 
 BLOCKACTIONABLE, BLOCKPERFECT, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, 
 CHARGEKICKEXPLODE, WALLRUN, DODGE, LANDING, LANDINGWALK, 
-LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH, HURTJUMP
+LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH, HURTJUMP, UPPERCUT
 }
 
 var state: States
@@ -107,7 +107,7 @@ func _physics_process(delta: float) -> void:
 		$AfterimageAnims.speed_scale = 1
 	direction = $Spritesheet.scale.x
 	# Debug labels
-
+	
 	# Input axis
 	INPUT_AXIS = signf(Input.get_axis("ui_left", "ui_right"))
 	# The State Machine
@@ -135,6 +135,10 @@ func _physics_process(delta: float) -> void:
 			chargepunching(delta)
 		States.PUNCHING:
 			punchingweak(delta)
+		States.PUNCH2:
+			punch2(delta)
+		States.UPPERCUT:
+			uppercut(delta)
 		States.CHARGEPUNCHWEAK:
 			punchingmid(delta)
 		States.CHARGEPUNCHSTRONG:
@@ -181,8 +185,6 @@ func _physics_process(delta: float) -> void:
 			sprintpunch(delta)
 		States.KICK:
 			kick(delta)
-		States.PUNCH2:
-			punch2(delta)
 		States.AIRSTOMPPREP:
 			airstompprep(delta)
 		States.AIRSTOMPHOLD:
@@ -654,7 +656,7 @@ func punchingweak(delta: float) -> void:
 		if punchcooldown.time_left > 0:
 			await get_tree().create_timer(punchcooldown.time_left, false).timeout
 		punchcooldown.start()
-		if state == States.PUNCHING:
+		if state == States.PUNCHING and is_on_floor():
 			change_state(States.PUNCH2)
 
 func punch2(delta: float) -> void:
@@ -674,8 +676,27 @@ func punch2(delta: float) -> void:
 		if punchcooldown.time_left > 0:
 			await get_tree().create_timer(punchcooldown.time_left, false).timeout
 		punchcooldown.start()
-		if state == States.PUNCH2:
-			change_state(States.PUNCHING)
+		if state == States.PUNCH2 and is_on_floor():
+			change_state(States.UPPERCUT)
+
+func uppercut(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+	if Input.is_action_just_pressed("input_punch") and is_on_floor():
+		if animation.current_animation_length >= 0.2:
+			await animation.animation_finished
+			if state == States.UPPERCUT and is_on_floor():
+				change_state(States.PUNCHING)
 
 func punchingmid(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -1251,7 +1272,6 @@ func skatedetachjumping(delta: float) -> void:
 				change_state(States.LANDINGWALK)
 
 func wallrunning(delta: float) -> void:
-	print(str(velocity.y))
 	velocity.x = 1000 * sprite.scale.x
 	velocity.y += gravity / 2 * delta
 	velocity.y = min(velocity.y, 500)
@@ -1522,7 +1542,9 @@ func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 	give_score(50, true)
 
 func _on_hitbox_hurt_something(area: Area2D) -> void:
-	hitboxdisable()
+	if not hitbox.SelfKnockback == Vector2(0, 0):
+		velocity = Vector2(hitbox.SelfKnockback.x * sprite.scale.x, hitbox.SelfKnockback.y)
+	hitboxshape.set_deferred("disabled", true)
 	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path , hitboxshape.global_position)
 	if not (area.Parriable and hitbox.Parrybox):
 		hitStop(min(0.1 * hitbox.Damage, 0.3))
@@ -1695,6 +1717,8 @@ func update_animations() -> void:
 		animation.play("punch")
 	if state == States.PUNCH2:
 		animation.play("punch2")
+	if state == States.UPPERCUT:
+		animation.play("uppercut")
 	if state == States.CHARGEPUNCHWEAK:
 		animation.play("chargepunchweak")
 	if state == States.CHARGEPUNCHSTRONG:
@@ -1844,9 +1868,6 @@ func hitStop(duration: float) -> void:
 func destroy() -> void:
 	queue_free()
 	Globalvars.Enzo = null
-
-func hitboxdisable() -> void:
-	hitboxshape.disabled = true
 
 func give_score(amount: int, accountForMultiplier: bool) -> void:
 	if accountForMultiplier == true:

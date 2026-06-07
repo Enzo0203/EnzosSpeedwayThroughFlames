@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cpgxtj1g7w84d"
-path="res://.godot/imported/Punch1.wav-fe12143938131d06da667ae0435d4a6b.sample"
+uid="uid://bevpeor2yh8tm"
+path="res://.godot/imported/CartoonPunch2.wav-4dddd3b70f5b97d5e0aed0cc2aca9992.sample"
 
 [deps]
 
-source_file="res://Sfx/Punch1.wav"
-dest_files=["res://.godot/imported/Punch1.wav-fe12143938131d06da667ae0435d4a6b.sample"]
+source_file="res://Sfx/CartoonPunch2.wav"
+dest_files=["res://.godot/imported/CartoonPunch2.wav-4dddd3b70f5b97d5e0aed0cc2aca9992.sample"]
 
 [params]
 

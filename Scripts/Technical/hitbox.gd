@@ -13,9 +13,9 @@ extends Area2D
 ## If true, attack can damage intangible hurtboxes and ignore armor.
 @export var Unstoppable: bool
 
-## How much knockback this deals to the victim.
+## How much knockback this deals to the victim. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
 @export var Knockback: Vector2
-## How much knockback this deals to the user.
+## How much knockback this deals to the user. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
 @export var SelfKnockback: Vector2
 
 ## Multiplies the amount of damage given.

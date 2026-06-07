@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") * 1.5
 
-enum States {IDLE, JUMPING, THROWING, JUMPTHROWING, BIGTHROWING, HURT, DEAD}
+enum States {IDLE, JUMPING, THROWING, JUMPTHROWING, BIGTHROWING, HURT, DEAD, AIRWEAVING}
 
 var state: int = States.IDLE
 var is_dead: bool = false
@@ -58,6 +58,8 @@ func _physics_process(delta: float) -> void:
 			hurt(delta)
 		States.DEAD:
 			dead(delta)
+		States.AIRWEAVING:
+			airweaving(delta)
 	move_and_slide()
 	update_animations()
 	set_health()
@@ -65,8 +67,7 @@ func _physics_process(delta: float) -> void:
 	flip_hitboxes()
 
 func idle(delta: float) -> void:
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 600)
+	apply_gravity(delta)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	# What to do
 	if position.x <= Globalvars.EnzoPosition.x:
@@ -107,8 +108,7 @@ func idle(delta: float) -> void:
 				$PaletteSwapAnims.play("Parriable")
 
 func jumping(delta: float) -> void:
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
+	apply_gravity(delta)
 	#Transitions
 	if state == States.JUMPING:
 		if is_on_floor():
@@ -118,9 +118,19 @@ func jumping(delta: float) -> void:
 			if cpbbcooldown.time_left == 0:
 				change_state(States.JUMPTHROWING)
 
+func airweaving(delta: float) -> void:
+	apply_gravity(delta)
+	#Transitions
+	if state == States.AIRWEAVING:
+		if is_on_floor():
+			change_state(States.IDLE)
+		await get_tree().create_timer(0.3, false).timeout
+		if state == States.AIRWEAVING:
+			if cpbbcooldown.time_left == 0:
+				change_state(States.JUMPTHROWING)
+
 func throwing(delta: float) -> void:
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
+	apply_gravity(delta)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if state == States.THROWING:
 		await get_tree().create_timer(0.2, false).timeout
@@ -131,8 +141,7 @@ func throwing(delta: float) -> void:
 				change_state(States.JUMPING)
 
 func jumpthrowing(delta: float) -> void:
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
+	apply_gravity(delta)
 	if state == States.JUMPTHROWING:
 		await get_tree().create_timer(0.2, false).timeout
 		if state == States.JUMPTHROWING:
@@ -142,8 +151,7 @@ func jumpthrowing(delta: float) -> void:
 				change_state(States.JUMPING)
 
 func bigthrowing(delta: float) -> void:
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
+	apply_gravity(delta)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if state == States.BIGTHROWING:
 		if animation.is_playing() == false:
@@ -158,7 +166,12 @@ func launch_compact_blastbox() -> void:
 	if cpbbcooldown.time_left == 0:
 		var compactblastbox_instance: Node = compactblastbox.instantiate()
 		compactblastbox_instance.instanceSpawnPosition = marker.global_position
-		compactblastbox_instance.instanceInitVelocity = Vector2(500 * sprite.scale.x, -100)
+		compactblastbox_instance.instanceInitVelocity = [\
+		Vector2(500 * sprite.scale.x, -100),\
+		Vector2(300 * sprite.scale.x, -300),\
+		Vector2(200 * sprite.scale.x, -400),\
+		Vector2(100 * sprite.scale.x, -400)\
+		].pick_random()
 		get_parent().add_child(compactblastbox_instance)
 		cpbbcooldown.start()
 
@@ -174,14 +187,25 @@ func launch_blastbox() -> void:
 var bounceSpeed: Variant
 
 func hurt(delta: float) -> void:
-	velocity.y += gravity * delta
+	apply_gravity(delta, false)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if stuntimer.time_left == 0:
 		if state == States.HURT:
 			if is_on_floor():
-				change_state(States.IDLE)
+				if $WallDetector.get_collider() != null or randi_range(0, 2) == 0:
+					velocity.x = 450 * sprite.scale.x
+					velocity.y = -500
+					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
+					change_state(States.AIRWEAVING)
+				else:
+					change_state(States.IDLE)
 			else:
-				change_state(States.JUMPING)
+				if $WallDetector.get_collider() != null or randi_range(0, 2) == 0:
+					velocity.x = 450 * sprite.scale.x
+					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
+					change_state(States.AIRWEAVING)
+				else:
+					change_state(States.JUMPING)
 	if not is_on_floor() and velocity.y >= 500:
 		bounceSpeed = velocity.y
 	if velocity.y >= 500:
@@ -194,7 +218,7 @@ func hurt(delta: float) -> void:
 
 func dead(delta: float) -> void:
 	# What to do
-	velocity.y += gravity * delta
+	apply_gravity(delta, false)
 	collision_mask = 0
 
 func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType: String) -> void:
@@ -239,12 +263,19 @@ func _on_hitbox_clank(area: Area2D) -> void:
 		$Spritesheet.scale.x = 1
 		velocity.x = 300
 
+func apply_gravity(delta: float, capped: bool = true) -> void:
+	velocity.y += gravity * delta
+	if capped:
+		velocity.y = min(velocity.y, 500)
+
 func flip_hitboxes() -> void:
 	$Hurtbox.scale.x = sprite.scale.x
 	$Hitbox.scale.x = sprite.scale.x
 	$EnzoDetector1.scale.x = sprite.scale.x
 	$EnzoDetector2.scale.x = sprite.scale.x
 	$EnzoDetector3.scale.x = sprite.scale.x
+	$WallDetector.scale.x = sprite.scale.x
+	$WallDetector2.scale.x = sprite.scale.x
 
 func update_animations() -> void:
 	if state == States.IDLE:
@@ -261,6 +292,11 @@ func update_animations() -> void:
 		animation.play("Hurt")
 	if state == States.DEAD:
 		animation.play("Dead")
+	if state == States.AIRWEAVING:
+		animation.play("Jump")
+		$AfterImager.active = true
+	else:
+		$AfterImager.active = false
 
 func hitStop(duration: float) -> void:
 	hitstopper.stop()

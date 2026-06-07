@@ -3,6 +3,9 @@ extends Node
 ## Sprite to duplicate.
 @export var sprite: Sprite2D
 
+## Hitstopper, if any
+@export var hitstopper: Timer
+
 @export_category("Afterimage Properties")
 
 ## Whether the afterimager is active or not.
@@ -28,7 +31,7 @@ func _process(delta: float) -> void:
 
 func spawn_afterimage() -> void:
 	# If Hitstopped, don't
-	if $"../../Hitstopper".time_left > 0:
+	if hitstopper.time_left > 0:
 		return
 	
 	# Make the duplicate

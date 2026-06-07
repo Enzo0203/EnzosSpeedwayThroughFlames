@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bevpeor2yh8tm"
-path="res://.godot/imported/Punch3.wav-5ece375bbb14cee11c9d79b0a023d039.sample"
+uid="uid://bfiik53drw8og"
+path="res://.godot/imported/CartoonKick.wav-ae9581632f805591d6794be195cc4469.sample"
 
 [deps]
 
-source_file="res://Sfx/Punch3.wav"
-dest_files=["res://.godot/imported/Punch3.wav-5ece375bbb14cee11c9d79b0a023d039.sample"]
+source_file="res://Sfx/CartoonKick.wav"
+dest_files=["res://.godot/imported/CartoonKick.wav-ae9581632f805591d6794be195cc4469.sample"]
 
 [params]
 
