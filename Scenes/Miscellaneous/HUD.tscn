@@ -3143,7 +3143,7 @@ offset_right = 245.0
 offset_bottom = 311.0
 scale = Vector2(1e-05, 1)
 theme_override_font_sizes/font_size = 30
-text = "Kills"
+text = "Kills:"
 
 [node name="LevelEndResultsTime" type="Label" parent="LevelEnd" unique_id=1790080332]
 modulate = Color(0, 0, 0, 1)

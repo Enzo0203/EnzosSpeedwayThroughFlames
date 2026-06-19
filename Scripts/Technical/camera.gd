@@ -24,9 +24,9 @@ func _physics_process(delta: float) -> void:
 		if followingEnzo:
 			global_position = Vector2(Globalvars.EnzoPosition.x + enzoMovementOffset, Globalvars.EnzoPosition.y - 25)
 			if Globalvars.EnzoVelocity < 300 and Globalvars.EnzoVelocity > -300:
-				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 100)
-			else:
 				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 200)
+			else:
+				enzoMovementOffset = move_toward(enzoMovementOffset, Globalvars.EnzoVelocity / 4, delta * 300)
 			drag_top_margin = 0.2
 			drag_bottom_margin = 0.2
 			

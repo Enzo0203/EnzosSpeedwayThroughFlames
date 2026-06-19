@@ -46,7 +46,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 
 enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, #0-4
-SPRINTING, JUMPSPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, #5-9
+SPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, #5-9
 PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD, #10-14
 BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, #15-19
 BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, #20-24
@@ -125,8 +125,6 @@ func _physics_process(delta: float) -> void:
 			running(delta)
 		States.SPRINTING:
 			sprinting(delta)
-		States.JUMPSPRINTING:
-			jumpsprinting(delta)
 		States.FALLSPRINTING:
 			fallsprinting(delta)
 		States.HALTING:
@@ -412,6 +410,8 @@ func running(delta: float) -> void:
 func sprinting(delta: float) -> void:
 	# What to do
 	velocity.x = move_toward(velocity.x, RUNNING_SPEED * INPUT_AXIS, RUNNING_ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
 	actionable()
 	# What can this transition to
 	if is_on_wall() and (roundi(acos(get_floor_normal().dot(Vector2.UP)) * rad_to_deg(1)) >= 42) and (roundi(acos(get_floor_normal().dot(Vector2.UP)) * rad_to_deg(1)) <= 48) and ((velocity.x > 0 and INPUT_AXIS == 1) or (velocity.x < 0 and INPUT_AXIS == -1)):
@@ -427,22 +427,6 @@ func sprinting(delta: float) -> void:
 		change_state(States.HALTING)
 	if velocity.x < 0 and INPUT_AXIS != -1:
 		change_state(States.HALTING)
-
-func jumpsprinting(delta: float) -> void:
-	# What to do
-	velocity.x = move_toward(velocity.x, RUNNING_SPEED * sprite.scale.x, RUNNING_ACCELERATION * delta)
-	velocity.y = RUNNING_JUMP_VELOCITY
-	actionable()
-	# What can this transition to
-	if is_on_wall_only() and ((velocity.x > 0 and INPUT_AXIS == 1) or (velocity.x < 0 and INPUT_AXIS == -1)):
-		change_state(States.WALLRUN)
-		velocity.y = RUNNING_SPEED / 2 * -1
-	if Input.is_action_just_released("input_jump") and velocity.y < RUNNING_JUMP_VELOCITY / 2:
-		velocity.y = RUNNING_JUMP_VELOCITY / 2
-	if Input.is_action_just_pressed("ui_down"):
-		velocity.y = velocity.y + 500
-	if not is_on_floor():
-		change_state(States.FALLSPRINTING)
 
 func fallsprinting(delta: float) -> void:
 	# What to do
@@ -471,7 +455,7 @@ func fallsprinting(delta: float) -> void:
 		change_state(States.FALLING)
 	if coyote_jump_timer.time_left > 0.0:
 		if Input.is_action_just_pressed("input_jump") and not Input.is_action_pressed("ui_down"):
-			change_state(States.JUMPSPRINTING)
+			velocity.y = RUNNING_JUMP_VELOCITY
 			coyote_jump_timer.stop()
 
 func shoulderbashing(delta: float) -> void:
@@ -527,7 +511,7 @@ func sprintpunch(delta: float) -> void:
 			change_state(States.FALLING)
 	if is_on_floor():
 		if Input.is_action_just_pressed("input_jump"):
-			change_state(States.JUMPSPRINTING)
+			velocity.y = RUNNING_JUMP_VELOCITY
 
 func dropkickprep(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, 800 * delta)
@@ -560,7 +544,7 @@ func dropkickhold(delta: float) -> void:
 			change_state(States.DROPKICKREL)
 	else:
 		if Input.is_action_just_pressed("input_jump"):
-			change_state(States.JUMPSPRINTING)
+			velocity.y = RUNNING_JUMP_VELOCITY
 		else:
 			if velocity.x > -600 and velocity.x < 600:
 				if INPUT_AXIS == 0:
@@ -1381,7 +1365,6 @@ func landingsexkick(delta: float) -> void:
 func actionable(exceptions: Array = []) -> void:
 	if is_on_floor():
 		if not state == States.SPRINTING and not \
-		state == States.JUMPSPRINTING and not \
 		state == States.FALLSPRINTING:
 			if Input.is_action_just_pressed("input_jump"):
 				change_state(States.JUMPING)
@@ -1404,7 +1387,8 @@ func actionable(exceptions: Array = []) -> void:
 					change_state(States.PARRYUPWARDS)
 		else:
 			if Input.is_action_pressed("input_jump"):
-				change_state(States.JUMPSPRINTING)
+				velocity.y = RUNNING_JUMP_VELOCITY
+				velocity.y = RUNNING_JUMP_VELOCITY
 			if Input.is_action_pressed("input_punch"):
 				change_state(States.SPRINTPUNCHING)
 			if Input.is_action_just_pressed("input_kick"):
@@ -1413,7 +1397,6 @@ func actionable(exceptions: Array = []) -> void:
 				velocity.y = -300
 	else:
 		if not state == States.SPRINTING and not \
-		state == States.JUMPSPRINTING and not \
 		state == States.FALLSPRINTING:
 			if Input.is_action_pressed("ui_down"):
 				if Input.is_action_just_pressed("input_jump"):
@@ -1701,9 +1684,6 @@ func update_animations() -> void:
 	if state == States.SPRINTING:
 		if INPUT_AXIS != 0:
 			$Spritesheet.scale.x = INPUT_AXIS
-		animation.play("sprint")
-		sprinting_sfx_manager()
-	if state == States.JUMPSPRINTING:
 		animation.play("sprint")
 		sprinting_sfx_manager()
 	if state == States.FALLSPRINTING:

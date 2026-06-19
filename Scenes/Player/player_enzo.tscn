@@ -8279,7 +8279,7 @@ position = Vector2(0, -5)
 collision_layer = 16
 floor_stop_on_slope = false
 floor_constant_speed = true
-floor_max_angle = 0.83775806
+floor_max_angle = 1.0471976
 floor_snap_length = 32.0
 script = ExtResource("1_o30bu")
 
@@ -8341,7 +8341,6 @@ initial_velocity_max = 300.0
 scale_amount_curve = SubResource("Curve_7iwhy")
 
 [node name="Clank" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1833097971]
-visible = false
 position = Vector2(0, -30)
 emitting = false
 amount = 1

@@ -23,7 +23,7 @@ size = Vector2(72, 116)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdckb"]
 resource_local_to_scene = true
-size = Vector2(1002, 479)
+size = Vector2(1400, 479)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6bl0"]
 resource_local_to_scene = true
@@ -1252,6 +1252,7 @@ metadata/deathtype = "blunt"
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=191388774]
 position = Vector2(31, -20.5)
 shape = SubResource("RectangleShape2D_6tv6m")
+disabled = true
 debug_color = Color(0.921569, 0, 0.694118, 0.419608)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=365169057 groups=["Enemy", "Hurtbox"]]
@@ -1279,6 +1280,7 @@ shape = SubResource("RectangleShape2D_xdckb")
 debug_color = Color(0, 0.811765, 0.301961, 0.419608)
 
 [node name="EnzoDetector2" type="Area2D" parent="." unique_id=1053803130]
+visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false
@@ -1289,6 +1291,7 @@ shape = SubResource("RectangleShape2D_y6bl0")
 debug_color = Color(0.0392157, 0.611765, 0, 0.419608)
 
 [node name="EnzoDetector3" type="Area2D" parent="." unique_id=1299282934]
+visible = false
 collision_layer = 0
 collision_mask = 16
 monitorable = false

@@ -120,6 +120,10 @@ func jumping(delta: float) -> void:
 
 func airweaving(delta: float) -> void:
 	apply_gravity(delta)
+	if position.x <= Globalvars.EnzoPosition.x:
+		sprite.scale.x = 1
+	else:
+		sprite.scale.x = -1
 	#Transitions
 	if state == States.AIRWEAVING:
 		if is_on_floor():
@@ -152,6 +156,11 @@ func jumpthrowing(delta: float) -> void:
 
 func bigthrowing(delta: float) -> void:
 	apply_gravity(delta)
+	if animation.current_animation_position < 0.3:
+		if position.x <= Globalvars.EnzoPosition.x:
+			sprite.scale.x = 1
+		else:
+			sprite.scale.x = -1
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
 	if state == States.BIGTHROWING:
 		if animation.is_playing() == false:
@@ -192,16 +201,25 @@ func hurt(delta: float) -> void:
 	if stuntimer.time_left == 0:
 		if state == States.HURT:
 			if is_on_floor():
-				if $WallDetector.get_collider() != null or randi_range(0, 2) == 0:
+				if $WallDetector.get_collider() != null:
 					velocity.x = 450 * sprite.scale.x
+					velocity.y = -500
+					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
+					change_state(States.AIRWEAVING)
+				elif randi_range(0, 2) == 1:
+					velocity.x = 450 * sprite.scale.x * -1
 					velocity.y = -500
 					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
 					change_state(States.AIRWEAVING)
 				else:
 					change_state(States.IDLE)
 			else:
-				if $WallDetector.get_collider() != null or randi_range(0, 2) == 0:
+				if $WallDetector.get_collider() != null:
 					velocity.x = 450 * sprite.scale.x
+					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
+					change_state(States.AIRWEAVING)
+				elif randi_range(0, 2) == 1:
+					velocity.x = 450 * sprite.scale.x * -1
 					GlobalAudioManager.play_audio_2d("res://Sfx/Whoosh.ogg", global_position, 10.0, randf_range(0.9, 1.1))
 					change_state(States.AIRWEAVING)
 				else:

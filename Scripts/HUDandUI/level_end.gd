@@ -1,5 +1,7 @@
 extends Control
 
+# Yeah, the ranking system sucks, Damnit! I'll make up a better one later.
+
 @onready var Rank: Sprite2D = $RanksSheet
 
 var ScoreFactor: String = "Z"
