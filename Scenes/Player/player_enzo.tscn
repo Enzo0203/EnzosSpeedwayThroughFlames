@@ -8139,6 +8139,7 @@ _data = {
 colors = PackedColorArray(1, 1, 1, 0.75000006, 1, 1, 1, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o30bu"]
+radius = 4.472136
 
 [sub_resource type="Image" id="Image_o30bu"]
 data = {
@@ -8587,9 +8588,8 @@ wait_time = 5.0
 one_shot = true
 
 [node name="CamAttractorDetector" type="Area2D" parent="." unique_id=491830455]
-visible = false
-collision_layer = 0
-collision_mask = 64
+collision_layer = 256
+collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CamAttractorDetector" unique_id=1896592582]
 shape = SubResource("CircleShape2D_o30bu")

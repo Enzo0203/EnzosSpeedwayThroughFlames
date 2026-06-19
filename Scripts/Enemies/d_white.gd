@@ -213,6 +213,7 @@ func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType
 			pr_heart.emitting = true
 			pr_hpbar.emitting = true
 			change_state(States.DEAD)
+			give_score(50, true)
 		else:
 			damage(Damage)
 			change_state(States.HURT)

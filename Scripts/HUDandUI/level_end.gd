@@ -48,83 +48,113 @@ func setRankFactors() -> void:
 	$Text/Factors.text = str(ScoreFactor,KillsFactor,TimeFactor,MaxComboFactor,DeathsFactor)
 
 func setScoreFactor() -> void:
-	if Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.10:
+	if Globalvars.EnzoScore <= Globalvars.LevelPars["ScoreMin"]:
 		ScoreFactor = "Z"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.30:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.3):
 		ScoreFactor = "G"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.40:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.5):
 		ScoreFactor = "F"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.50:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.6):
 		ScoreFactor = "D"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.60:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.7):
 		ScoreFactor = "C"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.70:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.8):
 		ScoreFactor = "B"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 0.99:
+	elif Globalvars.EnzoScore <= lerp(\
+	Globalvars.LevelPars["ScoreMin"], Globalvars.LevelPars["ScoreMax"],\
+	0.9):
 		ScoreFactor = "A"
-	elif Globalvars.EnzoScore <= Globalvars.LevelPars["Score"] * 1.10:
+	elif Globalvars.EnzoScore < Globalvars.LevelPars["ScoreMax"]:
 		ScoreFactor = "S"
-	elif Globalvars.EnzoScore > Globalvars.LevelPars["Score"] * 1.10:
+	elif Globalvars.EnzoScore >= Globalvars.LevelPars["ScoreMax"]:
 		ScoreFactor = "X"
 
 func setKillsFactor() -> void:
-	if Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.60:
+	if Globalvars.EnzoKills <= Globalvars.LevelPars["KillsMin"]:
 		KillsFactor = "Z"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.65:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.3):
 		KillsFactor = "G"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.70:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.5):
 		KillsFactor = "F"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.75:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.6):
 		KillsFactor = "D"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.80:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.7):
 		KillsFactor = "C"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.85:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.8):
 		KillsFactor = "B"
-	elif Globalvars.EnzoKills <= Globalvars.LevelPars["Kills"] * 0.90:
+	elif Globalvars.EnzoKills <= lerp(\
+	Globalvars.LevelPars["KillsMin"], Globalvars.LevelPars["KillsMax"],\
+	0.9):
 		KillsFactor = "A"
-	elif Globalvars.EnzoKills < Globalvars.LevelPars["Kills"] * 1.00:
+	elif Globalvars.EnzoKills < Globalvars.LevelPars["KillsMax"]:
 		KillsFactor = "S"
-	elif Globalvars.EnzoKills >= Globalvars.LevelPars["Kills"] * 1.00:
+	elif Globalvars.EnzoKills >= Globalvars.LevelPars["KillsMax"]:
 		KillsFactor = "X"
 
 func setTimefactor() -> void:
-	if Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 10.00:
+	if Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 5.00:
 		TimeFactor = "Z"
-	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 7.00:
-		TimeFactor = "G"
-	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 5.00:
-		TimeFactor = "F"
 	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 4.00:
-		TimeFactor = "D"
+		TimeFactor = "G"
+	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 3.50:
+		TimeFactor = "F"
 	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 3.00:
+		TimeFactor = "D"
+	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 2.50:
 		TimeFactor = "C"
 	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 2.00:
 		TimeFactor = "B"
-	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 1.01:
+	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 1.50:
 		TimeFactor = "A"
-	elif Globalvars.EnzoTime >= Globalvars.LevelPars["Time"] * 0.90:
+	elif Globalvars.EnzoTime > Globalvars.LevelPars["Time"]:
 		TimeFactor = "S"
-	elif Globalvars.EnzoTime < Globalvars.LevelPars["Time"] * 0.90:
+	elif Globalvars.EnzoTime <= Globalvars.LevelPars["Time"]:
 		TimeFactor = "X"
 
 func setMaxComboFactor() -> void:
-	if Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.20:
+	if Globalvars.EnzoMaxCombo <= 4:
 		MaxComboFactor = "Z"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.30:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.3):
 		MaxComboFactor = "G"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.40:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.5):
 		MaxComboFactor = "F"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.50:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.6):
 		MaxComboFactor = "D"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.60:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.7):
 		MaxComboFactor = "C"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.70:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.8):
 		MaxComboFactor = "B"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 0.99:
+	elif Globalvars.EnzoMaxCombo <= lerp(5, Globalvars.LevelPars["MaxCombo"],\
+	0.9):
 		MaxComboFactor = "A"
-	elif Globalvars.EnzoMaxCombo <= Globalvars.LevelPars["MaxCombo"] * 1.10:
+	elif Globalvars.EnzoMaxCombo < Globalvars.LevelPars["MaxCombo"]:
 		MaxComboFactor = "S"
-	elif Globalvars.EnzoMaxCombo > Globalvars.LevelPars["MaxCombo"] * 1.10:
+	elif Globalvars.EnzoMaxCombo >= Globalvars.LevelPars["MaxCombo"]:
 		MaxComboFactor = "X"
 
 func setDeathsfactor() -> void:

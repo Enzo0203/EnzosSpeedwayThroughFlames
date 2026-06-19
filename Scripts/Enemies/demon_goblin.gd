@@ -214,7 +214,7 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 func _on_hurtbox_hurt(_area: Area2D, Damage:int, Knockback: Vector2, _DeathType: String) -> void:
 	if is_dead == false:
 		addToMiniCombo(1)
-		give_score(100, true)
+		give_score(60, true)
 		change_state(States.DEAD)
 		$PaletteSwapAnims.play("Hurt")
 		hitStop(min(0.1 * Damage, 0.3))

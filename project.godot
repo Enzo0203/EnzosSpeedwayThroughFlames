@@ -128,6 +128,7 @@ fullscreen={
 2d_physics/layer_5="Enzo"
 2d_physics/layer_6="Enemies"
 2d_physics/layer_7="Objects"
+2d_physics/layer_9="DebugCollisions"
 
 [physics]
 

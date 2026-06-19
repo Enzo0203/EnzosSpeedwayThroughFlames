@@ -499,4 +499,8 @@ offset_left = -712.0
 offset_right = -672.0
 offset_bottom = 28.0
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=79396039]
+rect = Rect2(-1000, -1000, 2000, 2000)
+show_rect = false
+
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

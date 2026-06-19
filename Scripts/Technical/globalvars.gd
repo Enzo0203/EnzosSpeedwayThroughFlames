@@ -88,8 +88,10 @@ var LevelPars: Dictionary [String, int]
 func setLevelPars() -> void:
 	if CurrentLevel == "1-1":
 		LevelPars = {
-		"Score": 7500,
-		"Kills": 52,
-		"Time": 120, # In seconds
+		"ScoreMax": 8000,
+		"ScoreMin": 2000,
+		"KillsMax": 52,
+		"KillsMin": 25,
+		"Time": 110, # In seconds
 		"MaxCombo": 40
 		}

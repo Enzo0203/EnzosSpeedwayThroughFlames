@@ -745,7 +745,8 @@ func chargekicking(delta: float) -> void:
 		if animation.current_animation_position >= 1.2 and animation.current_animation_position <= 1.6:
 			velocity.x += 300 * sprite.scale.x
 			change_state(States.CHARGEKICKSTRONG)
-	if animation.is_playing() == false:
+	await animation.animation_finished
+	if state == States.CHARGEKICKCHARGE:
 		spontaniously_combust()
 		change_state(States.CHARGEKICKEXPLODE)
 
@@ -992,7 +993,7 @@ func burnrunning(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 	await get_tree().create_timer(1.0, false).timeout
 	if state == States.BURNRUNNING:
-		check_and_damage(1, false, true, 200)
+		check_and_damage(1, false, true, 100)
 	await get_tree().create_timer(0.5, false).timeout
 	if state == States.BURNRUNNING:
 		change_state(States.HALTING)
@@ -1454,18 +1455,22 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			else:
 				velocity.y = 800
 			lava_invincibility.start()
-			check_and_damage(1, false, false, 200)
+			check_and_damage(1, false, false, 100)
 	if area.is_in_group("Heal"):
 		if health + area.get_meta("heal") > 5:
 			if regen + (area.get_meta("heal") - (5 - health)) > 5:
 				regen_give(5 - regen)
 				change_regen(regen + (5 - regen)) 
+				give_score(10 * (5 - regen), true)
 			else:
 				regen_give(area.get_meta("heal") - (5 - health))
-				change_regen(regen + (area.get_meta("heal") - (5 - health))) 
+				change_regen(regen + (area.get_meta("heal") - (5 - health)))
+				give_score(10 * (area.get_meta("heal") - (5 - health)), true)
 			heal(5 - health)
+			give_score(10 * (5 - health), true)
 		else:
 			heal(area.get_meta("heal"))
+			give_score(10 * area.get_meta("heal"), true)
 		$PaletteSwapAnims.play("Heal")
 		Globalvars.EnzoHeal.emit()
 	if area.is_in_group("Skateboard"):
@@ -1490,7 +1495,7 @@ func collides_with_hitbox(area: Area2D) -> bool:
 
 func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, DeathType: String) -> void:
 	howToDie = DeathType
-	check_and_damage(1, true, true, 200)
+	check_and_damage(1, true, true, 100)
 	$PaletteSwapAnims.play("Hurt")
 	if health >= 1:
 		if not area.is_in_group("Caltrop"):

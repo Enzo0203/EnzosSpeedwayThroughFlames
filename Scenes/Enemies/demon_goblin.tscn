@@ -1609,6 +1609,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Swooshing" type="AudioStreamPlayer2D" parent="." unique_id=1154153759]
 stream = ExtResource("8_bnikn")
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1190575562]
+rect = Rect2(-1000, -1000, 2000, 2000)
+show_rect = false
+
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]

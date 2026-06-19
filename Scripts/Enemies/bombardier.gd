@@ -246,6 +246,7 @@ func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType
 			pr_heart.emitting = true
 			pr_hpbar.emitting = true
 			change_state(States.DEAD)
+			give_score(300, true)
 		else:
 			damage(Damage)
 			change_state(States.HURT)
@@ -254,7 +255,6 @@ func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType
 		pr_heart.direction = Knockback
 		pr_hpbar.direction = Knockback
 		stuntimer.start()
-		give_score(100, true)
 		hitStop(min(0.1 * Damage, 0.3))
 
 func _on_hurtbox_parried(_area: Area2D, _range: String) -> void:

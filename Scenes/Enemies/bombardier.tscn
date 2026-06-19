@@ -1420,6 +1420,9 @@ sprite = NodePath("../Spritesheet")
 hitstopper = NodePath("../Hitstopper")
 afterimage_modulate = SubResource("Gradient_xhbao")
 
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=362469476]
+rect = Rect2(-1000, -1000, 2000, 2000)
+
 [connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]
 [connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
