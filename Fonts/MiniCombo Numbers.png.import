@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://mkuwvd43bl4v"
+path="res://.godot/imported/MiniCombo Numbers.png-f23faa3f7fa89e1625607f087ce88500.fontdata"
+
+[deps]
+
+source_file="res://Fonts/MiniCombo Numbers.png"
+dest_files=["res://.godot/imported/MiniCombo Numbers.png-f23faa3f7fa89e1625607f087ce88500.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("48", "49", "50", "51", "52", "53", "54", "55", "56", "57")
+kerning_pairs=PackedStringArray()
+columns=10
+rows=1
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=2

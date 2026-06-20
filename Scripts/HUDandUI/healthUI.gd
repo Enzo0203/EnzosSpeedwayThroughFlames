@@ -25,15 +25,11 @@ extends Control
 @onready var Score6: AnimationPlayer = $Score/Score6/AnimationPlayer
 
 @onready var ComboTimeBar: TextureProgressBar = $Combo/ComboTimeBar
-@onready var ComboNumber1: AnimationPlayer = $Combo/ComboNumber1/AnimationPlayer
-@onready var ComboNumber2: AnimationPlayer = $Combo/ComboNumber2/AnimationPlayer
-@onready var ComboNumber3: AnimationPlayer = $Combo/ComboNumber3/AnimationPlayer
+@onready var ComboNumbers: Label = $Combo/ComboNumbers
 @onready var ComboTimer: Timer = $Combo/ComboTimer
 
 @onready var MiniComboTimeBar: TextureProgressBar = $Combo/MiniComboTimeBar
-@onready var MiniComboNumber1: AnimationPlayer = $Combo/MiniComboNumber1/AnimationPlayer
-@onready var MiniComboNumber2: AnimationPlayer = $Combo/MiniComboNumber2/AnimationPlayer
-@onready var MiniComboNumber3: AnimationPlayer = $Combo/MiniComboNumber3/AnimationPlayer
+@onready var MiniComboNumbers: Label = $Combo/MiniComboNumbers
 @onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
 @onready var MultiNumber1: AnimationPlayer = $Combo/MultiplierNumber1/AnimationPlayer
@@ -92,6 +88,7 @@ func handleHealth() -> void:
 	Regen1.play(str(regen[4]))
 
 func handleCombo() -> void:
+	ComboNumbers.text = str(Globalvars.EnzoCombo)
 	if Globalvars.EnzoCombo > 0:
 		ComboTimeBar.value = ComboTimer.time_left
 		ComboTimer.wait_time = Globalvars.EnzoCombo * 2
@@ -100,33 +97,16 @@ func handleCombo() -> void:
 	if ComboTimer.time_left == 0:
 		Globalvars.EnzoCombo = 0
 	if Globalvars.EnzoCombo < 10:
-		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
-		$Combo/ComboNumber1.position = Vector2(776, 418)
-		$Combo/ComboNumber2.visible = false
-		$Combo/ComboNumber3.visible = false
 		comboMultiplier = 0
 	if Globalvars.EnzoCombo >= 10 and Globalvars.EnzoCombo < 100:
-		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
-		$Combo/ComboNumber1.position = Vector2(791, 418)
-		ComboNumber2.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-2])
-		$Combo/ComboNumber2.position = Vector2(758, 418)
-		$Combo/ComboNumber2.visible = true
-		$Combo/ComboNumber3.visible = false
 		comboMultiplier = 1
 	if Globalvars.EnzoCombo >= 100:
-		ComboNumber1.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-1])
-		$Combo/ComboNumber1.position = Vector2(804, 418)
-		ComboNumber2.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-2])
-		$Combo/ComboNumber2.position = Vector2(776, 418)
-		$Combo/ComboNumber2.visible = true
-		ComboNumber3.play(str(Globalvars.EnzoCombo).pad_zeros(3)[-3])
-		$Combo/ComboNumber3.position = Vector2(747, 418)
-		$Combo/ComboNumber3.visible = true
 		comboMultiplier = 1.5
 	if Globalvars.EnzoCombo > Globalvars.EnzoMaxCombo:
 		Globalvars.EnzoMaxCombo = Globalvars.EnzoCombo
 
 func handleMiniCombo() -> void:
+	MiniComboNumbers.text = str(Globalvars.EnzoMiniCombo)
 	if Globalvars.EnzoMiniCombo > 0:
 		MiniComboTimeBar.value = MiniComboTimer.time_left
 		MiniComboTimer.wait_time = Globalvars.EnzoMiniCombo * 1.2
@@ -158,32 +138,10 @@ func handleMiniCombo() -> void:
 	if Globalvars.EnzoMiniCombo >= 300:
 		$Combo/MiniComboBackground.self_modulate = Color(0.8, 0.6, 1, 1)
 		miniComboMultiplier = 1
-	if Globalvars.EnzoMiniCombo < 10:
-		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
-		$Combo/MiniComboNumber1.position = Vector2(623, 381)
-		$Combo/MiniComboNumber2.visible = false
-		$Combo/MiniComboNumber3.visible = false
-	if Globalvars.EnzoMiniCombo >= 10 and Globalvars.EnzoMiniCombo < 100:
-		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
-		$Combo/MiniComboNumber1.position = Vector2(632, 381)
-		MiniComboNumber2.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-2])
-		$Combo/MiniComboNumber2.position = Vector2(615, 381)
-		$Combo/MiniComboNumber2.visible = true
-		$Combo/MiniComboNumber3.visible = false
-	if Globalvars.EnzoMiniCombo >= 100:
-		MiniComboNumber1.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-1])
-		$Combo/MiniComboNumber1.position = Vector2(640, 381)
-		MiniComboNumber2.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-2])
-		$Combo/MiniComboNumber2.position = Vector2(623, 381)
-		$Combo/MiniComboNumber2.visible = true
-		MiniComboNumber3.play(str(Globalvars.EnzoMiniCombo).pad_zeros(3)[-3])
-		$Combo/MiniComboNumber3.position = Vector2(606, 381)
-		$Combo/MiniComboNumber3.visible = true
 
 func handleMultiplier() -> void:
 	Globalvars.EnzoScoreMultiplier = 1 + miniComboMultiplier + comboMultiplier
-	MultiNumber1.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-1])
-	MultiNumber2.play(str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)[-3])
+	$Combo/MultiplierNumbers.text = str(Globalvars.EnzoScoreMultiplier).pad_decimals(1)
 
 func handleScore() -> void:
 	##.pad_zeros makes it so that the score says, for example, 000100 instead of 100

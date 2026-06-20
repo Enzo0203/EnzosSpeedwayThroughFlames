@@ -1525,11 +1525,12 @@ position = Vector2(0, 23)
 shape = SubResource("RectangleShape2D_gcjww")
 debug_color = Color(0.996078, 0, 0.215686, 0.419608)
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1539925312 groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1539925312 node_paths=PackedStringArray("Shape") groups=["Hitbox"]]
 visible = false
 collision_layer = 32
 collision_mask = 80
 script = ExtResource("5_eskqj")
+Shape = NodePath("HitboxShape")
 Damage = 2
 Strength = 2
 ImpactSfx = ExtResource("6_kcdes")

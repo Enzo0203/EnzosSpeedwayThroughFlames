@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://begvw3fkddfsi"
+path="res://.godot/imported/Small Feedback Text.png-7fcef6004aef08f0cc39bf1228816dfb.fontdata"
+
+[deps]
+
+source_file="res://Fonts/Small Feedback Text.png"
+dest_files=["res://.godot/imported/Small Feedback Text.png-7fcef6004aef08f0cc39bf1228816dfb.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("33", "65-90")
+kerning_pairs=PackedStringArray()
+columns=9
+rows=3
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=2

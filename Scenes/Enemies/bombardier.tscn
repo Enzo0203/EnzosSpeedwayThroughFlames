@@ -1235,12 +1235,13 @@ position = Vector2(-27, -51)
 [node name="Marker2D2" type="Marker2D" parent="Spritesheet" unique_id=1625088383]
 position = Vector2(43, -25)
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=826756319 groups=["Hitbox"]]
+[node name="Hitbox" type="Area2D" parent="." unique_id=826756319 node_paths=PackedStringArray("Shape") groups=["Hitbox"]]
 visible = false
 position = Vector2(0, -11)
 collision_layer = 32
 collision_mask = 80
 script = ExtResource("4_ifstu")
+Shape = NodePath("HitboxShape")
 Damage = 4
 Strength = 4
 ImpactSfx = ExtResource("8_5kbf8")

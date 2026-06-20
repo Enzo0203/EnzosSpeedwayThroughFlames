@@ -16,12 +16,12 @@
 [ext_resource type="Texture2D" uid="uid://b6o7nvgk524mj" path="res://Sprites/HUD/Combo/Combo Timer.png" id="15_ry46l"]
 [ext_resource type="Texture2D" uid="uid://bgmp4lmn0nc33" path="res://Sprites/HUD/Combo/MiniCombo Timer.png" id="16_q1jr0"]
 [ext_resource type="Texture2D" uid="uid://b6rcb81rgkvr6" path="res://Sprites/HUD/Combo/MiniCombo Background.png" id="17_4qjmw"]
-[ext_resource type="Texture2D" uid="uid://m5pflldfnx1o" path="res://Sprites/HUD/Combo/Combo Numbers.png" id="18_ffdmq"]
-[ext_resource type="Texture2D" uid="uid://mkuwvd43bl4v" path="res://Sprites/HUD/Combo/MiniCombo Numbers.png" id="19_pp0kj"]
-[ext_resource type="Texture2D" uid="uid://pbkh3vono5nj" path="res://Sprites/HUD/Combo/Multiplier Numbers.png" id="20_bfyaw"]
+[ext_resource type="Texture2D" path="res://Sprites/HUD/Combo/Combo Numbers.png" id="18_ffdmq"]
+[ext_resource type="Texture2D" uid="uid://mkuwvd43bl4v" path="res://Fonts/MiniCombo Numbers.png" id="19_pp0kj"]
+[ext_resource type="Texture2D" uid="uid://pbkh3vono5nj" path="res://Fonts/Multiplier Numbers.png" id="20_bfyaw"]
 [ext_resource type="Texture2D" uid="uid://kmgep6mg736b" path="res://Sprites/HUD/EnzoExprSheet.png" id="21_qkmun"]
 [ext_resource type="Texture2D" uid="uid://befumo68rbtyb" path="res://Sprites/HUD/Flamed.png" id="22_i1u4l"]
-[ext_resource type="AudioStream" uid="uid://cnb5cla535mjy" path="res://Music/Madman.mp3" id="23_qwqeg"]
+[ext_resource type="AudioStream" path="res://Music/Madman.mp3" id="23_qwqeg"]
 
 [sub_resource type="Animation" id="Animation_f2ror"]
 resource_name = "Black Screen of Death"
