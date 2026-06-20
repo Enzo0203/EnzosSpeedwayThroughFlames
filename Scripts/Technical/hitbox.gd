@@ -1,10 +1,22 @@
 extends Area2D
 
+@export_category("Children")
+
+# The Hitbox's shape.
+@export var Shape: CollisionShape2D
+
+@export_category("Base Stats")
+
 ## How much damage this does at base.
 @export var Damage: int
-
 ## Attack's priority when clanking with other attacks. Higher number = Higher priority.
 @export var Strength: int
+## How much knockback this deals to the victim. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
+@export var Knockback: Vector2
+## How much knockback this deals to the user. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
+@export var SelfKnockback: Vector2
+
+@export_category("Attributes")
 
 ## If true, attack can damage blocks and perfect blocks.
 @export var Unblockable: bool
@@ -12,11 +24,26 @@ extends Area2D
 @export var Uncounterable: bool
 ## If true, attack can damage intangible hurtboxes and ignore armor.
 @export var Unstoppable: bool
+## Attack can clank if it hits another attack of similar strength.
+@export var Clankable: bool = true
+## If true and this attack is stronger than a projectile, it deflects it. If false, it just clanks instead.
+@export var Deflector: bool = false
+## Attack can be parried.
+@export var Parriable: bool
+## Attack can phase through walls.
+@export var Ghost: bool
+## What this attack's shape should do when it hits something.
+@export var OnHitShapeBehavior: OnHitShapeBehaviors = OnHitShapeBehaviors.NONE
+enum OnHitShapeBehaviors {
+	## Keep shape active.
+	NONE,
+	## Disables its shape until it enables itself again.
+	DISABLE,
+}
+## Attack can parry.
+@export var Parrybox: bool
 
-## How much knockback this deals to the victim. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
-@export var Knockback: Vector2
-## How much knockback this deals to the user. If (0, 0), does not deal knockback. The X value of this scales with the Area2d's scale.x.
-@export var SelfKnockback: Vector2
+@export_category("Multipliers")
 
 ## Multiplies the amount of damage given.
 @export var DamageGiveMultiplier: float = 1.0
@@ -27,24 +54,17 @@ extends Area2D
 ## Multiplies the amount of knockback given.
 @export var KnockbackGiveMultiplier: float = 1.0
 
-## Attack can clank if it hits another attack of similar strength.
-@export var Clankable: bool = true
-## If true and this attack is stronger than a projectile, it deflects it. If false, it just clanks instead.
-@export var Deflector: bool = false
-## Attack can be parried.
-@export var Parriable: bool
-## Attack deactivates when hitting a hurtbox.
-@export var Stunnable: bool
-## Attack can phase through walls.
-@export var Ghost: bool
-
-## Attack can parry.
-@export var Parrybox: bool
+@export_category("Miscellaneous")
 
 ## Sound effect played when this hits something.
 @export var ImpactSfx: AudioStream
 ## Type of animation Enzo plays when killed by this attack.
 @export var DeathType: String
+enum EnzoDeathTypes { 
+	GENERIC,
+	BLUNT,
+	FIRE,
+	SPIKE}
 
 signal clank(area: Area2D)
 signal clashCounter(area: Area2D)
@@ -68,6 +88,8 @@ func _on_area_entered(area: Area2D) -> void:
 				if not area.DamageTakeMultiplier == 0.0:
 					if not Damage == 0:
 						emit_signal("hurtSomething", area)
+						if OnHitShapeBehavior == OnHitShapeBehaviors.DISABLE:
+							Shape.set_deferred("disabled", true)
 				if area.Parriable and Parrybox:
 					emit_signal("parry", area, "Melee")
 			if area.State == area.Hurtbox_States.BLOCKING or area.State == area.Hurtbox_States.PERFECT_BLOCKING:

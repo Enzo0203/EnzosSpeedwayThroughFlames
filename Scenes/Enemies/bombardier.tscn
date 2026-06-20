@@ -1302,6 +1302,7 @@ shape = SubResource("RectangleShape2D_lrs4e")
 debug_color = Color(0, 0.32549, 0.0980392, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318412846]
+visible = false
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_0fd5m")
 
@@ -1422,6 +1423,7 @@ afterimage_modulate = SubResource("Gradient_xhbao")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=362469476]
 rect = Rect2(-1000, -1000, 2000, 2000)
+show_rect = false
 
 [connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]
 [connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]

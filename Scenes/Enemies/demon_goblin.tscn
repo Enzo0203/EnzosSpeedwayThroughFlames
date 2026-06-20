@@ -1574,6 +1574,7 @@ shape = SubResource("RectangleShape2D_42vda")
 debug_color = Color(0.698039, 0.494118, 0, 0.419608)
 
 [node name="Pushbox" type="Area2D" parent="." unique_id=1324923143 groups=["Pushbox"]]
+visible = false
 script = ExtResource("7_kcdes")
 
 [node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=1540238381]

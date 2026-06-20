@@ -1,7 +1,10 @@
 extends Area2D
 
-@export_category("States")
+@export_category("Attributes")
 
+
+## What state the hurtbox is in.
+@export var State: Hurtbox_States = Hurtbox_States.VULNERABLE
 enum Hurtbox_States {
 	## No additional effects.
 	VULNERABLE, 
@@ -9,8 +12,6 @@ enum Hurtbox_States {
 	BLOCKING, 
 	## Also blocks hits, but has a special interaction.
 	PERFECT_BLOCKING}
-## What state the hurtbox is in, can be "Vuln", "Blocking" or "PerfectBlocking"
-@export var State: Hurtbox_States = Hurtbox_States.VULNERABLE
 ## If true, this hurtbox can't be hit by hitboxes.
 @export var Intangible: bool = false
 ## Intangibility given to segmented-health users after getting hurt.

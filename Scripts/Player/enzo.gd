@@ -1532,7 +1532,6 @@ func _on_hurtbox_perfect_block(_area: Area2D) -> void:
 func _on_hitbox_hurt_something(area: Area2D) -> void:
 	if not hitbox.SelfKnockback == Vector2(0, 0):
 		velocity = Vector2(hitbox.SelfKnockback.x * sprite.scale.x, hitbox.SelfKnockback.y)
-	hitboxshape.set_deferred("disabled", true)
 	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path , hitboxshape.global_position)
 	if not (area.Parriable and hitbox.Parrybox):
 		hitStop(min(0.1 * hitbox.Damage, 0.3))
