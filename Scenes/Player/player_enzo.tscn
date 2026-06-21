@@ -4,16 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_6b6sq"]
 [ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_i6v0c"]
 [ext_resource type="Texture2D" uid="uid://tx7i7kxffs0r" path="res://Sprites/HUD/Particles/TextBlock.png" id="3_k7fhu"]
-[ext_resource type="Texture2D" uid="uid://dh3a8cyoarhku" path="res://Sprites/HUD/Particles/TextClank.png" id="4_i6v0c"]
-[ext_resource type="Texture2D" uid="uid://byemvy6ae1ec3" path="res://Sprites/HUD/Particles/TextRebound.png" id="5_6cjy1"]
 [ext_resource type="Texture2D" uid="uid://gjqrq4mr4qps" path="res://Sprites/HUD/Particles/TextBlocked.png" id="5_7iwhy"]
 [ext_resource type="Texture2D" uid="uid://byf1krmfkpkld" path="res://Sprites/HUD/Particles/TextPerfectBlock.png" id="5_b6ds8"]
 [ext_resource type="Texture2D" uid="uid://kdnmo0wxd1ij" path="res://Sprites/HUD/Particles/TextParry.png" id="6_b7bpl"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="7_6b6sq"]
 [ext_resource type="AudioStream" uid="uid://bb2j584xkriq3" path="res://Sfx/Jump.wav" id="7_b6ds8"]
-[ext_resource type="Texture2D" uid="uid://crsu0rktinx06" path="res://Sprites/HUD/Particles/TextClashCounter.png" id="7_b7bpl"]
 [ext_resource type="AudioStream" uid="uid://bjqhmi6q1vrw8" path="res://Sfx/SwooshWeak3.wav" id="8_7iwhy"]
-[ext_resource type="Texture2D" uid="uid://s10tv8qk0346" path="res://Sprites/HUD/Particles/TextClashCountered.png" id="8_b6ds8"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="8_k7fhu"]
 [ext_resource type="AudioStream" uid="uid://chi2xk0kabye5" path="res://Sfx/SwooshStrong.wav" id="9_2y6so"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="10_t6rol"]
@@ -8568,62 +8564,6 @@ spread = 10.0
 initial_velocity_min = 300.0
 initial_velocity_max = 300.0
 scale_amount_curve = SubResource("Curve_7iwhy")
-
-[node name="Clank" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1833097971]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("4_i6v0c")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 15
-direction = Vector2(0, -1)
-spread = 20.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-
-[node name="ClashCounter" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=263929637]
-visible = false
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("7_b7bpl")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 20
-direction = Vector2(0, -1)
-spread = 20.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-
-[node name="ClashCountered" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=626432929]
-visible = false
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("8_b6ds8")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 20
-direction = Vector2(0, -1)
-spread = 20.0
-initial_velocity_min = 200.0
-initial_velocity_max = 200.0
-angular_velocity_min = -30.0
-angular_velocity_max = 30.0
-
-[node name="Rebound" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1113846182]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("5_6cjy1")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 20
-direction = Vector2(0, -1)
-spread = 20.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
 
 [node name="Parry" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=31956166]
 position = Vector2(0, -30)

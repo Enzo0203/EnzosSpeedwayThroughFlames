@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dsjbu46foc73b"]
+
+[ext_resource type="Script" uid="uid://cgvi4sudgewaj" path="res://Scripts/Technical/popup_text_manager.gd" id="1_vma7e"]
+
+[node name="PopupTextManager" type="Node2D" unique_id=1164668265]
+script = ExtResource("1_vma7e")

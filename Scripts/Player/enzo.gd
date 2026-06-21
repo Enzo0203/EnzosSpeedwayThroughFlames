@@ -10,6 +10,7 @@ const HALTING_FRICTION: float = 2400
 const JUMP_VELOCITY: float = -500.0
 const RUNNING_JUMP_VELOCITY: float = -530.0
 
+const max_health: int = 5
 var health: int
 var healtharr: Array
 var regen: int
@@ -35,10 +36,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var labelspeed: Label = $Speed
 @onready var labelthird: Label = $Slabel
 @onready var ExplosionMarker: Marker2D = $ExplosionMarker
-@onready var pr_clank: CPUParticles2D = $Spritesheet/Texts/Clank
-@onready var pr_rebound: CPUParticles2D = $Spritesheet/Texts/Rebound
-@onready var pr_clashcounter: CPUParticles2D = $Spritesheet/Texts/ClashCounter
-@onready var pr_clashcountered: CPUParticles2D = $Spritesheet/Texts/ClashCountered
 @onready var pr_parry: CPUParticles2D = $Spritesheet/Texts/Parry
 @onready var pr_blocked: CPUParticles2D = $Spritesheet/Texts/Blocked
 @onready var hurtbox: Area2D = $Hurtbox
@@ -1457,20 +1454,11 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			lava_invincibility.start()
 			check_and_damage(1, false, false, 100)
 	if area.is_in_group("Heal"):
-		if health + area.get_meta("heal") > 5:
-			if regen + (area.get_meta("heal") - (5 - health)) > 5:
-				regen_give(5 - regen)
-				change_regen(regen + (5 - regen)) 
-				give_score(10 * (5 - regen), true)
-			else:
-				regen_give(area.get_meta("heal") - (5 - health))
-				change_regen(regen + (area.get_meta("heal") - (5 - health)))
-				give_score(10 * (area.get_meta("heal") - (5 - health)), true)
-			heal(5 - health)
-			give_score(10 * (5 - health), true)
-		else:
-			heal(area.get_meta("heal"))
-			give_score(10 * area.get_meta("heal"), true)
+		give_score(50 * area.get_meta("heal"), true)
+		heal(min(area.get_meta("heal"), max_health - health))
+		if health + area.get_meta("heal") > max_health:
+			regen_give(min(area.get_meta("heal") - (max_health - health), max_health - regen))
+			change_regen(regen + min(regen + (area.get_meta("heal") - (max_health - health)), max_health - regen))
 		$PaletteSwapAnims.play("Heal")
 		Globalvars.EnzoHeal.emit()
 	if area.is_in_group("Skateboard"):
@@ -1549,18 +1537,18 @@ func _on_hitbox_clank(area: Area2D) -> void:
 	else:
 		sprite.scale.x = -1
 		velocity.x = 200
-	pr_clank.position = hitboxshape.position
-	pr_clank.set_emitting(true)
+	PopupTextManager.popup_text("CLANK", hitboxshape.global_position, Color("cfcfcfff"), "Shrink", 2.0)
 
 func _on_hitbox_clash_counter(_area: Area2D) -> void:
-	pr_clashcounter.set_emitting(true)
+	pass
+	#PopupTextManager.popup_text("TRAMPLE", hitboxshape.global_position, Color("ff6c00ff"))
 
 func _on_hitbox_clash_countered(_area: Area2D) -> void:
-	pr_clashcountered.set_emitting(true)
+	pass
+	#PopupTextManager.popup_text("TRAMPLED", hitboxshape.global_position, Color("854520ff"))
 
 func _on_hitbox_rebound(_area: Area2D) -> void:
-	pr_rebound.position = hitboxshape.position
-	pr_rebound.set_emitting(true)
+	PopupTextManager.popup_text("REBOUND", hitboxshape.global_position, Color("50e591ff"))
 
 func _on_hitbox_blocked(_area: Area2D) -> void:
 	pr_blocked.set_emitting(true)

@@ -29,7 +29,7 @@ buses/default_bus_layout="uid://bijglwhpff1xl"
 Globalvars="*res://Scripts/Technical/globalvars.gd"
 Gamesettings="*res://Scripts/Technical/gamesettings.gd"
 GlobalAudioManager="*uid://6u0fyyhmoud3"
-TextPopupManager="*uid://db260w4nw23d2"
+PopupTextManager="*uid://dsjbu46foc73b"
 
 [debug]
 
