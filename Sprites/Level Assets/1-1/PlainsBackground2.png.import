@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dar1x484n67a3"
-path="res://.godot/imported/BackgroundSigns.png-fc2d090fdc14577a6ad2325af5750c44.ctex"
+uid="uid://cf6ts5aineel2"
+path="res://.godot/imported/PlainsBackground2.png-fcc2a4eda20292b001538234c7d1a23d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/BackgroundSigns.png"
-dest_files=["res://.godot/imported/BackgroundSigns.png-fc2d090fdc14577a6ad2325af5750c44.ctex"]
+source_file="res://Sprites/Level Assets/1-1/PlainsBackground2.png"
+dest_files=["res://.godot/imported/PlainsBackground2.png-fcc2a4eda20292b001538234c7d1a23d.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf6ts5aineel2"
-path="res://.godot/imported/Plaingroundback.png-cfc37d7702d1ec526a6d2ada25d4d2a5.ctex"
+uid="uid://b10rc7aylswcj"
+path="res://.godot/imported/CavesBackground5.png-7fccc9604288356f7e18e215d3ed6862.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/Plaingroundback.png"
-dest_files=["res://.godot/imported/Plaingroundback.png-cfc37d7702d1ec526a6d2ada25d4d2a5.ctex"]
+source_file="res://Sprites/Level Assets/1-2/CavesBackground5.png"
+dest_files=["res://.godot/imported/CavesBackground5.png-7fccc9604288356f7e18e215d3ed6862.ctex"]
 
 [params]
 

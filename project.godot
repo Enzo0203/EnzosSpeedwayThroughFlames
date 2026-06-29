@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Enzo's Speedway Through Flames"
 run/main_scene="uid://q2rdc5lhfiis"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://Sprites/estficon.png"
 config/windows_native_icon="res://MiscResources/estficon.ico"
 

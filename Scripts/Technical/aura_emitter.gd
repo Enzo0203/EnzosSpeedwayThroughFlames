@@ -20,6 +20,9 @@ extends Node
 ## Afterimage duration.
 @export var duration: float = 0.5
 
+## How big the afterimages can grow. Growing speed is based off duration
+@export var grow_size: float = 2
+
 var after_image_counter: float = 0.0
 
 func _process(delta: float) -> void:
@@ -36,7 +39,7 @@ func spawn_afterimage() -> void:
 	
 	# Make the duplicate
 	var afterimage: Sprite2D = Sprite2D.new()
-	get_tree().current_scene.add_child(afterimage)
+	sprite.get_parent().add_child(afterimage)
 	
 	# Execute order 66
 	for child: Node in afterimage.get_children():
@@ -51,13 +54,25 @@ func spawn_afterimage() -> void:
 	afterimage.z_index = -1
 	afterimage.global_position = sprite.global_position
 	afterimage.scale = sprite.scale
-	afterimage.material = sprite.material
 	
 	# Make colors follow gradient
 	var gradient_tween: Tween = create_tween()
 	gradient_tween.tween_method(
 		func(offset: float) -> void: afterimage.modulate = afterimage_modulate.sample(offset), \
 		0.0, 1.0, duration)
+	
+	var grow_tween: Tween = create_tween()
+	grow_tween.tween_property(afterimage, "scale", Vector2(grow_size * sign(afterimage.scale.x), grow_size), duration)
+	
+	var frame_tween: Tween = create_tween()
+	frame_tween.tween_method(
+		func(_offset: float) -> void: afterimage.frame = sprite.frame, \
+		0.0, 0.0, duration)
+	
+	var flip_tween: Tween = create_tween()
+	flip_tween.tween_method(
+		func(_offset: float) -> void: afterimage.scale.x = abs(afterimage.scale.x) * sprite.scale.x, \
+		0.0, 0.0, duration)
 	
 	# Delete when gradient finishes or when this node stops existing
 	gradient_tween.finished.connect(afterimage.queue_free)

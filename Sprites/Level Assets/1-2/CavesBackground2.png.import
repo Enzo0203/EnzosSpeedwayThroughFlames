@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5vhvbr506qvy"
-path="res://.godot/imported/TilesetGrass.png-b8cf650166b9e7a35737e271f444648c.ctex"
+uid="uid://bcv2mlmagylky"
+path="res://.godot/imported/CavesBackground2.png-c87311aa604cdf118bf1f4d17efcf780.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/TilesetGrass.png"
-dest_files=["res://.godot/imported/TilesetGrass.png-b8cf650166b9e7a35737e271f444648c.ctex"]
+source_file="res://Sprites/Level Assets/1-2/CavesBackground2.png"
+dest_files=["res://.godot/imported/CavesBackground2.png-c87311aa604cdf118bf1f4d17efcf780.ctex"]
 
 [params]
 

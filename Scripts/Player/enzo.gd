@@ -280,7 +280,9 @@ func change_state(newState: States) -> void:
 	newState != States.HURTJUMP and \
 	newState != States.BURNJUMPING and \
 	newState != States.DEAD:
-		return
+		if newState != States.BLOCKHIT and \
+		newState != States.BLOCKPERFECT:
+			return
 	state_just_changed = true
 	state = newState
 
@@ -780,7 +782,8 @@ func chargekickexplode(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What can this transition to
-	if animation.is_playing() == false:
+	await animation.animation_finished
+	if state == States.CHARGEKICKEXPLODE:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)

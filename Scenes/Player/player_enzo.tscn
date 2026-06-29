@@ -35,6 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://grd0fbtua81q" path="res://Sfx/Footsteps/FootstepCrocs1.ogg" id="35_3r4sx"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="35_r1mvx"]
 [ext_resource type="AudioStream" uid="uid://6k3myo1xei8q" path="res://Sfx/Footsteps/FootstepCrocs2.ogg" id="36_5iiub"]
+[ext_resource type="Script" uid="uid://baeft1c5it6q0" path="res://Scripts/Technical/aura_emitter.gd" id="36_d2p4v"]
 
 [sub_resource type="Curve" id="Curve_ehqkl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -62,7 +63,7 @@ size = Vector2(42, 84)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s6kh"]
 resource_local_to_scene = true
-size = Vector2(59, 102)
+size = Vector2(69, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymy6b"]
 size = Vector2(14, 52)
@@ -8602,24 +8603,24 @@ shape = SubResource("RectangleShape2D_u3wga")
 debug_color = Color(1, 0, 0.133333, 0.419608)
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1748236585 node_paths=PackedStringArray("Shape") groups=["Hitbox"]]
+visible = false
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("7_6b6sq")
 Shape = NodePath("HitboxShape")
-Damage = 3
-Strength = 4
-Knockback = Vector2(200, -500)
-SelfKnockback = Vector2(-200, 0)
+Damage = 2
+Strength = 2
+Knockback = Vector2(300, -150)
 Deflector = true
 OnHitShapeBehavior = 1
-ImpactSfx = ExtResource("20_0vul7")
+ImpactSfx = ExtResource("18_fc8nm")
 metadata/dmg = 3
 metadata/strength = 3
 metadata/type = "norm"
 metadata/kbdirection = Vector2(100, 150)
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=904056683]
-position = Vector2(31.5, -11)
+position = Vector2(40.375, -10.25)
 shape = SubResource("RectangleShape2D_8s6kh")
 disabled = true
 debug_color = Color(0.913725, 0, 0.721569, 0.419608)
@@ -8734,6 +8735,12 @@ script = ExtResource("35_r1mvx")
 sprite = NodePath("../../Spritesheet")
 hitstopper = NodePath("../../Hitstopper")
 afterimage_modulate = SubResource("Gradient_414wy")
+
+[node name="AuraEmitter" type="Node" parent="AfterimageAnims" unique_id=1020387164 node_paths=PackedStringArray("sprite", "hitstopper")]
+script = ExtResource("36_d2p4v")
+sprite = NodePath("../../Spritesheet")
+hitstopper = NodePath("../../Hitstopper")
+interval = 0.1
 
 [node name="Hitstopper" type="Timer" parent="." unique_id=1243517027]
 one_shot = true

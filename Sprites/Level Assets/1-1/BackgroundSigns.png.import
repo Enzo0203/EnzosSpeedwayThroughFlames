@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6bhfsqtt2hb1"
-path="res://.godot/imported/Plainfrontcloud.png-e168d861a80628edd819fa5495d016bb.ctex"
+uid="uid://dar1x484n67a3"
+path="res://.godot/imported/BackgroundSigns.png-d44c36bb67f8b801274d8c35b20929d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/Plainfrontcloud.png"
-dest_files=["res://.godot/imported/Plainfrontcloud.png-e168d861a80628edd819fa5495d016bb.ctex"]
+source_file="res://Sprites/Level Assets/1-1/BackgroundSigns.png"
+dest_files=["res://.godot/imported/BackgroundSigns.png-d44c36bb67f8b801274d8c35b20929d1.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4d8pis7dwvpp"
-path="res://.godot/imported/Plainsky.png-2d22966bd77f5a689128a0a28aa8180d.ctex"
+uid="uid://56l4ck3an30o"
+path="res://.godot/imported/CavesBackground3.png-8a3eab12db97bd8cff525f99cd1f5748.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Backgrounds/Plainsky.png"
-dest_files=["res://.godot/imported/Plainsky.png-2d22966bd77f5a689128a0a28aa8180d.ctex"]
+source_file="res://Sprites/Level Assets/1-2/CavesBackground3.png"
+dest_files=["res://.godot/imported/CavesBackground3.png-8a3eab12db97bd8cff525f99cd1f5748.ctex"]
 
 [params]
 
