@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nealm3mfbbuv"
-path="res://.godot/imported/D-White ball sheet.png-b00b24575454a4837b4b669125115162.ctex"
+uid="uid://b22qtbvvafpx6"
+path="res://.godot/imported/Rookie hellballer sheet.png-44b42535af6d8198f2a409387b6996d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Enemies/D-White ball sheet.png"
-dest_files=["res://.godot/imported/D-White ball sheet.png-b00b24575454a4837b4b669125115162.ctex"]
+source_file="res://Sprites/General Sprites/Enemies/Rookie hellballer sheet.png"
+dest_files=["res://.godot/imported/Rookie hellballer sheet.png-44b42535af6d8198f2a409387b6996d1.ctex"]
 
 [params]
 

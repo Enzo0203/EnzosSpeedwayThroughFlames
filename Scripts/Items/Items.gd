@@ -18,5 +18,5 @@ func _physics_process(delta: float) -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hurtbox"):
-		PopupTextManager.popup_text(str(roundi(50 * hitbox.get_meta("heal") * Globalvars.EnzoScoreMultiplier)), global_position)
+		PopupTextManager.popup_text(str(roundi(50 * hitbox.get_meta("heal") * Globalvars.EnzoScoreMultiplier)), global_position, 12)
 		queue_free()

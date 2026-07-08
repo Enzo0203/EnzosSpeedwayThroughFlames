@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://buifbltj00ekt"
-path="res://.godot/imported/Cardboard Demon.png-8a5e0ba48be3a3a6a6b6c8175c3a6fe7.ctex"
+path="res://.godot/imported/Cardboard demon.png-15d5d4748e0de84fe191dc6af623f502.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Enemies/Cardboard Demon.png"
-dest_files=["res://.godot/imported/Cardboard Demon.png-8a5e0ba48be3a3a6a6b6c8175c3a6fe7.ctex"]
+source_file="res://Sprites/General Sprites/Enemies/Cardboard demon.png"
+dest_files=["res://.godot/imported/Cardboard demon.png-15d5d4748e0de84fe191dc6af623f502.ctex"]
 
 [params]
 

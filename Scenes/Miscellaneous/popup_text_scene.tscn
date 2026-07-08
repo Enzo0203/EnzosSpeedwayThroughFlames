@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://db260w4nw23d2"]
 
-[ext_resource type="FontFile" uid="uid://begvw3fkddfsi" path="res://Fonts/Small Feedback Text.png" id="1_xvr4d"]
 [ext_resource type="Script" uid="uid://oofa4qmk5q2x" path="res://Scripts/Technical/popup_text.gd" id="2_oy5mw"]
+[ext_resource type="FontFile" uid="uid://dd1a6i5sh5uk3" path="res://Fonts/Sharp Feedback Text.png" id="2_xvr4d"]
 
 [sub_resource type="FontVariation" id="FontVariation_midkh"]
-base_font = ExtResource("1_xvr4d")
+base_font = ExtResource("2_xvr4d")
 
 [sub_resource type="Animation" id="Animation_h65yx"]
 resource_name = "Jump"
@@ -136,14 +136,17 @@ _data = {
 script = ExtResource("2_oy5mw")
 
 [node name="Text" type="Label" parent="." unique_id=1275789028]
+modulate = Color(0.27582297, 0.880125, 0.99999994, 1)
 offset_left = -180.0
 offset_top = -6.0
 offset_right = 180.0
-offset_bottom = 6.0
+offset_bottom = 77.0
 pivot_offset = Vector2(180, 6)
+theme_override_constants/line_spacing = -7
 theme_override_fonts/font = SubResource("FontVariation_midkh")
-theme_override_font_sizes/font_size = 12
-text = "TESTTEXT"
+theme_override_font_sizes/font_size = 40
+text = "PERFECT
+BLOCK!"
 horizontal_alignment = 1
 uppercase = true
 

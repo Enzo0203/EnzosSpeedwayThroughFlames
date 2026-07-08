@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b22qtbvvafpx6"
-path="res://.godot/imported/D-White sheet.png-568e1f71db1b7ac4b5ece544859c8b1d.ctex"
+uid="uid://nealm3mfbbuv"
+path="res://.godot/imported/Hellballs sheet.png-cdf21909509b24532924a541dc2709d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/General Sprites/Enemies/D-White sheet.png"
-dest_files=["res://.godot/imported/D-White sheet.png-568e1f71db1b7ac4b5ece544859c8b1d.ctex"]
+source_file="res://Sprites/General Sprites/Enemies/Hellballs sheet.png"
+dest_files=["res://.godot/imported/Hellballs sheet.png-cdf21909509b24532924a541dc2709d7.ctex"]
 
 [params]
 

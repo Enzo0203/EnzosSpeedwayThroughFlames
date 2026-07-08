@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cpmq0bb3118cr"]
 
 [ext_resource type="Script" uid="uid://bpcpvybhbkat5" path="res://Scripts/EnemyWeapons/white_ball.gd" id="1_tldaj"]
-[ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/Enemies/D-White ball sheet.png" id="2_vnc03"]
+[ext_resource type="Texture2D" uid="uid://nealm3mfbbuv" path="res://Sprites/General Sprites/Enemies/Hellballs sheet.png" id="2_vnc03"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="3_3me6a"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="3_dimt7"]
 [ext_resource type="AudioStream" uid="uid://2hxfxy1vr08i" path="res://Sfx/Combat/Hitsounds/DodgeballHit.ogg" id="4_5eted"]
@@ -137,21 +137,22 @@ _data = {
 colors = PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]
-radius = 1.41421
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ju3r4"]
 resource_local_to_scene = true
-radius = 9.84886
+radius = 7.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1889828284]
-collision_layer = 32
-collision_mask = 0
+[node name="Hellball" type="CharacterBody2D" unique_id=1889828284]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_tldaj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=483460550]
-position = Vector2(-1, 0)
 texture = ExtResource("2_vnc03")
+offset = Vector2(-0.5, -0.5)
 hframes = 2
+vframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=129384373]
 libraries/ = SubResource("AnimationLibrary_4w3o2")
@@ -171,12 +172,12 @@ afterimage_modulate = SubResource("Gradient_601ny")
 duration = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1562683582]
+visible = false
 shape = SubResource("CircleShape2D_dqv0b")
-disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1529746478 groups=["Hitbox", "Projectile"]]
 collision_layer = 32
-collision_mask = 18
+collision_mask = 16
 script = ExtResource("3_dimt7")
 Damage = 1
 Strength = 1
@@ -194,19 +195,14 @@ visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Hit" type="AudioStreamPlayer2D" parent="." unique_id=2091884841]
-stream = ExtResource("4_5eted")
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=792458920]
 rect = Rect2(-24, -24, 48, 48)
 
 [node name="Hitstopper" type="Timer" parent="." unique_id=83111861]
 one_shot = true
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
 [connection signal="blocked" from="Hitbox" to="." method="_on_hitbox_blocked"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]
 [connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]
 [connection signal="parried" from="Hitbox" to="." method="_on_hitbox_parried"]

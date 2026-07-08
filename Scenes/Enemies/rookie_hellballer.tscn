@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtha7moi082yu" path="res://Scripts/Enemies/d_white.gd" id="1_fkcf2"]
 [ext_resource type="Shader" uid="uid://c70v7tc5vlywj" path="res://MiscResources/paletteSwap.gdshader" id="2_o2sl4"]
-[ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/Enemies/D-White sheet.png" id="2_vnbog"]
+[ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/Enemies/Rookie hellballer sheet.png" id="2_vnbog"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="4_2mjlo"]
 [ext_resource type="AudioStream" uid="uid://hr1o38iyijtk" path="res://Sfx/SwooshWeak.wav" id="4_uc5dp"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="5_f7682"]
@@ -16,6 +16,9 @@ shader = ExtResource("2_o2sl4")
 shader_parameter/origin_colors = [Color(0, 0, 0, 1)]
 shader_parameter/new_colors = [Color(0, 0, 0, 1)]
 shader_parameter/swap_count = 3
+shader_parameter/rimlight = false
+shader_parameter/rimlight_color = Color(1, 1, 1, 1)
+shader_parameter/extra_modulate = Color(1, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2mhsb"]
 resource_local_to_scene = true

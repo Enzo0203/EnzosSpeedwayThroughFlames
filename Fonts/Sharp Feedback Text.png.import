@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://dd1a6i5sh5uk3"
+path="res://.godot/imported/Sharp Feedback Text.png-fc43f20251b00db77ce9533680764702.fontdata"
+
+[deps]
+
+source_file="res://Fonts/Sharp Feedback Text.png"
+dest_files=["res://.godot/imported/Sharp Feedback Text.png-fc43f20251b00db77ce9533680764702.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("33", "65-90")
+kerning_pairs=PackedStringArray()
+columns=10
+rows=3
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=2

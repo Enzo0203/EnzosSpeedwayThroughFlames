@@ -42,18 +42,19 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 
-enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING, #0-4
-SPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE, #5-9
-PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD, #10-14
-BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING, #15-19
-BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING, #20-24
-SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH, #25-29
+enum States {IDLE, JUMPING, FALLING, WALKING, RUNNING,
+SPRINTING, FALLSPRINTING, HALTING, CHARGEPUNCHCHARGE,
+PUNCHING, CHARGEPUNCHWEAK, CHARGEPUNCHSTRONG, HURT, DEAD,
+BURNJUMPING, BURNRUNNING, CROUCHPREP, CROUCHING, BLOCKING,
+BLOCKHIT, GROUNDPOUNDPREP, GROUNDPOUND, GROUNDPOUNDLAND, WALLKICKING,
+SKATING, SKATECROUCHPREP, SKATECROUCHING, SKATEJUMP, SKATEJUMPDETATCH,
 SIDESWEEP, PARRYFORWARDS, PARRYFUPWARDS, PARRYUPWARDS, SPRINTPUNCHING,
 KICK, PUNCH2, AIRSTOMPPREP, AIRSTOMPHOLD, AIRSTOMPREL,
 DROPKICKPREP, DROPKICKHOLD, DROPKICKREL, SPIKER, AIRJAB, 
-BLOCKACTIONABLE, BLOCKPERFECT, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, CHARGEKICKSTRONG, 
-CHARGEKICKEXPLODE, WALLRUN, DODGE, LANDING, LANDINGWALK, 
-LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH, HURTJUMP, UPPERCUT
+BLOCKACTIONABLE, BLOCKPERFECT, SEXKICK, CHARGEKICKCHARGE, CHARGEKICKWEAK, 
+CHARGEKICKSTRONG, CHARGEKICKEXPLODE, WALLRUN, DODGE, LANDING, 
+LANDINGWALK, LANDINGAIRJAB, LANDINGSEXKICK, SHOULDERBASH, HURTJUMP, 
+UPPERCUT, PEDALKICK
 }
 
 var state: States
@@ -228,7 +229,8 @@ func _physics_process(delta: float) -> void:
 			landingsexkick(delta)
 		States.SHOULDERBASH:
 			shoulderbashing(delta)
-			
+		States.PEDALKICK:
+			pedalkicking(delta)
 	# Constant functions
 	update_animations()
 	flip_hitboxes()
@@ -792,25 +794,6 @@ func chargekickexplode(delta: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-func sexkick(delta: float) -> void:
-	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
-	velocity.y += gravity * delta
-	velocity.y = min(velocity.y, 500)
-	# Cut off jump when button released
-	if not Input.is_action_pressed("input_jump") and velocity.y < JUMP_VELOCITY / 2:
-		velocity.y = JUMP_VELOCITY / 2
-	# What can this transition to
-	if animation.is_playing() == false:
-		if is_on_floor():
-			if INPUT_AXIS == 0:
-				change_state(States.IDLE)
-			else:
-				change_state(States.WALKING)
-		else:
-			change_state(States.FALLING)
-	if animation.get_current_animation_position() >= 0.2 and is_on_floor():
-		change_state(States.LANDINGSEXKICK)
-
 func parryforwards(delta: float) -> void:
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
@@ -895,8 +878,48 @@ func kick(delta: float) -> void:
 		else:
 			change_state(States.FALLING)
 
-var canEnzoStomp: bool
+func sexkick(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
+	velocity.y += gravity * delta
+	velocity.y = min(velocity.y, 500)
+	# Cut off jump when button released
+	if not Input.is_action_pressed("input_jump") and velocity.y < JUMP_VELOCITY / 2:
+		velocity.y = JUMP_VELOCITY / 2
+	# What can this transition to
+	if animation.is_playing() == false:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+	if animation.get_current_animation_position() >= 0.2 and is_on_floor():
+		change_state(States.LANDINGSEXKICK)
 
+func pedalkicking(delta: float) -> void:
+	if animation.current_animation_position < 0.1:
+		velocity.x = move_toward(velocity.x, 0, FRICTION / 2 * delta)
+	else:
+		velocity.x = 600 * sprite.scale.x
+	velocity.y = 0
+	# Cut off jump when button released
+	if not Input.is_action_pressed("input_jump") and velocity.y < JUMP_VELOCITY / 2:
+		velocity.y = JUMP_VELOCITY / 2
+	# What can this transition to
+	if animation.is_playing() == false or is_on_wall()\
+	or ((velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1)) and animation.get_current_animation_position() >= 0.3:
+		if is_on_floor():
+			if INPUT_AXIS == 0:
+				change_state(States.IDLE)
+			else:
+				change_state(States.WALKING)
+		else:
+			change_state(States.FALLING)
+	if animation.get_current_animation_position() >= 0.4 and is_on_floor():
+		change_state(States.LANDINGSEXKICK)
+
+var canEnzoStomp: bool
 func airstompprep(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
@@ -1171,6 +1194,8 @@ func groundpoundland(delta: float) -> void:
 
 func wallkicking(delta: float) -> void:
 	# What to do
+	if animation.current_animation_position >= 0.05:
+		actionable()
 	velocity.x = move_toward(velocity.x, SPEED * INPUT_AXIS, ACCELERATION * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -1408,6 +1433,8 @@ func actionable(exceptions: Array = []) -> void:
 				else:
 					change_state(States.AIRJAB)
 			if Input.is_action_just_pressed("input_kick"):
+				if INPUT_AXIS != 0 and not Input.is_action_pressed("ui_down"):
+					change_state(States.PEDALKICK)
 				if Input.is_action_pressed("ui_down") and canEnzoStomp == true:
 					velocity.y = -200
 					change_state(States.AIRSTOMPPREP)
@@ -1503,6 +1530,8 @@ func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, DeathType
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 
 func _on_hurtbox_block(_area: Area2D) -> void:
+	PopupTextManager.popup_text("BLOCK!", Vector2(global_position.x, global_position.y - 50), \
+	40, Color("391c9bff"), "Jump", 1.0, "res://Fonts/Blocked Feedback Text.png")
 	change_state(States.BLOCKHIT)
 	if state == States.BLOCKHIT:
 		animation.stop(true)
@@ -1515,6 +1544,8 @@ func _on_hurtbox_block(_area: Area2D) -> void:
 	give_score(25, true)
 
 func _on_hurtbox_perfect_block(_area: Area2D) -> void:
+	PopupTextManager.popup_text("PERFECT\nBLOCK!", Vector2(global_position.x, global_position.y - 90), \
+	40, Color("46e0ffff"), "Jump", 1.0, "res://Fonts/Sharp Feedback Text.png")
 	change_state(States.BLOCKPERFECT)
 	intangibility_timer.wait_time = 0.7
 	intangibility_timer.start()
@@ -1540,18 +1571,21 @@ func _on_hitbox_clank(area: Area2D) -> void:
 	else:
 		sprite.scale.x = -1
 		velocity.x = 200
-	PopupTextManager.popup_text("CLANK", hitboxshape.global_position, Color("cfcfcfff"), "Shrink", 2.0)
+	PopupTextManager.popup_text("CLANK", hitboxshape.global_position, 12, Color("cfcfcfff"), "Shrink", 2.0)
 
 func _on_hitbox_clash_counter(_area: Area2D) -> void:
 	pass
-	#PopupTextManager.popup_text("TRAMPLE", hitboxshape.global_position, Color("ff6c00ff"))
+	#PopupTextManager.popup_text("TRAMPLE", hitboxshape.global_position, 12, \
+	#Color("ff6c00ff"))
 
 func _on_hitbox_clash_countered(_area: Area2D) -> void:
 	pass
-	#PopupTextManager.popup_text("TRAMPLED", hitboxshape.global_position, Color("854520ff"))
+	#PopupTextManager.popup_text("TRAMPLED", hitboxshape.global_position, 12, \
+	#Color("854520ff"))
 
 func _on_hitbox_rebound(_area: Area2D) -> void:
-	PopupTextManager.popup_text("REBOUND", hitboxshape.global_position, Color("50e591ff"))
+	PopupTextManager.popup_text("REBOUND", hitboxshape.global_position, 12, \
+	Color("50e591ff"))
 
 func _on_hitbox_blocked(_area: Area2D) -> void:
 	pr_blocked.set_emitting(true)
@@ -1733,6 +1767,8 @@ func update_animations() -> void:
 		animation.play("groundpoundland")
 	if state == States.WALLKICKING:
 		animation.play("wallkick")
+		if INPUT_AXIS != 0 and animation.current_animation_position >= 0.05:
+			$Spritesheet.scale.x = INPUT_AXIS
 	if state == States.SKATING:
 		animation.play("skating")
 	if state == States.SKATECROUCHPREP:
@@ -1807,6 +1843,8 @@ func update_animations() -> void:
 		animation.play("landsexkick")
 	if state == States.SHOULDERBASH:
 		animation.play("shoulderbash")
+	if state == States.PEDALKICK:
+		animation.play("pedalkick")
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	$"Sound effects/RunningFootsteps".stop()
