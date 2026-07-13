@@ -1,38 +1,33 @@
 extends Area2D
+class_name Pushbox
 
-func _ready() -> void:
-	assert(get_parent() is CharacterBody2D, "Parent of Pushbox must be CharacterBody2D")
+@export var push_speed: float = 10.0
 
-func _physics_process(_delta: float) -> void:
-	if not get_parent().is_on_wall():
-		if has_overlapping_areas():
-			if get_overlapping_areas().filter(is_pushbox).all(is_to_the_left):
-				get_parent().global_position.x += 2
-			elif get_overlapping_areas().filter(is_pushbox).all(is_to_the_right):
-				get_parent().global_position.x -= 2
-			if get_overlapping_areas().filter(is_pushbox).any(is_in_same_spot):
-				get_parent().global_position.x += [-2, 2].pick_random()
-
-func is_pushbox(area: Area2D) -> bool:
-	if area.is_in_group("Pushbox"):
-		return true
-	else:
-		return false
-
-func is_to_the_left(pushbox: Area2D) -> bool:
-	if pushbox.global_position.x < global_position.x:
-		return true
-	else:
-		return false
-
-func is_to_the_right(pushbox: Area2D) -> bool:
-	if pushbox.global_position.x < global_position.x:
-		return true
-	else:
-		return false
-
-func is_in_same_spot(pushbox: Area2D) -> bool:
-	if pushbox.global_position.x == global_position.x:
-		return true
-	else:
-		return false
+func _physics_process(delta: float) -> void:
+	for area: Area2D in get_overlapping_areas():
+		if area is Pushbox and area != self:
+			var opposing_pushbox: Pushbox = area
+			
+			var distance: float = get_parent().global_position.x - opposing_pushbox.get_parent().global_position.x
+			var direction: float = sign(distance)
+			if direction == 0: 
+				direction = 1 
+			
+			# Calculate exactly how many pixels to move this frame
+			var push_step: float = direction * push_speed * delta
+			
+			# Create a Transform2D representing the previewed movement
+			var test_transform: Transform2D = get_parent().global_transform
+			test_transform.origin.x += push_step
+			
+			# Test if moving would clip into wall
+			if not get_parent().test_move(test_transform, get_parent().velocity):
+				# Safe to move directly via position
+				get_parent().global_position.x += push_step
+			else:
+				# If hitting a wall, push the other thing instead
+				var opposing_transform: Transform2D = opposing_pushbox.get_parent().global_transform
+				opposing_transform.origin.x -= push_step
+				
+				if not opposing_pushbox.get_parent().test_move(opposing_transform, get_parent().velocity):
+					opposing_pushbox.get_parent().global_position.x -= push_step

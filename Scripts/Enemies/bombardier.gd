@@ -239,7 +239,7 @@ func dead(delta: float) -> void:
 	apply_gravity(delta, false)
 	collision_mask = 0
 
-func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType: String) -> void:
+func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2) -> void:
 	if is_dead == false:
 		if health - Damage <= 0:
 			damage(health)

@@ -19,4 +19,4 @@ font_character_spacing: int = 0\
 	popuptext_instance.popuptext_anim_speed = animation_speed
 	popuptext_instance.popuptext_font = load(font)
 	popuptext_instance.popuptext_font_character_spacing = font_character_spacing
-	get_parent().add_child(popuptext_instance)
+	get_parent().call_deferred("add_child", popuptext_instance)

@@ -3,10 +3,6 @@
 [ext_resource type="Script" uid="uid://d2we27x4rl5iq" path="res://Scripts/Player/enzo.gd" id="1_o30bu"]
 [ext_resource type="Texture2D" uid="uid://v44mpku3wpki" path="res://Sprites/General Sprites/Enzo Sheet.png" id="2_6b6sq"]
 [ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_i6v0c"]
-[ext_resource type="Texture2D" uid="uid://tx7i7kxffs0r" path="res://Sprites/HUD/Particles/TextBlock.png" id="3_k7fhu"]
-[ext_resource type="Texture2D" uid="uid://gjqrq4mr4qps" path="res://Sprites/HUD/Particles/TextBlocked.png" id="5_7iwhy"]
-[ext_resource type="Texture2D" uid="uid://byf1krmfkpkld" path="res://Sprites/HUD/Particles/TextPerfectBlock.png" id="5_b6ds8"]
-[ext_resource type="Texture2D" uid="uid://kdnmo0wxd1ij" path="res://Sprites/HUD/Particles/TextParry.png" id="6_b7bpl"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="7_6b6sq"]
 [ext_resource type="AudioStream" uid="uid://bb2j584xkriq3" path="res://Sfx/Jump.wav" id="7_b6ds8"]
 [ext_resource type="AudioStream" uid="uid://bjqhmi6q1vrw8" path="res://Sfx/SwooshWeak3.wav" id="8_7iwhy"]
@@ -32,27 +28,11 @@
 [ext_resource type="AudioStream" uid="uid://cww6x8eeevia7" path="res://Sfx/Skid.ogg" id="31_3r4sx"]
 [ext_resource type="AudioStream" uid="uid://d1ujdnc2tlbun" path="res://Sfx/PlaneDive.ogg" id="32_dxfpo"]
 [ext_resource type="AudioStream" uid="uid://dliyga4hem8sv" path="res://Sfx/Crash.ogg" id="33_l61qk"]
+[ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="33_mj6lw"]
 [ext_resource type="AudioStream" uid="uid://grd0fbtua81q" path="res://Sfx/Footsteps/FootstepCrocs1.ogg" id="35_3r4sx"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="35_r1mvx"]
 [ext_resource type="AudioStream" uid="uid://6k3myo1xei8q" path="res://Sfx/Footsteps/FootstepCrocs2.ogg" id="36_5iiub"]
 [ext_resource type="Script" uid="uid://baeft1c5it6q0" path="res://Scripts/Technical/aura_emitter.gd" id="36_d2p4v"]
-
-[sub_resource type="Curve" id="Curve_ehqkl"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Curve" id="Curve_7iwhy"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.753788, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Curve" id="Curve_yom7k"]
-_limits = [-10.0, 10.0, 0.0, 1.0]
-_data = [Vector2(0, -4.49057), 0.0, 55.0859, 0, 0, Vector2(0.253788, 5.4717), 9.26847e-06, 9.26847e-06, 0, 0, Vector2(0.511364, -4.18868), 1.52454e-06, 1.52454e-06, 0, 0, Vector2(0.753788, 4.26415), 1.80995e-06, 1.80995e-06, 0, 0, Vector2(1, -3.28302), -35.0189, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="Curve" id="Curve_au0cc"]
-_data = [Vector2(0.0113636, 1), 0.0, 0.0, 0, 0, Vector2(0.738636, 1), 0.0, 0.0, 0, 0, Vector2(0.92803, 0), 0.0, 0.0, 0, 0]
-point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o30bu"]
 size = Vector2(16, 72)
@@ -358,18 +338,6 @@ tracks/2/keys = {
 "clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sound effects/Block:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_jonr8"]
 resource_name = "blockperfect"
@@ -386,35 +354,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [192, 193, 194, 195, 194, 195]
 }
-tracks/1/type = "value"
+tracks/1/type = "animation"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sound effects/Block:playing")
+tracks/1/path = NodePath("HitboxDataPlayer")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
 }
 tracks/2/type = "animation"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HitboxDataPlayer")
+tracks/2/path = NodePath("AfterimageAnims")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"clips": PackedStringArray("idle"),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "animation"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AfterimageAnims")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "clips": PackedStringArray("Idle"),
 "times": PackedFloat32Array(0)
 }
@@ -8585,6 +8541,9 @@ _data = {
 [sub_resource type="Gradient" id="Gradient_414wy"]
 colors = PackedColorArray(1, 1, 1, 0.75000006, 1, 1, 1, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxfpo"]
+size = Vector2(49.24884, 49.24886)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_o30bu"]
 radius = 4.472136
 
@@ -8737,73 +8696,7 @@ material = ExtResource("2_i6v0c")
 texture = ExtResource("2_6b6sq")
 hframes = 7
 vframes = 40
-frame = 199
-
-[node name="Texts" type="Node2D" parent="Spritesheet" unique_id=819118818]
-
-[node name="Block" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=23356231]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("3_k7fhu")
-lifetime = 0.5
-one_shot = true
-randomness = 1.0
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 10.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-scale_amount_curve = SubResource("Curve_ehqkl")
-
-[node name="Blocked" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=1658595665]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("5_7iwhy")
-lifetime = 0.5
-one_shot = true
-randomness = 1.0
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 10.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-angular_velocity_min = -60.0
-angular_velocity_max = 60.0
-scale_amount_curve = SubResource("Curve_ehqkl")
-
-[node name="PerfectBlock" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=26402471]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("5_b6ds8")
-lifetime = 0.5
-one_shot = true
-randomness = 1.0
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 10.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-scale_amount_curve = SubResource("Curve_7iwhy")
-
-[node name="Parry" type="CPUParticles2D" parent="Spritesheet/Texts" unique_id=31956166]
-position = Vector2(0, -30)
-emitting = false
-amount = 1
-texture = ExtResource("6_b7bpl")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 10.0
-initial_velocity_min = 300.0
-initial_velocity_max = 300.0
-angular_velocity_min = 5.0
-angular_velocity_max = 5.0
-angular_velocity_curve = SubResource("Curve_yom7k")
-scale_amount_curve = SubResource("Curve_au0cc")
+frame = 192
 
 [node name="CollisionBox" type="CollisionShape2D" parent="." unique_id=671112625]
 visible = false
@@ -8812,6 +8705,7 @@ shape = SubResource("RectangleShape2D_o30bu")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1496553347 groups=["Hurtbox"]]
 editor_description = "neut"
+visible = false
 position = Vector2(0, 4)
 collision_layer = 16
 collision_mask = 96
@@ -8825,6 +8719,7 @@ shape = SubResource("RectangleShape2D_u3wga")
 debug_color = Color(1, 0, 0.133333, 0.419608)
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1748236585 node_paths=PackedStringArray("Shape") groups=["Hitbox"]]
+visible = false
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("7_6b6sq")
@@ -8965,6 +8860,18 @@ sprite = NodePath("../../Spritesheet")
 hitstopper = NodePath("../../Hitstopper")
 interval = 0.1
 
+[node name="Pushbox" type="Area2D" parent="." unique_id=1221816437 groups=["Pushbox"]]
+visible = false
+script = ExtResource("33_mj6lw")
+
+[node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=2144427128]
+position = Vector2(-1.1920929e-07, 4.499997)
+rotation = 1.1780972
+scale = Vector2(0.9999996, 0.99999994)
+skew = -0.7853984
+shape = SubResource("RectangleShape2D_dxfpo")
+debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
+
 [node name="Hitstopper" type="Timer" parent="." unique_id=1243517027]
 one_shot = true
 
@@ -9054,6 +8961,7 @@ position = Vector2(21, -33)
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
 [connection signal="block" from="Hurtbox" to="." method="_on_hurtbox_block"]
+[connection signal="dodged" from="Hurtbox" to="." method="_on_hurtbox_dodged"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="perfectBlock" from="Hurtbox" to="." method="_on_hurtbox_perfect_block"]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]

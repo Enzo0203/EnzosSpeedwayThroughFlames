@@ -29,7 +29,7 @@ func destroy() -> void:
 func randomizeAudioPitch(audio: AudioStreamPlayer2D) -> void:
 	audio.pitch_scale = randf_range(0.6, 1.4)
 
-func _on_crate_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, _DeathType: String) -> void:
+func _on_crate_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2) -> void:
 	if area.is_in_group("Explosion"):
 		await get_tree().create_timer(0.3, false).timeout
 		explode()

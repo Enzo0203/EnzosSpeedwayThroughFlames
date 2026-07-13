@@ -211,7 +211,7 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 	else:
 		Globalvars.EnzoScore += amount
 
-func _on_hurtbox_hurt(_area: Area2D, Damage:int, Knockback: Vector2, _DeathType: String) -> void:
+func _on_hurtbox_hurt(_area: Area2D, Damage:int, Knockback: Vector2) -> void:
 	if is_dead == false:
 		addToMiniCombo(1)
 		give_score(60, true)

@@ -32,9 +32,6 @@ extends Control
 @onready var MiniComboNumbers: Label = $Combo/MiniComboNumbers
 @onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
-@onready var MultiNumber1: AnimationPlayer = $Combo/MultiplierNumber1/AnimationPlayer
-@onready var MultiNumber2: AnimationPlayer = $Combo/MultiplierNumber2/AnimationPlayer
-
 var health: Array
 var regen: Array
 var miniComboMultiplier: float = 0

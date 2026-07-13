@@ -1,4 +1,4 @@
-extends Area2D
+class_name Hitbox extends Area2D
 
 @export_category("Children")
 
@@ -59,22 +59,48 @@ enum OnHitShapeBehaviors {
 ## Sound effect played when this hits something.
 @export var ImpactSfx: AudioStream
 ## Type of animation Enzo plays when killed by this attack.
-@export var DeathType: String
+@export var DeathType: EnzoDeathTypes
 enum EnzoDeathTypes { 
 	GENERIC,
 	BLUNT,
 	FIRE,
 	SPIKE}
 
+## Emitted whenever this Hitbox hits a Hurtbox but its final Damage post calculation
+## is equal or lower than 0.
+signal tinked(area: Area2D)
+## Emitted whenever this Hitbox hits another Hitbox whose strength has a difference
+## of 1 or less than this Hitbox's.
 signal clank(area: Area2D)
+## Emitted whenever this Hitbox hits another Hitbox whose strength is lower
+## than this Hitbox's. Only possible if both Hitboxes are Clankable.
 signal clashCounter(area: Area2D)
+## Emitted whenever this Hitbox hits a projectile's Hitbox whose strength is lower
+## than this Hitbox's. Only possible if both [Hitbox]es are Clankable and this
+## Hitbox is a Deflector.
 signal rebound(area: Area2D)
+## Emitted whenever this Hitbox hits another [Hitbox] whose strength is higher
+## than this Hitbox's. Only possible if both [Hitbox]es are Clankable.
 signal clashCountered(area: Area2D)
+## Emitted whenever this Hitbox hits a Hitbox whose strength is higher
+## than this Hitbox's and this Hitbox belongs to a projectile.
+## Only possible if both [Hitbox]es are Clankable and the other [Hitbox] is a Deflector.
 signal rebounded(area: Area2D)
+## Emitted whenever this Hitbox hits a projectile's [Hitbox] whose strength is lower
+## than this [Hitbox]'s. Only possible if this [Hitbox] is a Parrybox and the other
+## [Hitbox] is parriable.
 signal parry(area: Area2D, range: String)
+## Emitted whenever this Hitbox hits a projectile's Hitbox whose strength is lower
+## than this Hitbox's. Only possible if this [Hitbox] is [member Parriable] and the other
+## Hitbox is a Parrybox.
 signal parried(area: Area2D, range: String)
 
+## Emitted when this Hitbox succesfully hurts a [Hurtbox].
 signal hurtSomething(area: Area2D)
+
+## Emitted when this [Hitbox] hits a [Hurtbox] while its [member Hurtbox.Intangible] is [code]true[/code].
+signal missed(area: Area2D)
+## Emitted when this Hitbox hits a [Hurtbox] whose [member Hurtbox.State] is Blocking.
 signal blocked(area: Area2D)
 
 func _ready() -> void:
@@ -82,19 +108,24 @@ func _ready() -> void:
 		connect("area_entered", _on_area_entered)
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Hurtbox"):
-		if not area.Intangible and not area.IntangibleGrace and not area.IntangibleSpecial:
-			if area.State == area.Hurtbox_States.VULNERABLE:
-				if not area.DamageTakeMultiplier == 0.0:
-					if not Damage == 0:
+	if area is Hurtbox:
+		if not (area.IntangibleGrace or area.IntangibleSpecial):
+			if not area.Intangible:
+				if area.State == area.Hurtbox_States.VULNERABLE:
+					if Damage * DamageGiveMultiplier * area.DamageTakeMultiplier > 0:
 						emit_signal("hurtSomething", area)
 						if OnHitShapeBehavior == OnHitShapeBehaviors.DISABLE:
 							Shape.set_deferred("disabled", true)
-				if area.Parriable and Parrybox:
-					emit_signal("parry", area, "Melee")
-			if area.State == area.Hurtbox_States.BLOCKING or area.State == area.Hurtbox_States.PERFECT_BLOCKING:
-				emit_signal("blocked", area)
-	if area.is_in_group("Hitbox"):
+					else:
+						emit_signal("tinked", area)
+					if area.Parriable and Parrybox:
+						emit_signal("parry", area, "Melee")
+				if area.State == area.Hurtbox_States.BLOCKING or area.State == area.Hurtbox_States.PERFECT_BLOCKING:
+					emit_signal("blocked", area)
+			else:
+				emit_signal("missed", area)
+
+	if area is Hitbox:
 		if Clankable and area.Clankable:
 			if Strength - 1 > area.Strength:
 				if not Parrybox:

@@ -129,7 +129,7 @@ script = ExtResource("3_57wqk")
 Damage = 2
 Knockback = Vector2(0, -600)
 Clankable = false
-DeathType = "spike"
+DeathType = 3
 metadata/deathtype = "spike"
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=1254387971]
@@ -144,7 +144,7 @@ script = ExtResource("3_57wqk")
 Damage = 2
 Knockback = Vector2(0, -600)
 Clankable = false
-DeathType = "spike"
+DeathType = 3
 metadata/deathtype = "spike"
 
 [node name="Hitbox2Shape" type="CollisionShape2D" parent="Hitbox2" unique_id=1007031504]

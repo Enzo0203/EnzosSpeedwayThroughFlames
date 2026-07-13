@@ -36,8 +36,6 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var labelspeed: Label = $Speed
 @onready var labelthird: Label = $Slabel
 @onready var ExplosionMarker: Marker2D = $ExplosionMarker
-@onready var pr_parry: CPUParticles2D = $Spritesheet/Texts/Parry
-@onready var pr_blocked: CPUParticles2D = $Spritesheet/Texts/Blocked
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
@@ -1469,13 +1467,18 @@ func actionable(exceptions: Array = []) -> void:
 var collidingWithHurtbox: bool = false
 var collidingWithLava: bool = false
 var canWallJump: bool = false
-var howToDie: String
+var howToDie: EnzoDeathTypes
+enum EnzoDeathTypes { 
+	GENERIC,
+	BLUNT,
+	FIRE,
+	SPIKE}
 var is_dead: bool = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Lava"):
 		if lava_invincibility.time_left == 0:
-			howToDie = "burn"
+			howToDie = EnzoDeathTypes.FIRE
 			change_state(States.BURNJUMPING)
 			if area.global_position.y > global_position.y:
 				velocity.y = -800
@@ -1511,8 +1514,8 @@ func collides_with_hitbox(area: Area2D) -> bool:
 	else:
 		return false
 
-func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, DeathType: String) -> void:
-	howToDie = DeathType
+func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2) -> void:
+	howToDie = area.DeathType
 	check_and_damage(1, true, true, 100)
 	$PaletteSwapAnims.play("Hurt")
 	if health >= 1:
@@ -1529,7 +1532,12 @@ func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2, DeathType
 	elif health == 0:
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 
+func _on_hurtbox_dodged(_area: Area2D) -> void:
+	PopupTextManager.popup_text("DODGE!", Vector2(global_position.x, global_position.y - 50), \
+	40, Color("c1fffaff"), "Jump", 1.0, "res://Fonts/Blocked Feedback Text.png")
+
 func _on_hurtbox_block(_area: Area2D) -> void:
+	GlobalAudioManager.play_audio_2d("res://Sfx/Block.ogg", global_position, 0, randf_range(0.9, 1.1))
 	PopupTextManager.popup_text("BLOCK!", Vector2(global_position.x, global_position.y - 50), \
 	40, Color("391c9bff"), "Jump", 1.0, "res://Fonts/Blocked Feedback Text.png")
 	change_state(States.BLOCKHIT)
@@ -1544,6 +1552,7 @@ func _on_hurtbox_block(_area: Area2D) -> void:
 	give_score(25, true)
 
 func _on_hurtbox_perfect_block(_area: Area2D) -> void:
+	GlobalAudioManager.play_audio_2d("res://Sfx/Parry.ogg", global_position, 0, randf_range(1.4, 1.6))
 	PopupTextManager.popup_text("PERFECT\nBLOCK!", Vector2(global_position.x, global_position.y - 90), \
 	40, Color("46e0ffff"), "Jump", 1.0, "res://Fonts/Sharp Feedback Text.png")
 	change_state(States.BLOCKPERFECT)
@@ -1559,10 +1568,11 @@ func _on_hitbox_hurt_something(area: Area2D) -> void:
 		hitStop(min(0.1 * hitbox.Damage, 0.3))
 
 func _on_hitbox_parry(_area: Area2D, _range: String) -> void:
+	PopupTextManager.popup_text("PARRY!", Vector2(global_position.x, global_position.y - 50), \
+	40, Color("37ec9dff"), "Jump", 1.0, "res://Fonts/Sharp Feedback Text.png")
 	give_score(100, true)
 	GlobalAudioManager.play_audio_2d("res://Sfx/Parry.ogg", hitboxshape.global_position)
 	hitStop(0.25)
-	pr_parry.set_emitting(true)
 
 func _on_hitbox_clank(area: Area2D) -> void:
 	if area.global_position.x >= position.x:
@@ -1588,7 +1598,8 @@ func _on_hitbox_rebound(_area: Area2D) -> void:
 	Color("50e591ff"))
 
 func _on_hitbox_blocked(_area: Area2D) -> void:
-	pr_blocked.set_emitting(true)
+	PopupTextManager.popup_text("BLOCKED", Vector2(global_position.x, global_position.y - 50), \
+	40, Color("0c356aff"), "Jump", 1.0, "res://Fonts/Blocked Feedback Text.png")
 
 func flip_hitboxes() -> void:
 	hitbox.scale.x = sprite.scale.x
@@ -1737,11 +1748,11 @@ func update_animations() -> void:
 	if state == States.HURTJUMP:
 		animation.play("hurtjump")
 	if state == States.DEAD:
-		if howToDie == "blunt":
+		if howToDie == EnzoDeathTypes.BLUNT:
 			animation.play("deadblunt")
-		if howToDie == "burn":
+		if howToDie == EnzoDeathTypes.FIRE:
 			animation.play("deadburn")
-		if howToDie == "spike":
+		if howToDie == EnzoDeathTypes.SPIKE:
 			animation.play("deadspike")
 	if state == States.BURNJUMPING:
 		if INPUT_AXIS != 0:

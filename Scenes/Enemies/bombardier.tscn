@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://3vlfbpqg41vv" path="res://Sfx/Combat/Hitsounds/Slap.wav" id="8_5kbf8"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="8_d8tqx"]
 [ext_resource type="AudioStream" uid="uid://chdlwixxscanv" path="res://Sfx/ChargeAttack.ogg" id="9_d8tqx"]
+[ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="10_qrsml"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="12_okksv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6tv6m"]
@@ -1193,6 +1194,9 @@ _data = {
 &"RESET": SubResource("Animation_b0gc5")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhbao"]
+size = Vector2(61.155163, 61.15518)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbsy5"]
 atlas = ExtResource("6_5kbf8")
 region = Rect2(0, 0, 94, 18)
@@ -1245,7 +1249,7 @@ Shape = NodePath("HitboxShape")
 Damage = 4
 Strength = 4
 ImpactSfx = ExtResource("8_5kbf8")
-DeathType = "blunt"
+DeathType = 1
 metadata/dmg = 4
 metadata/strength = 4
 metadata/deathtype = "blunt"
@@ -1339,6 +1343,17 @@ libraries/ = SubResource("AnimationLibrary_5kbf8")
 
 [node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=74713521]
 libraries/ = SubResource("AnimationLibrary_t6rol")
+
+[node name="Pushbox" type="Area2D" parent="." unique_id=712842390 groups=["Pushbox"]]
+script = ExtResource("10_qrsml")
+
+[node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=1659055904]
+position = Vector2(0, -7.500001)
+rotation = 1.1780972
+scale = Vector2(0.9999996, 0.99999994)
+skew = -0.7853984
+shape = SubResource("RectangleShape2D_xhbao")
+debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
 
 [node name="Health" type="Node2D" parent="." unique_id=933598119]
 

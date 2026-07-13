@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b22qtbvvafpx6" path="res://Sprites/General Sprites/Enemies/Rookie hellballer sheet.png" id="2_vnbog"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="4_2mjlo"]
 [ext_resource type="AudioStream" uid="uid://hr1o38iyijtk" path="res://Sfx/SwooshWeak.wav" id="4_uc5dp"]
+[ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="5_8hpen"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="5_f7682"]
 [ext_resource type="Texture2D" uid="uid://cjvs0qi5g4bus" path="res://Sprites/HUD/DemonHeartEmpty.png" id="7_tbr1e"]
 [ext_resource type="Texture2D" uid="uid://3cta252ott4x" path="res://Sprites/HUD/Health/DemonHeartWeakSheet.png" id="8_2mjlo"]
@@ -361,6 +362,9 @@ _data = {
 &"RESET": SubResource("Animation_b0gc5")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbkf1"]
+size = Vector2(44.378075, 44.378094)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7d0"]
 resource_local_to_scene = true
 size = Vector2(20, 85)
@@ -407,13 +411,12 @@ metadata/state = "vuln"
 visible = false
 position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_2mhsb")
-disabled = true
 debug_color = Color(0.947641, 2.31028e-06, 0.582125, 0.42)
 
 [node name="EnzoDetector" type="RayCast2D" parent="." unique_id=1107464802]
 modulate = Color(0.0221348, 0.268932, 1.68458e-07, 1)
-position = Vector2(0, 32)
-target_position = Vector2(300, -27)
+position = Vector2(0, 8)
+target_position = Vector2(299, 22)
 collision_mask = 18
 hit_from_inside = true
 collide_with_areas = true
@@ -423,6 +426,17 @@ libraries/ = SubResource("AnimationLibrary_l6x4n")
 
 [node name="PaletteSwapAnims" type="AnimationPlayer" parent="." unique_id=1971271918]
 libraries/ = SubResource("AnimationLibrary_i4iyn")
+
+[node name="Pushbox" type="Area2D" parent="." unique_id=974827984 groups=["Pushbox"]]
+script = ExtResource("5_8hpen")
+
+[node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=1080984674]
+position = Vector2(-2.3841858e-07, 8.999996)
+rotation = 1.1780972
+scale = Vector2(0.9999996, 0.99999994)
+skew = -0.7853984
+shape = SubResource("RectangleShape2D_tbkf1")
+debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=991362969]
 visible = false

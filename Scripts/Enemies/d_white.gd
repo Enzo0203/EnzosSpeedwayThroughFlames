@@ -84,6 +84,11 @@ func idle(delta: float) -> void:
 				launch_ball()
 
 func throw(delta: float) -> void:
+	if animation.current_animation_position <= 0.1:
+		if global_position.x <= Globalvars.EnzoPosition.x:
+			sprite.scale.x = 1
+		else:
+			sprite.scale.x = -1
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	velocity.x = move_toward(velocity.x, 0, 600 * delta)
@@ -206,7 +211,7 @@ func give_score(amount: int, accountForMultiplier: bool) -> void:
 	else:
 		Globalvars.EnzoScore += amount
 
-func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2, _DeathType: String) -> void:
+func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2) -> void:
 	if is_dead == false:
 		if health - Damage <= 0:
 			damage(health)

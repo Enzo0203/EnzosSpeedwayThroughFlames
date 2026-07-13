@@ -1534,7 +1534,7 @@ Shape = NodePath("HitboxShape")
 Damage = 2
 Strength = 2
 ImpactSfx = ExtResource("6_kcdes")
-DeathType = "blunt"
+DeathType = 1
 metadata/dmg = 2
 metadata/strength = 2
 metadata/deathtype = "blunt"
@@ -1542,6 +1542,7 @@ metadata/deathtype = "blunt"
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=289349016]
 position = Vector2(21, 21)
 shape = SubResource("RectangleShape2D_avpfy")
+disabled = true
 debug_color = Color(0.909804, 0, 0.737255, 0.419608)
 
 [node name="EnzoDetector" type="Area2D" parent="." unique_id=1185635485]
@@ -1575,13 +1576,12 @@ shape = SubResource("RectangleShape2D_42vda")
 debug_color = Color(0.698039, 0.494118, 0, 0.419608)
 
 [node name="Pushbox" type="Area2D" parent="." unique_id=1324923143 groups=["Pushbox"]]
-visible = false
 script = ExtResource("7_kcdes")
 
 [node name="PushboxShape" type="CollisionShape2D" parent="Pushbox" unique_id=1540238381]
 position = Vector2(-1.1920929e-07, 18.999996)
 rotation = 1.1780972
-scale = Vector2(0.99999964, 0.99999994)
+scale = Vector2(0.9999996, 0.99999994)
 skew = -0.7853984
 shape = SubResource("RectangleShape2D_bnikn")
 debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)

@@ -137,7 +137,7 @@ _data = {
 colors = PackedColorArray(0, 1, 0, 0.75000006, 0, 1, 0, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqv0b"]
-radius = 7.0
+radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ju3r4"]
 resource_local_to_scene = true
@@ -172,7 +172,6 @@ afterimage_modulate = SubResource("Gradient_601ny")
 duration = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1562683582]
-visible = false
 shape = SubResource("CircleShape2D_dqv0b")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1529746478 groups=["Hitbox", "Projectile"]]
@@ -184,7 +183,7 @@ Strength = 1
 Knockback = Vector2(0, -100)
 Parriable = true
 ImpactSfx = ExtResource("4_5eted")
-DeathType = "blunt"
+DeathType = 1
 
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=1352693097]
 shape = SubResource("CircleShape2D_ju3r4")

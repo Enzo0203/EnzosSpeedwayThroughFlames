@@ -41,5 +41,5 @@ func explode() -> void:
 func destroy() -> void:
 	queue_free()
 
-func _on_hurtbox_hurt(_area: Area2D, _Damage: int, Knockback: Vector2, _DeathType: String) -> void:
+func _on_hurtbox_hurt(_area: Area2D, _Damage: int, Knockback: Vector2) -> void:
 	velocity = Knockback

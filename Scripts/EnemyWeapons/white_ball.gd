@@ -43,8 +43,10 @@ func _ready() -> void:
 		global_position = instanceSpawnPosition
 		velocity = instanceInitVelocity
 	gravity = 0
+	dissappearsOnHurtingSomething = true
 	await get_tree().create_timer(0.3, false).timeout
-	gravity = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
+	if not parried:
+		gravity = ProjectSettings.get_setting("physics/2d/default_gravity") - 500
 
 func _physics_process(delta: float) -> void:
 	if hitstopper.time_left > 0:
@@ -59,12 +61,16 @@ func _physics_process(delta: float) -> void:
 
 # Hit/hurtbox functions
 
+var parried: bool = false
+
 func _on_hitbox_parried(area: Area2D, _range: String) -> void:
+	parried = true
 	$AfterimageAnims.play("Parried")
-	hitbox.set_collision_layer_value(6, false)
-	hitbox.set_collision_layer_value(5, true)
-	hitbox.set_collision_mask_value(5, false)
-	hitbox.set_collision_mask_value(6, true)
+	dissappearsOnHurtingSomething = false
+	hitbox.collision_layer = 0
+	hitbox.collision_layer = area.collision_layer
+	hitbox.collision_mask = 0
+	hitbox.collision_mask = area.collision_mask
 	hitStop(0.25)
 	gravity = 0
 	hitbox.Damage = hitbox.Damage + area.Damage
@@ -86,7 +92,7 @@ func _on_hitbox_rebounded(area: Area2D) -> void:
 
 func _on_hitbox_hurt_something(_area: Area2D) -> void:
 	GlobalAudioManager.play_audio_2d(hitbox.ImpactSfx.resource_path, hitboxshape.global_position, 0, randf_range(0.9, 1.1))
-	if hitbox.get_collision_layer_value(6) == true:
+	if dissappearsOnHurtingSomething:
 		destroy()
 
 func _on_hitbox_blocked(_area: Area2D) -> void:
@@ -96,6 +102,7 @@ func _on_hitbox_blocked(_area: Area2D) -> void:
 
 func destroy_when_hitting_tileset() -> void:
 	if is_on_floor() or is_on_wall() or is_on_ceiling():
+		await get_tree().physics_frame
 		destroy()
 
 func destroy() -> void:
