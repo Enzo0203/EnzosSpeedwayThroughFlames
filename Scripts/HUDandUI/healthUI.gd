@@ -1,20 +1,5 @@
 extends Control
 
-@onready var Heart1: AnimationPlayer = $Hearts/Heart1/AnimationPlayer
-@onready var Heart2: AnimationPlayer = $Hearts/Heart2/AnimationPlayer
-@onready var Heart3: AnimationPlayer = $Hearts/Heart3/AnimationPlayer
-@onready var Heart4: AnimationPlayer = $Hearts/Heart4/AnimationPlayer
-@onready var Heart5: AnimationPlayer = $Hearts/Heart5/AnimationPlayer
-@onready var Heart6: AnimationPlayer = $Hearts/Heart6/AnimationPlayer
-@onready var Heart7: AnimationPlayer = $Hearts/Heart7/AnimationPlayer
-@onready var Heart8: AnimationPlayer = $Hearts/Heart8/AnimationPlayer
-@onready var Heart9: AnimationPlayer = $Hearts/Heart9/AnimationPlayer
-@onready var Heart10: AnimationPlayer = $Hearts/Heart10/AnimationPlayer
-@onready var Regen1: AnimationPlayer = $Hearts/Regenoutline1/AnimationPlayer
-@onready var Regen2: AnimationPlayer = $Hearts/Regenoutline2/AnimationPlayer
-@onready var Regen3: AnimationPlayer = $Hearts/Regenoutline3/AnimationPlayer
-@onready var Regen4: AnimationPlayer = $Hearts/Regenoutline4/AnimationPlayer
-@onready var Regen5: AnimationPlayer = $Hearts/Regenoutline5/AnimationPlayer
 @onready var Overlay: AnimationPlayer = $Overlay/AnimationPlayer
 @onready var SpubbleDelay: Timer = $SpeechBubbleDelay
 @onready var Score1: AnimationPlayer = $Score/Score1/AnimationPlayer
@@ -32,8 +17,6 @@ extends Control
 @onready var MiniComboNumbers: Label = $Combo/MiniComboNumbers
 @onready var MiniComboTimer: Timer = $Combo/MiniComboTimer
 
-var health: Array
-var regen: Array
 var miniComboMultiplier: float = 0
 var comboMultiplier: float = 0
 
@@ -49,12 +32,12 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if Globalvars.Enzo:
+		Globalvars.Enzo.health_manager.reparent($Hearts)
+		Globalvars.Enzo.health_manager.visible = true
+		Globalvars.Enzo.health_manager.global_position = $Hearts/LeftHealthbarLocation.global_position
 		if Overlay.is_playing() == false or Overlay.current_animation == "SceneTransition":
 			$Overlay.visible = true
 			Overlay.play("Idle")
-		health = Globalvars.EnzoHealthArr
-		regen = Globalvars.EnzoRegenArr
-		handleHealth()
 		#handlePortrait()
 		handleCombo()
 		handleMiniCombo()
@@ -66,23 +49,6 @@ func _physics_process(_delta: float) -> void:
 		visible = true
 	if Globalvars.LevelEndSequence == 1:
 		visible = false
-
-func handleHealth() -> void:
-	Heart1.play(str(health[0]))
-	Heart2.play(str(health[1]))
-	Heart3.play(str(health[2]))
-	Heart4.play(str(health[3]))
-	Heart5.play(str(health[4]))
-	#Heart6.play(str(health[5]))
-	#Heart7.play(str(health[6]))
-	#Heart8.play(str(health[7]))
-	#Heart9.play(str(health[8]))
-	#Heart10.play(str(health[9]))
-	Regen5.play(str(regen[0]))
-	Regen4.play(str(regen[1]))
-	Regen3.play(str(regen[2]))
-	Regen2.play(str(regen[3]))
-	Regen1.play(str(regen[4]))
 
 func handleCombo() -> void:
 	ComboNumbers.text = str(Globalvars.EnzoCombo)

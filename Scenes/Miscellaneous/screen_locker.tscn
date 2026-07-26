@@ -6,10 +6,10 @@
 size = Vector2(960, 540)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ym3m"]
-size = Vector2(540, 20)
+size = Vector2(540, 19.999985)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3s3e2"]
-size = Vector2(1000.0835, 20)
+size = Vector2(1000, 19.964905)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2knvg"]
 size = Vector2(540.03516, 20)
@@ -42,31 +42,27 @@ collision_layer = 7
 collision_mask = 0
 
 [node name="LockerLeft" type="CollisionShape2D" parent="ScreenLocker" unique_id=1291711197]
-position = Vector2(-11, 276.96484)
+position = Vector2(-10.916534, 276.96484)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_2ym3m")
 one_way_collision = true
-one_way_collision_margin = 50.0
 
 [node name="LockerUp" type="CollisionShape2D" parent="ScreenLocker" unique_id=1194342319]
-position = Vector2(479.04172, -3)
+position = Vector2(479.08347, -3.0175476)
 rotation = -3.1415925
 shape = SubResource("RectangleShape2D_3s3e2")
 one_way_collision = true
-one_way_collision_margin = 50.0
 
 [node name="LockerRight" type="CollisionShape2D" parent="ScreenLocker" unique_id=1024868081]
 position = Vector2(969, 276.98242)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_2knvg")
 one_way_collision = true
-one_way_collision_margin = 50.0
 
 [node name="LockerDown" type="CollisionShape2D" parent="ScreenLocker" unique_id=1572362491]
 position = Vector2(479.04175, 557)
 shape = SubResource("RectangleShape2D_awgvt")
 one_way_collision = true
-one_way_collision_margin = 50.0
 
 [node name="LockerDeactivator" type="Area2D" parent="." unique_id=707414637]
 collision_layer = 0
@@ -77,3 +73,10 @@ shape = SubResource("RectangleShape2D_6edg1")
 debug_color = Color(0.827451, 0.39607844, 0, 0.07058824)
 
 [node name="RewardPosition" type="Marker2D" parent="." unique_id=1162518529]
+
+[node name="Label" type="Label" parent="." unique_id=814015547]
+visible = false
+offset_right = 40.0
+offset_bottom = 24.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -10,16 +10,12 @@ const HALTING_FRICTION: float = 2400
 const JUMP_VELOCITY: float = -500.0
 const RUNNING_JUMP_VELOCITY: float = -530.0
 
-const max_health: int = 5
-var health: int
-var healtharr: Array
-var regen: int
-var regenarr: Array
-var regenstate: String
 var direction: float
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@export var health_manager: HealthManager
 
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Spritesheet
@@ -71,11 +67,7 @@ func _ready() -> void:
 	Globalvars.EnzoScore = 000000
 	Globalvars.EnzoMaxCombo = 0
 	is_dead = false
-	health = 5
-	healtharr = [3, 3, 3, 3, 3, 0, 0, 0, 0, 0]
-	regen = 0
-	regenarr = [0, 0, 0, 0, 0]
-	regenstate = "noregen"
+	
 	Globalvars.stopwatchPlaying = true
 	if instanceSpawnPosition and instanceInitVelocity:
 		global_position = instanceSpawnPosition
@@ -103,7 +95,7 @@ func _physics_process(delta: float) -> void:
 		$AfterimageAnims.speed_scale = 1
 	direction = $Spritesheet.scale.x
 	# Debug labels
-	
+	$State.text = str(get_tree().current_scene)
 	# Input axis
 	INPUT_AXIS = signf(Input.get_axis("ui_left", "ui_right"))
 	# The State Machine
@@ -232,15 +224,14 @@ func _physics_process(delta: float) -> void:
 	# Constant functions
 	update_animations()
 	flip_hitboxes()
-	check_for_death()
-	check_and_regen()
 	set_skating()
 	# Check for stomp refresh
 	if is_on_floor():
 		canEnzoStomp = true
-		$Walljumpdetector/Walljumpdetector.disabled = true
+		pedalKickNoGravity = true
+		$Walljumpdetector/Walljumpdetector.set_deferred("disabled", true)
 	else:
-		$Walljumpdetector/Walljumpdetector.disabled = false
+		$Walljumpdetector/Walljumpdetector.set_deferred("disabled", false)
 	# Higher gravity when falling, Even higher if sprinting
 	if velocity.y <= 0:
 		gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -895,18 +886,24 @@ func sexkick(delta: float) -> void:
 	if animation.get_current_animation_position() >= 0.2 and is_on_floor():
 		change_state(States.LANDINGSEXKICK)
 
+var pedalKickNoGravity: bool = true
 func pedalkicking(delta: float) -> void:
+	if pedalKickNoGravity == true:
+		velocity.y = 0
+	else:
+		velocity.y += gravity / 2 * delta
+		velocity.y = min(velocity.y, 500)
 	if animation.current_animation_position < 0.1:
 		velocity.x = move_toward(velocity.x, 0, FRICTION / 2 * delta)
 	else:
 		velocity.x = 600 * sprite.scale.x
-	velocity.y = 0
 	# Cut off jump when button released
 	if not Input.is_action_pressed("input_jump") and velocity.y < JUMP_VELOCITY / 2:
 		velocity.y = JUMP_VELOCITY / 2
 	# What can this transition to
 	if animation.is_playing() == false or is_on_wall()\
 	or ((velocity.x > 0 and INPUT_AXIS == -1) or (velocity.x < 0 and INPUT_AXIS == 1)) and animation.get_current_animation_position() >= 0.3:
+		pedalKickNoGravity = false
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -990,7 +987,7 @@ func hurtjump(delta: float) -> void:
 			change_state(States.IDLE)
 
 func dead(delta: float) -> void:
-	$Hurtbox/HurtboxShape.disabled = true
+	$Hurtbox/HurtboxShape.set_deferred("disabled", true)
 	velocity.x = move_toward(velocity.x, 0, 300 * delta)
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
@@ -1488,10 +1485,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			check_and_damage(1, false, false, 100)
 	if area.is_in_group("Heal"):
 		give_score(50 * area.get_meta("heal"), true)
-		heal(min(area.get_meta("heal"), max_health - health))
-		if health + area.get_meta("heal") > max_health:
-			regen_give(min(area.get_meta("heal") - (max_health - health), max_health - regen))
-			change_regen(regen + min(regen + (area.get_meta("heal") - (max_health - health)), max_health - regen))
+		health_manager.heal(0, area.get_meta("heal"))
 		$PaletteSwapAnims.play("Heal")
 		Globalvars.EnzoHeal.emit()
 	if area.is_in_group("Skateboard"):
@@ -1500,10 +1494,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		change_state(States.SKATING)
 	if area.is_in_group("LevelExitJeep"):
 		Globalvars.EnzoSavedData = {
-			"Health": health,
-			"Healtharr": healtharr,
-			"Regen": regen,
-			"Regenarr": regenarr}
+			"Health": health_manager.totalHeartAmount,
+			"Regen": health_manager.heartOutlines}
 		destroy()
 		Globalvars.LevelEndSequence = 1
 		Globalvars.stopwatchPlaying = false
@@ -1518,18 +1510,18 @@ func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2) -> void:
 	howToDie = area.DeathType
 	check_and_damage(1, true, true, 100)
 	$PaletteSwapAnims.play("Hurt")
-	if health >= 1:
+	if health_manager.totalHeartAmount >= 1:
 		if not area.is_in_group("Caltrop"):
 			change_state(States.HURT)
 			velocity.y = -300
 		else:
 			velocity.y = -600
 			change_state(States.HURTJUMP)
-	if health > 1:
+	if health_manager.totalHeartAmount > 1:
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurt.ogg", global_position)
-	elif health == 1:
+	elif health_manager.totalHeartAmount == 1:
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDanger.ogg", global_position)
-	elif health == 0:
+	elif health_manager.totalHeartAmount == 0:
 		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 
 func _on_hurtbox_dodged(_area: Area2D) -> void:
@@ -1609,19 +1601,13 @@ func flip_hitboxes() -> void:
 # Handle health/regen
 
 func force_damage(amount: int) -> void:
-	change_hp(health - amount)
-	heart_hit(amount)
+	health_manager.deal_damage(0, amount)
 	if regentimer.time_left > 0:
 		# If a regen is active, break it
-		regenstate = "regenbroken"
-		change_regen(regen - 1)
-		regenarr[regen] = 0
-		if regen != 0:
-			regenarr[0] = 1
 		# Make regen take a second longer to heal
 		regentimer.wait_time = 6
 		regentimer.start()
-	if health > 0:
+	if health_manager.totalHeartAmount > 0:
 		Globalvars.EnzoHurt.emit()
 
 func check_and_damage(amount: int, doHitStop: bool, makeInvincible: bool, scoreDeduction: int) -> void:
@@ -1632,67 +1618,18 @@ func check_and_damage(amount: int, doHitStop: bool, makeInvincible: bool, scoreD
 		else:
 			Globalvars.EnzoScore = 0
 		if makeInvincible == true:
-			if health >= 1:
+			if health_manager.totalHeartAmount >= 1:
 				intangibility_timer.wait_time = 2
 				intangibility_timer.start()
-		if doHitStop == true and health >= 1:
+		if doHitStop == true and health_manager.totalHeartAmount >= 1:
 			hitStop(0.3)
 
-func heal(amount: int) -> void:
-	await get_tree().physics_frame
-	if not is_dead:
-		heart_heal(amount)
-		change_hp(health + amount)
-
-func check_for_death() -> void:
-	if health <= 0 and is_dead == false:
-		health = 0
-		healtharr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+func _on_health_manager_dead() -> void:
+	if is_dead == false:
 		Globalvars.EnzoDeath.emit()
 		Globalvars.EnzoDeaths += 1
 		change_state(States.DEAD)
 		is_dead = true
-
-func change_hp(new_health: int) -> void:
-	health = new_health
-
-func change_regen(new_regen: int) -> void:
-	regen = new_regen
-
-func heart_hit(amount: int) -> void:
-	for i: int in range(amount):
-		healtharr[health - i] = 1
-
-func heart_heal(amount: int) -> void:
-	for i: int in range(amount):
-		healtharr[health + i] = 3
-
-func regen_give(amount: int) -> void:
-	for i: int in range(amount):
-		regenarr[regen + i] = 1
-
-func check_and_regen() -> void:
-	# If not at full health and it has regen
-	if health < 5 and regen > 0 and regenstate == "noregen":
-		regentimer.wait_time = 5
-		regenarr[0] = 2
-		regentimer.start()
-		regenstate = "regen"
-	if regentimer.time_left <= 5 and regenstate == "regenbroken":
-		regenstate = "regen"
-		regentimer.wait_time = 5
-		regenarr[0] = 2
-	if regentimer.time_left == 0 and regenstate == "regen":
-		heal(1)
-		change_regen(regen - 1)
-		regenarr[regen] = 0
-		regenstate = "noregen"
-		$PaletteSwapAnims.play("Heal")
-	if health == 5 or regen == 0:
-		if regen != 0:
-			regenarr[0] = 1
-		regentimer.stop()
-		regenstate = "noregen"
 
 # Misc functions
 

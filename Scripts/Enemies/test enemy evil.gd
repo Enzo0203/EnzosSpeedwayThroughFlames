@@ -25,9 +25,9 @@ func _physics_process(delta: float) -> void:
 			hurt(delta)
 	move_and_slide()
 	if state == States.HURT:
-		$Sprite/Hitbox/HitboxShape.disabled = true
+		$Sprite/Hitbox/HitboxShape.set_deferred("disabled", true)
 	else:
-		$Sprite/Hitbox/HitboxShape.disabled = false
+		$Sprite/Hitbox/HitboxShape.set_deferred("disabled", false)
 	if $Sprite.scale.x == -1:
 		$Sprite/Hurtbox/HitDetector.scale.x = -1
 	else:

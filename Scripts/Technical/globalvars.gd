@@ -26,9 +26,7 @@ var EnzoRegenArr: Array
 
 var EnzoSavedData: Dictionary = {
 	"Health": null,
-	"Healtharr": null,
 	"Regen": null,
-	"Regenarr": null
 }
 
 var EnzoScore: int = 000000
@@ -55,10 +53,8 @@ func _physics_process(_delta: float) -> void:
 		EnzoState = Enzo.state
 		EnzoVelocity = Enzo.velocity.x
 		EnzoPosition = Enzo.global_position
-		EnzoHealth = Enzo.health
-		EnzoHealthArr = Enzo.healtharr
-		EnzoRegen = Enzo.regen
-		EnzoRegenArr = Enzo.regenarr
+		EnzoHealth = Enzo.health_manager.totalHeartAmount
+		#EnzoRegen = Enzo.regen
 	setLevelPars()
 
 var stopwatchPlaying: bool

@@ -27,7 +27,7 @@ size = Vector2(1135, 410)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lujxp"]
 resource_local_to_scene = true
-size = Vector2(176, 44)
+size = Vector2(178, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42vda"]
 size = Vector2(14, 18)
@@ -747,43 +747,43 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Hitbox:DeathType")
+tracks/5/path = NodePath("Hurtbox/HurtboxShape:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["blunt"]
+"update": 0,
+"values": [Vector2(28, 56)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Hurtbox/HurtboxShape:shape:size")
+tracks/6/path = NodePath("Hurtbox/HurtboxShape:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(28, 56)]
+"values": [Vector2(0, 23)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Hurtbox/HurtboxShape:position")
+tracks/7/path = NodePath("Hurtbox/HurtboxShape:disabled")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 23)]
+"update": 1,
+"values": [false]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Hurtbox/HurtboxShape:disabled")
+tracks/8/path = NodePath("Hurtbox:Parriable")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -795,34 +795,22 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Hurtbox:Parriable")
+tracks/9/path = NodePath("CollisionShape2D:shape:size")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(22, 55)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("CollisionShape2D:shape:size")
+tracks/10/path = NodePath("CollisionShape2D:position")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(22, 55)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("CollisionShape2D:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -1542,7 +1530,6 @@ metadata/deathtype = "blunt"
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=289349016]
 position = Vector2(21, 21)
 shape = SubResource("RectangleShape2D_avpfy")
-disabled = true
 debug_color = Color(0.909804, 0, 0.737255, 0.419608)
 
 [node name="EnzoDetector" type="Area2D" parent="." unique_id=1185635485]
@@ -1561,7 +1548,7 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="EnzoDetectorShape2" type="CollisionShape2D" parent="EnzoDetector2" unique_id=321379051]
-position = Vector2(90, 28)
+position = Vector2(89, 28)
 shape = SubResource("RectangleShape2D_lujxp")
 debug_color = Color(0.156863, 0.509804, 0, 0.419608)
 

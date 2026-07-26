@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kf5j6sj1bmmq"
-path="res://.godot/imported/PlainsClouds2.png-1aaa477916d95852bda75ee75b31ebb1.ctex"
+uid="uid://dbbi4lol4dhxu"
+path="res://.godot/imported/HealthBarBig.png-7f57cae1e0d4818218e5337c191f715b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Level Assets/1-1/PlainsClouds2.png"
-dest_files=["res://.godot/imported/PlainsClouds2.png-1aaa477916d95852bda75ee75b31ebb1.ctex"]
+source_file="res://Sprites/HUD/Health/HealthBarBig.png"
+dest_files=["res://.godot/imported/HealthBarBig.png-7f57cae1e0d4818218e5337c191f715b.ctex"]
 
 [params]
 

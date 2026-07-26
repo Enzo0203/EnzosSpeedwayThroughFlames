@@ -8,16 +8,12 @@ extends Area2D
 
 @onready var reward_position: Marker2D = $RewardPosition
 
-
 var checkingForEnemies: bool = false
 signal unlockScreen
-
 
 func _ready() -> void:
 	reward_position.position = reward_position_offset
 	await get_tree().process_frame
-	await deactivator.area_entered # Checks if there's enemies
-	await area_entered # Waits until Enzo enters area
 	checkingForEnemies = true
 	await unlockScreen
 	queue_free()
@@ -25,7 +21,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if has_overlapping_areas():
 		if checkingForEnemies:
-			if deactivator.has_overlapping_areas() == false or not deactivator.get_overlapping_areas().any(are_enemies):
+			if deactivator.has_overlapping_areas() == false or deactivator.get_overlapping_areas().any(are_enemies) == false:
 				if reward:
 					spawn_reward()
 				checkingForEnemies = false

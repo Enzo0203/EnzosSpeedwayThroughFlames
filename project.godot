@@ -41,7 +41,6 @@ gdscript/warnings/inferred_declaration=1
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/size/resizable=false
-window/size/maximize_disabled=true
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 

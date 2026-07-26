@@ -1,0 +1,470 @@
+[gd_scene format=3 uid="uid://cbkl4g23jlf0b"]
+
+[ext_resource type="Script" uid="uid://coo48kmoqepo" path="res://Scripts/Technical/health_manager.gd" id="1_4kwy7"]
+[ext_resource type="Texture2D" uid="uid://dnq6xe6fc8yo7" path="res://Sprites/HUD/Health/HeartsBig Sheet.png" id="2_4kwy7"]
+[ext_resource type="Texture2D" uid="uid://cxidbh1ft24sx" path="res://Sprites/HUD/Health/Regenoutline.png" id="3_q5r7w"]
+[ext_resource type="Script" uid="uid://vboiin3f0ro8" path="res://Scripts/Technical/heart_regen_outline_sync.gd" id="4_ok221"]
+[ext_resource type="Texture2D" uid="uid://dbbi4lol4dhxu" path="res://Sprites/HUD/Health/HealthBarBig.png" id="5_8i603"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eelhd"]
+atlas = ExtResource("5_8i603")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw8yk"]
+atlas = ExtResource("5_8i603")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="Animation" id="Animation_shrw5"]
+resource_name = "Blue"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_7bx4x"]
+resource_name = "BlueHeal"
+length = 0.06667000347711147
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [13, 14]
+}
+
+[sub_resource type="Animation" id="Animation_0whor"]
+resource_name = "BlueHurt"
+length = 0.06667000347711147
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [11, 12]
+}
+
+[sub_resource type="Animation" id="Animation_4kwy7"]
+resource_name = "Empty"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_q5r7w"]
+resource_name = "Red"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_ok221"]
+resource_name = "RedEmpty"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8i603"]
+resource_name = "RedHeal"
+length = 0.06667000347711147
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_qnu0x"]
+resource_name = "RedHurt"
+length = 0.06667000347711147
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_shrw5"]
+_data = {
+&"Blue": SubResource("Animation_shrw5"),
+&"BlueHeal": SubResource("Animation_7bx4x"),
+&"BlueHurt": SubResource("Animation_0whor"),
+&"Empty": SubResource("Animation_4kwy7"),
+&"Red": SubResource("Animation_q5r7w"),
+&"RedEmpty": SubResource("Animation_ok221"),
+&"RedHeal": SubResource("Animation_8i603"),
+&"RedHurt": SubResource("Animation_qnu0x")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wpo4d"]
+animation = &"Blue"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tlvum"]
+animation = &"BlueHeal"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1mbfn"]
+animation = &"BlueHurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ptkno"]
+animation = &"Empty"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7bx4x"]
+animation = &"Red"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0whor"]
+animation = &"RedEmpty"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4dho7"]
+animation = &"RedHeal"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kacqn"]
+animation = &"RedHurt"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wpo4d"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tlvum"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_myo1e"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b8qyg"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_eelhd"]
+states/Blue/node = SubResource("AnimationNodeAnimation_wpo4d")
+states/Blue/position = Vector2(618.8209, 161.86221)
+states/BlueHeal/node = SubResource("AnimationNodeAnimation_tlvum")
+states/BlueHeal/position = Vector2(430.821, 163.19556)
+states/BlueHurt/node = SubResource("AnimationNodeAnimation_1mbfn")
+states/BlueHurt/position = Vector2(430.82098, 220.52888)
+states/Empty/node = SubResource("AnimationNodeAnimation_ptkno")
+states/Empty/position = Vector2(618.8703, 220.52888)
+states/End/position = Vector2(199.11108, 154.66667)
+states/Red/node = SubResource("AnimationNodeAnimation_7bx4x")
+states/Red/position = Vector2(618.82104, 10.996569)
+states/RedEmpty/node = SubResource("AnimationNodeAnimation_0whor")
+states/RedEmpty/position = Vector2(617.19147, 67.09535)
+states/RedHeal/node = SubResource("AnimationNodeAnimation_4dho7")
+states/RedHeal/position = Vector2(430.82104, 10.963648)
+states/RedHurt/node = SubResource("AnimationNodeAnimation_kacqn")
+states/RedHurt/position = Vector2(429.6359, 67.095345)
+states/Start/position = Vector2(199.25922, 100)
+transitions = ["RedHeal", "Red", SubResource("AnimationNodeStateMachineTransition_wpo4d"), "RedHurt", "RedEmpty", SubResource("AnimationNodeStateMachineTransition_tlvum"), "BlueHeal", "Blue", SubResource("AnimationNodeStateMachineTransition_myo1e"), "BlueHurt", "Empty", SubResource("AnimationNodeStateMachineTransition_b8qyg")]
+graph_offset = Vector2(84.1544, -48.137783)
+
+[sub_resource type="Animation" id="Animation_4dho7"]
+resource_name = "Empty"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [21]
+}
+
+[sub_resource type="Animation" id="Animation_kacqn"]
+resource_name = "Regen"
+length = 0.03333666840530932
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wpo4d"]
+resource_name = "RegenHealing"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.99999976, 1.0333331, 1.9999998, 2.033333, 3, 3.0333333, 4, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8333335, 4.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+}
+
+[sub_resource type="Animation" id="Animation_tlvum"]
+resource_name = "RegenHurt"
+length = 0.13333667362071572
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlvum"]
+_data = {
+&"Empty": SubResource("Animation_4dho7"),
+&"Regen": SubResource("Animation_kacqn"),
+&"RegenHealing": SubResource("Animation_wpo4d"),
+&"RegenHurt": SubResource("Animation_tlvum")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q5r7w"]
+animation = &"Empty"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_myo1e"]
+animation = &"Empty"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b8qyg"]
+animation = &"Regen"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cmlc0"]
+animation = &"RegenHealing"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aehi1"]
+animation = &"RegenHurt"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqmy7"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p3552"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hw8yk"]
+states/Empty/node = SubResource("AnimationNodeAnimation_myo1e")
+states/Empty/position = Vector2(522.6667, 178.00002)
+"states/Empty 2/node" = SubResource("AnimationNodeAnimation_q5r7w")
+"states/Empty 2/position" = Vector2(523.25934, 115.18519)
+states/Regen/node = SubResource("AnimationNodeAnimation_b8qyg")
+states/Regen/position = Vector2(358.66666, 55.333332)
+states/RegenHealing/node = SubResource("AnimationNodeAnimation_cmlc0")
+states/RegenHealing/position = Vector2(359.5555, 114.888885)
+states/RegenHurt/node = SubResource("AnimationNodeAnimation_aehi1")
+states/RegenHurt/position = Vector2(360, 178)
+transitions = ["RegenHealing", "Empty", SubResource("AnimationNodeStateMachineTransition_dqmy7"), "RegenHurt", "Empty", SubResource("AnimationNodeStateMachineTransition_p3552")]
+graph_offset = Vector2(-130.24292, 0)
+
+[node name="HealthManager" type="Node2D" unique_id=1043816269]
+script = ExtResource("1_4kwy7")
+HealthType = 1
+maxHealth = 20
+health = 20
+overhealBecomesRegen = true
+heartSpriteSeparation = Vector2(50, 50)
+
+[node name="RegenOutlineTimer" type="Timer" parent="." unique_id=1103686387]
+wait_time = 5.0
+one_shot = true
+
+[node name="Visuals" type="Control" parent="." unique_id=1537773275]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Regular" type="Control" parent="Visuals" unique_id=2085202016]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Healthbar" type="TextureProgressBar" parent="Visuals/Regular" unique_id=1090280165]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 12.0
+offset_right = 54.0
+offset_bottom = 41.0
+max_value = 10.0
+rounded = true
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 4
+stretch_margin_right = 4
+stretch_margin_bottom = 4
+texture_under = SubResource("AtlasTexture_eelhd")
+texture_progress = SubResource("AtlasTexture_hw8yk")
+
+[node name="HealthbarHeart" type="Sprite2D" parent="Visuals/Regular" unique_id=1223803143]
+position = Vector2(25, 25)
+texture = ExtResource("2_4kwy7")
+hframes = 5
+vframes = 4
+frame = 5
+
+[node name="Segmented" type="Control" parent="Visuals" unique_id=178137169]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Heart1" type="Sprite2D" parent="Visuals/Segmented" unique_id=48884646]
+texture = ExtResource("2_4kwy7")
+centered = false
+hframes = 5
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Segmented/Heart1" unique_id=74054573]
+libraries/ = SubResource("AnimationLibrary_shrw5")
+
+[node name="AnimationTree" type="AnimationTree" parent="Visuals/Segmented/Heart1/AnimationPlayer" unique_id=1516895688]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_eelhd")
+anim_player = NodePath("..")
+
+[node name="HeartOutline1" type="Sprite2D" parent="Visuals/Segmented" unique_id=1155760620]
+position = Vector2(1, 0)
+texture = ExtResource("3_q5r7w")
+centered = false
+hframes = 22
+script = ExtResource("4_ok221")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Segmented/HeartOutline1" unique_id=876637088]
+libraries/ = SubResource("AnimationLibrary_tlvum")
+
+[node name="AnimationTree" type="AnimationTree" parent="Visuals/Segmented/HeartOutline1/AnimationPlayer" unique_id=1369772938]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_hw8yk")
+anim_player = NodePath("..")
+
+[node name="DebugCamera" type="Camera2D" parent="Visuals" unique_id=408041973]
+position = Vector2(120, 28)
+zoom = Vector2(2, 2)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 540
+
+[node name="Dmg" type="Button" parent="Visuals" unique_id=615428914]
+visible = false
+layout_mode = 0
+offset_left = -120.0
+offset_top = -107.0
+offset_right = 8.0
+offset_bottom = -75.0
+scale = Vector2(0.5, 0.5)
+text = "Damage 2"
+
+[node name="Heal" type="Button" parent="Visuals" unique_id=1386434025]
+visible = false
+layout_mode = 0
+offset_left = -120.0
+offset_top = -91.0
+offset_right = 8.0
+offset_bottom = -59.0
+scale = Vector2(0.5, 0.5)
+text = "Heal 2"
+
+[node name="Blue" type="Button" parent="Visuals" unique_id=58462699]
+visible = false
+layout_mode = 0
+offset_left = -120.0
+offset_top = -75.0
+offset_right = 8.0
+offset_bottom = -43.0
+scale = Vector2(0.5, 0.5)
+text = "Blue 2"
+
+[node name="Regen" type="Button" parent="Visuals" unique_id=626566091]
+visible = false
+layout_mode = 0
+offset_left = -120.0
+offset_top = -59.0
+offset_right = 8.0
+offset_bottom = -27.0
+scale = Vector2(0.5, 0.5)
+text = "Regen 1"
+
+[node name="Label" type="Label" parent="." unique_id=1503806344]
+visible = false
+offset_left = -205.0
+offset_top = 70.0
+offset_right = -160.0
+offset_bottom = 94.0
+text = "0.0"
+
+[connection signal="timeout" from="RegenOutlineTimer" to="." method="_on_regen_outline_timer_timeout"]
