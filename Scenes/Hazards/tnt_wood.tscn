@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cfhxp35yy5oed"]
+
+[ext_resource type="Script" uid="uid://vp463l1flrtd" path="res://Scripts/Hazards/woodtnt.gd" id="1_533wl"]
+[ext_resource type="Texture2D" uid="uid://b5ko6p01vtakl" path="res://Sprites/General Sprites/Hazards/Wood TNT.png" id="2_u3t41"]
+[ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_6xk8l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tplgh"]
+size = Vector2(30, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dohng"]
+size = Vector2(30, 30)
+
+[node name="RigidBody2d" type="RigidBody2D" unique_id=1431150603 groups=["tileset"]]
+collision_layer = 7
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_533wl")
+
+[node name="Crate" type="Sprite2D" parent="." unique_id=1132021762]
+texture = ExtResource("2_u3t41")
+
+[node name="CrateHurtbox" type="Area2D" parent="Crate" unique_id=831539093 groups=["Hurtbox"]]
+collision_layer = 64
+collision_mask = 112
+script = ExtResource("3_6xk8l")
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Crate/CrateHurtbox" unique_id=322539159]
+shape = SubResource("RectangleShape2D_tplgh")
+debug_color = Color(0.984314, 0, 0.356863, 0.282353)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1887423484]
+visible = false
+shape = SubResource("RectangleShape2D_dohng")
+debug_color = Color(4.04298e-06, 0.572208, 0.836314, 0.419608)
+
+[node name="Label" type="Label" parent="." unique_id=2136642367]
+visible = false
+offset_left = -19.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 10.0
+text = "NAW"
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1217218022]
+
+[connection signal="hurt" from="Crate/CrateHurtbox" to="." method="_on_crate_hurtbox_hurt"]

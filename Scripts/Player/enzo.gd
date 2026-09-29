@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name player
+class_name Player
 
 const SPEED: float = 300.0
 const RUNNING_SPEED: float = 900.0
@@ -74,8 +74,10 @@ func _ready() -> void:
 		velocity = instanceInitVelocity
 	if instanceReason:
 		if instanceReason == "JeepEntrance":
+			sprite.frame = 95
 			state = States.SKATEJUMPDETATCH
 	else:
+		sprite.frame = 12
 		state = States.IDLE
 	await get_tree().physics_frame
 	if Globalvars.Enzo == null:
@@ -223,7 +225,6 @@ func _physics_process(delta: float) -> void:
 			pedalkicking(delta)
 	# Constant functions
 	update_animations()
-	flip_hitboxes()
 	set_skating()
 	# Check for stomp refresh
 	if is_on_floor():
@@ -580,7 +581,8 @@ func halting(delta: float) -> void:
 	if ($Spritesheet.scale.x == 1 and velocity.x <= -600) or ($Spritesheet.scale.x == -1 and velocity.x >= 600):
 		if state == States.HALTING:
 			change_state(States.SPRINTING)
-	if animation.is_playing() == false:
+	await animation.animation_finished
+	if state == States.HALTING:
 		if is_on_floor():
 			if INPUT_AXIS == 0:
 				change_state(States.IDLE)
@@ -998,8 +1000,10 @@ func burnjumping(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = min(velocity.y, 500)
 	# What this can transition to
-	if is_on_floor():
-		change_state(States.BURNRUNNING)
+	await get_tree().create_timer(0.5, false).timeout
+	if state == States.BURNJUMPING:
+		if is_on_floor():
+			change_state(States.BURNRUNNING)
 
 func burnrunning(delta: float) -> void:
 	# What to do
@@ -1012,7 +1016,7 @@ func burnrunning(delta: float) -> void:
 	await get_tree().create_timer(1.0, false).timeout
 	if state == States.BURNRUNNING:
 		check_and_damage(1, false, true, 100)
-	await get_tree().create_timer(0.5, false).timeout
+	await animation.animation_finished
 	if state == States.BURNRUNNING:
 		change_state(States.HALTING)
 
@@ -1473,16 +1477,6 @@ enum EnzoDeathTypes {
 var is_dead: bool = false
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Lava"):
-		if lava_invincibility.time_left == 0:
-			howToDie = EnzoDeathTypes.FIRE
-			change_state(States.BURNJUMPING)
-			if area.global_position.y > global_position.y:
-				velocity.y = -800
-			else:
-				velocity.y = 800
-			lava_invincibility.start()
-			check_and_damage(1, false, false, 100)
 	if area.is_in_group("Heal"):
 		give_score(50 * area.get_meta("heal"), true)
 		health_manager.heal(0, area.get_meta("heal"))
@@ -1511,18 +1505,21 @@ func _on_hurtbox_hurt(area: Area2D, _Damage: int, _Knockback: Vector2) -> void:
 	check_and_damage(1, true, true, 100)
 	$PaletteSwapAnims.play("Hurt")
 	if health_manager.totalHeartAmount >= 1:
-		if not area.is_in_group("Caltrop"):
-			change_state(States.HURT)
-			velocity.y = -300
-		else:
+		if area.is_in_group("Caltrop"):
 			velocity.y = -600
 			change_state(States.HURTJUMP)
-	if health_manager.totalHeartAmount > 1:
-		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurt.ogg", global_position)
-	elif health_manager.totalHeartAmount == 1:
-		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDanger.ogg", global_position)
-	elif health_manager.totalHeartAmount == 0:
-		GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
+		elif area.is_in_group("Lava"):
+			if lava_invincibility.time_left == 0:
+				howToDie = EnzoDeathTypes.FIRE
+				change_state(States.BURNJUMPING)
+				velocity.y = -800
+				lava_invincibility.start()
+				check_and_damage(1, false, false, 100)
+		else:
+			change_state(States.HURT)
+			velocity.y = -300
+
+
 
 func _on_hurtbox_dodged(_area: Area2D) -> void:
 	PopupTextManager.popup_text("DODGE!", Vector2(global_position.x, global_position.y - 50), \
@@ -1593,15 +1590,10 @@ func _on_hitbox_blocked(_area: Area2D) -> void:
 	PopupTextManager.popup_text("BLOCKED", Vector2(global_position.x, global_position.y - 50), \
 	40, Color("0c356aff"), "Jump", 1.0, "res://Fonts/Blocked Feedback Text.png")
 
-func flip_hitboxes() -> void:
-	hitbox.scale.x = sprite.scale.x
-	hurtbox.scale.x = sprite.scale.x
-	$Walljumpdetector.scale.x = sprite.scale.x
-
 # Handle health/regen
 
 func force_damage(amount: int) -> void:
-	health_manager.deal_damage(0, amount)
+	health_manager.deal_damage(10, amount)
 	if regentimer.time_left > 0:
 		# If a regen is active, break it
 		# Make regen take a second longer to heal
@@ -1621,6 +1613,12 @@ func check_and_damage(amount: int, doHitStop: bool, makeInvincible: bool, scoreD
 			if health_manager.totalHeartAmount >= 1:
 				intangibility_timer.wait_time = 2
 				intangibility_timer.start()
+		if health_manager.totalHeartAmount > 1:
+			GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurt.ogg", global_position)
+		elif health_manager.totalHeartAmount == 1:
+			GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDanger.ogg", global_position)
+		elif health_manager.totalHeartAmount == 0:
+			GlobalAudioManager.play_audio_2d("res://Sfx/Combat/EnzoHurtDead.ogg", global_position)
 		if doHitStop == true and health_manager.totalHeartAmount >= 1:
 			hitStop(0.3)
 
@@ -1793,6 +1791,14 @@ func update_animations() -> void:
 		animation.play("shoulderbash")
 	if state == States.PEDALKICK:
 		animation.play("pedalkick")
+	
+	if animation.current_animation == "burnrun" or animation.current_animation == "burnjump":
+		$FireGlow.enabled = true
+		$FireGlow.show()
+	else:
+		$FireGlow.enabled = false
+		$FireGlow.hide()
+
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	$"Sound effects/RunningFootsteps".stop()

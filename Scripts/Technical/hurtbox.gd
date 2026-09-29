@@ -22,6 +22,9 @@ var IntangibleSpecial: bool = false
 @export var Immovable: bool = false
 ## If true, this hurtbox can be parried by a parrybox
 @export var Parriable: bool = false
+## How much damage this Hurtbox's owner takes if it's parried.
+@export var DamageWhenParried: int = 1
+
 
 @export_category("Armor")
 
@@ -39,7 +42,7 @@ var IntangibleSpecial: bool = false
 ## Multiplies the amount of hitstun taken.
 @export var StunTakeMultiplier: float = 1.0
 ## Multiplies the amount of knockback taken.
-@export var KnockbackTakeMultiplier: Vector2 = Vector2(1.0, 1.0)
+@export var KnockbackTakeMultiplier: float = 1.0
 
 
 

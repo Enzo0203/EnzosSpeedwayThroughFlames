@@ -6,13 +6,32 @@
 [ext_resource type="Script" uid="uid://vboiin3f0ro8" path="res://Scripts/Technical/heart_regen_outline_sync.gd" id="4_ok221"]
 [ext_resource type="Texture2D" uid="uid://dbbi4lol4dhxu" path="res://Sprites/HUD/Health/HealthBarBig.png" id="5_8i603"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eelhd"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7bx4x"]
+light_mode = 1
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_eelhd"]
+resource_local_to_scene = true
 atlas = ExtResource("5_8i603")
 region = Rect2(0, 0, 12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hw8yk"]
+resource_local_to_scene = true
 atlas = ExtResource("5_8i603")
 region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8i603"]
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anb5f"]
+resource_local_to_scene = true
+atlas = ExtResource("2_4kwy7")
+region = Rect2(0, 50, 50, 50)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qnu0x"]
+light_mode = 1
 
 [sub_resource type="Animation" id="Animation_shrw5"]
 resource_name = "Blue"
@@ -216,6 +235,9 @@ states/Start/position = Vector2(199.25922, 100)
 transitions = ["RedHeal", "Red", SubResource("AnimationNodeStateMachineTransition_wpo4d"), "RedHurt", "RedEmpty", SubResource("AnimationNodeStateMachineTransition_tlvum"), "BlueHeal", "Blue", SubResource("AnimationNodeStateMachineTransition_myo1e"), "BlueHurt", "Empty", SubResource("AnimationNodeStateMachineTransition_b8qyg")]
 graph_offset = Vector2(84.1544, -48.137783)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_shrw5"]
+light_mode = 1
+
 [sub_resource type="Animation" id="Animation_4dho7"]
 resource_name = "Empty"
 length = 0.03333666840530932
@@ -326,11 +348,9 @@ transitions = ["RegenHealing", "Empty", SubResource("AnimationNodeStateMachineTr
 graph_offset = Vector2(-130.24292, 0)
 
 [node name="HealthManager" type="Node2D" unique_id=1043816269]
+process_physics_priority = -1
+material = SubResource("CanvasItemMaterial_eelhd")
 script = ExtResource("1_4kwy7")
-HealthType = 1
-maxHealth = 20
-health = 20
-overhealBecomesRegen = true
 heartSpriteSeparation = Vector2(50, 50)
 
 [node name="RegenOutlineTimer" type="Timer" parent="." unique_id=1103686387]
@@ -353,6 +373,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Healthbar" type="TextureProgressBar" parent="Visuals/Regular" unique_id=1090280165]
+material = SubResource("CanvasItemMaterial_7bx4x")
 layout_mode = 0
 offset_left = 30.0
 offset_top = 12.0
@@ -369,11 +390,9 @@ texture_under = SubResource("AtlasTexture_eelhd")
 texture_progress = SubResource("AtlasTexture_hw8yk")
 
 [node name="HealthbarHeart" type="Sprite2D" parent="Visuals/Regular" unique_id=1223803143]
+material = SubResource("CanvasItemMaterial_8i603")
 position = Vector2(25, 25)
-texture = ExtResource("2_4kwy7")
-hframes = 5
-vframes = 4
-frame = 5
+texture = SubResource("AtlasTexture_anb5f")
 
 [node name="Segmented" type="Control" parent="Visuals" unique_id=178137169]
 visible = false
@@ -382,6 +401,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Heart1" type="Sprite2D" parent="Visuals/Segmented" unique_id=48884646]
+material = SubResource("CanvasItemMaterial_qnu0x")
 texture = ExtResource("2_4kwy7")
 centered = false
 hframes = 5
@@ -396,6 +416,7 @@ tree_root = SubResource("AnimationNodeStateMachine_eelhd")
 anim_player = NodePath("..")
 
 [node name="HeartOutline1" type="Sprite2D" parent="Visuals/Segmented" unique_id=1155760620]
+material = SubResource("CanvasItemMaterial_shrw5")
 position = Vector2(1, 0)
 texture = ExtResource("3_q5r7w")
 centered = false
@@ -411,7 +432,9 @@ tree_root = SubResource("AnimationNodeStateMachine_hw8yk")
 anim_player = NodePath("..")
 
 [node name="DebugCamera" type="Camera2D" parent="Visuals" unique_id=408041973]
+visible = false
 position = Vector2(120, 28)
+enabled = false
 zoom = Vector2(2, 2)
 limit_enabled = false
 limit_left = 0
@@ -458,13 +481,5 @@ offset_right = 8.0
 offset_bottom = -27.0
 scale = Vector2(0.5, 0.5)
 text = "Regen 1"
-
-[node name="Label" type="Label" parent="." unique_id=1503806344]
-visible = false
-offset_left = -205.0
-offset_top = 70.0
-offset_right = -160.0
-offset_bottom = 94.0
-text = "0.0"
 
 [connection signal="timeout" from="RegenOutlineTimer" to="." method="_on_regen_outline_timer_timeout"]

@@ -2,43 +2,31 @@
 
 [ext_resource type="Script" uid="uid://jjrasgm0nymk" path="res://Scripts/Enemies/test enemy.gd" id="1_gf04l"]
 [ext_resource type="Texture2D" uid="uid://buifbltj00ekt" path="res://Sprites/General Sprites/Enemies/Cardboard demon.png" id="2_wusqm"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ndne"]
-size = Vector2(56, 93)
+[ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_4dcxv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6yw3"]
 size = Vector2(21, 91)
 
-[node name="Test enemy" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eelhd"]
+size = Vector2(68, 93)
+
+[node name="Test Enemy" type="CharacterBody2D" unique_id=293207309 node_paths=PackedStringArray("hurtbox", "hitstopper")]
 collision_layer = 128
 collision_mask = 9
 script = ExtResource("1_gf04l")
+hurtbox = NodePath("Hurtbox")
+hitstopper = NodePath("Hitstopper")
+metadata/_custom_type_script = "uid://pqyrxm6gnghv"
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=922728981]
 position = Vector2(0, -8)
 texture = ExtResource("2_wusqm")
-flip_h = true
 
-[node name="Hurtbox" type="Area2D" parent="Sprite"]
-position = Vector2(0, 8)
-collision_layer = 128
-collision_mask = 2072
-metadata/state = "vuln"
-
-[node name="HurtboxShape" type="CollisionShape2D" parent="Sprite/Hurtbox"]
-shape = SubResource("RectangleShape2D_7ndne")
-debug_color = Color(0.901961, 0, 0.0980392, 0.419608)
-
-[node name="HitDetector" type="RayCast2D" parent="Sprite/Hurtbox"]
-target_position = Vector2(0, 0)
-collision_mask = 9
-hit_from_inside = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=154748321]
 position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_b6yw3")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1862456523]
 visible = false
 offset_left = -41.0
 offset_top = -73.0
@@ -46,4 +34,17 @@ offset_right = 45.0
 offset_bottom = -45.0
 text = "wheee"
 
-[connection signal="area_entered" from="Sprite/Hurtbox" to="." method="_on_area_entered"]
+[node name="Hitstopper" type="Timer" parent="." unique_id=721279765]
+one_shot = true
+
+[node name="Stuntimer" type="Timer" parent="." unique_id=863539763]
+one_shot = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1417885752]
+script = ExtResource("3_4dcxv")
+metadata/_custom_type_script = "uid://w4lxvlpacy5t"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1927306655]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_eelhd")
+debug_color = Color(1, 0, 0.13333334, 0.41960785)

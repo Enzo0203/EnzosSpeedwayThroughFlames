@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://dr3syvvv8pr6c"]
 
 [ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/EnemyWeapons/blastbox.gd" id="1_61g1j"]
-[ext_resource type="Texture2D" uid="uid://dsiptst8rer5" path="res://Sprites/General Sprites/Objects/Compact blastbox Sheet.png" id="1_spill"]
+[ext_resource type="Texture2D" uid="uid://dsiptst8rer5" path="res://Sprites/General Sprites/EnemyWeapons/Compact blastbox Sheet.png" id="1_spill"]
+[ext_resource type="Shader" uid="uid://c70v7tc5vlywj" path="res://MiscResources/generalShader.gdshader" id="2_qhh4p"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_61g1j"]
 [ext_resource type="AudioStream" uid="uid://cf0n5kdlqhkn6" path="res://Sfx/CarLock.ogg" id="4_5e4fh"]
 [ext_resource type="AudioStream" uid="uid://b4phhc604ch3a" path="res://Sfx/BombBeep.ogg" id="5_e8fcf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v53ra"]
+shader = ExtResource("2_qhh4p")
+shader_parameter/origin_colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/new_colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/swap_count = 3
 
 [sub_resource type="Animation" id="Animation_do03d"]
 resource_name = "fuse"
@@ -78,6 +85,7 @@ collision_mask = 2
 script = ExtResource("1_61g1j")
 
 [node name="BlastboxSprite" type="Sprite2D" parent="." unique_id=2113723791]
+material = SubResource("ShaderMaterial_v53ra")
 texture = ExtResource("1_spill")
 hframes = 5
 frame = 2

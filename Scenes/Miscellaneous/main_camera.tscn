@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://djgvejae36xkl"]
+
+[ext_resource type="Script" uid="uid://gv3vq04ip567" path="res://Scripts/Technical/main_camera.gd" id="1_5jqyv"]
+
+[node name="Main Camera" type="Camera2D" unique_id=678676067]
+limit_left = -930
+limit_top = -800
+limit_right = 19300
+limit_bottom = 700
+position_smoothing_speed = 10.0
+drag_vertical_enabled = true
+drag_left_margin = 0.0
+drag_right_margin = 0.0
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource("1_5jqyv")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=436107010]
+
+[node name="Label" type="Label" parent="." unique_id=1614831689]
+offset_right = 40.0
+offset_bottom = 24.0

@@ -1,18 +1,34 @@
 [gd_scene format=3 uid="uid://c7cm41byq6hvq"]
 
 [ext_resource type="Script" uid="uid://ds0y7pabud0h4" path="res://Scripts/Enemies/bombardier.gd" id="1_vayxy"]
-[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_4s5j2"]
+[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/generalShader.material" id="2_4s5j2"]
 [ext_resource type="Texture2D" uid="uid://cgkhpb8ai8w0v" path="res://Sprites/General Sprites/Enemies/Bombardier sheet.png" id="2_vqjra"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="4_ifstu"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="5_5kbf8"]
-[ext_resource type="Texture2D" uid="uid://dpkybxrgshjgl" path="res://Sprites/HUD/Health/DemonHeartToughBar.png" id="6_5kbf8"]
-[ext_resource type="Texture2D" uid="uid://b1q6hcn8euomh" path="res://Sprites/HUD/Health/DemonHeartToughSheet.png" id="7_hfx46"]
+[ext_resource type="Texture2D" uid="uid://e1i0pn05ac8k" path="res://Sprites/HUD/Health/HealthBarSmall.png" id="5_xhbao"]
+[ext_resource type="Texture2D" uid="uid://das4sma83j42w" path="res://Sprites/HUD/Health/HeartsDemonTough Sheet.png" id="6_xhbao"]
 [ext_resource type="AudioStream" uid="uid://chi2xk0kabye5" path="res://Sfx/SwooshStrong.wav" id="7_pbsy5"]
 [ext_resource type="AudioStream" uid="uid://3vlfbpqg41vv" path="res://Sfx/Combat/Hitsounds/Slap.wav" id="8_5kbf8"]
 [ext_resource type="AudioStream" uid="uid://biimbdctau6w3" path="res://Sfx/SwooshStrong2.wav" id="8_d8tqx"]
 [ext_resource type="AudioStream" uid="uid://chdlwixxscanv" path="res://Sfx/ChargeAttack.ogg" id="9_d8tqx"]
 [ext_resource type="Script" uid="uid://dpeymgo5pqapo" path="res://Scripts/Technical/pushbox.gd" id="10_qrsml"]
 [ext_resource type="Script" uid="uid://eixugd0pu5t8" path="res://Scripts/Technical/afterimager.gd" id="12_okksv"]
+[ext_resource type="PackedScene" uid="uid://cbkl4g23jlf0b" path="res://Scenes/Miscellaneous/health_manager.tscn" id="12_qrsml"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhbao"]
+resource_local_to_scene = true
+atlas = ExtResource("5_xhbao")
+region = Rect2(0, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m460r"]
+resource_local_to_scene = true
+atlas = ExtResource("5_xhbao")
+region = Rect2(9, 0, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2acm"]
+resource_local_to_scene = true
+atlas = ExtResource("6_xhbao")
+region = Rect2(5, 48, 35, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6tv6m"]
 resource_local_to_scene = true
@@ -1197,25 +1213,6 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhbao"]
 size = Vector2(61.155163, 61.15518)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pbsy5"]
-atlas = ExtResource("6_5kbf8")
-region = Rect2(0, 0, 94, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d8tqx"]
-atlas = ExtResource("6_5kbf8")
-region = Rect2(1, 18, 92, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_okksv"]
-atlas = ExtResource("6_5kbf8")
-region = Rect2(0, 0, 94, 18)
-
-[sub_resource type="Gradient" id="Gradient_qrsml"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xhbao"]
-atlas = ExtResource("7_hfx46")
-region = Rect2(45, 0, 45, 44)
-
 [sub_resource type="Gradient" id="Gradient_xhbao"]
 colors = PackedColorArray(1, 1, 1, 0.25, 1, 1, 1, 0)
 
@@ -1224,8 +1221,6 @@ position = Vector2(0, -5)
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_vayxy")
-health = 30
-maxHealth = 30
 
 [node name="Spritesheet" type="Sprite2D" parent="." unique_id=497032297]
 material = ExtResource("2_4s5j2")
@@ -1238,6 +1233,26 @@ position = Vector2(-27, -51)
 
 [node name="Marker2D2" type="Marker2D" parent="Spritesheet" unique_id=1625088383]
 position = Vector2(43, -25)
+
+[node name="HealthManager" parent="." unique_id=1043816269 instance=ExtResource("12_qrsml")]
+position = Vector2(-86, -118)
+maxHealth = 30
+health = 30
+widthStepPixels = 4
+heartOutlines = Array[int]([1, 1, 1, 0, 0])
+
+[node name="Healthbar" parent="HealthManager/Visuals/Regular" parent_id_path=PackedInt32Array(1043816269, 2085202016) index="0" unique_id=1090280165]
+offset_left = 31.0
+offset_top = 10.0
+offset_right = 151.0
+offset_bottom = 31.0
+value = 10.0
+texture_under = SubResource("AtlasTexture_xhbao")
+texture_progress = SubResource("AtlasTexture_m460r")
+
+[node name="HealthbarHeart" parent="HealthManager/Visuals/Regular" parent_id_path=PackedInt32Array(1043816269, 2085202016) index="1" unique_id=1223803143]
+position = Vector2(25.5, 17)
+texture = SubResource("AtlasTexture_j2acm")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=826756319 node_paths=PackedStringArray("Shape") groups=["Hitbox"]]
 visible = false
@@ -1355,56 +1370,6 @@ skew = -0.7853984
 shape = SubResource("RectangleShape2D_xhbao")
 debug_color = Color(0.65907955, 0.50070596, 0.3469048, 0.41960785)
 
-[node name="Health" type="Node2D" parent="." unique_id=933598119]
-
-[node name="HealthBar" type="TextureProgressBar" parent="Health" unique_id=1445577422]
-offset_left = -40.0
-offset_top = -102.0
-offset_right = 54.0
-offset_bottom = -84.0
-max_value = 30.0
-value = 30.0
-texture_under = SubResource("AtlasTexture_pbsy5")
-texture_progress = SubResource("AtlasTexture_d8tqx")
-texture_progress_offset = Vector2(1, 1)
-
-[node name="DemonHeart" type="Sprite2D" parent="Health" unique_id=648541488]
-position = Vector2(-46, -97)
-texture = ExtResource("7_hfx46")
-hframes = 2
-
-[node name="HealthBarParticle" type="CPUParticles2D" parent="Health" unique_id=868991020]
-position = Vector2(7, -93)
-emitting = false
-amount = 1
-texture = SubResource("AtlasTexture_okksv")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 20.0
-initial_velocity_min = 500.0
-initial_velocity_max = 500.0
-angular_velocity_min = 150.0
-angular_velocity_max = 150.0
-color_ramp = SubResource("Gradient_qrsml")
-
-[node name="DemonHeartParticle" type="CPUParticles2D" parent="Health" unique_id=1021976903]
-position = Vector2(-46, -97)
-emitting = false
-amount = 1
-texture = SubResource("AtlasTexture_xhbao")
-lifetime = 0.5
-one_shot = true
-fixed_fps = 30
-direction = Vector2(0, -1)
-spread = 90.0
-initial_velocity_min = 500.0
-initial_velocity_max = 500.0
-angular_velocity_min = 150.0
-angular_velocity_max = 150.0
-color_ramp = SubResource("Gradient_qrsml")
-
 [node name="Hitstopper" type="Timer" parent="." unique_id=2054055879]
 one_shot = true
 
@@ -1441,6 +1406,7 @@ afterimage_modulate = SubResource("Gradient_xhbao")
 rect = Rect2(-1000, -1000, 2000, 2000)
 show_rect = false
 
+[connection signal="dead" from="HealthManager" to="." method="_on_health_manager_dead"]
 [connection signal="clank" from="Hitbox" to="." method="_on_hitbox_clank"]
 [connection signal="hurtSomething" from="Hitbox" to="." method="_on_hitbox_hurt_something"]
 [connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
@@ -1453,3 +1419,5 @@ show_rect = false
 [connection signal="area_entered" from="EnzoDetector3" to="." method="_on_enzo_detector_3_area_entered"]
 [connection signal="area_exited" from="EnzoDetector3" to="." method="_on_enzo_detector_3_area_exited"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
+
+[editable path="HealthManager"]

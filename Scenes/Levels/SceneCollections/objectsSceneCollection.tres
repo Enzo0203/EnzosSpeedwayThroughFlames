@@ -1,9 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://bva3ua0bbnc1f"]
 
-[ext_resource type="PackedScene" uid="uid://lcv2h2ct6fk2" path="res://Scenes/StageHazards/caltrop.tscn" id="1_wkq7x"]
-[ext_resource type="PackedScene" uid="uid://b7eqkwrnfbtps" path="res://Scenes/StageHazards/lava.tscn" id="2_pf6gy"]
-[ext_resource type="PackedScene" uid="uid://cfhxp35yy5oed" path="res://Scenes/StageHazards/woodtnt.tscn" id="3_cjy1n"]
-[ext_resource type="PackedScene" uid="uid://syewcoe1n7wo" path="res://Scenes/StageHazards/skateboard.tscn" id="4_pai1i"]
+[ext_resource type="PackedScene" uid="uid://lcv2h2ct6fk2" path="res://Scenes/Hazards/caltrop.tscn" id="1_15ky2"]
+[ext_resource type="PackedScene" uid="uid://b7eqkwrnfbtps" path="res://Scenes/Hazards/lava.tscn" id="2_7tg0c"]
+[ext_resource type="PackedScene" uid="uid://cfhxp35yy5oed" path="res://Scenes/Hazards/tnt_wood.tscn" id="3_7tg0c"]
+[ext_resource type="PackedScene" uid="uid://syewcoe1n7wo" path="res://Scenes/Hazards/skateboard.tscn" id="4_4axfu"]
+[ext_resource type="PackedScene" uid="uid://caj02l3aek3e2" path="res://Scenes/Hazards/bombwheel_track.tscn" id="5_poq3f"]
 [ext_resource type="PackedScene" uid="uid://bn1asnr7yf2j6" path="res://Scenes/Items/snackbox.tscn" id="5_ynri5"]
 [ext_resource type="PackedScene" uid="uid://cjpdwwtfsxaiw" path="res://Scenes/Items/chips.tscn" id="6_og430"]
 [ext_resource type="PackedScene" uid="uid://devu83rlhpbyw" path="res://Scenes/Items/pastel.tscn" id="7_kl6fu"]
@@ -12,13 +13,17 @@
 [ext_resource type="PackedScene" uid="uid://d3q8h330mw38p" path="res://Scenes/Miscellaneous/anti_enzo_boundary.tscn" id="10_pf6gy"]
 [ext_resource type="PackedScene" uid="uid://eatffjhnbskb" path="res://Scenes/Player/player_enzo.tscn" id="10_vnw0c"]
 [ext_resource type="PackedScene" uid="uid://bas8dbolydmy" path="res://Scenes/Player/jeep.tscn" id="11_lghli"]
+[ext_resource type="PackedScene" uid="uid://llqr0ojyr68u" path="res://Scenes/Objects/crate_wood.tscn" id="14_ejiyk"]
+[ext_resource type="PackedScene" uid="uid://btjokw3vsp0fx" path="res://Scenes/Objects/crate_brick.tscn" id="15_ejiyk"]
+[ext_resource type="PackedScene" uid="uid://dcj8w4b65dj15" path="res://Scenes/Objects/crate_iron.tscn" id="16_4axfu"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_3mqg2"]
 resource_name = "Level Hazards"
-scenes/1/scene = ExtResource("1_wkq7x")
-scenes/2/scene = ExtResource("2_pf6gy")
-scenes/3/scene = ExtResource("3_cjy1n")
-scenes/4/scene = ExtResource("4_pai1i")
+scenes/1/scene = ExtResource("1_15ky2")
+scenes/2/scene = ExtResource("2_7tg0c")
+scenes/3/scene = ExtResource("3_7tg0c")
+scenes/4/scene = ExtResource("4_4axfu")
+scenes/5/scene = ExtResource("5_poq3f")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_5npvc"]
 resource_name = "Items"
@@ -37,9 +42,16 @@ resource_name = "Misc"
 scenes/1/scene = ExtResource("10_vnw0c")
 scenes/2/scene = ExtResource("11_lghli")
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_4axfu"]
+resource_name = "Objects"
+scenes/1/scene = ExtResource("14_ejiyk")
+scenes/2/scene = ExtResource("15_ejiyk")
+scenes/3/scene = ExtResource("16_4axfu")
+
 [resource]
 tile_size = Vector2i(30, 30)
 sources/0 = SubResource("TileSetScenesCollectionSource_3mqg2")
 sources/1 = SubResource("TileSetScenesCollectionSource_5npvc")
 sources/2 = SubResource("TileSetScenesCollectionSource_8018r")
 sources/3 = SubResource("TileSetScenesCollectionSource_bg1ok")
+sources/4 = SubResource("TileSetScenesCollectionSource_4axfu")

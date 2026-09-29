@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://by3gtkliwmwif" path="res://Sprites/General Sprites/Enemies/Demon goblin sheet.png" id="1_wlxbx"]
 [ext_resource type="Script" uid="uid://bk1427ivshjqb" path="res://Scripts/Enemies/demon_goblin.gd" id="2_lcivg"]
-[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/paletteSwap.material" id="2_m7baw"]
+[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/generalShader.material" id="2_m7baw"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="4_rpbba"]
 [ext_resource type="Script" uid="uid://djir1wn4q0xjf" path="res://Scripts/Technical/hitbox.gd" id="5_eskqj"]
 [ext_resource type="AudioStream" uid="uid://3vlfbpqg41vv" path="res://Sfx/Combat/Hitsounds/Slap.wav" id="6_kcdes"]

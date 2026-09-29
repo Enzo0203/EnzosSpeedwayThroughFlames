@@ -2,9 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cm3jc5ma1gs2q" path="res://Scripts/Technical/screen_locker.gd" id="1_2ym3m"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wfkfe"]
-size = Vector2(960, 540)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ym3m"]
 size = Vector2(540, 19.999985)
 
@@ -20,15 +17,11 @@ size = Vector2(999.9165, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6edg1"]
 size = Vector2(960, 540)
 
-[node name="LockerCamAttractor" type="Area2D" unique_id=747368171 groups=["CameraAttractor"]]
+[node name="LockerCamAttractor" type="Area2D" unique_id=747368171]
 collision_layer = 256
 collision_mask = 256
 script = ExtResource("1_2ym3m")
 metadata/zoom = Vector2(1, 1)
-
-[node name="CamAttractor" type="CollisionShape2D" parent="." unique_id=879216735]
-shape = SubResource("RectangleShape2D_wfkfe")
-debug_color = Color(0.8784314, 0, 0, 0.0627451)
 
 [node name="CamAttractTopLeft" type="Marker2D" parent="." unique_id=1481313427]
 position = Vector2(-480, -270)
@@ -36,39 +29,39 @@ position = Vector2(-480, -270)
 [node name="CamAttractBottomRight" type="Marker2D" parent="." unique_id=1053870088]
 position = Vector2(480, 270)
 
-[node name="ScreenLocker" type="StaticBody2D" parent="." unique_id=1969822487]
+[node name="ScreenLockerWalls" type="StaticBody2D" parent="." unique_id=1969822487]
 position = Vector2(-479.08347, -276.96484)
 collision_layer = 7
 collision_mask = 0
 
-[node name="LockerLeft" type="CollisionShape2D" parent="ScreenLocker" unique_id=1291711197]
+[node name="LockerLeft" type="CollisionShape2D" parent="ScreenLockerWalls" unique_id=1291711197]
 position = Vector2(-10.916534, 276.96484)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_2ym3m")
 one_way_collision = true
 
-[node name="LockerUp" type="CollisionShape2D" parent="ScreenLocker" unique_id=1194342319]
+[node name="LockerUp" type="CollisionShape2D" parent="ScreenLockerWalls" unique_id=1194342319]
 position = Vector2(479.08347, -3.0175476)
 rotation = -3.1415925
 shape = SubResource("RectangleShape2D_3s3e2")
 one_way_collision = true
 
-[node name="LockerRight" type="CollisionShape2D" parent="ScreenLocker" unique_id=1024868081]
+[node name="LockerRight" type="CollisionShape2D" parent="ScreenLockerWalls" unique_id=1024868081]
 position = Vector2(969, 276.98242)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_2knvg")
 one_way_collision = true
 
-[node name="LockerDown" type="CollisionShape2D" parent="ScreenLocker" unique_id=1572362491]
+[node name="LockerDown" type="CollisionShape2D" parent="ScreenLockerWalls" unique_id=1572362491]
 position = Vector2(479.04175, 557)
 shape = SubResource("RectangleShape2D_awgvt")
 one_way_collision = true
 
-[node name="LockerDeactivator" type="Area2D" parent="." unique_id=707414637]
+[node name="EnemyChecker" type="Area2D" parent="." unique_id=707414637]
 collision_layer = 0
-collision_mask = 32
+collision_mask = 48
 
-[node name="LockerDeactivatorShape" type="CollisionShape2D" parent="LockerDeactivator" unique_id=921994644]
+[node name="EnemyCheckerShape" type="CollisionShape2D" parent="EnemyChecker" unique_id=921994644]
 shape = SubResource("RectangleShape2D_6edg1")
 debug_color = Color(0.827451, 0.39607844, 0, 0.07058824)
 
@@ -79,4 +72,11 @@ visible = false
 offset_right = 40.0
 offset_bottom = 24.0
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[node name="PlayerChecker" type="Area2D" parent="." unique_id=1833147269]
+collision_layer = 0
+collision_mask = 16
+
+[node name="PlayerCheckerShape" type="CollisionPolygon2D" parent="PlayerChecker" unique_id=1447741689]
+polygon = PackedVector2Array(-500, 290, 500, 290, 500, -290, -480, -290, -480, -270, 480, -270, 480, 270, -480, 270, -480, -290, -500, -290)
+
+[connection signal="body_exited" from="PlayerChecker" to="." method="_on_player_checker_body_exited"]

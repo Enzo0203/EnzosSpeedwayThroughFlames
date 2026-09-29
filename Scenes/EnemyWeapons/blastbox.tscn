@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://do8r4ukdgr63b"]
 
 [ext_resource type="Script" uid="uid://c3app80w08dob" path="res://Scripts/EnemyWeapons/blastbox.gd" id="1_0242f"]
-[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/Objects/Blastbox Sheet.png" id="2_ss6vh"]
+[ext_resource type="Texture2D" uid="uid://di73vlvmwrpn0" path="res://Sprites/General Sprites/EnemyWeapons/Blastbox Sheet.png" id="2_ss6vh"]
+[ext_resource type="Material" uid="uid://bxp676keuk48h" path="res://MiscResources/generalShader.material" id="2_y20cm"]
 [ext_resource type="Script" uid="uid://w4lxvlpacy5t" path="res://Scripts/Technical/hurtbox.gd" id="3_ss6vh"]
 [ext_resource type="AudioStream" uid="uid://cf0n5kdlqhkn6" path="res://Sfx/CarLock.ogg" id="4_2ncte"]
 [ext_resource type="AudioStream" uid="uid://b4phhc604ch3a" path="res://Sfx/BombBeep.ogg" id="5_w5aig"]
@@ -79,6 +80,7 @@ script = ExtResource("1_0242f")
 blast_radius = 0.85
 
 [node name="BlastboxSprite" type="Sprite2D" parent="." unique_id=428736598]
+material = ExtResource("2_y20cm")
 position = Vector2(0, -4)
 texture = ExtResource("2_ss6vh")
 hframes = 5

@@ -8,12 +8,12 @@ enum States {IDLE, JUMPING, THROWING, JUMPTHROWING, BIGTHROWING, HURT, DEAD, AIR
 var state: int = States.IDLE
 var is_dead: bool = false
 
+@onready var health_manager: HealthManager = $HealthManager
+
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Spritesheet
 @onready var marker: Marker2D = $Spritesheet/Marker2D
 @onready var marker_2: Marker2D = $Spritesheet/Marker2D2
-@onready var healthbar: TextureProgressBar = $Health/HealthBar
-@onready var demonheart: Sprite2D = $Health/DemonHeart
 
 @onready var hitstopper: Timer = $Hitstopper
 @onready var stuntimer: Timer = $Stuntimer
@@ -26,12 +26,6 @@ var is_dead: bool = false
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitboxshape: CollisionShape2D = $Hitbox/HitboxShape
 @onready var hurtbox: Area2D = $Hurtbox
-
-@export var health: int
-@export var maxHealth: int
-
-@onready var pr_heart: CPUParticles2D = $Health/DemonHeartParticle
-@onready var pr_hpbar: CPUParticles2D = $Health/HealthBarParticle
 
 func change_state(newState: int) -> void:
 	state = newState
@@ -62,8 +56,6 @@ func _physics_process(delta: float) -> void:
 			airweaving(delta)
 	move_and_slide()
 	update_animations()
-	set_health()
-	check_for_death()
 	flip_hitboxes()
 
 func idle(delta: float) -> void:
@@ -240,32 +232,29 @@ func dead(delta: float) -> void:
 	collision_mask = 0
 
 func _on_hurtbox_hurt(_area: Area2D, Damage: int, Knockback: Vector2) -> void:
-	if is_dead == false:
-		if health - Damage <= 0:
-			damage(health)
-			pr_heart.emitting = true
-			pr_hpbar.emitting = true
-			change_state(States.DEAD)
-			give_score(300, true)
-		else:
-			damage(Damage)
-			change_state(States.HURT)
-		$PaletteSwapAnims.play("Hurt")
-		velocity = Knockback
-		pr_heart.direction = Knockback
-		pr_hpbar.direction = Knockback
-		stuntimer.start()
-		hitStop(min(0.1 * Damage, 0.3))
+	damage(Damage)
+	change_state(States.HURT)
+	$PaletteSwapAnims.play("Hurt")
+	stuntimer.start()
+	await get_tree().process_frame
+	velocity = Knockback
+	hitStop(min(0.1 * Damage, 0.3))
+
+func _on_health_manager_dead() -> void:
+	change_state(States.DEAD)
+	give_score(50, true)
+	health_manager.health = 0
+	Globalvars.EnzoComboUpdated.emit()
+	Globalvars.EnzoCombo += 1
+	Globalvars.EnzoKills += 1
+	is_dead = true
 
 func _on_hurtbox_parried(_area: Area2D, _range: String) -> void:
-	if health - $Hitbox.Damage <= 0:
-		damage(health)
-	else:
-		damage($Hitbox.Damage)
+	damage($Hitbox.Damage)
 	blastboxcooldown.start()
 
 func damage(amount: int) -> void:
-	health -= amount
+	health_manager.deal_damage(amount)
 	give_score(10 * amount, true)
 	addToMiniCombo(amount)
 
@@ -321,34 +310,8 @@ func hitStop(duration: float) -> void:
 	hitstopper.wait_time = duration
 	hitstopper.start()
 
-#@onready var snackbox: PackedScene = preload("res://Scenes/Items/snackbox.tscn")
-func check_for_death() -> void:
-	if health <= 0 and is_dead == false:
-		health = 0
-		change_state(States.DEAD)
-		Globalvars.EnzoComboUpdated.emit()
-		Globalvars.EnzoCombo += 1
-		Globalvars.EnzoKills += 1
-		#var snackbox_instance: Node = snackbox.instantiate()
-		#snackbox_instance.spawnPosition = hurtbox.global_position
-		#get_parent().add_child(snackbox_instance)
-		is_dead = true
-
 func randomizeAudioPitch(_audio: String) -> void:
 	pass
-
-func set_health() -> void:
-	$Health/HealthBar.value = health
-	if health == maxHealth:
-		healthbar.visible = false
-		demonheart.visible = false
-	else:
-		if not is_dead:
-			healthbar.visible = true
-			demonheart.visible = true
-		else:
-			healthbar.visible = false
-			demonheart.visible = false
 
 var EnzoInArea1: bool = false
 var EnzoInArea2: bool = false

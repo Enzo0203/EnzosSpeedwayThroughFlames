@@ -12,12 +12,35 @@
 [ext_resource type="Script" uid="uid://dvo46akhcujq8" path="res://Scripts/Technical/music_manager.gd" id="15_mlqhy"]
 [ext_resource type="AudioStream" uid="uid://cb3oxoqe5kxss" path="res://Music/Madman.ogg" id="16_mlqhy"]
 [ext_resource type="AudioStream" uid="uid://3khd6xm6il63" path="res://Music/MadmanPause.ogg" id="17_dpeam"]
-[ext_resource type="Script" uid="uid://d3flv4u36drg5" path="res://Scripts/Technical/camera.gd" id="19_q0mot"]
+[ext_resource type="PackedScene" uid="uid://djgvejae36xkl" path="res://Scenes/Miscellaneous/main_camera.tscn" id="19_b3rx7"]
 [ext_resource type="Texture2D" uid="uid://c4d8pis7dwvpp" path="res://Sprites/Level Assets/1-1/PlainsSky.png" id="20_rslwb"]
 [ext_resource type="Texture2D" uid="uid://kf5j6sj1bmmq" path="res://Sprites/Level Assets/1-1/PlainsClouds2.png" id="21_w5sfv"]
 [ext_resource type="Texture2D" uid="uid://c6bhfsqtt2hb1" path="res://Sprites/Level Assets/1-1/PlainsClouds1.png" id="22_exkol"]
 [ext_resource type="Texture2D" uid="uid://cf6ts5aineel2" path="res://Sprites/Level Assets/1-1/PlainsBackground2.png" id="23_nq7ui"]
 [ext_resource type="Texture2D" uid="uid://cw23skrl85ef5" path="res://Sprites/Level Assets/1-1/PlainsBackground1.png" id="24_cfpub"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_opk3b"]
+clip_count = 2
+clip_0/name = &"Main"
+clip_0/stream = ExtResource("16_mlqhy")
+clip_0/auto_advance = 0
+clip_1/name = &"MainPause"
+clip_1/stream = ExtResource("17_dpeam")
+clip_1/auto_advance = 0
+_transitions = {
+Vector2i(0, 1): {
+"fade_beats": 0.0,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(1, 0): {
+"fade_beats": 0.0,
+"fade_mode": 0,
+"from_time": 0,
+"to_time": 0
+}
+}
 
 [node name="World" type="Node2D" unique_id=1799268501]
 
@@ -33,7 +56,7 @@ tile_map_data = PackedByteArray("AAD0/xIAAAABAAAAAAD0/xMAAAABAAEAAAD0/xQAAAABAAE
 tile_set = ExtResource("1_h52vy")
 
 [node name="TilemapEnemies" type="TileMapLayer" parent="." unique_id=594857931]
-tile_map_data = PackedByteArray("AAAuAAoAAAAAAAAAAwBaAAsAAAAAAAAABABeAA4AAAAAAAAABABgAA4AAAAAAAAABABsAAkAAAAAAAAAAwBvAA8AAAAAAAAABACwAAwAAAAAAAAABACzAAwAAAAAAAAABAC5AAgAAAAAAAAABACkAAoAAAAAAAAAAwC0AAMAAAAAAAAAAwDAAAgAAAAAAAAAAwDMAAYAAAAAAAAAAwAVAf//AAAAAAAAAwAOAfT/AAAAAAAAAwASAfT/AAAAAAAAAwAWAfT/AAAAAAAAAwAaAfT/AAAAAAAAAwAeAfT/AAAAAAAAAwAQAfT/AAAAAAAABAAUAfT/AAAAAAAABAAYAfT/AAAAAAAABAAcAfT/AAAAAAAABABSAQsAAAAAAAAAAwBiAQgAAAAAAAAAAwB6AQgAAAAAAAAAAwCxAQQAAAAAAAAABADKAQ0AAAAAAAAAAwDmAQkAAAAAAAAAAwDvAQoAAAAAAAAAAwDyAQoAAAAAAAAAAwD8AQkAAAAAAAAAAwAQAg0AAAAAAAAAAwAUAgMAAAAAAAAAAwAqAvn/AAAAAAAAAwAuAgYAAAAAAAAAAwDsAQ0AAAAAAAAABAD1AQ0AAAAAAAAABADvAQYAAAAAAAAABADyAQYAAAAAAAAABAAZAgAAAAAAAAAABAAhAvD/AAAAAAAAAwAzAgEAAAAAAAAABAAoAv//AAAAAAAABAAkAgYAAAAAAAAABAA4Ag4AAAAAAAAAAwA/Ag4AAAAAAAAAAwA0AgcAAAAAAAAAAwBnAgwAAAAAAAAABQCTAQwAAAAAAAAABAAQAvb/AAAAAAAAAwD6AAIAAAAAAAAAAwA=")
+tile_map_data = PackedByteArray("AABaAAsAAAAAAAAABABeAA4AAAAAAAAABABgAA4AAAAAAAAABABsAAkAAAAAAAAAAwBvAA8AAAAAAAAABACwAAwAAAAAAAAABACzAAwAAAAAAAAABAC5AAgAAAAAAAAABACkAAoAAAAAAAAAAwC0AAMAAAAAAAAAAwDAAAgAAAAAAAAAAwDMAAYAAAAAAAAAAwAVAf//AAAAAAAAAwAOAfT/AAAAAAAAAwASAfT/AAAAAAAAAwAWAfT/AAAAAAAAAwAaAfT/AAAAAAAAAwAeAfT/AAAAAAAAAwAQAfT/AAAAAAAABAAUAfT/AAAAAAAABAAYAfT/AAAAAAAABAAcAfT/AAAAAAAABABSAQsAAAAAAAAAAwBiAQgAAAAAAAAAAwB6AQgAAAAAAAAAAwCxAQQAAAAAAAAABADKAQ0AAAAAAAAAAwDmAQkAAAAAAAAAAwDvAQoAAAAAAAAAAwDyAQoAAAAAAAAAAwD8AQkAAAAAAAAAAwAQAg0AAAAAAAAAAwAUAgMAAAAAAAAAAwAqAvn/AAAAAAAAAwAuAgYAAAAAAAAAAwDsAQ0AAAAAAAAABAD1AQ0AAAAAAAAABADvAQYAAAAAAAAABADyAQYAAAAAAAAABAAZAgAAAAAAAAAABAAhAvD/AAAAAAAAAwAzAgEAAAAAAAAABAAoAv//AAAAAAAABAAkAgYAAAAAAAAABAA4Ag4AAAAAAAAAAwA/Ag4AAAAAAAAAAwA0AgcAAAAAAAAAAwCTAQwAAAAAAAAABAAQAvb/AAAAAAAAAwD6AAIAAAAAAAAAAwBoAgwAAAAAAAAABQAtAAoAAAAAAAAAAwA=")
 tile_set = ExtResource("3_26o3t")
 
 [node name="TilemapObjects" type="TileMapLayer" parent="." unique_id=331903841]
@@ -54,22 +77,6 @@ reward = ExtResource("5_dpeam")
 [node name="Jeep" parent="TilemapObjects/UniqueDataObjects" unique_id=1516526785 instance=ExtResource("2_iracw")]
 position = Vector2(19040, 136)
 type = 1
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1315846363]
-position = Vector2(218, 370)
-limit_left = -930
-limit_top = -800
-limit_right = 19300
-limit_bottom = 700
-position_smoothing_speed = 10.0
-drag_vertical_enabled = true
-drag_left_margin = 0.0
-drag_right_margin = 0.0
-editor_draw_limits = true
-editor_draw_drag_margin = true
-script = ExtResource("19_q0mot")
-
-[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D" unique_id=1531849370]
 
 [node name="Background" type="ParallaxBackground" parent="." unique_id=1506768404]
 
@@ -146,18 +153,9 @@ process_mode = 3
 script = ExtResource("15_mlqhy")
 
 [node name="Madman" type="AudioStreamPlayer" parent="MusicHandler" unique_id=1817145193]
-stream = ExtResource("16_mlqhy")
+stream = SubResource("AudioStreamInteractive_opk3b")
 autoplay = true
 bus = &"Music"
 
-[node name="MadmanPause" type="AudioStreamPlayer" parent="MusicHandler" unique_id=146522589]
-stream = ExtResource("17_dpeam")
-autoplay = true
-bus = &"Music"
-
-[connection signal="area_entered" from="TilemapObjects/LockerCamAttractor" to="TilemapObjects/LockerCamAttractor" method="_on_area_entered"]
-[connection signal="area_entered" from="TilemapObjects/@Area2D@120743" to="TilemapObjects/@Area2D@120743" method="_on_area_entered"]
-[connection signal="area_entered" from="TilemapObjects/@Area2D@120747" to="TilemapObjects/@Area2D@120747" method="_on_area_entered"]
-[connection signal="area_entered" from="TilemapObjects/@Area2D@120756" to="TilemapObjects/@Area2D@120756" method="_on_area_entered"]
-[connection signal="area_entered" from="TilemapObjects/@Area2D@120757" to="TilemapObjects/@Area2D@120757" method="_on_area_entered"]
-[connection signal="area_entered" from="TilemapObjects/@Area2D@120758" to="TilemapObjects/@Area2D@120758" method="_on_area_entered"]
+[node name="Main Camera" parent="." unique_id=678676067 instance=ExtResource("19_b3rx7")]
+position = Vector2(216, 368)

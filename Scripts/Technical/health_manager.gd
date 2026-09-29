@@ -30,7 +30,6 @@ signal zeroHealth
 
 ## Emitted when health is zero or all hearts are empty and [member DieOnZeroHealth]
 ## is [code]true[/code].
-@warning_ignore("unused_signal")
 signal dead
 
 func _ready() -> void:
@@ -103,7 +102,7 @@ func _build_segmented_heart_outlines() -> void:
 func _update_healthbar() -> void:
 	healthbar.value = health
 	healthbar.max_value = maxHealth
-	healthbar.size.x = max(24, 12 * maxHealth)
+	healthbar.size.x = max(minimumWidth, widthStepPixels * maxHealth)
 
 func _show_healthtype() -> void:
 	if HealthType == HealthTypes.REGULAR:
@@ -121,7 +120,7 @@ func _physics_process(_delta: float) -> void:
 	_update_healthbar()
 	_show_healthtype()
 
-func deal_damage(regularDmg: int, segmentedDmg: int) -> void:
+func deal_damage(regularDmg: int, segmentedDmg: int = 1) -> void:
 	if HealthType == HealthTypes.REGULAR:
 		health -= min(regularDmg, health)
 	if HealthType == HealthTypes.SEGMENTED:
@@ -135,7 +134,7 @@ func deal_damage(regularDmg: int, segmentedDmg: int) -> void:
 				play_heart_animation(hearts.rfind(HeartTypes.RED), "RedHurt")
 				hearts[hearts.rfind(HeartTypes.RED)] = HeartTypes.REDEMPTY
 
-func heal(regularHeal: int, segmentedHeal: int) -> void:
+func heal(regularHeal: int, segmentedHeal: int = 1) -> void:
 	if is_dead:
 		return
 	if HealthType == HealthTypes.REGULAR:
@@ -165,6 +164,8 @@ func _check_if_dead() -> void:
 
 @export var maxHealth: int = 5
 @export var health: int = 5
+@export var widthStepPixels: int = 12
+@export var minimumWidth: int = 24
 
 # ------------------------------Segmented------------------------------
 
